@@ -80,11 +80,12 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
         { name: dict.nav.howWeWork, href: "/how-we-work" },
         { name: dict.nav.packagingSafety, href: "/packaging-safety" },
         { name: dict.nav.sustainability, href: "/sustainability" },
-        { name: dict.nav.contact, href: "/contact" },
       ];
     }
 
-    const mainItems = navItems.filter((i: any) => !i.parentId && i.link !== '/news').sort((a, b) => a.order - b.order);
+    const mainItems = navItems
+      .filter((i: any) => !i.parentId && i.link !== "/news" && i.link !== "/contact")
+      .sort((a, b) => a.order - b.order);
     return mainItems.map((item: any) => {
       // 只有产品栏目（或特定包含 mega menu 的栏目）才保留下拉菜单数据，其他只保留一级
       const isProducts = item.link.includes('products');
@@ -129,11 +130,11 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
       }`}>
         
         {/* Left: Logo and Mobile Menu Button */}
-        <div className="flex-shrink-0 flex items-center justify-between w-full md:w-auto h-[80px] md:h-auto md:pt-[26px] xl:pt-[41px] px-[10px] md:px-[7px] xl:px-[5px] transition-transform duration-[750ms] ease-out">
+        <div className="flex-shrink-0 flex items-center justify-between w-full md:w-auto h-[80px] md:h-auto md:pt-[20px] xl:pt-[41px] px-[10px] md:px-[7px] xl:px-[5px] transition-transform duration-[750ms] ease-out">
           <Link href="/" className={`inline-block transition-transform duration-[750ms] ease-out ${
-            isSolid ? "scale-[0.85] origin-left md:scale-[0.75] md:-translate-y-[28px] xl:-translate-y-[28px]" : "scale-[0.85] md:scale-100 origin-left translate-y-0"
+            isSolid ? "scale-[0.85] origin-left md:scale-[0.68] xl:scale-[0.75] md:-translate-y-[22px] xl:-translate-y-[28px]" : "scale-[0.85] md:scale-[0.9] xl:scale-100 origin-left translate-y-0"
           }`}>
-            <img src="/logo.png" alt="HAILITONG Packaging" className={`w-[140px] md:w-[180px] h-auto object-contain transition-all duration-[750ms]`} />
+            <img src="/logo.png" alt="HAILITONG Packaging" className={`w-[140px] md:w-[160px] xl:w-[180px] h-auto object-contain transition-all duration-[750ms]`} />
           </Link>
           
           {/* Mobile Menu Button (Only visible on small screens) */}
@@ -147,7 +148,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
         </div>
 
           {/* Right Section */}
-        <div className={`hidden md:flex flex-grow flex-col items-end pt-[30px] gap-[25px] xl:gap-[25px] transition-transform duration-[750ms] ease-out`}>
+        <div className={`hidden md:flex flex-grow flex-col items-end pt-[18px] xl:pt-[30px] gap-[16px] xl:gap-[25px] transition-transform duration-[750ms] ease-out`}>
           
           {/* Top Bar: Tools & Lang (Capsule) - 滚动时保持在最右侧，紧贴顶部 */}
           <div className={`relative z-[60] flex items-center transition-all duration-[750ms] ease-out origin-top-right ${
@@ -155,29 +156,29 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
           }`}>
             <div className={`transition-all duration-[750ms] ease-out ${
               isSolid ? "rounded-b-[23px] rounded-t-none bg-[#F05A22] shadow-md" : "rounded-[30px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
-            } w-auto px-[30px]`}>
+            } w-auto px-[20px] xl:px-[30px]`}>
               <div className={`bg-transparent h-full w-full py-[12px] flex items-center justify-center gap-[24px] transition-all duration-[750ms] ease-out ${
-                isSolid ? "rounded-b-[23px] rounded-t-none pb-[14px] pt-[10px]" : "rounded-[30px]"
+                isSolid ? "rounded-b-[23px] rounded-t-none pb-[12px] pt-[8px] xl:pb-[14px] xl:pt-[10px]" : "rounded-[30px]"
               }`}>
                 {/* Tool Icons */}
                 <Link href="/" className={`transition-colors ${isSolid ? "text-white/90 hover:text-white" : "text-[#F05A22]/90 hover:text-[#F05A22]"}`}>
-                  <Home className="w-[24px] h-[24px]" strokeWidth={1.5} />
+                  <Home className="w-[20px] h-[20px] xl:w-[24px] xl:h-[24px]" strokeWidth={1.5} />
                 </Link>
                 <Link href="#" className={`transition-colors ${isSolid ? "text-white/90 hover:text-white" : "text-[#F05A22]/90 hover:text-[#F05A22]"}`}>
-                  <Phone className="w-[24px] h-[24px]" strokeWidth={1.5} />
+                  <Phone className="w-[20px] h-[20px] xl:w-[24px] xl:h-[24px]" strokeWidth={1.5} />
                 </Link>
                 <Link href="#" className={`transition-colors ${isSolid ? "text-white/90 hover:text-white" : "text-[#F05A22]/90 hover:text-[#F05A22]"}`}>
-                  <Search className="w-[24px] h-[24px]" strokeWidth={1.5} />
+                  <Search className="w-[20px] h-[20px] xl:w-[24px] xl:h-[24px]" strokeWidth={1.5} />
                 </Link>
                 
                 {/* Divider */}
-                <div className={`w-[1px] h-[24px] transition-colors duration-[750ms] ${isSolid ? "bg-white/30" : "bg-[#F05A22]/20"}`}></div>
+                <div className={`w-[1px] h-[20px] xl:h-[24px] transition-colors duration-[750ms] ${isSolid ? "bg-white/30" : "bg-[#F05A22]/20"}`}></div>
                 
                 {/* Language Switcher */}
                 <div className={`group relative flex items-center cursor-pointer transition-colors duration-[750ms] ${isSolid ? "text-white" : "text-[#F05A22]"}`}>
-                  <Globe className="w-[24px] h-[24px] mr-[8px]" strokeWidth={1.5} />
-                  <span className="text-[16px] font-medium tracking-wide">{dict.nav.language}</span>
-                  <ChevronDown className="w-[18px] h-[18px] ml-[8px] opacity-80" strokeWidth={1.5} />
+                  <Globe className="w-[20px] h-[20px] xl:w-[24px] xl:h-[24px] mr-[6px] xl:mr-[8px]" strokeWidth={1.5} />
+                  <span className="text-[14px] xl:text-[16px] font-medium tracking-wide">{dict.nav.language}</span>
+                  <ChevronDown className="w-[16px] h-[16px] xl:w-[18px] xl:h-[18px] ml-[6px] xl:ml-[8px] opacity-80" strokeWidth={1.5} />
                   
                   {/* Desktop Dropdown */}
                   <div className="absolute top-full right-0 pt-[15px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[110]">
@@ -195,7 +196,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
           </div>
 
           {/* Bottom Bar: Navigation */}
-          <nav className={`flex items-center space-x-[40px] xl:space-x-[53px] justify-end transition-transform duration-[750ms] ease-out origin-right ${
+          <nav className={`flex items-center space-x-[24px] xl:space-x-[53px] justify-end transition-transform duration-[750ms] ease-out origin-right ${
             isSolid ? "translate-y-[-45px]" : "translate-y-0"
           }`}>
             {navLinks.map((link) => (
@@ -217,11 +218,11 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
               >
                 <Link
                   href={link.href}
-                  className={`inline-flex items-center text-[15px] font-bold transition-colors duration-[750ms] tracking-[1px] relative ${isSolid ? "pb-0" : "pb-1"} ${activeMegaMenu === link.name ? "text-[#F05A22]" : "text-[#1A1A1A] hover:text-[#F05A22]"}`}
+                  className={`group inline-flex items-center text-[13px] xl:text-[15px] font-bold transition-colors duration-[300ms] tracking-[0.5px] xl:tracking-[1px] relative ${isSolid ? "pb-0" : "pb-1"} text-[#1A1A1A]`}
                 >
                   {link.name}
-                  {link.children?.length ? <ChevronDown className={`ml-1 h-4 w-4 transition-transform ${activeMegaMenu === link.name ? "rotate-180" : ""}`} /> : null}
-                  <span className={`absolute bottom-[-6px] left-1/2 -translate-x-1/2 h-[3px] transition-all duration-300 ease-out rounded-full bg-[#F05A22] ${activeMegaMenu === link.name ? "w-full" : "w-0"}`}></span>
+                  {link.children?.length ? <ChevronDown className={`ml-1 h-3.5 w-3.5 xl:h-4 xl:w-4 transition-transform ${activeMegaMenu === link.name ? "rotate-180" : ""}`} /> : null}
+                  <span className={`absolute bottom-[-4px] left-1/2 -translate-x-1/2 h-[1.5px] transition-all duration-300 ease-out bg-[#1A1A1A] ${activeMegaMenu === link.name ? "w-full" : "w-0 group-hover:w-full"}`}></span>
                 </Link>
 
                 {/* Mega Menu Dropdown (Only for Products or links matching /products) */}

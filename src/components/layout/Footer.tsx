@@ -114,6 +114,12 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
                 </li>
               )}
             </ul>
+            <Link
+              href="/contact"
+              className="mt-8 inline-flex items-center rounded-full bg-[#F05A22] px-6 py-3 text-[14px] font-bold uppercase tracking-wider text-white transition-all duration-300 hover:bg-[#D64816] hover:shadow-[0_12px_30px_rgba(240,90,34,0.28)]"
+            >
+              {content.footer.contact}
+            </Link>
           </div>
 
           {/* Column 4: Newsletter */}
@@ -174,6 +180,12 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
             <Link href="/packaging-market" className="hover:text-[#F05A22]">{content.footer.packagingMarket}</Link>
             <Link href="/contact" className="hover:text-[#F05A22]">{content.footer.contact}</Link>
           </div>
+          <Link
+            href="/contact"
+            className="mb-8 inline-flex w-full items-center justify-center rounded-[30px] bg-[#F05A22] px-6 py-4 text-[15px] font-extrabold uppercase tracking-wider text-white transition-colors hover:bg-[#D64816]"
+          >
+            {content.footer.contact}
+          </Link>
 
           {/* Follow Us */}
           <div className="flex items-center gap-6 mb-8">

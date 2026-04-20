@@ -79,7 +79,7 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
   }, [emblaApi]);
 
   return (
-    <section className="relative w-full h-auto lg:min-h-[700px] lg:h-[100vh] lg:max-h-[900px] bg-transparent pt-[100px] pb-[80px] lg:pt-[177px] lg:pb-0 flex items-start lg:items-center">
+    <section className="relative w-full h-auto lg:min-h-[700px] lg:h-[100vh] lg:max-h-[900px] bg-transparent pt-[100px] pb-[140px] lg:pt-[210px] xl:pt-[177px] lg:pb-0 flex items-start lg:items-start xl:items-center">
       
       <div className="relative lg:absolute inset-0 z-10 w-full h-full overflow-hidden" ref={emblaRef}>
         <div className="flex h-full w-full">
@@ -87,7 +87,7 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
             <div key={slide.id} className="relative flex-[0_0_100%] min-w-0 lg:h-full flex flex-col lg:flex-row items-center pt-0">
               
               {/* DESKTOP VIEW */}
-              <div className="hidden lg:flex w-full max-w-[1600px] mx-auto px-20 flex-row items-center justify-between h-full">
+              <div className="hidden lg:flex w-full max-w-[1600px] mx-auto px-10 xl:px-20 flex-row items-center justify-between h-full">
                 {/* Left Content: Typography */}
                 <div className="w-1/2 flex flex-col justify-center relative z-20 text-left">
                   <AnimatePresence mode="wait">
@@ -101,21 +101,21 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                         <h3 className="text-[#F05A22] font-bold tracking-[3px] uppercase text-[15px] mb-4">
                           {slide.subtitle}
                         </h3>
-                        <h2 className="text-[#1A1A1A] font-extrabold text-[56px] xl:text-[72px] leading-[1.1] tracking-tight mb-6 font-sans uppercase">
+                        <h2 className="text-[#1A1A1A] font-extrabold text-[44px] xl:text-[72px] leading-[1.1] tracking-tight mb-6 font-sans uppercase">
                           {slide.title}
                         </h2>
-                        <p className="text-[#595959] text-[18px] max-w-[540px] leading-[1.6] mb-10">
+                        <p className="text-[#595959] text-[16px] xl:text-[18px] max-w-[500px] xl:max-w-[540px] leading-[1.6] mb-8 xl:mb-10">
                           {slide.description}
                         </p>
                         
-                        <div className="flex flex-row items-center justify-start gap-5">
-                          <a href={slide.link || "/products"} className="group relative px-8 py-4 bg-[#F05A22] text-white font-bold text-[15px] rounded-[30px] overflow-hidden transition-all duration-300 hover:shadow-[0_10px_20px_rgba(240,90,34,0.3)] flex items-center justify-center gap-3">
+                        <div className="flex flex-row items-center justify-start gap-4 xl:gap-5">
+                          <a href={slide.link || "/products"} className="group relative px-7 xl:px-8 py-3.5 xl:py-4 bg-[#F05A22] text-white font-bold text-[14px] xl:text-[15px] rounded-[30px] overflow-hidden transition-all duration-300 hover:shadow-[0_10px_20px_rgba(240,90,34,0.3)] flex items-center justify-center gap-3">
                             <span className="relative z-10">{dict.home.hero.explore}</span>
                             <ArrowRight className="w-5 h-5 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
                             <div className="absolute inset-0 bg-[#D64816] transform scale-x-0 origin-left transition-transform duration-500 ease-out group-hover:scale-x-100"></div>
                           </a>
                           
-                          <a href="/contact" className="px-8 py-4 bg-transparent text-[#1A1A1A] font-bold text-[15px] rounded-[30px] border-2 border-[#EAEAEA] transition-all duration-300 hover:border-[#F05A22] hover:text-[#F05A22] shadow-none flex items-center justify-center">
+                          <a href="/contact" className="px-7 xl:px-8 py-3.5 xl:py-4 bg-transparent text-[#1A1A1A] font-bold text-[14px] xl:text-[15px] rounded-[30px] border-2 border-[#EAEAEA] transition-all duration-300 hover:border-[#F05A22] hover:text-[#F05A22] shadow-none flex items-center justify-center">
                             {dict.home.hero.contact}
                           </a>
                         </div>
@@ -141,7 +141,7 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                         <img
                           src={slide.image}
                           alt="Packaging Product"
-                          className="relative z-10 w-auto h-full max-h-[600px] object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.15)]"
+                          className="relative z-10 w-auto h-full max-h-[500px] xl:max-h-[600px] object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.15)]"
                         />
                       </motion.div>
                     )}
@@ -183,13 +183,13 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                           {slide.description}
                         </p>
                         
-                        <div className="flex flex-row w-full justify-center gap-2">
-                          <a href={slide.link || "/products"} className="flex-1 py-2.5 bg-[#F05A22] text-white font-bold text-[12px] rounded-full shadow-[0_4px_10px_rgba(240,90,34,0.3)] flex items-center justify-center gap-1.5">
+                        <div className="flex flex-row w-full justify-center gap-3">
+                          <a href={slide.link || "/products"} className="flex-1 py-3 bg-[#F05A22] text-white font-bold text-[13px] rounded-full shadow-[0_4px_10px_rgba(240,90,34,0.3)] flex items-center justify-center gap-1.5 transition-transform active:scale-95">
                             {dict.home.hero.explore}
                             <ArrowRight className="w-3.5 h-3.5" />
                           </a>
                           
-                          <a href="/contact" className="flex-1 py-2.5 bg-white text-[#1A1A1A] font-bold text-[12px] rounded-full border border-gray-200 shadow-[0_2px_10px_rgba(0,0,0,0.05)] flex items-center justify-center">
+                          <a href="/contact" className="flex-1 py-3 bg-white text-[#1A1A1A] font-bold text-[13px] rounded-full border border-gray-200 shadow-[0_2px_10px_rgba(0,0,0,0.05)] flex items-center justify-center transition-transform active:scale-95">
                             {dict.home.hero.contact}
                           </a>
                         </div>
@@ -205,7 +205,7 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
       </div>
 
       {/* Modern Carousel Controls */}
-      <div className="absolute bottom-6 sm:bottom-8 lg:bottom-16 left-0 w-full z-20 pointer-events-none">
+      <div className="absolute bottom-8 sm:bottom-10 lg:bottom-16 left-0 w-full z-20 pointer-events-none">
         <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 flex justify-center lg:justify-start items-center">
           
           {/* MOBILE CONTROLS (Competitor Style: < 1 / 5 >) */}
