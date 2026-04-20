@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String?  @unique
+  seoTitle    String?
+  seoDescription String?
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  image       String
+  gallery     String   @default("[]") // Array of image URLs stored as JSON string
+  features    String   // Stored as JSON string array
+  content     String?  // Rich text for product details
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model News {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String?  @unique
+  seoTitle    String?
+  seoDescription String?
+  summary     String
+  content     String?
+  category    String
+  date        String
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Banner {
+  id          String   @id @default(cuid())
+  title       String
+  subtitle    String?
+  description String?
+  image       String   // Background or Product image
+  link        String?  // Optional CTA link
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Message {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  company     String?
+  phone       String?
+  status      String   @default("new")
+  subject     String?
+  inquiryType String?
+  productId   String?
+  productName String?
+  bagType     String?
+  material    String?
+  quantity    String?
+  application String?
+  targetMarket String?
+  sourcePage  String?
+  assignedTo  String?
+  followUpAt  DateTime?
+  internalNote String?
+  content     String
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  logs        MessageActivityLog[]
+}
+
+model MessageActivityLog {
+  id        String   @id @default(cuid())
+  messageId String
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  action    String
+  actor     String
+  details   String?
+  createdAt DateTime @default(now())
+
+  @@index([messageId, createdAt])
+}
+
+model NavigationItem {
+  id        String           @id @default(cuid())
+  nameZh    String
+  nameEn    String
+  link      String
+  order     Int              @default(0)
+  parentId  String?
+  parent    NavigationItem?  @relation("NavHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children  NavigationItem[] @relation("NavHierarchy")
+  isVisible Boolean          @default(true)
+  image     String?          // Optional image for Mega Menu items
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model SystemSetting {
+  id               String   @id @default("global") // Single row pattern
+  siteNameZh       String   @default("海力通包装")
+  siteNameEn       String   @default("Logos Packaging")
+  logoUrl          String?
+  faviconUrl       String?
+  contactEmail     String?
+  contactPhone     String?
+  contactAddressZh String?
+  contactAddressEn String?
+  whatsapp         String?
+  wechat           String?
+  facebook         String?
+  linkedin         String?
+  youtube          String?
+  instagram        String?
+  twitter          String?
+  seoTitleZh       String?
+  seoTitleEn       String?
+  seoDescZh        String?
+  seoDescEn        String?
+  seoKeywordsZh    String?
+  seoKeywordsEn    String?
+  defaultSeoImageUrl String?
+  siteNoindex      Boolean  @default(false)
+  robotsDisallowPaths String?
+  noindexPaths     String?
+  footerCopyZh     String?
+  footerCopyEn     String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model FriendLink {
+  id        String   @id @default(cuid())
+  name      String
+  url       String
+  order     Int      @default(0)
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
