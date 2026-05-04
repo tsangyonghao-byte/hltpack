@@ -19,6 +19,7 @@
   --color-text-muted: #8C8C8C; /* Muted text */
   
   --font-sans: var(--font-montserrat), "Noto Sans TC", "Noto Sans SC", "Noto Sans Thai", "Bahasa Indonesia", Arial, sans-serif;
+  --font-serif: var(--font-playfair), "Times New Roman", Times, serif;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

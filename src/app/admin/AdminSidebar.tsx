@@ -15,6 +15,8 @@ import {
   Home,
   Navigation,
   Settings,
+  KeyRound,
+  Users,
 } from "lucide-react";
 import { useAdminLanguage } from "@/i18n/AdminLanguageContext";
 import { setAdminLanguage } from "@/actions/adminLangActions";
@@ -34,6 +36,8 @@ export default function AdminSidebar() {
     { href: "/admin/banners", label: dict.nav.banners, icon: ImageIcon },
     { href: "/admin/navigation", label: locale === "zh" ? "导航栏" : "Navigation", icon: Navigation },
     { href: "/admin/messages", label: dict.nav.messages, icon: MessageSquare },
+    { href: "/admin/users", label: locale === "zh" ? "管理员账号" : "Admin Users", icon: Users },
+    { href: "/admin/account/password", label: locale === "zh" ? "修改密码" : "Change Password", icon: KeyRound },
     { href: "/admin/settings", label: locale === "zh" ? "系统设置" : "Settings", icon: Settings },
   ];
 

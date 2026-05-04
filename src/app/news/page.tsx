@@ -68,25 +68,35 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function NewsListPage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; page?: string }>;
 }) {
   const cookieStore = await cookies();
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const text = newsListText[locale as keyof typeof newsListText] || newsListText.en;
   const params = await searchParams;
   const category = params.category?.trim() || "";
+  const page = parseInt(params.page || "1", 10);
+  const pageSize = 9;
+  const skip = (page - 1) * pageSize;
 
-  const [newsItems, categoryRows] = await Promise.all([
+  const [newsItems, categoryRows, totalCount] = await Promise.all([
     prisma.news.findMany({
       where: category ? { category } : undefined,
       orderBy: { date: "desc" },
+      take: pageSize,
+      skip: skip,
     }),
     prisma.news.findMany({
       distinct: ["category"],
       select: { category: true },
       orderBy: { category: "asc" },
     }),
+    prisma.news.count({
+      where: category ? { category } : undefined,
+    }),
   ]);
+
+  const totalPages = Math.ceil(totalCount / pageSize);
 
   const categories = categoryRows.map((item) => item.category).filter(Boolean);
   const siteUrl = getSiteUrl();
@@ -188,7 +198,7 @@ export default async function NewsListPage({
                 href={`/news/${newsItem.slug || newsItem.id}`}
                 className="group overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
-                <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                <div className="aspect-video overflow-hidden bg-gray-100">
                   <img
                     src={newsItem.image}
                     alt={newsItem.title}
@@ -217,6 +227,50 @@ export default async function NewsListPage({
                 </div>
               </Link>
             ))}
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <div className="mt-16 flex justify-center items-center gap-2">
+            <Link
+              href={`/news?${new URLSearchParams({
+                ...(category ? { category } : {}),
+                page: Math.max(1, page - 1).toString(),
+              }).toString()}`}
+              className={`w-10 h-10 rounded-none flex items-center justify-center border border-gray-200 text-gray-500 hover:bg-[#1E293B] hover:text-white hover:border-[#1E293B] transition-colors ${page === 1 ? 'pointer-events-none opacity-50' : ''}`}
+            >
+              <ChevronRight className="w-5 h-5 rotate-180" />
+            </Link>
+            
+            {Array.from({ length: totalPages }).map((_, i) => {
+              const pageNum = i + 1;
+              return (
+                <Link
+                  key={pageNum}
+                  href={`/news?${new URLSearchParams({
+                    ...(category ? { category } : {}),
+                    page: pageNum.toString(),
+                  }).toString()}`}
+                  className={`w-10 h-10 rounded-none flex items-center justify-center text-[14px] font-bold transition-colors ${
+                    page === pageNum 
+                      ? "bg-[#1E293B] text-white border border-[#1E293B]" 
+                      : "border border-gray-200 text-gray-500 hover:bg-gray-50"
+                  }`}
+                >
+                  {pageNum}
+                </Link>
+              );
+            })}
+
+            <Link
+              href={`/news?${new URLSearchParams({
+                ...(category ? { category } : {}),
+                page: Math.min(totalPages, page + 1).toString(),
+              }).toString()}`}
+              className={`w-10 h-10 rounded-none flex items-center justify-center border border-gray-200 text-gray-500 hover:bg-[#1E293B] hover:text-white hover:border-[#1E293B] transition-colors ${page === totalPages ? 'pointer-events-none opacity-50' : ''}`}
+            >
+              <ChevronRight className="w-5 h-5" />
+            </Link>
           </div>
         )}
       </section>

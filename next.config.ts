@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "20mb",
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.szhltbz.com',
+      },
+    ],
+  },
 };
 
 export default nextConfig;

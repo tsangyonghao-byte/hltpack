@@ -20,51 +20,54 @@ export default function HowWeWorkPage() {
   return (
     <div className="min-h-screen bg-gray-50/50">
       {/* Page Hero Banner */}
-      <section className="relative w-full pt-[140px] pb-16 md:pt-[180px] md:pb-20 bg-[#1E293B] flex flex-col items-center justify-center overflow-hidden min-h-[350px] md:min-h-[450px]">
+      <section className="relative w-full pt-[140px] pb-16 md:pt-[180px] md:pb-20 bg-[#111111] flex flex-col items-center justify-center overflow-hidden min-h-[350px] md:min-h-[450px]">
         {/* Background Image / Pattern */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('https://www.logospack.com.hk/cache/img/cf1f784f1e2d0010ea43d775a6884a3a190f292bbf73.jpg')" }} // Factory/Process placeholder
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
+          style={{ backgroundImage: "url('/images/factory/印刷车间/10001.png')" }}
         ></div>
         {/* Dark Overlay for Text Readability */}
-        <div className="absolute inset-0 bg-[#1E293B]/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>
         
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center justify-center flex-grow">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-center gap-3 mb-6"
+          >
+            <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+            <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">
+              {content.howWeWork.breadcrumb}
+            </span>
+            <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+          </motion.div>
+
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight uppercase leading-tight"
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl lg:text-[64px] font-extrabold text-white mb-6 tracking-tight leading-tight"
           >
             {content.howWeWork.heroTitle}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto font-light"
+            transition={{ delay: 0.2 }}
+            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed"
           >
             {content.howWeWork.heroDescription}
           </motion.p>
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center justify-center gap-2 text-sm md:text-base text-gray-400 font-medium uppercase tracking-wider"
-          >
-            <Link href="/" className="hover:text-white transition-colors">{content.footer.home}</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-[#F05A22]">{content.howWeWork.breadcrumb}</span>
-          </motion.div>
         </div>
       </section>
 
       {/* Intro Text */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-white border-b border-gray-100">
         <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#1E293B] mb-6 leading-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-6 leading-tight tracking-tight">
             {content.howWeWork.introTitle}
           </h2>
-          <p className="text-lg text-gray-600 leading-relaxed mb-10">
+          <p className="text-lg text-gray-500 leading-relaxed font-light">
             {content.howWeWork.introDescription}
           </p>
         </div>
@@ -74,10 +77,10 @@ export default function HowWeWorkPage() {
       <section className="py-16 md:py-24 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative">
           {/* Central Line */}
-          <div className="absolute left-[39px] md:left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 md:-translate-x-1/2"></div>
+          <div className="absolute left-[39px] md:left-1/2 top-0 bottom-0 w-[1px] bg-gray-200 md:-translate-x-1/2"></div>
 
-          <div className="space-y-12 md:space-y-24">
-            {processSteps.map((step: { id: string; title: string; description: string; icon: any; color: string; borderColor: string; shadow: string }, index: number) => {
+          <div className="space-y-16 md:space-y-32">
+            {processSteps.map((step: { id: string; title: string; description: string; icon: any; image?: string }, index: number) => {
               const isEven = index % 2 === 1;
               return (
                 <motion.div 
@@ -92,34 +95,48 @@ export default function HowWeWorkPage() {
                   )}
                 >
                   {/* Icon Node */}
-                  <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-20 h-20 rounded-full bg-white border-[6px] border-gray-50 shadow-md z-10 transition-transform duration-500 group-hover:scale-110 group-hover:border-white">
-                    <div className={clsx("w-full h-full rounded-full flex items-center justify-center", step.color)}>
-                      <step.icon className="w-8 h-8" />
-                    </div>
+                  <div className="absolute left-[16px] md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-12 h-12 rounded-none bg-[#111111] text-white z-10 transition-colors duration-500 group-hover:bg-[#F05A22] mt-4 md:mt-0">
+                    <step.icon className="w-5 h-5" strokeWidth={1.5} />
                   </div>
 
                   {/* Content Box */}
                   <div className={clsx(
-                    "w-full md:w-1/2 pl-28 md:pl-0 pt-2 md:pt-0",
-                    isEven ? "md:pr-20 lg:pr-28 text-left md:text-right" : "md:pl-20 lg:pl-28 text-left"
+                    "w-full md:w-1/2 pl-24 md:pl-0 pt-2 md:pt-0 flex flex-col",
+                    isEven ? "md:pr-20 lg:pr-28 text-left md:text-right items-start md:items-end" : "md:pl-20 lg:pl-28 text-left items-start"
                   )}>
                     <div className={clsx(
-                      "bg-white p-8 md:p-10 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border relative overflow-hidden",
-                      step.borderColor,
-                      `hover:${step.shadow}`
+                      "bg-white p-8 md:p-10 rounded-none border border-gray-200 shadow-sm hover:border-[#F05A22] transition-colors duration-500 relative overflow-hidden w-full"
                     )}>
                       {/* Decorative Background Number */}
                       <div className={clsx(
-                        "absolute text-9xl font-black opacity-[0.03] select-none -translate-y-1/2 top-1/2",
-                        isEven ? "-left-4" : "-right-4"
+                        "absolute text-[120px] font-extrabold text-gray-50 opacity-50 select-none -translate-y-1/2 top-1/2",
+                        isEven ? "left-0 -translate-x-4" : "right-0 translate-x-4"
                       )}>
-                        {index + 1}
+                        0{index + 1}
                       </div>
 
-                      <h3 className="text-2xl font-bold text-[#1E293B] mb-4 relative z-10">{step.title}</h3>
-                      <p className="text-gray-600 leading-relaxed relative z-10">{step.description}</p>
+                      <h3 className="text-xl md:text-2xl font-bold text-[#1A1A1A] mb-4 relative z-10 tracking-wide">{step.title}</h3>
+                      <p className="text-gray-500 font-light leading-relaxed relative z-10 text-[15px]">{step.description}</p>
                     </div>
                   </div>
+
+                  {/* Image Box */}
+                  {step.image && (
+                    <div className={clsx(
+                      "w-full md:w-1/2 pl-24 md:pl-0 pt-6 md:pt-0 flex",
+                      isEven ? "md:pl-20 lg:pl-28 justify-start" : "md:pr-20 lg:pr-28 justify-end"
+                    )}>
+                      <div className="relative w-full aspect-[4/3] md:aspect-[16/9] overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-500 border border-gray-100">
+                        <img 
+                          src={step.image} 
+                          alt={step.title}
+                          className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                        />
+                        {/* Overlay Accent */}
+                        <div className="absolute inset-0 border-[4px] border-transparent group-hover:border-[#F05A22]/20 transition-colors duration-500 pointer-events-none"></div>
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               );
             })}
@@ -128,15 +145,15 @@ export default function HowWeWorkPage() {
       </section>
 
       {/* Why This Process Works (Features) */}
-      <section className="py-16 md:py-24 bg-[#1E293B] text-white">
+      <section className="py-16 md:py-24 bg-[#111111] text-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold mb-6 tracking-tight">
               {content.howWeWork.commitmentTitle}
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {content.howWeWork.commitments.map((feature: { title: string; desc: string }, i: number) => (
               <motion.div 
                 key={i}
@@ -144,13 +161,13 @@ export default function HowWeWorkPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-[#0F172A] p-8 rounded-3xl border border-gray-800"
+                className="bg-transparent p-8 rounded-none border border-white/10 hover:border-[#F05A22]/50 transition-colors duration-300"
               >
-                <div className="w-12 h-12 bg-[#F05A22]/20 rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle2 className="w-6 h-6 text-[#F05A22]" />
+                <div className="w-12 h-12 bg-transparent border border-white/20 flex items-center justify-center mb-6">
+                  <CheckCircle2 className="w-5 h-5 text-[#F05A22]" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl font-bold mb-4">{feature.title}</h3>
-                <p className="text-gray-400 leading-relaxed">{feature.desc}</p>
+                <h3 className="text-xl font-bold mb-4 tracking-wide">{feature.title}</h3>
+                <p className="text-gray-400 font-light leading-relaxed text-[15px]">{feature.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -158,20 +175,20 @@ export default function HowWeWorkPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 text-center bg-white">
+      <section className="py-24 text-center bg-white border-t border-gray-100">
         <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#1E293B] mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-6 tracking-tight">
             {content.howWeWork.ctaTitle}
           </h2>
-          <p className="text-lg text-gray-600 mb-10">
+          <p className="text-lg text-gray-500 font-light leading-relaxed mb-10">
             {content.howWeWork.ctaDescription}
           </p>
           <Link 
             href="/contact" 
-            className="inline-flex items-center justify-center px-10 py-5 bg-[#F05A22] text-white rounded-full font-extrabold text-[16px] uppercase tracking-wider hover:bg-[#D44A18] shadow-[0_10px_30px_rgba(240,90,34,0.2)] hover:-translate-y-1 transition-all duration-300"
+            className="inline-flex items-center justify-center px-10 py-5 bg-[#1A1A1A] text-white rounded-none font-bold text-[15px] uppercase tracking-wider hover:bg-[#F05A22] transition-colors duration-300 group"
           >
             {content.howWeWork.ctaButton}
-            <ArrowRight className="w-5 h-5 ml-2" />
+            <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       </section>

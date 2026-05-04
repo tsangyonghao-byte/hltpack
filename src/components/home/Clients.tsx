@@ -6,14 +6,20 @@ import { useLanguage } from "@/i18n/LanguageContext";
 export default function Clients() {
   const { dict } = useLanguage();
   const clients = [
-    { name: "Heinz", logo: "https://www.logospack.com.hk/cache/img/cf1f784f1e2d3ef764d9836114729546d458339197d1.jpg" },
-    { name: "Nestle", logo: "https://www.logospack.com.hk/cache/img/cf1f784f1e2d0010ea43d775a6884a3a190f292bbf73.jpg" },
-    { name: "FamilyMart", logo: "https://www.logospack.com.hk/cache/img/cf1f784f1e2d2f80a80a35375b0baa269b5357c8d929.jpg" },
-    { name: "Royal Canin", logo: "https://www.logospack.com.hk/cache/img/cf1f784f1e2dba581c4d40c516cec0fffcc146d2c2b0.jpg" },
-    { name: "Mars", logo: "https://www.logospack.com.hk/cache/img/cf1f784f1e2d6a60d5c5a76e3782df5318e668d1249d.jpg" },
-    { name: "Inaba", logo: "https://www.logospack.com.hk/cache/img/cf1f784f1e2d3c9ec3b1b9b717eae20f4fee66f1be11.png" },
-    { name: "Purina", logo: "https://www.logospack.com.hk/cache/img/cf1f784f1e2daaefce95509f7cae997760b5a5f646a4.png" },
-    { name: "Neste", logo: "https://www.logospack.com.hk/cache/img/cf1f784f1e2d09241e4150443b31d5110a319d7ba1bf.png" },
+    { name: "Partner 1", logo: "/海利通合作伙伴/图片1.png" },
+    { name: "Partner 2", logo: "/海利通合作伙伴/图片2.png" },
+    { name: "Partner 3", logo: "/海利通合作伙伴/图片3.png" },
+    { name: "Partner 4", logo: "/海利通合作伙伴/图片4.png" },
+    { name: "Partner 5", logo: "/海利通合作伙伴/图片5.png" },
+    { name: "Partner 6", logo: "/海利通合作伙伴/图片6.png" },
+    { name: "Partner 7", logo: "/海利通合作伙伴/图片7.png" },
+    { name: "Partner 8", logo: "/海利通合作伙伴/图片8.png" },
+    { name: "Partner 9", logo: "/海利通合作伙伴/图片9.png" },
+    { name: "Partner 10", logo: "/海利通合作伙伴/图片10.png" },
+    { name: "Partner 11", logo: "/海利通合作伙伴/图片11.png" },
+    { name: "Partner 12", logo: "/海利通合作伙伴/图片12.png" },
+    { name: "Partner 13", logo: "/海利通合作伙伴/图片13.png" },
+    { name: "Partner 14", logo: "/海利通合作伙伴/图片14.png" },
   ];
 
   // Duplicate array for seamless infinite scroll

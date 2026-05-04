@@ -122,3 +122,29 @@ export async function sendContactEmail(formData: FormData) {
     return { success: false, error: "Failed to send message. Please try again later." };
   }
 }
+
+export async function subscribeNewsletter(email: string) {
+  try {
+    if (!email) {
+      return { success: false, error: "Please provide an email address." };
+    }
+
+    // Save as a message in the database with inquiryType = 'newsletter'
+    await prisma.message.create({
+      data: {
+        name: "Newsletter Subscriber",
+        email,
+        status: "new",
+        subject: "New Newsletter Subscription",
+        inquiryType: "newsletter",
+        content: `User subscribed to the newsletter with email: ${email}`,
+        sourcePage: "Footer Newsletter Form",
+      }
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error saving newsletter subscription:", error);
+    return { success: false, error: "Failed to subscribe. Please try again later." };
+  }
+}

@@ -2,16 +2,19 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback, useEffect } from "react";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import Link from "next/link";
 
 export default function Certificates() {
   const { dict } = useLanguage();
+  
+  // Only the 3 core certificates for the homepage layout
   const certs = [
     { id: 1, name: "BRC A+ Grade Certificate 1", img: "/zs01.png" },
     { id: 2, name: "BRC A+ Grade Certificate 2", img: "/zs02.png" },
-    { id: 3, name: "Recyclable Certification", img: "/zs03.jpg" },
+    { id: 3, name: "Recyclable Certification", img: "/zs03.png" },
   ];
 
   const [selectedCertIndex, setSelectedCertIndex] = useState<number | null>(null);
@@ -56,18 +59,28 @@ export default function Certificates() {
               
               <div className="text-gray-500 text-[15px] md:text-[17px] leading-[1.8] space-y-6 pt-4 font-light">
                 <p>
-                  Our factory has passed <span className="font-semibold text-gray-800">BRC, ISO9001, GMP</span> certification, and has five production lines with an annual production capacity of over 700 million dollars. 
+                  {dict.home.certificates.desc1}
                 </p>
                 <p>
-                  The factory&apos;s five major workshops are PRINTING, LAMINATION, SLITTING, BAG MAKING, SPOUT SEALING, and each workshop is equipped with advanced equipment.
+                  {dict.home.certificates.desc2}
                 </p>
                 <p>
-                  We create a good production environment, aiming to produce products that meet the needs of our customers, while improving the work efficiency of our staff and embodying the spirit of human care.
+                  {dict.home.certificates.desc3}
                 </p>
+              </div>
+
+              <div className="pt-6">
+                <Link 
+                  href="/certificates" 
+                  className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-gray-300 text-gray-800 font-bold text-sm tracking-wide hover:bg-[#F05A22] hover:text-white hover:border-[#F05A22] transition-all duration-300 rounded-full group"
+                >
+                  View All Certificates
+                  <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
             </div>
 
-            {/* Certificate Images Grid */}
+            {/* Certificate Images Grid (Restored 3-card layout) */}
             <div className="w-full lg:w-[55%] relative h-[500px] md:h-[600px] lg:h-[700px] flex items-center justify-center">
               {/* Image 1 (Top Left) */}
               <motion.div 

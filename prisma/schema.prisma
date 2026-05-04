@@ -117,7 +117,7 @@ model NavigationItem {
 model SystemSetting {
   id               String   @id @default("global") // Single row pattern
   siteNameZh       String   @default("海力通包装")
-  siteNameEn       String   @default("Logos Packaging")
+  siteNameEn       String   @default("HAILITONG Packaging")
   logoUrl          String?
   faviconUrl       String?
   contactEmail     String?
@@ -153,6 +153,16 @@ model FriendLink {
   url       String
   order     Int      @default(0)
   isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String   // Hashed password
+  name      String?
+  role      String   @default("admin")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

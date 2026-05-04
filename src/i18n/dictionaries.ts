@@ -48,8 +48,11 @@ export const en = {
       title: "Key Packaging Showcase"
     },
     certificates: {
-      title: "Global Certifications",
-      subtitle: "QUALITY & SAFETY ASSURED"
+      title: "GLOBAL\nCERTIFICATIONS",
+      subtitle: "QUALITY & SAFETY ASSURED",
+      desc1: "Our factory has passed BRC, ISO9001, GMP certification, achieving an annual production value of over 400 million RMB.",
+      desc2: "The factory's 5 major workshops are PRINTING, LAMINATION, SLITTING, BAG MAKING, and SPOUT SEALING, housing 113 sets of advanced production equipment.",
+      desc3: "We create a good production environment, aiming to produce products that meet the needs of our customers, while improving the work efficiency of our staff and embodying the spirit of human care."
     },
     process: {
       title: "General Order Process",
@@ -116,8 +119,11 @@ export const es = {
       title: "Exhibición de Envases Clave"
     },
     certificates: {
-      title: "Certificaciones Globales",
-      subtitle: "CALIDAD Y SEGURIDAD GARANTIZADAS"
+      title: "CERTIFICACIONES\nGLOBALES",
+      subtitle: "CALIDAD Y SEGURIDAD GARANTIZADAS",
+      desc1: "Nuestra fábrica ha pasado las certificaciones BRC, ISO9001 y GMP, logrando un valor de producción anual de más de 400 millones de RMB.",
+      desc2: "Los 5 talleres principales de la fábrica son IMPRESIÓN, LAMINACIÓN, CORTE, FABRICACIÓN DE BOLSAS y SELLADO DE BOQUILLAS, albergando 113 equipos de producción avanzados.",
+      desc3: "Creamos un buen entorno de producción, con el objetivo de fabricar productos que satisfagan las necesidades de nuestros clientes, al tiempo que mejoramos la eficiencia laboral de nuestro personal y encarnamos el espíritu del cuidado humano."
     },
     process: {
       title: "Proceso General de Pedido",
@@ -184,8 +190,11 @@ export const ar = {
       title: "عرض التغليف الرئيسي"
     },
     certificates: {
-      title: "الشهادات العالمية",
-      subtitle: "الجودة والسلامة مضمونة"
+      title: "الشهادات\nالعالمية",
+      subtitle: "الجودة والسلامة مضمونة",
+      desc1: "حصل مصنعنا على شهادات BRC و ISO9001 و GMP، محققًا قيمة إنتاج سنوية تزيد عن 400 مليون يوان صيني.",
+      desc2: "ورش العمل الخمس الرئيسية في المصنع هي الطباعة، والتصفيح، والتقطيع، وصناعة الأكياس، وختم الفوهات، وتضم 113 مجموعة من معدات الإنتاج المتقدمة.",
+      desc3: "نحن نخلق بيئة إنتاج جيدة، ونهدف إلى إنتاج منتجات تلبي احتياجات عملائنا، مع تحسين كفاءة عمل موظفينا وتجسيد روح الرعاية الإنسانية."
     },
     process: {
       title: "عملية الطلب العامة",

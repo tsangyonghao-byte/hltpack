@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight, MapPin, Phone, Mail, Clock, Send, CheckCircle2 } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -155,6 +155,9 @@ export default function ContactPage() {
     };
   }, [searchParams]);
 
+  const [selectedInquiryType, setSelectedInquiryType] = useState(defaults.inquiryType);
+  const isDetailedRFQ = ['quote', 'custom', 'samples'].includes(selectedInquiryType);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -190,9 +193,16 @@ export default function ContactPage() {
       
       if (result.success) {
         setIsSubmitted(true);
-        // Reset after 3 seconds
-        setTimeout(() => setIsSubmitted(false), 3000);
         (e.target as HTMLFormElement).reset();
+        
+        // Scroll to the top of the form so they see the success message
+        window.scrollTo({
+          top: document.getElementById("contact-form-section")?.offsetTop || 0 - 100,
+          behavior: "smooth"
+        });
+
+        // Reset after 8 seconds
+        setTimeout(() => setIsSubmitted(false), 8000);
       } else {
         setErrorMessage(result.error || content.contact.errors.failed);
       }
@@ -204,50 +214,53 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50/50">
+    <div className="min-h-screen bg-[#F8F9FA]">
       {/* Page Hero Banner */}
-      <section className="relative w-full pt-[140px] pb-16 md:pt-[180px] md:pb-20 bg-[#1E293B] flex flex-col items-center justify-center overflow-hidden min-h-[350px] md:min-h-[450px]">
+      <section className="relative w-full pt-[140px] pb-16 md:pt-[180px] md:pb-20 bg-[#111111] flex flex-col items-center justify-center overflow-hidden min-h-[350px] md:min-h-[450px]">
         {/* Background Image / Pattern */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('https://www.logospack.com.hk/cache/img/cf1f784f1e2d0010ea43d775a6884a3a190f292bbf73.jpg')" }} // Factory/Map placeholder
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
+          style={{ backgroundImage: "url('/images/factory/制袋车间/10006.png')" }}
         ></div>
         {/* Dark Overlay for Text Readability */}
-        <div className="absolute inset-0 bg-[#1E293B]/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>
         
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center justify-center flex-grow">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-center gap-3 mb-6"
+          >
+            <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+            <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">
+              {content.contact.breadcrumb}
+            </span>
+            <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+          </motion.div>
+
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight uppercase leading-tight"
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl lg:text-[64px] font-extrabold text-white mb-6 tracking-tight uppercase leading-tight"
           >
             {content.contact.heroTitle}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto font-light"
+            transition={{ delay: 0.2 }}
+            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed"
           >
             {content.contact.heroDescription}
           </motion.p>
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center justify-center gap-2 text-sm md:text-base text-gray-400 font-medium uppercase tracking-wider"
-          >
-            <Link href="/" className="hover:text-white transition-colors">{content.footer.home}</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-[#F05A22]">{content.contact.breadcrumb}</span>
-          </motion.div>
         </div>
       </section>
 
       {/* Main Content Area */}
-      <section className="py-16 md:py-24 relative z-20 -mt-10 md:-mt-20">
+      <section className="py-16 md:py-24 relative z-20">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
             
             {/* Left: Contact Information Cards */}
             <motion.div 
@@ -257,53 +270,53 @@ export default function ContactPage() {
               className="w-full lg:w-1/3 space-y-6"
             >
               {/* HQ Card */}
-              <div className="bg-white p-8 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100">
-                <div className="w-14 h-14 bg-[#F05A22]/10 rounded-full flex items-center justify-center mb-6">
-                  <MapPin className="w-7 h-7 text-[#F05A22]" />
+              <div className="bg-white p-8 rounded-none border border-gray-200 group hover:border-[#F05A22] transition-colors duration-300">
+                <div className="w-14 h-14 bg-[#111111] text-white rounded-none flex items-center justify-center mb-8 group-hover:bg-[#F05A22] transition-colors duration-300">
+                  <MapPin className="w-6 h-6" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl font-bold text-[#1E293B] mb-4">{content.contact.headquarters}</h3>
-                <p className="text-gray-600 leading-relaxed mb-4">
+                <h3 className="text-[19px] font-bold text-[#1A1A1A] mb-4 tracking-wide">{content.contact.headquarters}</h3>
+                <p className="text-gray-500 font-light leading-relaxed mb-6">
                   {content.contact.address.split("\n").map((line: string) => (
                     <span key={line}>{line}<br /></span>
                   ))}
                 </p>
-                <div className="text-sm font-bold text-[#F05A22] uppercase tracking-wider">{content.contact.headquarterLabel}</div>
+                <div className="text-[12px] font-bold text-[#1A1A1A] uppercase tracking-widest group-hover:text-[#F05A22] transition-colors">{content.contact.headquarterLabel}</div>
               </div>
 
               {/* Direct Contact Card */}
-              <div className="bg-white p-8 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100">
-                <div className="flex flex-col space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center shrink-0">
-                      <Phone className="w-6 h-6 text-blue-600" />
+              <div className="bg-white p-8 rounded-none border border-gray-200">
+                <div className="flex flex-col space-y-8">
+                  <div className="flex items-start gap-5 group">
+                    <div className="w-12 h-12 bg-gray-50 rounded-none flex items-center justify-center shrink-0 group-hover:bg-[#111111] group-hover:text-white transition-colors duration-300">
+                      <Phone className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" strokeWidth={1.5} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">{content.contact.phoneLabel}</h4>
-                      <p className="text-lg font-bold text-[#1E293B]">+86 752 1234 5678</p>
+                      <h4 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">{content.contact.phoneLabel}</h4>
+                      <p className="text-[16px] font-bold text-[#1A1A1A] tracking-wide">{content.footer.phone}</p>
                     </div>
                   </div>
                   
                   <div className="w-full h-px bg-gray-100"></div>
 
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center shrink-0">
-                      <Mail className="w-6 h-6 text-emerald-600" />
+                  <div className="flex items-start gap-5 group">
+                    <div className="w-12 h-12 bg-gray-50 rounded-none flex items-center justify-center shrink-0 group-hover:bg-[#111111] group-hover:text-white transition-colors duration-300">
+                      <Mail className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" strokeWidth={1.5} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">{content.contact.emailLabel}</h4>
-                      <p className="text-lg font-bold text-[#1E293B]">info@hailitong.com</p>
+                      <h4 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">{content.contact.emailLabel}</h4>
+                      <p className="text-[16px] font-bold text-[#1A1A1A] tracking-wide">{content.footer.email}</p>
                     </div>
                   </div>
 
                   <div className="w-full h-px bg-gray-100"></div>
 
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center shrink-0">
-                      <Clock className="w-6 h-6 text-purple-600" />
+                  <div className="flex items-start gap-5 group">
+                    <div className="w-12 h-12 bg-gray-50 rounded-none flex items-center justify-center shrink-0 group-hover:bg-[#111111] group-hover:text-white transition-colors duration-300">
+                      <Clock className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" strokeWidth={1.5} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">{content.contact.hoursLabel}</h4>
-                      <p className="text-lg font-bold text-[#1E293B]">{content.contact.hoursValue}</p>
+                      <h4 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">{content.contact.hoursLabel}</h4>
+                      <p className="text-[16px] font-bold text-[#1A1A1A] tracking-wide">{content.contact.hoursValue}</p>
                     </div>
                   </div>
                 </div>
@@ -316,86 +329,104 @@ export default function ContactPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="w-full lg:w-2/3"
+              id="contact-form-section"
             >
-              <div className="bg-white p-8 md:p-12 rounded-3xl shadow-2xl shadow-gray-200/50 border border-gray-100 h-full">
-                <div className="mb-8">
-                  <h2 className="text-3xl font-extrabold text-[#1E293B] mb-2">{content.contact.formTitle}</h2>
-                  <p className="text-gray-500">{content.contact.formDescription}</p>
+              <div className="bg-white p-8 md:p-12 rounded-none border border-gray-200 h-full">
+                <div className="mb-10">
+                  <h2 className="text-3xl font-extrabold text-[#1A1A1A] mb-3 tracking-tight">{content.contact.formTitle}</h2>
+                  <p className="text-gray-500 font-light leading-relaxed">{content.contact.formDescription}</p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  {isSubmitted && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="p-6 bg-emerald-50 border border-emerald-200 rounded-none mb-8 flex items-start gap-4"
+                    >
+                      <div className="mt-1 flex-shrink-0">
+                        <CheckCircle2 className="w-6 h-6 text-emerald-500" />
+                      </div>
+                      <div>
+                        <h4 className="text-[16px] font-bold text-emerald-800 mb-1">{content.contact.sent}</h4>
+                        <p className="text-[14px] text-emerald-600">{content.contact.successMessage}</p>
+                      </div>
+                    </motion.div>
+                  )}
+
                   {errorMessage && (
-                    <div className="p-4 bg-red-50 text-red-600 rounded-xl text-sm border border-red-100">
+                    <div className="p-4 bg-red-50 text-red-600 rounded-none text-sm border border-red-100">
                       {errorMessage}
                     </div>
                   )}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="firstName" className="text-sm font-bold text-[#1E293B]">{content.contact.firstName}</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <label htmlFor="firstName" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{content.contact.firstName}</label>
                       <input 
                         type="text" 
                         id="firstName"
                         name="firstName"
                         required
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none"
+                        className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] rounded-none"
                         placeholder={content.contact.placeholders.firstName}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label htmlFor="lastName" className="text-sm font-bold text-[#1E293B]">{content.contact.lastName}</label>
+                    <div className="space-y-3">
+                      <label htmlFor="lastName" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{content.contact.lastName}</label>
                       <input 
                         type="text" 
                         id="lastName"
                         name="lastName"
                         required
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none"
+                        className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] rounded-none"
                         placeholder={content.contact.placeholders.lastName}
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-bold text-[#1E293B]">{content.contact.emailAddress}</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <label htmlFor="email" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{content.contact.emailAddress}</label>
                       <input 
                         type="email" 
                         id="email"
                         name="email"
                         required
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none"
+                        className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] rounded-none"
                         placeholder={content.contact.placeholders.email}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label htmlFor="company" className="text-sm font-bold text-[#1E293B]">{content.contact.companyName}</label>
+                    <div className="space-y-3">
+                      <label htmlFor="company" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{content.contact.companyName}</label>
                       <input 
                         type="text" 
                         id="company"
                         name="company"
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none"
+                        className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] rounded-none"
                         placeholder={content.contact.placeholders.company}
                       />
                     </div>
                   </div>
 
-                  <div className="rounded-2xl border border-orange-100 bg-orange-50/50 p-5 md:p-6 space-y-5">
-                    <div>
-                      <h3 className="text-lg font-bold text-[#1E293B]">{formText.rfqTitle}</h3>
-                      <p className="text-sm text-gray-500 mt-1">{formText.rfqDescription}</p>
+                  <div className="border border-gray-200 bg-gray-50/50 p-6 md:p-8 space-y-6 rounded-none">
+                    <div className="mb-8">
+                      <h3 className="text-[16px] font-bold text-[#1A1A1A] tracking-wide mb-2">{formText.rfqTitle}</h3>
+                      <p className="text-[13px] text-gray-500 font-light">{formText.rfqDescription}</p>
                     </div>
 
                     <input type="hidden" name="productId" value={defaults.productId} />
                     <input type="hidden" name="sourcePage" value={defaults.sourcePage || "/contact"} />
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label htmlFor="inquiryType" className="text-sm font-bold text-[#1E293B]">{formText.inquiryType}</label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="space-y-3">
+                        <label htmlFor="inquiryType" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{formText.inquiryType}</label>
                         <select
                           id="inquiryType"
                           name="inquiryType"
                           required
-                          defaultValue={defaults.inquiryType}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none text-gray-700"
+                          value={selectedInquiryType}
+                          onChange={(e) => setSelectedInquiryType(e.target.value)}
+                          className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] text-gray-700 rounded-none cursor-pointer"
                         >
                           <option value="">{content.contact.topics.default}</option>
                           <option value="quote">{formText.types.quote}</option>
@@ -405,115 +436,123 @@ export default function ContactPage() {
                           <option value="other">{formText.types.other}</option>
                         </select>
                       </div>
-                      <div className="space-y-2">
-                        <label htmlFor="phone" className="text-sm font-bold text-[#1E293B]">{formText.phone}</label>
+                      <div className="space-y-3">
+                        <label htmlFor="phone" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{formText.phone}</label>
                         <input
                           type="text"
                           id="phone"
                           name="phone"
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none"
+                          className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] rounded-none"
                           placeholder={formText.placeholders.phone}
                         />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label htmlFor="productName" className="text-sm font-bold text-[#1E293B]">{formText.productName}</label>
-                        <input
-                          type="text"
-                          id="productName"
-                          name="productName"
-                          defaultValue={defaults.productName}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none"
-                          placeholder={formText.placeholders.productName}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label htmlFor="quantity" className="text-sm font-bold text-[#1E293B]">{formText.quantity}</label>
-                        <input
-                          type="text"
-                          id="quantity"
-                          name="quantity"
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none"
-                          placeholder={formText.placeholders.quantity}
-                        />
-                      </div>
-                    </div>
+                    <AnimatePresence>
+                      {isDetailedRFQ && (
+                        <motion.div 
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="space-y-6 overflow-hidden"
+                        >
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="space-y-3">
+                            <label htmlFor="productName" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{formText.productName}</label>
+                            <input
+                              type="text"
+                              id="productName"
+                              name="productName"
+                              defaultValue={defaults.productName}
+                              className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] rounded-none"
+                              placeholder={formText.placeholders.productName}
+                            />
+                          </div>
+                          <div className="space-y-3">
+                            <label htmlFor="quantity" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{formText.quantity}</label>
+                            <input
+                              type="text"
+                              id="quantity"
+                              name="quantity"
+                              className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] rounded-none"
+                              placeholder={formText.placeholders.quantity}
+                            />
+                          </div>
+                        </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label htmlFor="bagType" className="text-sm font-bold text-[#1E293B]">{formText.bagType}</label>
-                        <input
-                          type="text"
-                          id="bagType"
-                          name="bagType"
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none"
-                          placeholder={formText.placeholders.bagType}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label htmlFor="material" className="text-sm font-bold text-[#1E293B]">{formText.material}</label>
-                        <input
-                          type="text"
-                          id="material"
-                          name="material"
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none"
-                          placeholder={formText.placeholders.material}
-                        />
-                      </div>
-                    </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          <div className="space-y-3">
+                            <label htmlFor="bagType" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{formText.bagType}</label>
+                            <input
+                              type="text"
+                              id="bagType"
+                              name="bagType"
+                              className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] rounded-none"
+                              placeholder={formText.placeholders.bagType}
+                            />
+                          </div>
+                          <div className="space-y-3">
+                            <label htmlFor="material" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{formText.material}</label>
+                            <input
+                              type="text"
+                              id="material"
+                              name="material"
+                              className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] rounded-none"
+                              placeholder={formText.placeholders.material}
+                            />
+                          </div>
+                        </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label htmlFor="application" className="text-sm font-bold text-[#1E293B]">{formText.application}</label>
-                        <input
-                          type="text"
-                          id="application"
-                          name="application"
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none"
-                          placeholder={formText.placeholders.application}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label htmlFor="targetMarket" className="text-sm font-bold text-[#1E293B]">{formText.targetMarket}</label>
-                        <input
-                          type="text"
-                          id="targetMarket"
-                          name="targetMarket"
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none"
-                          placeholder={formText.placeholders.targetMarket}
-                        />
-                      </div>
-                    </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          <div className="space-y-3">
+                            <label htmlFor="application" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{formText.application}</label>
+                            <input
+                              type="text"
+                              id="application"
+                              name="application"
+                              className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] rounded-none"
+                              placeholder={formText.placeholders.application}
+                            />
+                          </div>
+                          <div className="space-y-3">
+                            <label htmlFor="targetMarket" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{formText.targetMarket}</label>
+                            <input
+                              type="text"
+                              id="targetMarket"
+                              name="targetMarket"
+                              className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] rounded-none"
+                              placeholder={formText.placeholders.targetMarket}
+                            />
+                          </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
-                    <div className="space-y-2">
-                      <label htmlFor="subject" className="text-sm font-bold text-[#1E293B]">{content.contact.subject}</label>
-                      <input
-                        type="text"
-                        id="subject"
-                        name="subject"
-                        required
-                        defaultValue={
-                          defaults.inquiryType
-                            ? formText.types[defaults.inquiryType as keyof typeof formText.types] || defaults.inquiryType
-                            : ""
-                        }
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none"
-                        placeholder={content.contact.topics.default}
-                      />
-                    </div>
+                    <div className="space-y-3">
+                        <label htmlFor="subject" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{content.contact.subject}</label>
+                        <input
+                          type="text"
+                          id="subject"
+                          name="subject"
+                          required
+                          value={selectedInquiryType ? formText.types[selectedInquiryType as keyof typeof formText.types] || selectedInquiryType : ""}
+                          onChange={() => {}}
+                          className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none text-[15px] rounded-none"
+                          placeholder={content.contact.topics.default}
+                        />
+                      </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-bold text-[#1E293B]">{content.contact.message}</label>
+                  <div className="space-y-3">
+                    <label htmlFor="message" className="text-[13px] font-bold text-[#1A1A1A] uppercase tracking-wider">{content.contact.message}</label>
                     <textarea 
                       id="message"
                       name="message"
                       required
-                      rows={5}
+                      rows={4}
                       defaultValue={defaults.message}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#F05A22]/20 focus:border-[#F05A22] transition-colors outline-none resize-none"
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-[#F05A22] transition-colors outline-none resize-none text-[15px] rounded-none"
                       placeholder={content.contact.placeholders.message}
                     ></textarea>
                   </div>
@@ -522,24 +561,24 @@ export default function ContactPage() {
                     type="submit" 
                     disabled={isSubmitting || isSubmitted}
                     className={clsx(
-                      "w-full flex items-center justify-center py-4 rounded-xl font-bold text-[16px] uppercase tracking-wider transition-all duration-300",
+                      "w-full flex items-center justify-center py-4 rounded-none font-bold text-[14px] uppercase tracking-widest transition-all duration-300",
                       isSubmitted 
-                        ? "bg-emerald-500 text-white cursor-default" 
-                        : "bg-[#1E293B] text-white hover:bg-[#F05A22] hover:shadow-lg"
+                        ? "bg-[#1A1A1A] text-white cursor-default" 
+                        : "bg-[#F05A22] text-white hover:bg-[#D44A18]"
                     )}
                   >
                     {isSubmitting ? (
-                      <span className="flex items-center gap-2">
+                      <span className="flex items-center gap-3">
                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                          {content.contact.sending}
                       </span>
                     ) : isSubmitted ? (
-                      <span className="flex items-center gap-2">
+                      <span className="flex items-center gap-3">
                         <CheckCircle2 className="w-5 h-5" />
                         {content.contact.sent}
                       </span>
                     ) : (
-                      <span className="flex items-center gap-2">
+                      <span className="flex items-center gap-3">
                         <Send className="w-5 h-5" />
                         {content.contact.send}
                       </span>
@@ -549,18 +588,6 @@ export default function ContactPage() {
               </div>
             </motion.div>
 
-          </div>
-        </div>
-      </section>
-
-      {/* Map Section */}
-      <section className="w-full h-[500px] bg-gray-200 relative">
-        {/* Placeholder for actual Google Maps / Baidu Maps iframe */}
-        <div className="absolute inset-0 flex items-center justify-center bg-[#1E293B]">
-          <div className="text-center text-white/50">
-            <MapPin className="w-16 h-16 mx-auto mb-4 opacity-50" />
-            <p className="text-xl font-bold tracking-widest uppercase">{content.contact.mapTitle}</p>
-            <p className="text-sm mt-2">{content.contact.mapDescription}</p>
           </div>
         </div>
       </section>

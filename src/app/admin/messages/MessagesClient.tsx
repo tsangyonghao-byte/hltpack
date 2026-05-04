@@ -562,8 +562,8 @@ export default function MessagesClient({
                         className={ADMIN_CHECKBOX}
                       />
                     </td>
-                    <td className="p-4">
-                      <div className="space-y-3">
+                    <td className="p-4 max-w-[200px]">
+                      <div className="space-y-3 flex flex-col items-start">
                         <AdminStatusBadge
                           label={getStatusMeta(msg.status).label}
                           tone={getStatusMeta(msg.status).tone}
@@ -573,7 +573,7 @@ export default function MessagesClient({
                           value={msg.status}
                           onChange={(e) => handleUpdateStatus(msg.id, e.target.value)}
                           disabled={loading === `status-${msg.id}` || loading === "bulk-read" || loading === "bulk-delete"}
-                          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs text-gray-700 outline-none transition focus:border-[#F05A22] disabled:opacity-60"
+                          className="w-full min-w-[120px] rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs text-gray-700 outline-none transition focus:border-[#F05A22] disabled:opacity-60"
                           title={dict.messages.updateStatus}
                         >
                           <option value="new">{dict.messages.statusNew}</option>

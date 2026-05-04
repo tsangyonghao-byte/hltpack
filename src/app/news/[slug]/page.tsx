@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ChevronRight, ArrowLeft, Calendar, Tag } from "lucide-react";
 import { cookies } from "next/headers";
 import { buildRobotsMetadata, buildSeoMetadata, getSiteUrl, getSystemSeo, jsonLdScript, toAbsoluteUrl } from "@/lib/seo";
+import { getPreferredProductImage, parseProductGallery } from "@/lib/productImages";
 
 import type { Metadata } from "next";
 
@@ -15,7 +16,6 @@ const newsDetailText = {
     home: "Home",
     news: "News",
     back: "Back to Home",
-    empty: "Detailed content for this article is being updated...",
     contact: "Contact us for more details",
     recentPosts: "Recent Posts",
     categories: "Categories",
@@ -27,7 +27,6 @@ const newsDetailText = {
     home: "Inicio",
     news: "Noticias",
     back: "Volver a noticias",
-    empty: "El contenido detallado de este articulo se esta actualizando...",
     contact: "Contactenos para mas detalles",
     recentPosts: "Publicaciones Recientes",
     categories: "Categorias",
@@ -39,7 +38,6 @@ const newsDetailText = {
     home: "الرئيسية",
     news: "الأخبار",
     back: "العودة إلى الأخبار",
-    empty: "يتم تحديث المحتوى التفصيلي لهذا المقال...",
     contact: "اتصل بنا لمزيد من التفاصيل",
     recentPosts: "المنشورات الأخيرة",
     categories: "التصنيفات",
@@ -112,6 +110,12 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
       orderBy: [{ isFeatured: "desc" }, { createdAt: "desc" }],
     }),
   ]);
+  const featuredProductsWithMainImage = await Promise.all(
+    featuredProducts.map(async (product) => ({
+      ...product,
+      image: await getPreferredProductImage(product.image, parseProductGallery(product.gallery)),
+    }))
+  );
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
@@ -212,7 +216,9 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
                 dangerouslySetInnerHTML={{ __html: newsItem.content }}
               />
             ) : (
-              <p className="text-gray-500 italic">{text.empty}</p>
+              <div className="rounded-2xl border border-gray-200 bg-gray-50 px-6 py-5 text-gray-600">
+                {text.contact}
+              </div>
             )}
           </div>
 
@@ -224,7 +230,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
                 </h3>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {featuredProducts.map((product) => (
+                {featuredProductsWithMainImage.map((product) => (
                   <Link key={product.id} href={`/products/${product.slug || product.id}`} className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                     <div className="w-full aspect-[4/3] bg-gray-50 relative overflow-hidden">
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />

@@ -34,12 +34,24 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
+    const syncScrollState = () => {
       setScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+
+    syncScrollState();
+    const frameId = window.requestAnimationFrame(syncScrollState);
+
+    window.addEventListener("scroll", syncScrollState, { passive: true });
+    window.addEventListener("load", syncScrollState);
+    window.addEventListener("pageshow", syncScrollState);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener("scroll", syncScrollState);
+      window.removeEventListener("load", syncScrollState);
+      window.removeEventListener("pageshow", syncScrollState);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
@@ -68,10 +80,36 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
         {
           name: dict.nav.products,
           href: "/products",
-          children: content.navbar.productChildren.map((name: string) => ({
-            name,
-            href: "/products",
-          })),
+          children: [
+            {
+              name: content.navbar.productChildren[0],
+              href: "/products",
+              children: [
+                { name: "Custom Pet Supplies Bags", href: "/products", image: "/images/factory/制袋车间/10001.png" },
+                { name: "Tea Bags", href: "/products", image: "/images/factory/制袋车间/10002.png" },
+                { name: "Custom Food Bags", href: "/products", image: "/images/factory/制袋车间/10003.png" },
+                { name: "Facial Mask Bags", href: "/products", image: "/images/factory/制袋车间/10004.png" },
+                { name: "Toy Bags", href: "/products", image: "/images/factory/制袋车间/10005.png" },
+                { name: "Shaped Bags", href: "/products", image: "/products/塑料包装袋系列/异性袋/异型包装袋/10002.jpg" },
+                { name: "Ziplock Bags", href: "/products", image: "/images/factory/制袋车间/10007.png" },
+                { name: "Mask Bags", href: "/products", image: "/images/factory/制袋车间/10008.png" },
+                { name: "Kraft Paper Bags", href: "/products", image: "/images/factory/制袋车间/10009.png" },
+                { name: "Bubble Bags", href: "/products", image: "/images/factory/制袋车间/10010.png" },
+                { name: "Spout Pouches", href: "/products", image: "/images/factory/制袋车间/10011.png" },
+                { name: "Foil-Clear Bags", href: "/products", image: "/images/factory/制袋车间/10012.png" }
+              ]
+            },
+            {
+              name: content.navbar.productChildren[1],
+              href: "/products",
+              children: []
+            },
+            {
+              name: content.navbar.productChildren[2],
+              href: "/products",
+              children: []
+            }
+          ]
         },
         {
           name: dict.nav.packagingMarket,
@@ -99,6 +137,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
           return {
             name: locale === "zh" ? child.nameZh : child.nameEn,
             href: child.link,
+            image: child.image,
             children: subChildren.length > 0 ? subChildren.map((subChild: any) => ({
               name: locale === "zh" ? subChild.nameZh : subChild.nameEn,
               href: subChild.link,
@@ -132,9 +171,13 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
         {/* Left: Logo and Mobile Menu Button */}
         <div className="flex-shrink-0 flex items-center justify-between w-full md:w-auto h-[80px] md:h-auto md:pt-[20px] xl:pt-[41px] px-[10px] md:px-[7px] xl:px-[5px] transition-transform duration-[750ms] ease-out">
           <Link href="/" className={`inline-block transition-transform duration-[750ms] ease-out ${
-            isSolid ? "scale-[0.85] origin-left md:scale-[0.68] xl:scale-[0.75] md:-translate-y-[22px] xl:-translate-y-[28px]" : "scale-[0.85] md:scale-[0.9] xl:scale-100 origin-left translate-y-0"
+            isSolid ? "scale-[0.85] origin-left md:scale-[0.68] xl:scale-[0.75] md:-translate-y-[22px] xl:-translate-y-[28px]" : "scale-[0.85] md:scale-[0.9] xl:scale-100 origin-left translate-y-[10px]"
           }`}>
-            <img src="/logo.png" alt="HAILITONG Packaging" className={`w-[140px] md:w-[160px] xl:w-[180px] h-auto object-contain transition-all duration-[750ms]`} />
+            <img 
+              src="/logo.png" 
+              alt="HAILITONG Packaging" 
+              className={`w-[140px] md:w-[160px] xl:w-[180px] h-auto object-contain transition-all duration-[750ms] drop-shadow-md`} 
+            />
           </Link>
           
           {/* Mobile Menu Button (Only visible on small screens) */}
@@ -280,9 +323,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                                     >
                                       {sub.name}
                                     </Link>
-                                  )) : (
-                                    <div className="text-gray-400 text-sm px-4 py-2">More items coming soon...</div>
-                                  )}
+                                  )) : null}
                                 </div>
                                 
                                 <Link 
@@ -304,8 +345,8 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                             const child = link.children[safeIndex];
                             const subItems = child?.children || [];
                             
-                            // Get image from active subcategory if hovered, otherwise from the first subcategory, fallback to default
-                            let imgSrc = `/daizi01.png`;
+                            // Get image from active subcategory if hovered, otherwise from the first subcategory, fallback to child image
+                        let imgSrc = (child as any)?.image || '';
                             
                             if (activeMegaSubCategory) {
                                 const activeSub = subItems.find((s: any) => s.name === activeMegaSubCategory);
@@ -316,12 +357,14 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                             
                             return (
                               <div className="w-full h-full rounded-2xl border border-gray-50 flex items-center justify-center overflow-hidden relative group">
-                                <img 
-                                  key={imgSrc} // forces re-render/animation on source change
-                                  src={imgSrc} 
-                                  alt={activeMegaSubCategory || activeMegaCategory || 'Featured Product'} 
-                                  className="max-w-[90%] max-h-[90%] object-contain mix-blend-multiply group-hover:scale-105 transition-all duration-500 ease-out"
-                                />
+                                {imgSrc ? (
+                                  <img 
+                                    key={imgSrc} // forces re-render/animation on source change
+                                    src={imgSrc} 
+                                    alt={activeMegaSubCategory || activeMegaCategory || 'Featured Product'} 
+                                    className="max-w-[90%] max-h-[90%] object-contain mix-blend-multiply group-hover:scale-105 transition-all duration-500 ease-out"
+                                  />
+                                ) : null}
                               </div>
                             );
                           })()}
@@ -347,6 +390,13 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
             transition={{ duration: 0.25, ease: "easeOut" }}
             className="md:hidden fixed inset-0 z-[120] bg-[rgba(248,249,251,0.92)] backdrop-blur-xl"
           >
+            {/* Inject a global style to hide the floating WhatsApp widget when mobile menu is open */}
+            <style>{`
+              .mobile-floating-whatsapp {
+                display: none !important;
+              }
+            `}</style>
+            
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -367,7 +417,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto px-4 pb-[110px] pt-10">
+              <div className="flex-1 overflow-y-auto px-4 pb-[130px] pt-10">
                 <div className="mb-8 flex items-center justify-center gap-6 text-[#1A1A1A]">
                   <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="transition-colors hover:text-[#F05A22]">
                     <Home className="h-5 w-5" />
@@ -475,16 +525,6 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                     );
                   })}
                 </div>
-              </div>
-
-              <div className="absolute bottom-0 left-0 w-full bg-white/90 p-4 backdrop-blur-sm border-t border-[#EAECEF]">
-                <Link 
-                  href="#" 
-                  className="flex w-full items-center justify-center rounded-[14px] bg-[#25D366] py-4 text-[18px] font-bold text-white shadow-[0_10px_24px_rgba(37,211,102,0.25)] transition-colors hover:bg-[#1fbe59]"
-                >
-                  <MessageCircle className="mr-2 h-6 w-6" />
-                  {content.navbar.whatsapp}
-                </Link>
               </div>
             </motion.div>
           </motion.div>

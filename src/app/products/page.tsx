@@ -3,6 +3,7 @@ import ProductsClient from "./ProductsClient";
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import { buildRobotsMetadata, buildSeoMetadata, composeSeoTitle, getSiteUrl, getSystemSeo, jsonLdScript, toAbsoluteUrl } from "@/lib/seo";
+import { getPreferredProductImage, parseProductGallery } from "@/lib/productImages";
 
 export const dynamic = "force-dynamic";
 
@@ -61,14 +62,16 @@ export default async function ProductsPage() {
 
   const categories = [allProductsLabel, ...dbCategories.map(c => c.name)];
   
-  const products = dbProducts.map(p => ({
-    id: p.id,
-    slug: p.slug,
-    name: p.name,
-    category: p.category.name,
-    image: p.image,
-    features: JSON.parse(p.features),
-  }));
+  const products = await Promise.all(
+    dbProducts.map(async (p) => ({
+      id: p.id,
+      slug: p.slug,
+      name: p.name,
+      category: p.category.name,
+      image: await getPreferredProductImage(p.image, parseProductGallery(p.gallery)),
+      features: JSON.parse(p.features),
+    }))
+  );
   const siteUrl = getSiteUrl();
   const itemListJsonLd = {
     "@context": "https://schema.org",
@@ -78,7 +81,7 @@ export default async function ProductsPage() {
     url: `${siteUrl}/products`,
     mainEntity: {
       "@type": "ItemList",
-      itemListElement: dbProducts.map((product, index) => ({
+      itemListElement: products.map((product, index) => ({
         "@type": "ListItem",
         position: index + 1,
         url: `${siteUrl}/products/${product.slug || product.id}`,

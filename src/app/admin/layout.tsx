@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import AdminSidebar from "./AdminSidebar";
 import AdminToaster from "./AdminToaster";
 import AdminFlashToast from "./AdminFlashToast";

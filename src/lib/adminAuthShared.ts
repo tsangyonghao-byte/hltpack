@@ -1,5 +1,7 @@
 export const ADMIN_SESSION_COOKIE = "ADMIN_SESSION";
 
+import { prisma } from "./prisma";
+
 function getAdminCredentials() {
   return {
     user: process.env.ADMIN_USER,
@@ -9,32 +11,45 @@ function getAdminCredentials() {
 }
 
 export function isAdminAuthConfigured() {
-  const { user, pass, secret } = getAdminCredentials();
-  return Boolean(user && pass && secret);
+  const { secret } = getAdminCredentials();
+  return Boolean(secret); // Only require secret now, as users can be in DB
 }
 
-function requireAdminCredentials() {
-  const credentials = getAdminCredentials();
-  if (!credentials.user || !credentials.pass || !credentials.secret) {
-    throw new Error("ADMIN_AUTH_MISSING_CONFIG");
-  }
-  return credentials as {
-    user: string;
-    pass: string;
-    secret: string;
-  };
-}
-
-async function sha256(input: string) {
+export async function sha256(input: string) {
   const data = new TextEncoder().encode(input);
   const hashBuffer = await crypto.subtle.digest("SHA-256", data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   return hashArray.map((byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
-export async function buildAdminSessionToken() {
-  const { user, pass, secret } = requireAdminCredentials();
-  return sha256(`${user}:${pass}:${secret}`);
+export async function buildAdminSessionToken(userId: string) {
+  const { secret } = getAdminCredentials();
+  if (!secret) throw new Error("ADMIN_AUTH_MISSING_CONFIG");
+  const hash = await sha256(`${userId}:${secret}`);
+  return `${userId}.${hash}`;
+}
+
+export async function verifyAdminSessionToken(token: string) {
+  if (!token || !token.includes(".")) return false;
+  const [userId] = token.split(".");
+  const expected = await buildAdminSessionToken(userId);
+  if (token !== expected) return false;
+
+  if (userId === "root") {
+    return true;
+  }
+
+  try {
+    const dbUser = await prisma.adminUser.findUnique({
+      where: { id: userId },
+      select: { id: true },
+    });
+
+    return Boolean(dbUser);
+  } catch (err) {
+    console.error("Admin session validation failed:", err);
+    return false;
+  }
 }
 
 export function isSafeAdminPath(path?: string | null) {
@@ -51,7 +66,29 @@ export function getAdminCookieOptions() {
   };
 }
 
-export async function verifyAdminCredentials(username: string, password: string) {
-  const { user, pass } = requireAdminCredentials();
-  return username === user && password === pass;
+export async function verifyAdminCredentials(username: string, password: string): Promise<string | null> {
+  const { user, pass } = getAdminCredentials();
+  
+  // 1. Check root admin from .env
+  if (user && pass && username === user && password === pass) {
+    return "root";
+  }
+
+  // 2. Check DB AdminUser
+  try {
+    const dbUser = await prisma.adminUser.findUnique({
+      where: { username },
+    });
+    
+    if (dbUser) {
+      const hashedAttempt = await sha256(`${password}:${process.env.ADMIN_SESSION_SECRET}`);
+      if (dbUser.password === hashedAttempt) {
+        return dbUser.id;
+      }
+    }
+  } catch (err) {
+    console.error("DB User check failed:", err);
+  }
+
+  return null;
 }

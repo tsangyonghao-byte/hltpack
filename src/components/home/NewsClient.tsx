@@ -8,27 +8,17 @@ import Link from "next/link";
 
 import { useLanguage } from "@/i18n/LanguageContext";
 
-export default function NewsClient({ categories, newsItems }: { categories: string[], newsItems: any[] }) {
+export default function NewsClient({ newsItems }: { categories: string[], newsItems: any[] }) {
   const { dict } = useLanguage();
   const hasNews = newsItems.length > 0;
   
-  const [activeCategory, setActiveCategory] = useState<string>("All");
-  
-  // Filter news based on active category
-  const filteredNews = activeCategory === "All" 
-    ? newsItems 
-    : newsItems.filter(item => item.category === activeCategory);
+  // Use all news directly
+  const filteredNews = newsItems;
 
   // Pagination for desktop (3 items per page)
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
-  
-  const handleCategoryChange = (category: string) => {
-    setActiveCategory(category);
-    setCurrentPage(0); // Reset page on category change
-    setCurrentIndex(0); // Reset mobile index
-  };
 
   const nextDesktopSlide = () => {
     setCurrentPage((prev) => (prev === totalPages - 1 ? 0 : prev + 1));
@@ -60,39 +50,31 @@ export default function NewsClient({ categories, newsItems }: { categories: stri
     <section id="news" className="py-12 md:py-24 bg-gray-50 relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Header & Categories (Similar to Logospack) */}
-        <div className="flex flex-col items-center mb-12 md:mb-16">
-          <div className="w-full flex justify-center mb-10">
-            {/* Category Pill Container */}
-            <div className="bg-[#EEF2FA] rounded-full p-1.5 flex flex-wrap justify-center items-center gap-1 max-w-full overflow-x-auto no-scrollbar shadow-sm border border-blue-50/50">
-              <button
-                onClick={() => handleCategoryChange("All")}
-                className={`px-8 py-2.5 rounded-full text-[14px] font-bold tracking-wide transition-all duration-300 whitespace-nowrap ${
-                  activeCategory === "All" 
-                    ? "bg-white text-[#F05A22] shadow-[0_2px_8px_rgba(0,0,0,0.08)]" 
-                    : "text-[#4B5563] hover:text-[#F05A22] hover:bg-white/50"
-                }`}
-              >
-                All
-              </button>
-              {categories.map((category) => {
-                // Ignore weird combined categories if any
-                if (category.includes('#')) return null;
-                return (
-                  <button
-                    key={category}
-                    onClick={() => handleCategoryChange(category)}
-                    className={`px-8 py-2.5 rounded-full text-[14px] font-bold tracking-wide transition-all duration-300 whitespace-nowrap ${
-                      activeCategory === category 
-                        ? "bg-white text-[#F05A22] shadow-[0_2px_8px_rgba(0,0,0,0.08)]" 
-                        : "text-[#4B5563] hover:text-[#F05A22] hover:bg-white/50"
-                    }`}
-                  >
-                    {category}
-                  </button>
-                );
-              })}
-            </div>
+        {/* Header & Categories - Editorial Style */}
+        <div className="flex flex-col mb-12 md:mb-16">
+          <div className="flex flex-col items-center text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-3 mb-6"
+            >
+              <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+              <span className="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">
+                Latest Insights
+              </span>
+              <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+            </motion.div>
+
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-3xl md:text-4xl lg:text-[44px] font-bold text-[#1A1A1A] leading-tight tracking-tight"
+            >
+              {dict.home.news.title}
+            </motion.h2>
           </div>
         </div>
 
@@ -130,7 +112,7 @@ export default function NewsClient({ categories, newsItems }: { categories: stri
             <div className="hidden md:block overflow-hidden pb-4">
               <AnimatePresence mode="wait">
                 <motion.div 
-                  key={`${activeCategory}-${currentPage}`}
+                  key={`news-page-${currentPage}`}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -138,7 +120,7 @@ export default function NewsClient({ categories, newsItems }: { categories: stri
                   className="grid grid-cols-3 gap-6 lg:gap-8"
                 >
                   {currentDesktopItems.map((news) => (
-                    <Link href={`/news/${news.slug || news.id}`} key={news.id} className="group flex flex-col h-full bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)] transition-all duration-300 overflow-hidden">
+                    <Link href={`/news/${news.slug || news.id}`} key={news.id} className="group flex flex-col h-full bg-white rounded-none border border-gray-200 hover:border-[#F05A22]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] transition-all duration-500 overflow-hidden">
                       {/* Image Container */}
                       <div className="relative aspect-[1.5] overflow-hidden bg-gray-50">
                         <img 
@@ -150,19 +132,19 @@ export default function NewsClient({ categories, newsItems }: { categories: stri
 
                       {/* Content */}
                       <div className="flex flex-col flex-grow p-6 md:p-8">
-                        <h3 className="text-[18px] lg:text-[20px] font-bold text-[#1E293B] mb-3 leading-[1.4] group-hover:text-[#F05A22] transition-colors line-clamp-2">
+                        <div className="flex items-center gap-3 mb-4">
+                          <span className="text-[#F05A22] text-[11px] font-bold tracking-[0.1em] uppercase">{news.category}</span>
+                          <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+                          <span className="text-gray-400 font-medium text-[12px]">{news.date.replace(/,/g, '')}</span>
+                        </div>
+                        
+                        <h3 className="text-[18px] lg:text-[20px] font-bold text-[#1A1A1A] mb-4 leading-[1.4] group-hover:text-[#F05A22] transition-colors line-clamp-2">
                           {news.title}
                         </h3>
                         
-                        <p className="text-gray-500 text-[14px] lg:text-[15px] leading-relaxed mb-6 line-clamp-3 font-light">
+                        <p className="text-gray-500 text-[14px] lg:text-[15px] leading-relaxed line-clamp-3 font-light">
                           {news.summary}
                         </p>
-                        
-                        {/* Bottom Row */}
-                        <div className="mt-auto pt-4 flex items-center justify-between border-t border-gray-100">
-                          <span className="text-[#1E293B] font-extrabold text-[13px]">{news.date.replace(/,/g, '')}</span>
-                          <span className="text-[#F05A22] text-[13px] font-bold tracking-wide">#{news.category}</span>
-                        </div>
                       </div>
                     </Link>
                   ))}
@@ -174,7 +156,7 @@ export default function NewsClient({ categories, newsItems }: { categories: stri
             <div className="md:hidden flex flex-col w-full pb-2 relative">
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={`${activeCategory}-${currentIndex}`}
+                  key={`news-mobile-${currentIndex}`}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}

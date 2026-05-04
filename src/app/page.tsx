@@ -1,11 +1,12 @@
 import prisma from "@/lib/prisma";
 import Hero from "@/components/home/Hero";
-import Clients from "@/components/home/Clients";
-import WhyUs from "@/components/home/WhyUs";
-import Showcase from "@/components/home/Showcase";
+import BentoFeatures from "@/components/home/BentoFeatures";
+import Industries from "@/components/home/Industries";
+import AboutUs from "@/components/home/AboutUs";
+import FactoryTour from "@/components/home/FactoryTour";
 import Certificates from "@/components/home/Certificates";
-import Process from "@/components/home/Process";
 import News from "@/components/home/News";
+import BottomCTA from "@/components/home/BottomCTA";
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import { buildRobotsMetadata, buildSeoMetadata, getDefaultSeoImage, getSiteUrl, getSystemSeo, jsonLdScript } from "@/lib/seo";
@@ -85,28 +86,23 @@ export default async function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(organizationJsonLd)} />
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(websiteJsonLd)} />
-      {/* Global Background Images for the Top Sections (Hero & WhyUs) */}
-      <div className="hidden lg:block absolute top-0 left-0 w-full h-[1500px] md:h-[2000px] pointer-events-none z-0 overflow-hidden">
-        <div
-          className="absolute left-[-40%] md:left-[-32%] top-[200px] md:top-[550px] -translate-y-1/2 w-[120%] md:w-[50%] h-[600px] md:h-[884px] bg-no-repeat bg-contain bg-center opacity-90"
-          style={{ backgroundImage: "url('/10001.png')" }}
-        />
-        <div
-          className="absolute right-[-40%] md:right-[-25%] top-[600px] md:top-[250px] -translate-y-1/2 w-[140%] md:w-[85%] h-[800px] md:h-[1328px] bg-no-repeat bg-contain bg-center opacity-90"
-          style={{ backgroundImage: "url('/10002.png')" }}
-        />
+      {/* Modern Vibe Backgrounds (Replaces old industrial 10001/10002.png) */}
+      <div className="hidden lg:block absolute top-0 left-0 w-full h-[1500px] pointer-events-none z-0 overflow-hidden bg-[#FAFAFA]">
+        <div className="absolute top-[20%] left-[-10%] w-[600px] h-[600px] bg-[#F05A22]/5 rounded-full blur-[100px]" />
+        <div className="absolute top-[40%] right-[-10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[120px]" />
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 bg-[#FAFAFA] lg:bg-transparent">
         <Hero banners={banners} />
-        <Clients />
-        <WhyUs />
       </div>
       <div className="relative z-10 bg-white">
-        <Showcase />
+        <BentoFeatures />
+        <Industries />
+        <AboutUs />
+        <FactoryTour />
         <Certificates />
-        <Process />
         <News news={allNews} categories={newsCategories} />
+        <BottomCTA />
       </div>
     </>
   );

@@ -1,19 +1,91 @@
 "use client";
 
 import Link from "next/link";
-import { Globe, Mail, Phone, MapPin, ChevronUp, ChevronsRight, Link as LinkIcon, Video, Camera, MessageCircle } from "lucide-react";
+import { Globe, Mail, Phone, MapPin, ChevronUp, ChevronsRight, Link as LinkIcon, Video, Camera, MessageCircle, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { siteContent } from "@/i18n/siteContent";
+import { motion, useAnimation } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { subscribeNewsletter } from "@/actions/contactActions";
 
 export default function Footer({ setting, navItems = [] }: { setting?: any, navItems?: any[] }) {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
+  
+  // Slider State
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [mobileEmail, setMobileEmail] = useState("");
+  const [desktopEmail, setDesktopEmail] = useState("");
+  const [isDesktopSubmitting, setIsDesktopSubmitting] = useState(false);
+  const [isDesktopSubscribed, setIsDesktopSubscribed] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dragConstraints, setDragConstraints] = useState({ left: 0, right: 0 });
+  const controls = useAnimation();
+
+  useEffect(() => {
+    const updateConstraints = () => {
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        const thumbWidth = 130; // Approx width of the "Submit >>" thumb
+        setDragConstraints({ left: 0, right: containerWidth - thumbWidth });
+      }
+    };
+    
+    updateConstraints();
+    window.addEventListener("resize", updateConstraints);
+    return () => window.removeEventListener("resize", updateConstraints);
+  }, []);
+
+  const handleDragEnd = async (event: any, info: any) => {
+    // If dragged more than 80% of the way, snap to end and submit
+    if (info.offset.x >= dragConstraints.right * 0.8) {
+      if (mobileEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mobileEmail)) {
+        setIsSubscribed(true);
+        controls.start({ x: dragConstraints.right });
+        
+        await subscribeNewsletter(mobileEmail);
+        setMobileEmail("");
+
+        // Reset after 3 seconds
+        setTimeout(() => {
+          setIsSubscribed(false);
+          controls.start({ x: 0 });
+        }, 3000);
+      } else {
+        // Email invalid, snap back
+        controls.start({ x: 0 });
+        alert("Please enter a valid email address first.");
+      }
+    } else {
+      // Snap back to start
+      controls.start({ x: 0 });
+    }
+  };
+
+  const handleDesktopSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!desktopEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(desktopEmail)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    
+    setIsDesktopSubmitting(true);
+    await subscribeNewsletter(desktopEmail);
+    setIsDesktopSubmitting(false);
+    setIsDesktopSubscribed(true);
+    setDesktopEmail("");
+    
+    setTimeout(() => {
+      setIsDesktopSubscribed(false);
+    }, 3000);
+  };
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const currentYear = new Date().getFullYear();
-  const siteName = locale === "zh" ? (setting?.siteNameZh || "海力通包装") : (setting?.siteNameEn || "Logos Packaging Holding");
+  const siteName = locale === "zh" ? (setting?.siteNameZh || "海力通包装") : (setting?.siteNameEn || "HAILITONG Packaging");
   const copyright = locale === "zh" ? setting?.footerCopyZh : setting?.footerCopyEn;
   const address = locale === "zh" ? setting?.contactAddressZh : setting?.contactAddressEn;
 
@@ -79,6 +151,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
               <li><Link href="/how-we-work" className="text-gray-400 hover:text-[#F05A22] transition-all duration-300">{content.footer.howWeWork}</Link></li>
               <li><Link href="/packaging-safety" className="text-gray-400 hover:text-[#F05A22] transition-all duration-300">{content.footer.packagingSafety}</Link></li>
               <li><Link href="/sustainability" className="text-gray-400 hover:text-[#F05A22] transition-all duration-300">{content.footer.sustainability}</Link></li>
+              <li><Link href="/news" className="text-gray-400 hover:text-[#F05A22] transition-all duration-300">{content.footer.news}</Link></li>
             </ul>
           </div>
 
@@ -94,7 +167,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
                   <div className="w-8 h-8 flex items-center justify-center shrink-0">
                     <MapPin className="w-5 h-5 text-[#F05A22]" />
                   </div>
-                  <span className="text-gray-400 leading-relaxed mt-1">{address || "Guangdong, China"}</span>
+                  <span className="text-gray-400 leading-relaxed mt-1">{address || content.footer.address}</span>
                 </li>
               )}
               {(setting?.contactPhone || true) && (
@@ -102,7 +175,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
                   <div className="w-8 h-8 flex items-center justify-center shrink-0">
                     <Phone className="w-5 h-5 text-[#F05A22]" />
                   </div>
-                  <span className="text-gray-400 mt-1">{setting?.contactPhone || "+86 123 4567 8900"}</span>
+                  <span className="text-gray-400 mt-1">{setting?.contactPhone || content.footer.phone}</span>
                 </li>
               )}
               {(setting?.contactEmail || true) && (
@@ -110,7 +183,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
                   <div className="w-8 h-8 flex items-center justify-center shrink-0">
                     <Mail className="w-5 h-5 text-[#F05A22]" />
                   </div>
-                  <a href={`mailto:${setting?.contactEmail || "info@example.com"}`} className="text-gray-400 hover:text-white transition-colors mt-1">{setting?.contactEmail || "info@example.com"}</a>
+                  <a href={`mailto:${setting?.contactEmail || content.footer.email}`} className="text-gray-400 hover:text-white transition-colors mt-1">{setting?.contactEmail || content.footer.email}</a>
                 </li>
               )}
             </ul>
@@ -131,19 +204,41 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
             <p className="text-[15px] text-gray-400 mb-6 leading-relaxed">
               {content.footer.newsletterText}
             </p>
-            <form className="flex flex-col space-y-3">
+            <form onSubmit={handleDesktopSubmit} className="flex flex-col space-y-3">
               <div className="relative">
                 <input 
                   type="email" 
+                  required
+                  value={desktopEmail}
+                  onChange={(e) => setDesktopEmail(e.target.value)}
                   placeholder={content.footer.emailPlaceholder} 
                   className="w-full bg-white border border-gray-700 text-gray-800 px-5 py-4 rounded-[30px] text-[14px] focus:outline-none focus:border-[#F05A22] focus:ring-1 focus:ring-[#F05A22] transition-all placeholder-gray-400"
                 />
               </div>
+              {isDesktopSubscribed && (
+                <div className="text-emerald-400 text-xs font-medium px-2 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  {content.footer.successMessage || "Subscription successful! Our staff will contact you shortly."}
+                </div>
+              )}
               <button 
-                type="button"
-                className="w-full bg-[#F05A22] hover:bg-[#D64816] text-white px-5 py-4 rounded-[30px] text-[14px] font-bold uppercase tracking-wider transition-all hover:shadow-[0_0_20px_rgba(240,90,34,0.3)]"
+                type="submit"
+                disabled={isDesktopSubmitting || isDesktopSubscribed}
+                className={`w-full text-white px-5 py-4 rounded-[30px] text-[14px] font-bold uppercase tracking-wider transition-all ${
+                  isDesktopSubscribed 
+                    ? "bg-[#25D366] hover:bg-[#25D366]" 
+                    : "bg-[#F05A22] hover:bg-[#D64816] hover:shadow-[0_0_20px_rgba(240,90,34,0.3)]"
+                }`}
               >
-                {content.footer.subscribeNow}
+                {isDesktopSubmitting ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  </span>
+                ) : isDesktopSubscribed ? (
+                  <span className="flex items-center justify-center gap-2"><CheckCircle2 className="w-4 h-4" /> Success</span>
+                ) : (
+                  content.footer.subscribeNow
+                )}
               </button>
             </form>
           </div>
@@ -178,7 +273,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
             <Link href="/products" className="hover:text-[#F05A22]">{content.footer.products}</Link>
             <Link href="/sustainability" className="hover:text-[#F05A22]">{content.footer.sustainability}</Link>
             <Link href="/packaging-market" className="hover:text-[#F05A22]">{content.footer.packagingMarket}</Link>
-            <Link href="/contact" className="hover:text-[#F05A22]">{content.footer.contact}</Link>
+            <Link href="/news" className="hover:text-[#F05A22]">{content.footer.news}</Link>
           </div>
           <Link
             href="/contact"
@@ -230,16 +325,56 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
             <form className="flex flex-col gap-3">
               <input 
                 type="email" 
+                value={mobileEmail}
+                onChange={(e) => setMobileEmail(e.target.value)}
                 placeholder={content.footer.mobileEmailPlaceholder} 
                 className="w-full bg-white text-gray-800 px-5 py-3.5 rounded-[30px] text-[14px] outline-none shadow-sm"
               />
-              <div className="flex w-full bg-white rounded-[30px] overflow-hidden h-[48px] shadow-sm">
-                <button type="button" className="w-[45%] bg-[#F05A22] text-white font-bold flex items-center justify-center gap-1 text-[15px] hover:bg-[#d94d1b] transition-colors">
-                  {content.footer.submit} <ChevronsRight className="w-4 h-4" />
-                </button>
-                <div className="w-[55%] flex items-center justify-center text-gray-400 text-[14px]">
-                  {content.footer.slideToRight}
+              {isSubscribed && (
+                <div className="text-emerald-400 text-xs font-medium px-2 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  {content.footer.successMessage || "Subscription successful! Our staff will contact you shortly."}
                 </div>
+              )}
+              <div 
+                ref={containerRef}
+                className="relative flex w-full bg-white rounded-[30px] overflow-hidden h-[48px] shadow-sm items-center select-none"
+              >
+                {/* Background Text */}
+                <div className="absolute w-full flex items-center justify-center text-gray-400 text-[14px] z-0 pl-[40%] pointer-events-none">
+                  {isSubscribed ? "" : content.footer.slideToRight}
+                </div>
+                
+                {/* Drag Thumb */}
+                <motion.div
+                  drag={!isSubscribed ? "x" : false}
+                  dragConstraints={dragConstraints}
+                  dragElastic={0.1}
+                  dragMomentum={false}
+                  onDragEnd={handleDragEnd}
+                  animate={controls}
+                  className={`absolute left-0 top-0 bottom-0 z-10 flex items-center justify-center rounded-[30px] font-bold text-[15px] text-white cursor-grab active:cursor-grabbing min-w-[130px] transition-colors duration-300 ${
+                    isSubscribed ? "bg-[#25D366]" : "bg-[#F05A22] hover:bg-[#d94d1b]"
+                  }`}
+                  style={{ touchAction: "none" }}
+                >
+                  {isSubscribed ? (
+                    <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4" /> Success</span>
+                  ) : (
+                    <span className="flex items-center gap-1 pointer-events-none">{content.footer.submit} <ChevronsRight className="w-4 h-4" /></span>
+                  )}
+                </motion.div>
+                
+                {/* Filled background behind the thumb */}
+                {!isSubscribed && (
+                  <motion.div
+                    className="absolute left-0 top-0 bottom-0 bg-[#F05A22]/10 z-0 rounded-l-[30px]"
+                    style={{
+                      width: "100%", // This won't work perfectly without mapping x value. We'll skip the trailing color for simplicity, or use useMotionValue.
+                      display: "none" 
+                    }}
+                  />
+                )}
               </div>
             </form>
           </div>
@@ -253,13 +388,6 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
                 <p>{`Copyright © ${currentYear} ${siteName}`}</p>
               )}
             </div>
-            <button 
-              onClick={scrollToTop} 
-              className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-[#1E293B] shadow-md hover:bg-gray-100 transition-colors flex-shrink-0"
-              aria-label={content.footer.backToTop}
-            >
-              <ChevronUp className="w-6 h-6" />
-            </button>
           </div>
         </div>
 

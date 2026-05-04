@@ -12,7 +12,7 @@ const ECO_SOLUTIONS = [
     title: "100% Recyclable Mono-Material",
     description: "Our innovative Mono-PE and Mono-PP pouches provide excellent barrier properties while being fully recyclable in existing plastic streams.",
     icon: Recycle,
-    image: "https://www.logospack.com.hk/cache/img/88c2f8ae74bd774aacc80bdb24f848fe4ea1c7a533ae.png", // Stand-up pouch placeholder
+    image: "/products/塑料包装袋系列/牛皮纸袋/开天窗牛皮纸袋/10001.jpg", // Using a paper bag image
     color: "text-emerald-500",
     bg: "bg-emerald-50",
     tag: "Circular Economy"
@@ -21,7 +21,7 @@ const ECO_SOLUTIONS = [
     title: "Post-Consumer Recycled (PCR)",
     description: "We incorporate up to 30% PCR plastics into non-food contact layers, significantly reducing the reliance on virgin fossil-based resins.",
     icon: Droplet,
-    image: "https://www.logospack.com.hk/cache/img/596de946fdb47fa3480f1a1bc5d5dfab839845a8fbb1.png", // Roll stock placeholder
+    image: "/products/塑料包装袋系列/定制宠物用品袋/八边自封宠物粮食袋/10001.jpg", // Using a heavy-duty bag as a proxy for PCR
     color: "text-blue-500",
     bg: "bg-blue-50",
     tag: "Resource Reduction"
@@ -30,7 +30,7 @@ const ECO_SOLUTIONS = [
     title: "Compostable Packaging",
     description: "Certified biodegradable films that break down into organic matter, perfect for dry foods, snacks, and eco-conscious brands.",
     icon: Leaf,
-    image: "https://www.logospack.com.hk/cache/img/9e55548254d2eb11f093cf288503222666a8561fbcb7.png", // Coffee pouch placeholder
+    image: "/products/塑料包装袋系列/定制食品袋/三边封手提袋/10001.jpg", // Using a food bag image
     color: "text-[#F05A22]",
     bg: "bg-[#F05A22]/10",
     tag: "Zero Waste"
@@ -61,68 +61,74 @@ export default function SustainabilityPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Page Hero Banner */}
-      <section className="relative w-full pt-[140px] pb-16 md:pt-[180px] md:pb-20 bg-[#0F172A] flex flex-col items-center justify-center overflow-hidden min-h-[350px] md:min-h-[450px]">
+      <section className="relative w-full pt-[140px] pb-16 md:pt-[180px] md:pb-20 bg-[#111111] flex flex-col items-center justify-center overflow-hidden min-h-[350px] md:min-h-[450px]">
         {/* Background Image / Pattern */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 mix-blend-luminosity"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2574&auto=format&fit=crop')" }} // Nature/Leaf background
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
+          style={{ backgroundImage: "url('/images/factory/制袋车间/10008.png')" }} 
         ></div>
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/80 to-emerald-900/30"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>
         
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center justify-center flex-grow">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 mb-6 backdrop-blur-sm border border-emerald-500/30">
-            <Leaf className="w-8 h-8" />
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-center gap-3 mb-6"
+          >
+            <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+            <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">
+              {content.sustainability.breadcrumb}
+            </span>
+            <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+          </motion.div>
+
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight uppercase leading-tight"
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl lg:text-[64px] font-extrabold text-white mb-6 tracking-tight uppercase leading-tight"
           >
             {content.sustainability.heroTitle}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto font-light"
+            transition={{ delay: 0.2 }}
+            className="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto font-light leading-relaxed"
           >
             {content.sustainability.heroDescription}
           </motion.p>
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center justify-center gap-2 text-sm md:text-base text-gray-400 font-medium uppercase tracking-wider"
-          >
-            <Link href="/" className="hover:text-white transition-colors">{content.footer.home}</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-emerald-400">{content.sustainability.breadcrumb}</span>
-          </motion.div>
         </div>
       </section>
 
       {/* Intro Section */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 border-b border-gray-100">
         <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#1E293B] mb-6 leading-tight">
+          <div className="inline-flex items-center gap-3 mb-8">
+            <div className="w-8 h-[2px] bg-[#F05A22]"></div>
+            <span className="text-xs font-bold tracking-[0.25em] text-gray-500 uppercase">
+              {content.sustainability.breadcrumb}
+            </span>
+            <div className="w-8 h-[2px] bg-[#F05A22]"></div>
+          </div>
+          <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-8 leading-tight tracking-tight">
             {content.sustainability.introTitle}
           </h2>
-          <p className="text-lg text-gray-600 leading-relaxed mb-10">
+          <p className="text-lg text-gray-500 leading-relaxed font-light">
             {content.sustainability.introDescription}
           </p>
         </div>
       </section>
 
       {/* Eco Solutions Grid */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section className="py-16 md:py-24 bg-[#F8F9FA]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 text-sm font-bold uppercase tracking-widest mb-6 text-emerald-600 border border-emerald-100">
-              <Recycle className="w-4 h-4" />
-              {content.sustainability.portfolioTag}
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-[#111111] rounded-none mb-6 text-[#F05A22]">
+              <Recycle className="w-8 h-8" strokeWidth={1.5} />
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#1E293B]">
+            <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] tracking-tight">
               {content.sustainability.solutionsTitle}
             </h2>
           </div>
@@ -137,18 +143,17 @@ export default function SustainabilityPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(16,185,129,0.1)] transition-all duration-500 border border-gray-100 group flex flex-col"
+                className="bg-white rounded-none overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(240,90,34,0.1)] transition-all duration-500 border border-gray-200 group flex flex-col"
               >
                 {/* Image Header */}
-                <div className="relative h-64 bg-gray-50 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+                <div className="relative h-64 bg-gray-50 overflow-hidden border-b border-gray-100">
                   <img 
                     src={solution.image} 
                     alt={solution.title} 
-                    className="w-full h-full object-cover mix-blend-multiply transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute bottom-6 left-6 z-20">
-                    <span className="px-4 py-1.5 bg-white text-gray-900 text-xs font-bold uppercase tracking-wider rounded-full shadow-lg">
+                  <div className="absolute bottom-0 left-0 z-20">
+                    <span className="px-5 py-2 bg-[#111111] text-white text-[11px] font-bold uppercase tracking-widest rounded-none">
                       {translated.tag}
                     </span>
                   </div>
@@ -156,11 +161,11 @@ export default function SustainabilityPage() {
 
                 {/* Content */}
                 <div className="p-8 flex flex-col flex-grow">
-                  <div className={clsx("w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shrink-0", solution.bg, solution.color)}>
-                    <solution.icon className="w-7 h-7" />
+                  <div className={clsx("w-12 h-12 rounded-none flex items-center justify-center mb-6 shrink-0 bg-[#111111] text-white group-hover:bg-[#F05A22] transition-colors duration-300")}>
+                    <solution.icon className="w-5 h-5" strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-2xl font-bold text-[#1E293B] mb-4">{translated.title}</h3>
-                  <p className="text-gray-600 leading-relaxed flex-grow">
+                  <h3 className="text-xl font-bold text-[#1A1A1A] mb-4 tracking-wide">{translated.title}</h3>
+                  <p className="text-gray-500 font-light leading-relaxed flex-grow text-[15px]">
                     {translated.description}
                   </p>
                 </div>
@@ -171,11 +176,7 @@ export default function SustainabilityPage() {
       </section>
 
       {/* Manufacturing Practices */}
-      <section className="py-16 md:py-24 bg-[#0F172A] relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-600 rounded-full blur-[150px] opacity-10 -translate-y-1/2 translate-x-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600 rounded-full blur-[150px] opacity-10 translate-y-1/2 -translate-x-1/3"></div>
-        
+      <section className="py-16 md:py-24 bg-[#111111] relative overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             
@@ -186,10 +187,16 @@ export default function SustainabilityPage() {
               transition={{ duration: 0.7 }}
               className="w-full lg:w-1/2"
             >
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6 leading-tight">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-[2px] bg-[#F05A22]"></div>
+                <span className="text-xs font-bold tracking-[0.25em] text-gray-500 uppercase">
+                  {content.sustainability.manufacturingTitle}
+                </span>
+              </div>
+              <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-white mb-6 leading-tight tracking-tight">
                 {content.sustainability.manufacturingTitle}
               </h2>
-              <p className="text-lg text-gray-400 mb-10 leading-relaxed">
+              <p className="text-lg text-gray-400 mb-10 leading-relaxed font-light">
                 {content.sustainability.manufacturingDescription}
               </p>
 
@@ -198,12 +205,12 @@ export default function SustainabilityPage() {
                   const translated = content.sustainability.practices[index] || practice;
                   return (
                   <div key={index} className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-1">
-                      <practice.icon className="w-5 h-5 text-emerald-400" />
+                    <div className="w-12 h-12 rounded-none bg-white/5 border border-white/10 flex items-center justify-center shrink-0 mt-1">
+                      <practice.icon className="w-5 h-5 text-[#F05A22]" strokeWidth={1.5} />
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold text-white mb-2">{translated.title}</h4>
-                      <p className="text-gray-400 leading-relaxed">{translated.description}</p>
+                      <h4 className="text-[19px] font-bold text-white mb-2 tracking-wide">{translated.title}</h4>
+                      <p className="text-gray-400 leading-relaxed font-light text-[15px]">{translated.description}</p>
                     </div>
                   </div>
                 )})}
@@ -217,20 +224,12 @@ export default function SustainabilityPage() {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="w-full lg:w-1/2"
             >
-              <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-gray-800">
+              <div className="relative aspect-square md:aspect-[4/3] rounded-none overflow-hidden shadow-2xl border border-gray-800">
                 <img 
-                  src="https://www.logospack.com.hk/cache/img/cf1f784f1e2d0010ea43d775a6884a3a190f292bbf73.jpg" 
+                  src="/images/factory/制袋车间/10008.png" 
                   alt="Sustainable Factory" 
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-emerald-900/20 mix-blend-multiply"></div>
-                
-                {/* Overlay Badge */}
-                <div className="absolute bottom-8 left-8 bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl max-w-xs">
-                  <div className="text-3xl font-extrabold text-white mb-1">25%</div>
-                  <div className="text-emerald-400 font-bold text-sm uppercase tracking-wider mb-2">{content.sustainability.carbonReduction}</div>
-                  <p className="text-gray-300 text-sm">{content.sustainability.carbonDescription}</p>
-                </div>
               </div>
             </motion.div>
 
@@ -239,17 +238,17 @@ export default function SustainabilityPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 text-center">
+      <section className="py-20 text-center bg-white">
         <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#1E293B] mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-6 tracking-tight">
             {content.sustainability.ctaTitle}
           </h2>
-          <p className="text-lg text-gray-600 mb-10">
+          <p className="text-lg text-gray-500 mb-10 font-light leading-relaxed">
             {content.sustainability.ctaDescription}
           </p>
           <Link 
             href="/contact" 
-            className="inline-flex items-center justify-center px-10 py-5 bg-emerald-600 text-white rounded-full font-extrabold text-[16px] uppercase tracking-wider hover:bg-emerald-700 shadow-[0_10px_30px_rgba(16,185,129,0.2)] hover:-translate-y-1 transition-all duration-300"
+            className="inline-flex items-center justify-center px-10 py-4 bg-[#1A1A1A] text-white rounded-none font-bold text-[14px] uppercase tracking-wider hover:bg-[#F05A22] transition-colors duration-300"
           >
             {content.sustainability.ctaButton}
           </Link>

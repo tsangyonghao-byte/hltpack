@@ -1,8 +1,10 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import prisma from "./prisma";
 import {
   ADMIN_SESSION_COOKIE,
   buildAdminSessionToken,
+  verifyAdminSessionToken,
   getAdminCookieOptions,
   isSafeAdminPath,
 } from "./adminAuthShared";
@@ -12,13 +14,12 @@ export async function isAdminAuthenticated() {
   const session = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
   if (!session) return false;
 
-  const expected = await buildAdminSessionToken();
-  return session === expected;
+  return await verifyAdminSessionToken(session);
 }
 
-export async function setAdminSession() {
+export async function setAdminSession(userId: string) {
   const cookieStore = await cookies();
-  const token = await buildAdminSessionToken();
+  const token = await buildAdminSessionToken(userId);
   cookieStore.set(ADMIN_SESSION_COOKIE, token, getAdminCookieOptions());
 }
 
@@ -46,6 +47,47 @@ export async function clearAdminFlash() {
 export async function clearAdminSession() {
   const cookieStore = await cookies();
   cookieStore.delete(ADMIN_SESSION_COOKIE);
+}
+
+export async function getCurrentAdminIdentity() {
+  const cookieStore = await cookies();
+  const session = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
+  if (!session) return null;
+
+  const isValid = await verifyAdminSessionToken(session);
+  if (!isValid) return null;
+
+  const [userId] = session.split(".");
+
+  if (userId === "root") {
+    return {
+      userId: "root",
+      username: process.env.ADMIN_USER?.trim() || "root",
+      name: "Super Admin",
+      role: "root",
+      isRoot: true,
+    };
+  }
+
+  const dbUser = await prisma.adminUser.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      username: true,
+      name: true,
+      role: true,
+    },
+  });
+
+  if (!dbUser) return null;
+
+  return {
+    userId: dbUser.id,
+    username: dbUser.username,
+    name: dbUser.name,
+    role: dbUser.role,
+    isRoot: false,
+  };
 }
 
 export async function requireAdminSession(nextPath = "/admin") {

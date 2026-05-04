@@ -14,7 +14,7 @@ export default function Showcase({ products: dbProducts = [] }: { products?: any
       id: 1,
       name: "Nestlé Premium Coffee Pouch",
       client: "Nestlé",
-      image: "/nestle-pouch.png",
+      image: "/products/塑料包装袋系列/茶叶袋/自立自封袋/10001.jpg",
     },
     {
       id: 2,
@@ -69,7 +69,7 @@ export default function Showcase({ products: dbProducts = [] }: { products?: any
 
   // Start in the middle of the massive array
   const [activeIndex, setActiveIndex] = useState(Math.floor(MULTIPLIER / 2) * products.length);
-  const [dimensions, setDimensions] = useState({ inactive: 220, active: 450, gap: 32 });
+  const [dimensions, setDimensions] = useState({ inactive: 200, active: 400, gap: 40 });
 
   useEffect(() => {
     const updateDims = () => {
@@ -77,9 +77,9 @@ export default function Showcase({ products: dbProducts = [] }: { products?: any
         if (window.innerWidth < 768) {
           setDimensions({ inactive: 140, active: 280, gap: 16 });
         } else if (window.innerWidth < 1024) {
-          setDimensions({ inactive: 180, active: 360, gap: 24 });
+          setDimensions({ inactive: 180, active: 340, gap: 24 });
         } else {
-          setDimensions({ inactive: 220, active: 480, gap: 32 });
+          setDimensions({ inactive: 200, active: 400, gap: 40 });
         }
       }
     };
@@ -95,17 +95,40 @@ export default function Showcase({ products: dbProducts = [] }: { products?: any
   const xOffset = -(dimensions.inactive + dimensions.gap) * activeIndex;
 
   return (
-    <section className="py-12 md:py-32 bg-[#F05A22] text-white overflow-hidden relative">
+    <section className="py-20 md:py-32 bg-[#F8F9FA] relative overflow-hidden">
+      {/* Background with Dark Overlay */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-fixed opacity-40 mix-blend-luminosity grayscale"
+        style={{ backgroundImage: "url('/images/factory/印刷车间/10001.png')" }}
+      ></div>
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="flex flex-col items-center mb-12 md:mb-20">
-          <h2 className="text-3xl md:text-[42px] font-extrabold text-white mb-4 uppercase tracking-[0.05em] relative inline-block text-center">
+        <div className="flex flex-col items-center mb-16 md:mb-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-3 mb-6"
+          >
+            <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+            <span className="text-xs font-semibold tracking-[0.2em] text-[#1A1A1A] uppercase">
+              Our Products
+            </span>
+            <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+          </motion.div>
+
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl md:text-[48px] font-extrabold text-[#1A1A1A] uppercase tracking-[-0.02em] text-center"
+          >
             {dict.home.showcase.title}
-            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-24 h-[3px] bg-white/50 rounded-full"></div>
-          </h2>
+          </motion.h2>
         </div>
 
         {/* Carousel Track Wrapper */}
-        <div className="relative w-full h-[400px] md:h-[500px]">
+        <div className="relative w-full h-[500px] md:h-[600px]">
           <motion.div
             className="absolute left-0 top-0 flex items-center h-full"
             style={{ gap: dimensions.gap }}
@@ -143,62 +166,50 @@ export default function Showcase({ products: dbProducts = [] }: { products?: any
                   transition={{ type: "spring", stiffness: 200, damping: 25 }}
                   onClick={() => setActiveIndex(index)}
                 >
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    {/* Active Blob Background */}
+                  <div className="relative w-full h-full flex flex-col items-center justify-center">
+                    {/* Active Blob Background / Tray */}
                     <motion.div
                       className="absolute inset-0 flex items-center justify-center pointer-events-none"
                       initial={false}
                       animate={{
-                        opacity: isActive ? 0.2 : 0,
-                        scale: isActive ? 1 : 0.5,
+                        opacity: isActive ? 1 : 0,
+                        scale: isActive ? 1 : 0.8,
                       }}
                       transition={{ duration: 0.4 }}
                     >
-                      <svg
-                        className="w-[120%] h-[120%] text-white"
-                        viewBox="10.729 17.304 414 381"
-                        fill="currentColor"
-                      >
-                        <path d="M101.467,357.531c16.794,19.325,62.145,72.815,153.388,13.893 c91.242-58.921,152.568-174.373,164.799-227.948c12.23-53.576,5.297-92.769-53.717-113.843 C306.922,8.558,171.356,12.814,82.454,55.581C-6.448,98.348,3.414,180.62,27.079,238.117 C50.745,295.614,84.679,338.21,101.467,357.531z" />
-                      </svg>
+                      <div className="w-[110%] h-[110%] rounded-[32px] bg-white border border-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.06)] backdrop-blur-md"></div>
+                      <div className="absolute inset-0 rounded-[32px] bg-gradient-to-b from-transparent to-[#FAFAFA] opacity-50"></div>
+                      
+                      {/* Brand highlight stripe */}
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-1 bg-gradient-to-r from-transparent via-[#F05A22] to-transparent opacity-50"></div>
                     </motion.div>
 
                     <motion.img
                       src={product.image}
                       alt={product.name}
-                      className="relative z-10 object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.3)]"
+                      className="relative z-10 object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.15)]"
                       animate={{
-                        width: isActive ? "105%" : "85%",
-                        height: isActive ? "105%" : "85%",
-                        y: isActive ? -15 : 0,
-                        scale: isActive ? 1.1 : 1,
+                        width: isActive ? "85%" : "75%",
+                        height: isActive ? "85%" : "75%",
+                        y: isActive ? -20 : 0,
+                        scale: isActive ? 1.05 : 1,
                       }}
                       transition={{ type: "spring", stiffness: 200, damping: 25 }}
                     />
                   </div>
 
-                  <motion.h3
+                  <motion.div
                     className={clsx(
-                      "font-bold text-center mt-4 transition-all duration-300",
-                      isActive ? "text-xl md:text-2xl text-white opacity-100 drop-shadow-sm" : "text-sm md:text-base text-white/70 group-hover:text-white opacity-80"
+                      "mt-6 transition-all duration-300 flex flex-col items-center",
+                      isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                     )}
                   >
-                    {product.name}
-                  </motion.h3>
-                  
-                  {/* Client Name Label */}
-                  <motion.div
-                    className="mt-2"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ 
-                      opacity: isActive ? 1 : 0,
-                      y: isActive ? 0 : -10
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-bold text-white uppercase tracking-wider border border-white/30">
+                    <span className="px-3 py-1 mb-3 bg-[#F05A22]/10 text-[#F05A22] rounded-full text-[10px] font-bold uppercase tracking-widest border border-[#F05A22]/20">
                       {product.client}
                     </span>
+                    <h3 className="font-bold text-center text-xl md:text-2xl text-[#1A1A1A] max-w-[80%] leading-tight">
+                      {product.name}
+                    </h3>
                   </motion.div>
                 </motion.div>
               );
@@ -210,13 +221,13 @@ export default function Showcase({ products: dbProducts = [] }: { products?: any
         <div className="absolute bottom-0 right-4 sm:right-6 lg:right-8 flex items-center gap-4 z-20">
           <button
             onClick={handlePrev}
-            className="bg-white/10 text-white hover:bg-white hover:text-[#F05A22] shadow-md border border-white/20 hover:scale-110 hover:shadow-lg w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+            className="bg-white text-[#1A1A1A] hover:text-[#F05A22] shadow-md border border-gray-100 hover:scale-110 hover:shadow-lg w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
           >
             <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
           </button>
           <button
             onClick={handleNext}
-            className="bg-white/10 text-white hover:bg-white hover:text-[#F05A22] shadow-md border border-white/20 hover:scale-110 hover:shadow-lg w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+            className="bg-white text-[#1A1A1A] hover:text-[#F05A22] shadow-md border border-gray-100 hover:scale-110 hover:shadow-lg w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
           >
             <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
           </button>
