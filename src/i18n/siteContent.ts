@@ -1,6 +1,6 @@
 const enContent = {
   navbar: {
-    productChildren: ["Plastic Packaging Bags", "Shrink Label Series"],
+    productChildren: ["Plastic Packaging Bags", "Shrink Label Series", "High-Barrier & Metallized Films"],
     marketChildren: ["Packaging News", "Exhibition", "Video"],
     languages: { en: "English", es: "Español", ar: "العربية" },
     whatsapp: "WhatsApp",
@@ -284,7 +284,7 @@ export const siteContent = {
   es: {
     ...enContent,
     navbar: {
-      productChildren: ["Bolsas de Plástico", "Etiquetas Termoencogibles"],
+      productChildren: ["Bolsas de Plástico", "Etiquetas Termoencogibles", "Películas Metalizadas y de Alta Barrera"],
       marketChildren: ["Noticias de Envases", "Exposición", "Video"],
       languages: { en: "English", es: "Español", ar: "العربية" },
       whatsapp: "WhatsApp",
@@ -472,7 +472,7 @@ export const siteContent = {
   ar: {
     ...enContent,
     navbar: {
-      productChildren: ["أكياس التغليف البلاستيكية", "سلسلة الملصقات المنكمشة"],
+      productChildren: ["أكياس التغليف البلاستيكية", "سلسلة الملصقات المنكمشة", "أفلام عالية الحاجز والمعدنية"],
       marketChildren: ["أخبار التغليف", "المعارض", "فيديو"],
       languages: { en: "English", es: "Español", ar: "العربية" },
       whatsapp: "واتساب",

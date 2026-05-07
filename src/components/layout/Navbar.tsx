@@ -9,7 +9,12 @@ import { useHero } from "@/components/home/HeroContext";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { setLanguage } from "@/actions/langActions";
 import { siteContent } from "@/i18n/siteContent";
-import { getProductCategoryNameFromParam, getProductCategoryNameFromPathname, normalizeProductCategoryHref } from "@/lib/productCategorySlug";
+import {
+  buildProductCategoryPath,
+  getProductCategoryNameFromParam,
+  getProductCategoryNameFromPathname,
+  normalizeProductCategoryHref,
+} from "@/lib/productCategorySlug";
 
 export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
   const router = useRouter();
@@ -129,31 +134,52 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
           children: [
             {
               name: content.navbar.productChildren[0],
-              href: "/products",
+              href: buildProductCategoryPath("Plastic Packaging Bags"),
               children: [
-                { name: "Custom Pet Supplies Bags", href: "/products", image: "/images/factory/制袋车间/10001.png" },
-                { name: "Tea Bags", href: "/products", image: "/images/factory/制袋车间/10002.png" },
-                { name: "Custom Food Bags", href: "/products", image: "/images/factory/制袋车间/10003.png" },
-                { name: "Medical Mask Bags", href: "/products", image: "/images/factory/制袋车间/10004.png" },
-                { name: "Toy Bags", href: "/products", image: "/images/factory/制袋车间/10005.png" },
-                { name: "Shaped Bags", href: "/products", image: "/products/塑料包装袋系列/异型袋/异型包装袋/10002.jpg" },
-                { name: "Ziplock Bags", href: "/products", image: "/images/factory/制袋车间/10007.png" },
-                { name: "Mask Bags", href: "/products", image: "/images/factory/制袋车间/10008.png" },
-                { name: "Kraft Paper Bags", href: "/products", image: "/images/factory/制袋车间/10009.png" },
-                { name: "Bubble Bags", href: "/products", image: "/images/factory/制袋车间/10010.png" },
-                { name: "Spout Pouches", href: "/products", image: "/images/factory/制袋车间/10011.png" },
-                { name: "Foil-Clear Bags", href: "/products", image: "/images/factory/制袋车间/10012.png" }
+                { name: "Custom Pet Supplies Bags", href: buildProductCategoryPath("Custom Pet Supplies Bags"), image: "/images/factory/制袋车间/10001.png" },
+                { name: "Tea Bags", href: buildProductCategoryPath("Tea Bags"), image: "/images/factory/制袋车间/10002.png" },
+                { name: "Custom Food Bags", href: buildProductCategoryPath("Custom Food Bags"), image: "/images/factory/制袋车间/10003.png" },
+                { name: "Medical Mask Bags", href: buildProductCategoryPath("Medical Mask Bags"), image: "/images/factory/制袋车间/10004.png" },
+                { name: "Toy Bags", href: buildProductCategoryPath("Toy Bags"), image: "/images/factory/制袋车间/10005.png" },
+                { name: "Shaped Bags", href: buildProductCategoryPath("Shaped Bags"), image: "/products/塑料包装袋系列/异型袋/异型包装袋/10002.jpg" },
+                { name: "Ziplock Bags", href: buildProductCategoryPath("Ziplock Bags"), image: "/images/factory/制袋车间/10007.png" },
+                { name: "Mask Bags", href: buildProductCategoryPath("Mask Bags"), image: "/images/factory/制袋车间/10008.png" },
+                { name: "Kraft Paper Bags", href: buildProductCategoryPath("Kraft Paper Bags"), image: "/images/factory/制袋车间/10009.png" },
+                { name: "Bubble Bags", href: buildProductCategoryPath("Bubble Bags"), image: "/images/factory/制袋车间/10010.png" },
+                { name: "Spout Pouches", href: buildProductCategoryPath("Spout Pouches"), image: "/images/factory/制袋车间/10011.png" },
+                { name: "Foil-Clear Bags", href: buildProductCategoryPath("Foil-Clear Bags"), image: "/images/factory/制袋车间/10012.png" }
               ]
             },
             {
               name: content.navbar.productChildren[1],
-              href: "/products",
+              href: buildProductCategoryPath("Shrink Label Series"),
               children: []
             },
             {
               name: content.navbar.productChildren[2],
-              href: "/products",
-              children: []
+              href: buildProductCategoryPath("High-Barrier & Metallized Films"),
+              children: [
+                {
+                  name: "Transparent High-Barrier Films (AlOx)",
+                  href: buildProductCategoryPath("Transparent High-Barrier Films (AlOx)"),
+                  image: "/images/factory/印刷车间/10003.png",
+                },
+                {
+                  name: "Metallized Films (VMPET/VMCPP)",
+                  href: buildProductCategoryPath("Metallized Films (VMPET/VMCPP)"),
+                  image: "/images/factory/制袋车间/10005.png",
+                },
+                {
+                  name: "Specialty & Functional Films",
+                  href: buildProductCategoryPath("Specialty & Functional Films"),
+                  image: "/images/factory/制袋车间/10006.png",
+                },
+                {
+                  name: "Recyclable Mono-Materials",
+                  href: buildProductCategoryPath("Recyclable Mono-Materials"),
+                  image: "/images/factory/制袋车间/10007.png",
+                },
+              ]
             }
           ]
         },
