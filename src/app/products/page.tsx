@@ -3,7 +3,7 @@ import ProductsClient from "./ProductsClient";
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import { buildRobotsMetadata, buildSeoMetadata, composeSeoTitle, getSiteUrl, getSystemSeo, jsonLdScript, toAbsoluteUrl } from "@/lib/seo";
-import { getPreferredProductImage, parseProductGallery } from "@/lib/productImages";
+import { getProductsPageData } from "./shared";
 
 export const dynamic = "force-dynamic";
 
@@ -50,28 +50,7 @@ export default async function ProductsPage() {
   const cookieStore = await cookies();
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const text = productsListText[locale as keyof typeof productsListText] || productsListText.en;
-  const allProductsLabel =
-    locale === "es" ? "Todos los productos" : locale === "ar" ? "كل المنتجات" : "All Products";
-
-  const dbCategories = await prisma.category.findMany();
-  const dbProducts = await prisma.product.findMany({
-    include: {
-      category: true,
-    }
-  });
-
-  const categories = [allProductsLabel, ...dbCategories.map(c => c.name)];
-  
-  const products = await Promise.all(
-    dbProducts.map(async (p) => ({
-      id: p.id,
-      slug: p.slug,
-      name: p.name,
-      category: p.category.name,
-      image: await getPreferredProductImage(p.image, parseProductGallery(p.gallery)),
-      features: JSON.parse(p.features),
-    }))
-  );
+  const { categories, products } = await getProductsPageData(locale);
   const siteUrl = getSiteUrl();
   const itemListJsonLd = {
     "@context": "https://schema.org",

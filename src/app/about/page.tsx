@@ -1,12 +1,13 @@
 "use client";
 
-import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { AnimatePresence, motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Target, ShieldCheck, Leaf, Users, ArrowRight, Award, Globe, Building2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Target, ShieldCheck, Users, ArrowRight, Globe, Building2, X } from "lucide-react";
 import clsx from "clsx";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { siteContent } from "@/i18n/siteContent";
+import VideoModal from "./VideoModal";
 
 function AnimatedCounter({ value, suffix = "" }: { value: number, suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -42,6 +43,16 @@ function AnimatedCounter({ value, suffix = "" }: { value: number, suffix?: strin
 export default function AboutPage() {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
+  const introHighlights = [
+    {
+      title: "Shenzhen-Based Export Hub",
+      description: "Located next to Hong Kong, we support fast global shipping and responsive project coordination.",
+    },
+    {
+      title: "BRC / ISO Certified",
+      description: "Factory systems are built around stable quality control, food-grade production discipline, and reliable delivery.",
+    },
+  ];
   const stats = content.about.stats.map((item: { value: number; suffix: string; label: string }, index: number) => ({
     ...item,
     icon: [Building2, Globe, ShieldCheck, Users][index],
@@ -52,7 +63,60 @@ export default function AboutPage() {
     color: ["text-blue-500", "text-[#F05A22]", "text-emerald-500", "text-purple-500"][index],
     bg: ["bg-blue-50", "bg-[#F05A22]/10", "bg-emerald-50", "bg-purple-50"][index],
   }));
+  const factoryGallery = [
+    {
+      name: "Printing Workshop",
+      img: "/images/factory/印刷车间/10001.png",
+      className: "absolute left-0 top-0 w-[58%] z-10",
+    },
+    {
+      name: "Bag Making Workshop",
+      img: "/images/factory/制袋车间/10006.png",
+      className: "absolute right-0 top-12 w-[48%] z-20",
+    },
+    {
+      name: "Production Line",
+      img: "/images/factory/制袋车间/10001.png",
+      className: "absolute bottom-0 left-1/2 w-[52%] -translate-x-1/2 z-30",
+    },
+  ];
+  const [selectedFactoryIndex, setSelectedFactoryIndex] = useState<number | null>(null);
+
+  const handlePrevFactory = useCallback(() => {
+    setSelectedFactoryIndex((current) => {
+      if (current === null) return 0;
+      return current === 0 ? factoryGallery.length - 1 : current - 1;
+    });
+  }, [factoryGallery.length]);
+
+  const handleNextFactory = useCallback(() => {
+    setSelectedFactoryIndex((current) => {
+      if (current === null) return 0;
+      return current === factoryGallery.length - 1 ? 0 : current + 1;
+    });
+  }, [factoryGallery.length]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedFactoryIndex(null);
+      }
+
+      if (selectedFactoryIndex !== null && event.key === "ArrowLeft") {
+        handlePrevFactory();
+      }
+
+      if (selectedFactoryIndex !== null && event.key === "ArrowRight") {
+        handleNextFactory();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleNextFactory, handlePrevFactory, selectedFactoryIndex]);
+
   return (
+    <>
     <div className="min-h-screen bg-white">
       {/* Page Hero Banner */}
       <section className="relative w-full pt-[140px] pb-16 md:pt-[180px] md:pb-20 bg-[#111111] flex flex-col items-center justify-center overflow-hidden min-h-[350px] md:minh-[450px]">
@@ -100,100 +164,86 @@ export default function AboutPage() {
       {/* About Company Intro */}
       <section className="py-16 md:py-24">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-            {/* Image Side - Premium Mosaic */}
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="w-full lg:w-1/2 relative h-[500px] md:h-[600px]"
-            >
-              {/* Main Image */}
-              <div className="absolute top-0 left-0 w-[80%] h-[75%] rounded-none overflow-hidden border border-gray-200 shadow-lg z-10">
-                <img 
-                  src="/images/factory/制袋车间/10001.png" 
-                  alt="HAILITONG Packaging Solutions" 
-                  className="w-full h-full object-cover bg-gray-50"
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="w-full"
+          >
+            <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[560px_1fr] lg:gap-16 xl:gap-24">
+              {/* Left Video Content & Images */}
+              <div className="w-full flex flex-col gap-6">
+                <VideoModal 
+                  videoId="t4a25BQtjmY" 
+                  coverImage="/images/factory/制袋车间/10002.png" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
-                <div className="absolute bottom-6 left-6">
-                  <div className="inline-flex items-center justify-center w-10 h-10 bg-[#F05A22] rounded-none mb-3">
-                    <Leaf className="w-5 h-5 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white tracking-wide">{content.about.imageTitle}</h3>
+                
+                {/* Additional Factory Images Below Video - Staggered Layout */}
+                <div className="relative h-[420px] lg:h-[460px]">
+                  {factoryGallery.map((item, index) => (
+                    <motion.button
+                      key={item.name}
+                      type="button"
+                      initial={{ opacity: 0, y: index === 2 ? 30 : -20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.7, delay: index * 0.15, ease: "easeOut" }}
+                      className={clsx(
+                        item.className,
+                        "overflow-hidden border border-gray-200 bg-white p-3 text-left shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(240,90,34,0.14)]"
+                      )}
+                      onClick={() => setSelectedFactoryIndex(index)}
+                    >
+                      <div className="aspect-[4/5] overflow-hidden">
+                        <img
+                          src={item.img}
+                          alt={item.name}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    </motion.button>
+                  ))}
                 </div>
               </div>
 
-              {/* Secondary Image - Bottom Right Overlap */}
-              <div className="absolute bottom-0 right-0 w-[55%] h-[55%] rounded-none overflow-hidden border-4 border-white shadow-xl z-20">
-                <img 
-                  src="/images/factory/印刷车间/10101 (1).png" 
-                  alt="Factory Workshop" 
-                  className="w-full h-full object-cover bg-gray-50"
-                />
-              </div>
+              {/* Right Text Content */}
+              <div className="flex flex-col h-full">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-[2px] bg-[#F05A22]"></div>
+                  <span className="text-xs font-bold tracking-[0.25em] text-gray-500 uppercase">
+                    {content.about.storyTag}
+                  </span>
+                </div>
 
-              {/* Floating Stat Card */}
-              <div className="absolute top-8 -right-4 md:-right-8 bg-white p-5 md:p-6 rounded-none shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-gray-200 hidden sm:block z-30">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#111111] rounded-none flex items-center justify-center">
-                    <ShieldCheck className="w-6 h-6 text-[#F05A22]" />
-                  </div>
-                  <div>
-                    <div className="text-xl font-extrabold text-[#1A1A1A] tracking-tight">BRC & ISO</div>
-                    <div className="text-gray-500 font-medium text-xs tracking-wide uppercase mt-1">{content.about.certLabel}</div>
-                  </div>
+                <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-8 leading-tight tracking-tight">
+                  {content.about.storyTitle.split("Our Future")[0]}
+                  <span className="text-[#F05A22]">Our Future</span>
+                </h2>
+
+                <div className="space-y-6 text-gray-500 text-[16px] leading-8 font-light mb-10">
+                  <p>{content.about.storyBody1}</p>
+                  <p>{content.about.storyBody2}</p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-4 mt-auto pt-6 border-t border-gray-100">
+                  <Link 
+                    href="/products" 
+                    className="inline-flex items-center justify-center px-8 py-4 bg-[#1A1A1A] text-white rounded-none font-bold text-[14px] uppercase tracking-wider hover:bg-[#F05A22] transition-colors duration-300"
+                  >
+                    {content.about.exploreProducts}
+                  </Link>
+                  <Link 
+                    href="/contact" 
+                    className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-[#1A1A1A] border border-gray-300 rounded-none font-bold text-[14px] uppercase tracking-wider hover:border-[#1A1A1A] hover:bg-gray-50 transition-colors duration-300 group"
+                  >
+                    {content.about.getInTouch}
+                    <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </div>
-            </motion.div>
-
-            {/* Text Side */}
-            <motion.div 
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="w-full lg:w-1/2"
-            >
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-8 h-[2px] bg-[#F05A22]"></div>
-                <span className="text-xs font-bold tracking-[0.25em] text-gray-500 uppercase">
-                  {content.about.storyTag}
-                </span>
-              </div>
-              
-              <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-8 leading-tight tracking-tight">
-                {content.about.storyTitle.split("Our Future")[0]}
-                <span className="text-[#F05A22]">Our Future</span>
-              </h2>
-              
-              <div className="space-y-6 text-gray-500 text-lg leading-relaxed font-light mb-10">
-                <p>
-                  {content.about.storyBody1}
-                </p>
-                <p>
-                  {content.about.storyBody2}
-                </p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-4">
-                <Link 
-                  href="/products" 
-                  className="inline-flex items-center justify-center px-8 py-4 bg-[#1A1A1A] text-white rounded-none font-bold text-[14px] uppercase tracking-wider hover:bg-[#F05A22] transition-colors duration-300"
-                >
-                  {content.about.exploreProducts}
-                </Link>
-                <Link 
-                  href="/contact" 
-                  className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-[#1A1A1A] border border-gray-300 rounded-none font-bold text-[14px] uppercase tracking-wider hover:border-[#1A1A1A] hover:bg-gray-50 transition-colors duration-300 group"
-                >
-                  {content.about.getInTouch}
-                  <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -350,7 +400,57 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
     </div>
+
+    <AnimatePresence>
+      {selectedFactoryIndex !== null ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-[9999] flex items-center justify-center"
+        >
+          <div
+            className="absolute inset-0 bg-black/90 backdrop-blur-sm cursor-pointer"
+            onClick={() => setSelectedFactoryIndex(null)}
+          />
+
+          <div className="relative z-[10000] flex h-full w-full items-center justify-center px-4 md:px-16 pointer-events-none">
+            <div className="pointer-events-auto relative flex h-[82vh] w-full max-w-5xl items-center justify-center">
+              <img
+                src={factoryGallery[selectedFactoryIndex].img}
+                alt={factoryGallery[selectedFactoryIndex].name}
+                className="max-h-full max-w-full object-contain drop-shadow-2xl"
+              />
+
+              <button
+                type="button"
+                onClick={handlePrevFactory}
+                className="absolute left-0 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-3 text-white/70 transition-colors hover:bg-[#F05A22] hover:text-white md:-left-10"
+              >
+                <ChevronLeft className="h-7 w-7" />
+              </button>
+              <button
+                type="button"
+                onClick={handleNextFactory}
+                className="absolute right-0 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-3 text-white/70 transition-colors hover:bg-[#F05A22] hover:text-white md:-right-10"
+              >
+                <ChevronRight className="h-7 w-7" />
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setSelectedFactoryIndex(null)}
+            className="absolute right-4 top-4 z-[10001] rounded-full border border-white/20 bg-black/60 p-3 text-white transition-colors hover:bg-[#F05A22] md:right-8 md:top-8"
+          >
+            <X className="h-6 w-6" />
+          </button>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+    </>
   );
 }

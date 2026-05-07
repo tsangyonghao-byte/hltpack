@@ -9,6 +9,7 @@ const CATEGORIES = [
   "Spout Pouches",
   "Roll Stock Film",
   "Sustainable Packaging",
+  "High-Barrier & Metallized Films",
 ];
 
 const MOCK_PRODUCTS = [

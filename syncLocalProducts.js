@@ -33,19 +33,19 @@ function translateTitle(zhTitle, categoryZh) {
 
 // English Category Map based on Chinese SubCategory
 const catMap = {
-  '口罩袋': 'Medical Packaging Bags',
+  '口罩袋': 'Medical Mask Bags',
   '吸嘴袋': 'Spout Pouches',
   '定制宠物用品袋': 'Custom Pet Supplies Bags',
   '定制食品袋': 'Custom Food Bags',
-  '异性袋': 'Custom Shaped Bags',
-  '异型袋': 'Custom Shaped Bags',
-  '气泡袋': 'Bubble Mailers',
+  '异性袋': 'Shaped Bags',
+  '异型袋': 'Shaped Bags',
+  '气泡袋': 'Bubble Bags',
   '牛皮纸袋': 'Kraft Paper Bags',
   '玩具袋': 'Toy Bags',
   '自封袋': 'Ziplock Bags',
   '茶叶袋': 'Tea Bags',
   '阴阳袋': 'Foil-Clear Bags',
-  '面膜袋': 'Facial Mask Bags',
+  '面膜袋': 'Mask Bags',
   '收缩标签系列': 'Shrink Label Series',
   '卷膜系列': 'Roll Film Series',
   '塑料包装袋系列': 'Plastic Packaging Bags'
@@ -123,7 +123,7 @@ async function run() {
     const mainImg = await getPreferredImage(webImages, { baseDir: __dirname }) || webImages[0];
     const galleryJson = JSON.stringify(webImages);
     
-    const catEn = catMap[subCatZh] || catMap[majorCatZh] || 'Plastic Packaging Bags';
+    const catEn = catMap[prodNameZh] || catMap[subCatZh] || catMap[majorCatZh] || 'Plastic Packaging Bags';
     let categoryId = dbCatMap[catEn];
     
     if (!categoryId) {

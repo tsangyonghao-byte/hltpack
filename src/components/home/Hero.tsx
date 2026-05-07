@@ -83,9 +83,10 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
       {/* Refined Background - Protects Logo Area but Keeps Orange Impact */}
       <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
         {/* Mobile: Pure white background at the top for logo, orange at the bottom. Desktop: Diagonal cut */}
-        <div 
-          className="absolute inset-0 w-full h-full lg:w-[65%] bg-gradient-to-br from-[#F05A22] to-[#D64816] z-0"
+        <div
+          className="absolute inset-0 w-full h-full lg:w-[65%] z-0"
           style={{
+            background: "linear-gradient(to bottom, #FF8E5E 0%, #F05A22 45%, #9A3110 100%)",
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", // Default for mobile (full cover, handled by CSS below)
           }}
         />

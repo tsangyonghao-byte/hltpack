@@ -6,6 +6,9 @@ import { cookies } from "next/headers";
 import ProductGallery from "@/components/products/ProductGallery";
 import { buildRobotsMetadata, buildSeoMetadata, getSiteUrl, getSystemSeo, jsonLdScript, toAbsoluteUrl } from "@/lib/seo";
 import { getOrderedProductImages, parseProductGallery } from "@/lib/productImages";
+import ProductsClient from "../ProductsClient";
+import { getProductsPageData } from "../shared";
+import { buildProductCategoryPath, getProductCategoryNameFromParam, isProductCategorySlug } from "@/lib/productCategorySlug";
 
 import type { Metadata } from "next";
 
@@ -83,6 +86,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const text = productDetailText[locale as keyof typeof productDetailText] || productDetailText.en;
   const { siteNoindex, noindexPaths } = await getSystemSeo(locale);
   const resolvedParams = await params;
+  const categoryName = getProductCategoryNameFromParam(resolvedParams.slug);
+
+  if (isProductCategorySlug(resolvedParams.slug) && categoryName) {
+    return buildSeoMetadata({
+      title: `${categoryName} | HAILITONG Packaging`,
+      description: `Browse ${categoryName.toLowerCase()} from HAILITONG Packaging.`,
+      canonicalPath: `/products/${resolvedParams.slug}`,
+      robots: buildRobotsMetadata(`/products/${resolvedParams.slug}`, { siteNoindex, noindexPaths }),
+    });
+  }
+
   const product = await findProductByParam(resolvedParams.slug);
 
   if (!product) {
@@ -107,6 +121,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const text = productDetailText[locale as keyof typeof productDetailText] || productDetailText.en;
   const resolvedParams = await params;
+  const categoryName = getProductCategoryNameFromParam(resolvedParams.slug);
+
+  if (isProductCategorySlug(resolvedParams.slug) && categoryName) {
+    const { categories, products } = await getProductsPageData(locale);
+    return <ProductsClient categories={categories} products={products} />;
+  }
+
   const product = await findProductByParam(resolvedParams.slug);
 
   if (!product) {
@@ -129,6 +150,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const gallery = parseProductGallery(product.gallery);
   const allImages = await getOrderedProductImages(product.image, gallery);
   const productPath = `/products/${canonicalSegment}`;
+  const categoryPath = buildProductCategoryPath(product.category.name);
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -156,8 +178,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       {
         "@type": "ListItem",
         position: 2,
-        name: text.products,
-        item: `${getSiteUrl()}/products`,
+        name: product.category.name,
+        item: `${getSiteUrl()}${categoryPath}`,
       },
       {
         "@type": "ListItem",
@@ -176,16 +198,16 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         <div className="max-w-[1200px] mx-auto flex items-center text-sm text-gray-400">
           <Link href="/" className="hover:text-white transition-colors">{text.home}</Link>
           <ChevronRight className="w-4 h-4 mx-2" />
-          <Link href="/products" className="hover:text-white transition-colors">{text.products}</Link>
+          <Link href={categoryPath} className="hover:text-white transition-colors">{product.category.name}</Link>
           <ChevronRight className="w-4 h-4 mx-2" />
           <span className="text-white font-bold">{product.name}</span>
         </div>
       </div>
 
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
-        <Link href="/products" className="inline-flex items-center text-gray-500 hover:text-[#F05A22] font-bold text-sm uppercase tracking-wider mb-8 transition-colors group">
+        <Link href={categoryPath} className="inline-flex items-center text-gray-500 hover:text-[#F05A22] font-bold text-sm uppercase tracking-wider mb-8 transition-colors group">
           <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-          {text.back}
+          {`${text.back}: ${product.category.name}`}
         </Link>
 
         <div className="bg-white rounded-none p-6 md:p-12 border border-gray-200 mb-16">

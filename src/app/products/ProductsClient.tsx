@@ -3,14 +3,19 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ChevronRight, ChevronDown, Filter, Search } from "lucide-react";
 import clsx from "clsx";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { buildProductCategoryPath, getProductCategoryNameFromParam, getProductCategoryNameFromPathname, getProductCategorySlug } from "@/lib/productCategorySlug";
 
 const productText = {
   en: {
+    home: "Home",
     allProducts: "All Products",
     title: "Our Products",
+    searchTitle: "Search Results",
+    searchIn: "in",
     search: "Search products...",
     filters: "Filters",
     categories: "Categories",
@@ -23,10 +28,14 @@ const productText = {
     clearFilters: "Clear Filters",
     mainCat1: "Plastic Packaging Bags",
     mainCat2: "Shrink Label Series",
+    mainCat3: "High-Barrier & Metallized Films",
   },
   es: {
+    home: "Inicio",
     allProducts: "Todos los productos",
     title: "Nuestros Productos",
+    searchTitle: "Resultados de busqueda",
+    searchIn: "en",
     search: "Buscar productos...",
     filters: "Filtros",
     categories: "Categorías",
@@ -39,10 +48,14 @@ const productText = {
     clearFilters: "Limpiar filtros",
     mainCat1: "Bolsas de Embalaje de Plástico",
     mainCat2: "Serie de Etiquetas Termoencogibles",
+    mainCat3: "Películas Metalizadas y de Alta Barrera",
   },
   ar: {
+    home: "الرئيسية",
     allProducts: "كل المنتجات",
     title: "منتجاتنا",
+    searchTitle: "نتائج البحث",
+    searchIn: "في",
     search: "ابحث عن المنتجات...",
     filters: "الفلاتر",
     categories: "الفئات",
@@ -55,25 +68,30 @@ const productText = {
     clearFilters: "مسح الفلاتر",
     mainCat1: "سلسلة أكياس التغليف البلاستيكية",
     mainCat2: "سلسلة الملصقات المنكمشة",
+    mainCat3: "أفلام عالية الحاجز والمعدنية",
   },
 } as const;
 
 export default function ProductsClient({ categories, products }: { categories: string[], products: any[] }) {
   const { dict, locale } = useLanguage();
   const text = productText[locale as keyof typeof productText] || productText.en;
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [activeCategory, setActiveCategory] = useState<string>(text.allProducts);
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isPlasticBagsOpen, setIsPlasticBagsOpen] = useState(true);
-  const ITEMS_PER_PAGE = 6;
+  const [isHighBarrierOpen, setIsHighBarrierOpen] = useState(true);
+  const ITEMS_PER_PAGE = 9;
 
   // Hardcoded subcategories for the first main category based on DB seeds
   const plasticBagSubs = [
     "Custom Pet Supplies Bags",
     "Tea Bags",
     "Custom Food Bags",
-    "Facial Mask Bags",
+    "Medical Mask Bags",
     "Toy Bags",
     "Shaped Bags",
     "Ziplock Bags",
@@ -84,14 +102,90 @@ export default function ProductsClient({ categories, products }: { categories: s
     "Foil-Clear Bags"
   ];
 
-  // Read URL params on mount to support global search
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const searchParam = params.get("search");
+  // Hardcoded subcategories for the new High-Barrier & Metallized Films category
+  const highBarrierSubs = [
+    "Transparent High-Barrier Films (AlOx)",
+    "Metallized Films (VMPET/VMCPP)",
+    "Specialty & Functional Films",
+    "Recyclable Mono-Materials"
+  ];
+
+  const syncFiltersFromUrl = () => {
+    const categoryParam =
+      getProductCategoryNameFromPathname(pathname) ||
+      getProductCategoryNameFromParam(searchParams.get("category"));
+    const searchParam = searchParams.get("search");
+    const isPlasticCategory =
+      categoryParam === "Plastic Packaging Bags" || Boolean(categoryParam && plasticBagSubs.includes(categoryParam));
+    const isHighBarrierCategory =
+      categoryParam === "High-Barrier & Metallized Films" || Boolean(categoryParam && highBarrierSubs.includes(categoryParam));
+
+    setIsPlasticBagsOpen(isPlasticCategory || !categoryParam);
+    setIsHighBarrierOpen(isHighBarrierCategory || !categoryParam);
+
     if (searchParam) {
       setSearchQuery(searchParam);
+    } else {
+      setSearchQuery("");
     }
-  }, []);
+
+    if (!categoryParam) {
+      setActiveCategory(text.allProducts);
+      return;
+    }
+
+    if (categoryParam === "Plastic Packaging Bags") {
+      setActiveCategory(text.mainCat1);
+      return;
+    }
+
+    if (categoryParam === "High-Barrier & Metallized Films") {
+      setActiveCategory(text.mainCat3);
+      return;
+    }
+
+    setActiveCategory(categoryParam);
+  };
+
+  const updateUrlFilters = (nextCategory?: string, nextSearch?: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (nextSearch !== undefined) {
+      if (nextSearch.trim()) {
+        params.set("search", nextSearch.trim());
+      } else {
+        params.delete("search");
+      }
+    }
+
+    if (nextCategory !== undefined) {
+      if (
+        nextCategory === text.allProducts ||
+        !nextCategory
+      ) {
+        params.delete("category");
+      } else {
+        const categoryName =
+          nextCategory === text.mainCat1
+            ? "Plastic Packaging Bags"
+            : nextCategory === text.mainCat3
+              ? "High-Barrier & Metallized Films"
+              : nextCategory;
+        const categoryPath = buildProductCategoryPath(categoryName);
+        const query = params.toString();
+        router.push(query ? `${categoryPath}?${query}` : categoryPath, { scroll: false });
+        return;
+      }
+    }
+
+    const query = params.toString();
+    router.push(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  };
+
+  // Read URL params whenever route search params change
+  useEffect(() => {
+    syncFiltersFromUrl();
+  }, [searchParams, text.allProducts, text.mainCat1, text.mainCat3]);
 
   // Reset page when filters change
   useEffect(() => {
@@ -108,23 +202,54 @@ export default function ProductsClient({ categories, products }: { categories: s
     );
   }, [text.allProducts]);
 
-  const filteredProducts = products.filter((product) => {
+  const matchesActiveCategory = (productCategory: string) => {
     let matchesCategory = false;
-    
+
     if (activeCategory === text.allProducts) {
       matchesCategory = true;
     } else if (activeCategory === text.mainCat1) {
-      // If clicking the main category "Plastic Packaging Bags", match all its subcategories
-      matchesCategory = plasticBagSubs.includes(product.category);
+      matchesCategory = plasticBagSubs.includes(productCategory);
+    } else if (activeCategory === text.mainCat3) {
+      matchesCategory = highBarrierSubs.includes(productCategory);
     } else {
-      // Direct exact match (e.g. for "Tea Bags" or "Shrink Label Series")
-      matchesCategory = product.category === activeCategory;
+      matchesCategory = productCategory === activeCategory;
     }
 
+    return matchesCategory;
+  };
+
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory = matchesActiveCategory(product.category);
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           product.category.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  const pageTitle =
+    searchQuery.trim() && activeCategory !== text.allProducts
+      ? `${activeCategory}`
+      : searchQuery.trim()
+        ? text.searchTitle
+        : activeCategory === text.allProducts
+          ? text.title
+          : activeCategory;
+
+  const pageSubtitle =
+    searchQuery.trim() && activeCategory !== text.allProducts
+      ? `"${searchQuery.trim()}" ${text.searchIn} ${activeCategory}`
+      : searchQuery.trim()
+        ? `"${searchQuery.trim()}"`
+        : activeCategory === text.allProducts
+          ? dict.nav.products
+          : activeCategory;
+
+  const breadcrumbTrail = [
+    text.home,
+    text.title,
+    ...(activeCategory !== text.allProducts ? [activeCategory] : []),
+  ];
+
+  const heroBackgroundImage = "/images/factory/印刷车间/10003.png";
 
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
   const currentProducts = filteredProducts.slice(
@@ -156,12 +281,25 @@ export default function ProductsClient({ categories, products }: { categories: s
         {/* Background Image / Pattern */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
-          style={{ backgroundImage: "url('/images/factory/印刷车间/10003.png')" }}
+          style={{ backgroundImage: `url('${heroBackgroundImage}')` }}
         ></div>
         {/* Dark Overlay for Text Readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/35 to-black/55"></div>
         
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center justify-center flex-grow">
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 flex flex-wrap items-center justify-center gap-3 text-[11px] font-bold uppercase tracking-[0.18em] text-white/65"
+          >
+            {breadcrumbTrail.map((item, index) => (
+              <div key={`${item}-${index}`} className="flex items-center gap-3">
+                {index > 0 ? <span className="text-[#F05A22]">/</span> : null}
+                <span className={index === breadcrumbTrail.length - 1 ? "text-white" : ""}>{item}</span>
+              </div>
+            ))}
+          </motion.div>
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -180,8 +318,16 @@ export default function ProductsClient({ categories, products }: { categories: s
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-[64px] font-extrabold text-white mb-6 tracking-tight uppercase leading-tight"
           >
-            {text.title}
+            {pageTitle}
           </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.18 }}
+            className="max-w-2xl text-sm md:text-base text-white/70 tracking-[0.08em] uppercase"
+          >
+            {pageSubtitle}
+          </motion.p>
         </div>
       </section>
 
@@ -197,7 +343,11 @@ export default function ProductsClient({ categories, products }: { categories: s
                   placeholder={text.search} 
                   className="w-full pl-10 pr-4 py-3 rounded-none border border-gray-200 focus:outline-none focus:border-[#F05A22] focus:ring-1 focus:ring-[#F05A22] text-[14px] transition-all bg-white"
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => {
+                    const nextValue = e.target.value;
+                    setSearchQuery(nextValue);
+                    updateUrlFilters(undefined, nextValue);
+                  }}
                 />
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               </div>
@@ -224,7 +374,11 @@ export default function ProductsClient({ categories, products }: { categories: s
                     placeholder={text.search} 
                     className="w-full pl-10 pr-4 py-4 rounded-none border border-gray-200 focus:outline-none focus:border-[#F05A22] focus:ring-1 focus:ring-[#F05A22] text-[14px] transition-all bg-white"
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => {
+                      const nextValue = e.target.value;
+                      setSearchQuery(nextValue);
+                      updateUrlFilters(undefined, nextValue);
+                    }}
                   />
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 </div>
@@ -243,6 +397,7 @@ export default function ProductsClient({ categories, products }: { categories: s
                       onClick={() => {
                         setActiveCategory(text.allProducts);
                         setIsMobileFilterOpen(false);
+                        updateUrlFilters(text.allProducts);
                       }}
                       className={clsx(
                         "w-full text-left px-5 py-4 rounded-none text-[14px] font-bold transition-all duration-300 flex items-center justify-between group border-l-2",
@@ -272,6 +427,7 @@ export default function ProductsClient({ categories, products }: { categories: s
                       onClick={() => {
                         setActiveCategory(text.mainCat1);
                         setIsPlasticBagsOpen(!isPlasticBagsOpen);
+                        updateUrlFilters(text.mainCat1);
                       }}
                     >
                       {text.mainCat1}
@@ -299,6 +455,7 @@ export default function ProductsClient({ categories, products }: { categories: s
                               onClick={() => {
                                 setActiveCategory(sub);
                                 setIsMobileFilterOpen(false);
+                                updateUrlFilters(sub);
                               }}
                               className={clsx(
                                 "w-full text-left pl-10 pr-5 py-2.5 text-[13px] transition-colors flex items-center justify-between group",
@@ -322,6 +479,7 @@ export default function ProductsClient({ categories, products }: { categories: s
                       onClick={() => {
                         setActiveCategory("Shrink Label Series");
                         setIsMobileFilterOpen(false);
+                        updateUrlFilters("Shrink Label Series");
                       }}
                       className={clsx(
                         "w-full text-left px-5 py-4 rounded-none text-[14px] font-bold transition-all duration-300 flex items-center justify-between group border-l-2",
@@ -337,6 +495,63 @@ export default function ProductsClient({ categories, products }: { categories: s
                         </motion.div>
                       )}
                     </button>
+                  </li>
+                  {/* Main Category 3 (High-Barrier Films) with Subcategories */}
+                  <li>
+                    <div
+                      className={clsx(
+                        "w-full text-left px-5 py-4 rounded-none text-[14px] font-bold transition-all duration-300 flex items-center justify-between group border-l-2 cursor-pointer",
+                        (activeCategory === text.mainCat3 || highBarrierSubs.includes(activeCategory))
+                          ? "bg-white border-[#F05A22] text-[#1A1A1A] shadow-sm" 
+                          : "bg-transparent border-transparent text-gray-500 hover:bg-white hover:text-[#1A1A1A] hover:border-gray-200"
+                      )}
+                      onClick={() => {
+                        setActiveCategory(text.mainCat3);
+                        setIsHighBarrierOpen(!isHighBarrierOpen);
+                        updateUrlFilters(text.mainCat3);
+                      }}
+                    >
+                      {text.mainCat3}
+                      <motion.div 
+                        animate={{ rotate: isHighBarrierOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <ChevronDown className={clsx(
+                          "w-4 h-4", 
+                          (activeCategory === text.mainCat3 || highBarrierSubs.includes(activeCategory)) ? "text-[#F05A22]" : "text-gray-400 group-hover:text-[#1A1A1A]"
+                        )} />
+                      </motion.div>
+                    </div>
+
+                    {/* High-Barrier Subcategories Dropdown */}
+                    <motion.div
+                      initial={false}
+                      animate={{ height: isHighBarrierOpen ? "auto" : 0, opacity: isHighBarrierOpen ? 1 : 0 }}
+                      className="overflow-hidden bg-gray-50"
+                    >
+                      <ul className="py-2">
+                        {highBarrierSubs.map((sub) => (
+                          <li key={sub}>
+                            <button
+                              onClick={() => {
+                                setActiveCategory(sub);
+                                setIsMobileFilterOpen(false);
+                                updateUrlFilters(sub);
+                              }}
+                              className={clsx(
+                                "w-full text-left pl-10 pr-5 py-2.5 text-[13px] transition-colors flex items-center justify-between group",
+                                activeCategory === sub 
+                                  ? "text-[#F05A22] font-bold bg-orange-50/50" 
+                                  : "text-gray-500 hover:text-[#1A1A1A] hover:bg-gray-100"
+                              )}
+                            >
+                              {sub}
+                              {activeCategory === sub && <ChevronRight className="w-3 h-3 text-[#F05A22]" />}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
                   </li>
                 </ul>
 
@@ -356,7 +571,7 @@ export default function ProductsClient({ categories, products }: { categories: s
             <div className="flex-1">
               <div className="mb-8 flex items-center justify-between border-b border-gray-200 pb-4">
                 <h2 className="text-2xl md:text-3xl font-extrabold text-[#1A1A1A] tracking-tight">
-                  {activeCategory} <span className="text-gray-400 text-lg font-light ml-2">({filteredProducts.length})</span>
+                  {pageTitle} <span className="text-gray-400 text-lg font-light ml-2">({filteredProducts.length})</span>
                 </h2>
               </div>
 
@@ -466,6 +681,7 @@ export default function ProductsClient({ categories, products }: { categories: s
                     onClick={() => {
                       setSearchQuery("");
                       setActiveCategory(text.allProducts);
+                      updateUrlFilters(text.allProducts, "");
                     }}
                     className="px-8 py-3 bg-[#1A1A1A] text-white rounded-none text-[13px] font-bold uppercase tracking-wider hover:bg-[#F05A22] transition-colors"
                   >

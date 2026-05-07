@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/i18n/LanguageContext";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function AboutUs() {
@@ -96,11 +96,6 @@ export default function AboutUs() {
                 Discover Our Story
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
-              
-              <button className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-white/20 text-white font-bold text-sm tracking-wide hover:bg-white/10 transition-colors duration-300 rounded-full group">
-                <Play className="mr-2 w-4 h-4 fill-white group-hover:text-[#F05A22] group-hover:fill-[#F05A22] transition-colors" />
-                Factory Tour
-              </button>
             </div>
           </motion.div>
 

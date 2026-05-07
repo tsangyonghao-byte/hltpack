@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Search, Menu, Phone, Home, Globe, ChevronDown, ChevronRight, X, MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,10 +9,12 @@ import { useHero } from "@/components/home/HeroContext";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { setLanguage } from "@/actions/langActions";
 import { siteContent } from "@/i18n/siteContent";
+import { getProductCategoryNameFromParam, getProductCategoryNameFromPathname, normalizeProductCategoryHref } from "@/lib/productCategorySlug";
 
 export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const isHomePage = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,6 +26,50 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
   const { currentSlideIndex } = useHero();
   const { dict, locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
+  const currentCategory =
+    getProductCategoryNameFromPathname(pathname) ||
+    getProductCategoryNameFromParam(searchParams.get("category"));
+
+  const getHrefCategory = (href?: string) => {
+    if (!href) return null;
+    try {
+      return getProductCategoryNameFromParam(
+        new URL(href, "https://hltpack.local").searchParams.get("category")
+      );
+    } catch {
+      return null;
+    }
+  };
+
+  const isTopLevelLinkActive = (href?: string) => {
+    if (!href) return false;
+    const hrefPath = href.split("?")[0];
+    if (hrefPath === "/products") {
+      return pathname === "/products";
+    }
+    return pathname === hrefPath;
+  };
+
+  const isMegaSubLinkActive = (href?: string) => {
+    if (pathname !== "/products") return false;
+    const hrefCategory = getHrefCategory(href);
+    return Boolean(hrefCategory && currentCategory === hrefCategory);
+  };
+
+  const isMegaCategoryActive = (item: any) => {
+    if (pathname !== "/products") return false;
+    const hrefCategory = getHrefCategory(item?.href);
+    if (!hrefCategory) return false;
+
+    if (currentCategory === hrefCategory) return true;
+    return Boolean(item?.children?.some((sub: any) => isMegaSubLinkActive(sub.href)));
+  };
+
+  // Close Mega Menu on route change
+  useEffect(() => {
+    setActiveMegaMenu(null);
+    setIsMobileMenuOpen(false);
+  }, [pathname, searchParams]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,9 +134,9 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                 { name: "Custom Pet Supplies Bags", href: "/products", image: "/images/factory/制袋车间/10001.png" },
                 { name: "Tea Bags", href: "/products", image: "/images/factory/制袋车间/10002.png" },
                 { name: "Custom Food Bags", href: "/products", image: "/images/factory/制袋车间/10003.png" },
-                { name: "Facial Mask Bags", href: "/products", image: "/images/factory/制袋车间/10004.png" },
+                { name: "Medical Mask Bags", href: "/products", image: "/images/factory/制袋车间/10004.png" },
                 { name: "Toy Bags", href: "/products", image: "/images/factory/制袋车间/10005.png" },
-                { name: "Shaped Bags", href: "/products", image: "/products/塑料包装袋系列/异性袋/异型包装袋/10002.jpg" },
+                { name: "Shaped Bags", href: "/products", image: "/products/塑料包装袋系列/异型袋/异型包装袋/10002.jpg" },
                 { name: "Ziplock Bags", href: "/products", image: "/images/factory/制袋车间/10007.png" },
                 { name: "Mask Bags", href: "/products", image: "/images/factory/制袋车间/10008.png" },
                 { name: "Kraft Paper Bags", href: "/products", image: "/images/factory/制袋车间/10009.png" },
@@ -131,16 +177,16 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
       
       return {
         name: locale === "zh" ? item.nameZh : item.nameEn,
-        href: item.link,
+        href: normalizeProductCategoryHref(item.link),
         children: children.length > 0 ? children.map((child: any) => {
           const subChildren = navItems.filter((i: any) => i.parentId === child.id).sort((a, b) => a.order - b.order);
           return {
             name: locale === "zh" ? child.nameZh : child.nameEn,
-            href: child.link,
+            href: normalizeProductCategoryHref(child.link),
             image: child.image,
             children: subChildren.length > 0 ? subChildren.map((subChild: any) => ({
               name: locale === "zh" ? subChild.nameZh : subChild.nameEn,
-              href: subChild.link,
+              href: normalizeProductCategoryHref(subChild.link),
               image: subChild.image
             })) : undefined
           };
@@ -248,9 +294,11 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                 className="relative"
                 onMouseEnter={() => {
                   if (link.children?.length) {
+                    const matchedChild = link.children.find((child: any) => isMegaCategoryActive(child));
+                    const matchedSub = matchedChild?.children?.find((sub: any) => isMegaSubLinkActive(sub.href));
                     setActiveMegaMenu(link.name);
-                    setActiveMegaCategory(link.children[0]?.name || null);
-                    setActiveMegaSubCategory(null);
+                    setActiveMegaCategory(matchedChild?.name || link.children[0]?.name || null);
+                    setActiveMegaSubCategory(matchedSub?.name || null);
                   }
                 }}
                 onMouseLeave={() => {
@@ -261,11 +309,15 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
               >
                 <Link
                   href={link.href}
-                  className={`group inline-flex items-center text-[13px] xl:text-[15px] font-bold transition-colors duration-[300ms] tracking-[0.5px] xl:tracking-[1px] relative ${isSolid ? "pb-0" : "pb-1"} text-[#1A1A1A]`}
+                  className={`group inline-flex items-center text-[13px] xl:text-[15px] font-bold transition-colors duration-[300ms] tracking-[0.5px] xl:tracking-[1px] relative ${isSolid ? "pb-0" : "pb-1"} ${
+                    isTopLevelLinkActive(link.href) ? "text-[#F05A22]" : "text-[#1A1A1A]"
+                  }`}
                 >
                   {link.name}
                   {link.children?.length ? <ChevronDown className={`ml-1 h-3.5 w-3.5 xl:h-4 xl:w-4 transition-transform ${activeMegaMenu === link.name ? "rotate-180" : ""}`} /> : null}
-                  <span className={`absolute bottom-[-4px] left-1/2 -translate-x-1/2 h-[1.5px] transition-all duration-300 ease-out bg-[#1A1A1A] ${activeMegaMenu === link.name ? "w-full" : "w-0 group-hover:w-full"}`}></span>
+                  <span className={`absolute bottom-[-4px] left-1/2 -translate-x-1/2 h-[1.5px] transition-all duration-300 ease-out ${
+                    isTopLevelLinkActive(link.href) ? "bg-[#F05A22]" : "bg-[#1A1A1A]"
+                  } ${activeMegaMenu === link.name || isTopLevelLinkActive(link.href) ? "w-full" : "w-0 group-hover:w-full"}`}></span>
                 </Link>
 
                 {/* Mega Menu Dropdown (Only for Products or links matching /products) */}
@@ -281,21 +333,25 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                         {/* Left Column: Categories */}
                         <div className="w-[300px] xl:w-[320px] bg-white overflow-y-auto custom-scrollbar py-4 border-r border-gray-50">
                           {link.children.map((child: any) => (
-                            <button
+                            <Link
                               key={child.name}
+                              href={child.href || '#'}
                               onMouseEnter={() => {
                                 setActiveMegaCategory(child.name);
                                 setActiveMegaSubCategory(null);
                               }}
+                              onClick={() => {
+                                setActiveMegaMenu(null);
+                              }}
                               className={`w-full flex items-center justify-between px-8 py-4 text-left text-[16px] transition-all duration-200 border-l-4 ${
-                                activeMegaCategory === child.name 
+                                activeMegaCategory === child.name || isMegaCategoryActive(child)
                                   ? "bg-[#EEF2FA]/80 text-[#F05A22] font-bold border-[#F05A22]" 
                                   : "border-transparent text-gray-700 hover:bg-gray-50 hover:text-[#F05A22]"
                               }`}
                             >
                               <span>{child.name}</span>
-                              <ChevronRight className={`w-4 h-4 transition-opacity ${activeMegaCategory === child.name ? 'opacity-100' : 'opacity-40'}`} />
-                            </button>
+                              <ChevronRight className={`w-4 h-4 transition-opacity ${activeMegaCategory === child.name || isMegaCategoryActive(child) ? 'opacity-100' : 'opacity-40'}`} />
+                            </Link>
                           ))}
                         </div>
                         
@@ -315,8 +371,9 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                                       key={idx}
                                       href={sub.href} 
                                       onMouseEnter={() => setActiveMegaSubCategory(sub.name)}
+                                      onClick={() => setActiveMegaMenu(null)}
                                       className={`px-4 py-3 rounded-xl text-[15px] transition-all duration-200 ${
-                                        activeMegaSubCategory === sub.name 
+                                        activeMegaSubCategory === sub.name || isMegaSubLinkActive(sub.href)
                                           ? "bg-[#EEF2FA] text-[#F05A22] font-bold shadow-sm" 
                                           : "text-gray-700 hover:bg-[#EEF2FA]/60 hover:text-[#F05A22]"
                                       }`}
@@ -328,6 +385,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                                 
                                 <Link 
                                   href={child?.href || '#'}
+                                  onClick={() => setActiveMegaMenu(null)}
                                   className="inline-flex items-center text-[#F05A22] font-bold hover:underline mt-auto pt-8 text-[15px] px-4"
                                 >
                                   Explore All <ChevronRight className="w-4 h-4 ml-1" />
