@@ -9,6 +9,7 @@ import { useHero } from "@/components/home/HeroContext";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { setLanguage } from "@/actions/langActions";
 import { siteContent } from "@/i18n/siteContent";
+import { useSystemSetting } from "@/components/layout/SystemSettingContext";
 import {
   buildProductCategoryPath,
   getProductCategoryNameFromParam,
@@ -31,6 +32,9 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
   const { currentSlideIndex } = useHero();
   const { dict, locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
+  const setting = useSystemSetting();
+  const contactPhone = setting?.contactPhone || "";
+  const phoneHref = contactPhone ? `tel:${contactPhone.replace(/\s+/g, "")}` : "/contact";
   const currentCategory =
     getProductCategoryNameFromPathname(pathname) ||
     getProductCategoryNameFromParam(searchParams.get("category"));
@@ -279,10 +283,10 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                 <Link href="/" className={`transition-colors ${isSolid ? "text-white/90 hover:text-white" : "text-[#F05A22]/90 hover:text-[#F05A22]"}`}>
                   <Home className="w-[20px] h-[20px] xl:w-[24px] xl:h-[24px]" strokeWidth={1.5} />
                 </Link>
-                <Link href="#" className={`transition-colors ${isSolid ? "text-white/90 hover:text-white" : "text-[#F05A22]/90 hover:text-[#F05A22]"}`}>
+                <Link href={phoneHref} className={`transition-colors ${isSolid ? "text-white/90 hover:text-white" : "text-[#F05A22]/90 hover:text-[#F05A22]"}`}>
                   <Phone className="w-[20px] h-[20px] xl:w-[24px] xl:h-[24px]" strokeWidth={1.5} />
                 </Link>
-                <Link href="#" className={`transition-colors ${isSolid ? "text-white/90 hover:text-white" : "text-[#F05A22]/90 hover:text-[#F05A22]"}`}>
+                <Link href="/products" className={`transition-colors ${isSolid ? "text-white/90 hover:text-white" : "text-[#F05A22]/90 hover:text-[#F05A22]"}`}>
                   <Search className="w-[20px] h-[20px] xl:w-[24px] xl:h-[24px]" strokeWidth={1.5} />
                 </Link>
                 

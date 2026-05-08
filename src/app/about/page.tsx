@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Target, ShieldCheck, Users, ArrowRight, Glob
 import clsx from "clsx";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { siteContent } from "@/i18n/siteContent";
+import { useSystemSetting } from "@/components/layout/SystemSettingContext";
 import VideoModal from "./VideoModal";
 
 function AnimatedCounter({ value, suffix = "" }: { value: number, suffix?: string }) {
@@ -43,6 +44,11 @@ function AnimatedCounter({ value, suffix = "" }: { value: number, suffix?: strin
 export default function AboutPage() {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
+  const setting = useSystemSetting();
+  const contactAddress =
+    (locale === "zh" ? setting?.contactAddressZh : setting?.contactAddressEn) ||
+    content.contact?.address || 
+    "No.51, Lan'er Road, Longxin Community, Baolong Street, Longgang District, Shenzhen, China";
   const introHighlights = [
     {
       title: "Shenzhen-Based Export Hub",
@@ -398,6 +404,46 @@ export default function AboutPage() {
               <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Location Map Section */}
+      <section className="py-16 md:py-24 bg-white border-t border-gray-100">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center text-center mb-16">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+              <span className="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">
+                Our Location
+              </span>
+              <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-6 tracking-tight">
+              Visit Our Factory
+            </h2>
+            <p className="text-lg text-gray-500 max-w-2xl mx-auto font-light leading-relaxed whitespace-pre-line">
+              {contactAddress}
+            </p>
+          </div>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="w-full aspect-[16/9] md:aspect-[21/9] lg:aspect-[24/9] bg-gray-100 overflow-hidden shadow-sm"
+          >
+            <iframe
+              title="Factory Location"
+              src="https://maps.google.com/maps?q=广东省深圳市龙岗区宝龙街道龙新社区兰二路51号深圳市海利通包装用品有限公司&t=m&z=15&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </motion.div>
         </div>
       </section>
     </div>
