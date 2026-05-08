@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import prisma from "./prisma";
 import {
@@ -26,19 +26,45 @@ export async function isAdminAuthenticated() {
   return await verifyAdminSessionToken(session);
 }
 
+async function shouldUseSecureAdminCookies() {
+  if (process.env.ADMIN_COOKIE_SECURE === "true") return true;
+  if (process.env.ADMIN_COOKIE_SECURE === "false") return false;
+  if (process.env.NODE_ENV !== "production") return false;
+
+  const headerStore = await headers();
+  const forwardedProto = headerStore.get("x-forwarded-proto");
+  if (forwardedProto) {
+    return forwardedProto.split(",")[0]?.trim() === "https";
+  }
+
+  const origin = headerStore.get("origin");
+  if (origin) {
+    return origin.startsWith("https://");
+  }
+
+  const referer = headerStore.get("referer");
+  if (referer) {
+    return referer.startsWith("https://");
+  }
+
+  return false;
+}
+
 export async function setAdminSession(userId: string) {
   const cookieStore = await cookies();
   const token = await buildAdminSessionToken(userId);
-  cookieStore.set(ADMIN_SESSION_COOKIE, token, getAdminCookieOptions());
+  const secure = await shouldUseSecureAdminCookies();
+  cookieStore.set(ADMIN_SESSION_COOKIE, token, getAdminCookieOptions(secure));
 }
 
 export async function setAdminFlash(value: string) {
   const cookieStore = await cookies();
+  const secure = await shouldUseSecureAdminCookies();
   cookieStore.set("ADMIN_FLASH", value, {
     path: "/",
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure,
     maxAge: 60,
   });
 }

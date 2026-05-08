@@ -63,12 +63,12 @@ export function isSafeAdminPath(path?: string | null) {
   return !!path && path.startsWith("/admin");
 }
 
-export function getAdminCookieOptions() {
+export function getAdminCookieOptions(secure = process.env.NODE_ENV === "production") {
   return {
     path: "/",
     httpOnly: true,
     sameSite: "lax" as const,
-    secure: process.env.NODE_ENV === "production",
+    secure,
     maxAge: 60 * 60 * 24 * 7,
   };
 }
