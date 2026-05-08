@@ -1,13 +1,13 @@
 "use client";
 
-import { MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { useSystemSetting } from "@/components/layout/SystemSettingContext";
 
 export default function FloatingWhatsApp() {
-  // Use the actual phone number for WhatsApp without '+' or spaces
-  const phoneNumber = "8613682412949";
-  const message = "Hi, I'm interested in your packaging solutions.";
-  const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  const setting = useSystemSetting();
+  const waUrl =
+    setting?.whatsapp ||
+    "https://wa.me/8613682412949?text=Hi,%20I'm%20interested%20in%20your%20packaging%20solutions.";
 
   return (
     <motion.a

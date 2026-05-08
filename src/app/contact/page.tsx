@@ -9,6 +9,7 @@ import { sendContactEmail } from "@/actions/contactActions";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { siteContent } from "@/i18n/siteContent";
 import { useSearchParams } from "next/navigation";
+import { useSystemSetting } from "@/components/layout/SystemSettingContext";
 
 const rfqText = {
   en: {
@@ -132,6 +133,7 @@ const rfqText = {
 export default function ContactPage() {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
+  const setting = useSystemSetting();
   const searchParams = useSearchParams();
   const formText = rfqText[locale as keyof typeof rfqText] || rfqText.en;
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -157,6 +159,11 @@ export default function ContactPage() {
 
   const [selectedInquiryType, setSelectedInquiryType] = useState(defaults.inquiryType);
   const isDetailedRFQ = ['quote', 'custom', 'samples'].includes(selectedInquiryType);
+  const contactAddress =
+    (locale === "zh" ? setting?.contactAddressZh : setting?.contactAddressEn) ||
+    content.contact.address;
+  const contactPhone = setting?.contactPhone || content.footer.phone;
+  const contactEmail = setting?.contactEmail || content.footer.email;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -276,7 +283,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="text-[19px] font-bold text-[#1A1A1A] mb-4 tracking-wide">{content.contact.headquarters}</h3>
                 <p className="text-gray-500 font-light leading-relaxed mb-6">
-                  {content.contact.address.split("\n").map((line: string) => (
+                  {contactAddress.split("\n").map((line: string) => (
                     <span key={line}>{line}<br /></span>
                   ))}
                 </p>
@@ -292,7 +299,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h4 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">{content.contact.phoneLabel}</h4>
-                      <p className="text-[16px] font-bold text-[#1A1A1A] tracking-wide">{content.footer.phone}</p>
+                      <p className="text-[16px] font-bold text-[#1A1A1A] tracking-wide">{contactPhone}</p>
                     </div>
                   </div>
                   
@@ -304,7 +311,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h4 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">{content.contact.emailLabel}</h4>
-                      <p className="text-[16px] font-bold text-[#1A1A1A] tracking-wide">{content.footer.email}</p>
+                      <p className="text-[16px] font-bold text-[#1A1A1A] tracking-wide">{contactEmail}</p>
                     </div>
                   </div>
 

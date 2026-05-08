@@ -80,27 +80,28 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
 
   return (
     <section className="relative w-full h-auto lg:h-[100vh] lg:min-h-[800px] lg:max-h-[1000px] pt-[120px] pb-[100px] lg:pt-[160px] lg:pb-0 flex flex-col justify-center overflow-hidden bg-white">
-      {/* Refined Background - Protects Logo Area but Keeps Orange Impact */}
+      {/* Refined Background - Gradient from White to Orange */}
       <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
-        {/* Mobile: Pure white background at the top for logo, orange at the bottom. Desktop: Diagonal cut */}
+        {/* Mobile & Desktop Gradient */}
         <div
           className="absolute inset-0 w-full h-full lg:w-[65%] z-0"
           style={{
-            background: "linear-gradient(to bottom, #FF8E5E 0%, #F05A22 45%, #9A3110 100%)",
+            background: "linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 12%, #F05A22 40%, #C43B0D 100%)",
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", // Default for mobile (full cover, handled by CSS below)
           }}
         />
-        {/* Desktop ONLY: The white section on the right cutting into the orange */}
-        <div 
-          className="hidden lg:block absolute top-0 right-0 w-[60%] h-full bg-white z-10"
-          style={{
-            clipPath: "polygon(20% 0, 100% 0, 100% 100%, 0 100%)", 
-          }}
-        />
-        {/* Top-Left Logo Protection Area - Stronger on mobile to protect logo and menu */}
-        <div 
-          className="absolute top-[-100px] left-[-50px] w-[150%] sm:w-[500px] h-[350px] sm:h-[300px] bg-white blur-[60px] lg:blur-[60px] z-[5] pointer-events-none opacity-100 lg:opacity-90"
-        />
+        {/* Desktop ONLY: The white section on the right cutting into the orange (Curved) */}
+        <div className="hidden lg:block absolute top-0 right-0 w-[60%] h-full z-10 pointer-events-none">
+          <svg
+            className="absolute inset-0 w-full h-full text-white"
+            preserveAspectRatio="none"
+            viewBox="0 0 100 100"
+            fill="currentColor"
+          >
+            {/* A single smooth sweeping curve resembling a semi-circle arch */}
+            <path d="M15,0 L100,0 L100,100 L15,100 Q-15,50 15,0 Z" />
+          </svg>
+        </div>
       </div>
 
       <div className="relative z-10 w-full h-full flex flex-col justify-center max-w-[1600px] mx-auto" ref={emblaRef}>

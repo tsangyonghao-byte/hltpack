@@ -111,7 +111,7 @@ export default function AboutUs() {
               >
                 <div className="text-4xl md:text-5xl lg:text-[56px] font-bold text-white mb-2 font-serif flex items-baseline tracking-tight">
                   {inView ? (
-                    <CountUp end={stat.value} duration={2.5} separator="," />
+                    <CountUp end={stat.value} duration={4.5} separator="," />
                   ) : (
                     "0"
                   )}

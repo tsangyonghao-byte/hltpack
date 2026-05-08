@@ -5,11 +5,16 @@ import { MessageCircle, ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { siteContent } from "@/i18n/siteContent";
+import { useSystemSetting } from "@/components/layout/SystemSettingContext";
 
 export default function FloatingWidgets() {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
+  const setting = useSystemSetting();
   const [isVisible, setIsVisible] = useState(false);
+  const whatsappUrl =
+    setting?.whatsapp ||
+    "https://wa.me/8613682412949?text=Hi,%20I'm%20interested%20in%20your%20packaging%20solutions.";
 
   useEffect(() => {
     const syncVisibility = () => {
@@ -58,7 +63,7 @@ export default function FloatingWidgets() {
   return (
     <>
       <a 
-        href="https://wa.me/8613682412949?text=Hi,%20I'm%20interested%20in%20your%20packaging%20solutions." 
+        href={whatsappUrl}
         target="_blank" 
         rel="noopener noreferrer"
         className="mobile-floating-whatsapp sm:hidden fixed bottom-0 left-0 right-0 z-[100] h-14 bg-[#25D366] text-white flex items-center justify-center gap-3 font-bold text-[16px] shadow-[0_-8px_20px_rgba(37,211,102,0.25)]"
@@ -69,7 +74,7 @@ export default function FloatingWidgets() {
 
       <div className="hidden sm:flex fixed bottom-8 right-8 z-[100] flex-col items-end space-y-4">
         <a 
-          href="https://wa.me/8613682412949?text=Hi,%20I'm%20interested%20in%20your%20packaging%20solutions." 
+          href={whatsappUrl}
           target="_blank" 
           rel="noopener noreferrer"
           className="group relative flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-[0_10px_20px_rgba(37,211,102,0.3)] hover:scale-110 transition-all duration-300"
