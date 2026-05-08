@@ -398,9 +398,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
     {(setting?.whatsapp || true) && (
       <div className="md:hidden fixed bottom-0 left-0 w-full bg-[#25D366] h-[55px] flex items-center justify-center z-50 shadow-[0_-2px_10px_rgba(0,0,0,0.1)]">
         <a href={setting?.whatsapp || "#"} className="flex items-center gap-2 text-white font-extrabold text-[17px] tracking-wide w-full h-full justify-center">
-          <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white shadow-sm">
-            <img src="/WhatsApp.png" alt="WhatsApp" className="w-6 h-6 object-contain" />
-          </span>
+          <img src="/WhatsApp2.png" alt="WhatsApp" className="w-7 h-7 object-contain drop-shadow-sm" />
           {content.floating.whatsapp}
         </a>
       </div>

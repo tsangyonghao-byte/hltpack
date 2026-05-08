@@ -66,11 +66,9 @@ export default function FloatingWidgets() {
           href={whatsappHref}
           target={whatsappUrl ? "_blank" : undefined}
           rel={whatsappUrl ? "noopener noreferrer" : undefined}
-          className="mobile-floating-whatsapp sm:hidden fixed bottom-0 left-0 right-0 z-[100] h-14 bg-[#25D366] text-white flex items-center justify-center gap-3 font-bold text-[16px] shadow-[0_-8px_20px_rgba(37,211,102,0.25)]"
+          className="mobile-floating-whatsapp sm:hidden fixed bottom-0 left-0 right-0 z-[100] h-14 bg-[#25D366] text-white flex items-center justify-center gap-2 font-bold text-[16px] shadow-[0_-8px_20px_rgba(37,211,102,0.25)]"
       >
-          <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white shadow-sm">
-            <img src="/WhatsApp.png" alt="WhatsApp" className="w-6 h-6 object-contain" />
-          </span>
+          <img src="/WhatsApp2.png" alt="WhatsApp" className="w-7 h-7 object-contain drop-shadow-sm" />
           {whatsappLabel}
       </a>
 

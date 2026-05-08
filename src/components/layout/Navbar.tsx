@@ -258,7 +258,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
           
           {/* Mobile Menu Button (Only visible on small screens) */}
           <button 
-            className="md:hidden flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#F05A22] text-white shadow-[0_8px_20px_rgba(240,90,34,0.25)] transition-transform duration-300 active:scale-95"
+            className="md:hidden flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white text-[#1A1A1A] shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-gray-100 transition-transform duration-300 active:scale-95"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Toggle Menu"
           >
@@ -476,20 +476,15 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="md:hidden fixed inset-0 z-[120] bg-[rgba(248,249,251,0.92)] backdrop-blur-xl"
+            className="md:hidden fixed inset-0 z-[120] bg-[rgba(248,249,251,0.98)] backdrop-blur-xl"
           >
-            {/* Inject a global style to hide the floating WhatsApp widget when mobile menu is open */}
-            <style>{`
-              .mobile-floating-whatsapp {
-                display: none !important;
-              }
-            `}</style>
+            {/* NO longer hiding whatsapp, so that it remains visible just like on logospack */}
             
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 30 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="flex h-[100dvh] flex-col"
             >
               <div className="flex items-center justify-between px-5 pt-5">
@@ -497,7 +492,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                   <img src="/logo.png" alt="HAILITONG Packaging" className="w-[106px] h-auto object-contain" />
                 </Link>
                 <button
-                  className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-gradient-to-br from-[#F05A22] to-[#ff7e4f] text-white shadow-[0_10px_25px_rgba(240,90,34,0.28)]"
+                  className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white text-[#1A1A1A] shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-gray-100 transition-transform duration-300 active:scale-95"
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-label="Close Menu"
                 >
