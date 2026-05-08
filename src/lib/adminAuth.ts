@@ -4,10 +4,19 @@ import prisma from "./prisma";
 import {
   ADMIN_SESSION_COOKIE,
   buildAdminSessionToken,
+  verifyAdminSessionTokenLight,
   verifyAdminSessionToken,
   getAdminCookieOptions,
   isSafeAdminPath,
 } from "./adminAuthShared";
+
+export async function isAdminAuthenticatedLight() {
+  const cookieStore = await cookies();
+  const session = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
+  if (!session) return false;
+
+  return await verifyAdminSessionTokenLight(session);
+}
 
 export async function isAdminAuthenticated() {
   const cookieStore = await cookies();
@@ -92,6 +101,14 @@ export async function getCurrentAdminIdentity() {
 
 export async function requireAdminSession(nextPath = "/admin") {
   const authenticated = await isAdminAuthenticated();
+  if (!authenticated) {
+    const target = isSafeAdminPath(nextPath) ? nextPath : "/admin";
+    redirect(`/login?next=${encodeURIComponent(target)}`);
+  }
+}
+
+export async function requireAdminPageSession(nextPath = "/admin") {
+  const authenticated = await isAdminAuthenticatedLight();
   if (!authenticated) {
     const target = isSafeAdminPath(nextPath) ? nextPath : "/admin";
     redirect(`/login?next=${encodeURIComponent(target)}`);

@@ -29,11 +29,18 @@ export async function buildAdminSessionToken(userId: string) {
   return `${userId}.${hash}`;
 }
 
-export async function verifyAdminSessionToken(token: string) {
+export async function verifyAdminSessionTokenLight(token: string) {
   if (!token || !token.includes(".")) return false;
   const [userId] = token.split(".");
   const expected = await buildAdminSessionToken(userId);
-  if (token !== expected) return false;
+  return token === expected;
+}
+
+export async function verifyAdminSessionToken(token: string) {
+  const isSignatureValid = await verifyAdminSessionTokenLight(token);
+  if (!isSignatureValid) return false;
+
+  const [userId] = token.split(".");
 
   if (userId === "root") {
     return true;

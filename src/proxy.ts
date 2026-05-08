@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import {
   ADMIN_SESSION_COOKIE,
   isAdminAuthConfigured,
-  verifyAdminSessionToken,
+  verifyAdminSessionTokenLight,
 } from "@/lib/adminAuthShared";
 
 export async function proxy(req: NextRequest) {
@@ -18,7 +18,7 @@ export async function proxy(req: NextRequest) {
     }
 
     const session = req.cookies.get(ADMIN_SESSION_COOKIE)?.value;
-    if (session && (await verifyAdminSessionToken(session))) {
+    if (session && (await verifyAdminSessionTokenLight(session))) {
       return NextResponse.next();
     }
 

@@ -5,14 +5,14 @@ import AdminToaster from "./AdminToaster";
 import AdminFlashToast from "./AdminFlashToast";
 import { AdminLanguageProvider } from "@/i18n/AdminLanguageContext";
 import { getAdminDictionary } from "@/i18n/getAdminDictionary";
-import { consumeAdminFlash, requireAdminSession } from "@/lib/adminAuth";
+import { consumeAdminFlash, requireAdminPageSession } from "@/lib/adminAuth";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  await requireAdminSession("/admin");
+  await requireAdminPageSession("/admin");
   const flash = await consumeAdminFlash();
   const { dict, locale } = await getAdminDictionary();
 
