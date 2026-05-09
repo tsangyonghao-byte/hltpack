@@ -87,6 +87,28 @@ export default function AboutPage() {
     },
   ];
   const [selectedFactoryIndex, setSelectedFactoryIndex] = useState<number | null>(null);
+  const [activeLocation, setActiveLocation] = useState(0);
+
+  const locations = [
+    {
+      id: 0,
+      title: locale === "zh" ? "深圳总部及工厂" : "Shenzhen Headquarters & Factory",
+      address: contactAddress,
+      query: "广东省深圳市龙岗区宝龙街道龙新社区兰二路51号深圳市海利通包装用品有限公司"
+    },
+    {
+      id: 1,
+      title: locale === "zh" ? "纽约办事处" : "New York Office",
+      address: "1178 Broadway, 3rd Floor #3886 , New York , New York 10001, US",
+      query: "1178 Broadway, 3rd Floor #3886, New York, NY 10001, USA"
+    },
+    {
+      id: 2,
+      title: locale === "zh" ? "香港办事处" : "Hong Kong Office",
+      address: "Good Hope Commercial Centre, 2–16 Fa Yuen Street, Hong Kong, HK",
+      query: "Good Hope Commercial Centre, 2–16 Fa Yuen Street, Hong Kong"
+    }
+  ];
 
   const handlePrevFactory = useCallback(() => {
     setSelectedFactoryIndex((current) => {
@@ -414,36 +436,65 @@ export default function AboutPage() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-8 h-[1px] bg-[#F05A22]"></div>
               <span className="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">
-                Our Location
+                Global Presence
               </span>
               <div className="w-8 h-[1px] bg-[#F05A22]"></div>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-6 tracking-tight">
-              Visit Our Factory
+              {locale === "zh" ? "全球办事处及工厂" : "Our Global Offices & Factory"}
             </h2>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto font-light leading-relaxed whitespace-pre-line">
-              {contactAddress}
+              {locale === "zh" ? "我们在深圳、纽约和香港均设有分支机构，为您提供全球化的包装解决方案与本地化服务。" : "With branches in Shenzhen, New York, and Hong Kong, we provide global packaging solutions with localized service."}
             </p>
           </div>
           
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="w-full aspect-[16/9] md:aspect-[21/9] lg:aspect-[24/9] bg-gray-100 overflow-hidden shadow-sm"
-          >
-            <iframe
-              title="Factory Location"
-              src="https://maps.google.com/maps?q=广东省深圳市龙岗区宝龙街道龙新社区兰二路51号深圳市海利通包装用品有限公司&t=m&z=15&output=embed"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </motion.div>
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
+            {/* Left: Location Tabs */}
+            <div className="w-full lg:w-1/3 flex flex-col gap-4">
+              {locations.map((loc) => (
+                <button
+                  key={loc.id}
+                  onClick={() => setActiveLocation(loc.id)}
+                  className={clsx(
+                    "flex flex-col items-start text-left p-6 md:p-8 transition-all duration-300 border-l-4",
+                    activeLocation === loc.id
+                      ? "bg-[#F05A22]/5 border-[#F05A22] shadow-[0_4px_20px_rgba(240,90,34,0.08)]"
+                      : "bg-white border-transparent hover:bg-gray-50 hover:border-gray-200 border-l-gray-200"
+                  )}
+                >
+                  <h3 className={clsx(
+                    "text-xl font-bold mb-3 tracking-wide transition-colors",
+                    activeLocation === loc.id ? "text-[#F05A22]" : "text-[#1A1A1A]"
+                  )}>
+                    {loc.title}
+                  </h3>
+                  <p className="text-gray-500 font-light leading-relaxed text-[15px]">
+                    {loc.address}
+                  </p>
+                </button>
+              ))}
+            </div>
+
+            {/* Right: Map Iframe */}
+            <motion.div 
+              key={activeLocation}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="w-full lg:w-2/3 h-[400px] lg:h-auto min-h-[400px] bg-gray-100 shadow-md"
+            >
+              <iframe
+                title={`Location - ${locations[activeLocation].title}`}
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(locations[activeLocation].query)}&t=m&z=15&output=embed`}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </motion.div>
+          </div>
         </div>
       </section>
     </div>

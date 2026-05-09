@@ -84,14 +84,14 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
       <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
         {/* Mobile & Desktop Gradient */}
         <div
-          className="absolute inset-0 w-full h-full lg:w-[65%] z-0"
+          className="absolute inset-0 w-full h-full lg:w-[75%] z-0"
           style={{
-            background: "linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 12%, #F05A22 40%, #C43B0D 100%)",
+            background: "linear-gradient(to bottom, #F05A22 0%, #F05A22 40%, #F88960 70%, #FFFFFF 100%)",
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", // Default for mobile (full cover, handled by CSS below)
           }}
         />
         {/* Desktop ONLY: The white section on the right cutting into the orange (Curved) */}
-        <div className="hidden lg:block absolute top-0 right-0 w-[60%] h-full z-10 pointer-events-none">
+        <div className="hidden lg:block absolute top-0 right-0 w-[50%] h-full z-10 pointer-events-none">
           <svg
             className="absolute inset-0 w-full h-full text-white"
             preserveAspectRatio="none"
@@ -118,13 +118,13 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -40 }}
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col items-start text-left w-full lg:w-[45%] z-20 shrink-0 pt-6 sm:pt-8 lg:pt-0 order-2 lg:order-1"
+                    className="flex flex-col items-start text-left w-full lg:w-[45%] z-20 shrink-0 pt-6 sm:pt-8 lg:pt-0 order-1 lg:order-1"
                   >
                     <motion.div 
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: 0.2 }}
-                      className="inline-flex items-center gap-2 mb-4 lg:mb-6 px-3 py-1 lg:px-4 lg:py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 shadow-sm"
+                      className="inline-flex items-center gap-2 mb-4 lg:mb-6 px-3 py-1 lg:px-4 lg:py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 shadow-md drop-shadow-md"
                     >
                       <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-white animate-pulse"></span>
                       <h3 className="text-white font-medium tracking-[0.05em] text-[11px] lg:text-[13px]">
@@ -132,8 +132,8 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                       </h3>
                     </motion.div>
                     
-                    {/* Text is white on both mobile and desktop now, because mobile text is placed on the orange background at the bottom */}
-                    <h2 className="text-white font-serif font-bold text-[36px] sm:text-[44px] md:text-[52px] lg:text-[72px] xl:text-[80px] leading-[1.05] tracking-[-0.02em] mb-4 lg:mb-8 drop-shadow-sm lg:drop-shadow-md">
+                    {/* Text is white on both mobile and desktop. On mobile it's placed at the top which is dark orange */}
+                    <h2 className="text-white font-serif font-bold text-[36px] sm:text-[44px] md:text-[52px] lg:text-[72px] xl:text-[80px] leading-[1.05] tracking-[-0.02em] mb-4 lg:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
                       {slide.title.split(' ').map((word: string, i: number) => (
                         <span key={i} className="inline-block overflow-hidden mr-[0.25em] pb-1 lg:pb-2">
                           <motion.span 
@@ -152,7 +152,7 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: 0.4 }}
-                      className="text-white/90 text-[14px] lg:text-[18px] max-w-[500px] leading-[1.6] lg:leading-[1.7] mb-8 lg:mb-12 font-sans font-light drop-shadow-sm"
+                      className="text-white text-[14px] lg:text-[18px] max-w-[500px] leading-[1.6] lg:leading-[1.7] mb-8 lg:mb-12 font-sans font-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
                     >
                       {slide.description}
                     </motion.p>
@@ -163,12 +163,12 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                       transition={{ duration: 0.8, delay: 0.5 }}
                       className="flex flex-row items-center justify-start gap-3 lg:gap-5 w-full sm:w-auto"
                     >
-                      <a href={slide.link || "/products"} className="flex-1 sm:flex-none px-6 lg:px-9 py-3 lg:py-3.5 bg-white text-[#F05A22] hover:bg-white/90 font-bold text-[13px] lg:text-[15px] tracking-wide transition-all duration-500 rounded-[4px] flex items-center justify-center gap-2 lg:gap-3 group shadow-lg">
+                      <a href={slide.link || "/products"} className="flex-1 sm:flex-none px-6 lg:px-9 py-3 lg:py-3.5 bg-white text-[#F05A22] hover:bg-white/90 font-bold text-[13px] lg:text-[15px] tracking-wide transition-all duration-500 rounded-[4px] flex items-center justify-center gap-2 lg:gap-3 group shadow-[0_4px_14px_rgba(0,0,0,0.15)]">
                         {dict.home.hero.explore}
                         <ArrowRight className="w-3.5 h-3.5 lg:w-4 lg:h-4 transition-transform duration-300 group-hover:translate-x-1" />
                       </a>
                       
-                      <a href="/contact" className="flex-1 sm:flex-none px-6 lg:px-9 py-3 lg:py-3.5 bg-transparent text-white font-medium text-[13px] lg:text-[15px] tracking-wide border border-white/40 hover:border-white transition-all duration-500 rounded-[4px] flex items-center justify-center shadow-sm">
+                      <a href="/contact" className="flex-1 sm:flex-none px-6 lg:px-9 py-3 lg:py-3.5 bg-[#1A1A1A] hover:bg-[#333333] text-white font-bold text-[13px] lg:text-[15px] tracking-wide transition-all duration-500 rounded-[4px] flex items-center justify-center shadow-[0_4px_14px_rgba(0,0,0,0.2)]">
                         {dict.home.hero.contact}
                       </a>
                     </motion.div>
@@ -184,7 +184,7 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="relative w-full lg:w-[45%] h-[280px] sm:h-[350px] lg:h-[550px] flex items-center justify-center z-10 shrink order-1 lg:order-2"
+                    className="relative w-full lg:w-[45%] h-[280px] sm:h-[350px] lg:h-[550px] flex items-center justify-center z-10 shrink order-2 lg:order-2"
                   >
                     {/* Product Image Container */}
                     <div className="absolute inset-0 flex items-center justify-center">
