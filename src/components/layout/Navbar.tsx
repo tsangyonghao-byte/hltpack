@@ -340,7 +340,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                 <Link
                   href={link.href}
                   className={`group inline-flex items-center text-[13px] xl:text-[15px] font-bold transition-colors duration-[300ms] tracking-[0.5px] xl:tracking-[1px] relative ${isSolid ? "pb-0" : "pb-1"} ${
-                    isTopLevelLinkActive(link.href) ? "text-[#F05A22]" : "text-[#1A1A1A] hover:text-[#F05A22]"
+                    isTopLevelLinkActive(link.href) ? "text-[#F05A22]" : "text-[#1A1A1A]"
                   }`}
                 >
                   {link.name}
