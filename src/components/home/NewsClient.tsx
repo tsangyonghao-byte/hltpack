@@ -7,10 +7,29 @@ import { useSwipeable } from "react-swipeable";
 import Link from "next/link";
 
 import { useLanguage } from "@/i18n/LanguageContext";
+import { getLocalizedValue } from "@/lib/localizedContent";
 
 export default function NewsClient({ newsItems }: { categories: string[], newsItems: any[] }) {
-  const { dict } = useLanguage();
+  const { dict, locale } = useLanguage();
   const hasNews = newsItems.length > 0;
+  const textMap = {
+    en: {
+      eyebrow: "Latest Insights",
+      updating: "News content is being updated.",
+      empty: "No news found in this category.",
+    },
+    es: {
+      eyebrow: "Ultimas noticias",
+      updating: "El contenido de noticias se esta actualizando.",
+      empty: "No se encontraron noticias en esta categoria.",
+    },
+    ar: {
+      eyebrow: "احدث الرؤى",
+      updating: "يتم تحديث محتوى الاخبار حاليا.",
+      empty: "لا توجد اخبار في هذه الفئة.",
+    },
+  } as const;
+  const text = textMap[locale as keyof typeof textMap] || textMap.en;
   
   // Use all news directly
   const filteredNews = newsItems;
@@ -61,7 +80,7 @@ export default function NewsClient({ newsItems }: { categories: string[], newsIt
             >
               <div className="w-8 h-[1px] bg-[#F05A22]"></div>
               <span className="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">
-                Latest Insights
+                {text.eyebrow}
               </span>
               <div className="w-8 h-[1px] bg-[#F05A22]"></div>
             </motion.div>
@@ -81,11 +100,11 @@ export default function NewsClient({ newsItems }: { categories: string[], newsIt
         {!hasNews ? (
           <div className="rounded-3xl border border-gray-100 bg-white px-8 py-16 text-center shadow-sm">
             <h3 className="text-2xl font-bold text-[#1E293B]">{dict.home.news.title}</h3>
-            <p className="mt-3 text-sm text-gray-500">News content is being updated.</p>
+            <p className="mt-3 text-sm text-gray-500">{text.updating}</p>
           </div>
         ) : filteredNews.length === 0 ? (
           <div className="rounded-3xl border border-gray-100 bg-white px-8 py-16 text-center shadow-sm">
-            <p className="text-gray-500">No news found in this category.</p>
+            <p className="text-gray-500">{text.empty}</p>
           </div>
         ) : (
           <div className="relative">
@@ -119,13 +138,18 @@ export default function NewsClient({ newsItems }: { categories: string[], newsIt
                   transition={{ duration: 0.3, ease: "easeOut" }}
                   className="grid grid-cols-3 gap-6 lg:gap-8"
                 >
-                  {currentDesktopItems.map((news) => (
+                  {currentDesktopItems.map((news) => {
+                    const title = getLocalizedValue(news, "title", locale);
+                    const summary = getLocalizedValue(news, "summary", locale);
+                    const category = getLocalizedValue(news, "category", locale);
+
+                    return (
                     <Link href={`/news/${news.slug || news.id}`} key={news.id} className="group flex flex-col h-full bg-white rounded-none border border-gray-200 hover:border-[#F05A22]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] transition-all duration-500 overflow-hidden">
                       {/* Image Container */}
                       <div className="relative aspect-[1.5] overflow-hidden bg-gray-50">
                         <img 
                           src={news.image} 
-                          alt={news.title} 
+                          alt={title} 
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
                         />
                       </div>
@@ -133,21 +157,21 @@ export default function NewsClient({ newsItems }: { categories: string[], newsIt
                       {/* Content */}
                       <div className="flex flex-col flex-grow p-6 md:p-8">
                         <div className="flex items-center gap-3 mb-4">
-                          <span className="text-[#F05A22] text-[11px] font-bold tracking-[0.1em] uppercase">{news.category}</span>
+                          <span className="text-[#F05A22] text-[11px] font-bold tracking-[0.1em] uppercase">{category}</span>
                           <span className="w-1 h-1 rounded-full bg-gray-300"></span>
                           <span className="text-gray-400 font-medium text-[12px]">{news.date.replace(/,/g, '')}</span>
                         </div>
                         
                         <h3 className="text-[18px] lg:text-[20px] font-bold text-[#1A1A1A] mb-4 leading-[1.4] group-hover:text-[#F05A22] transition-colors line-clamp-2">
-                          {news.title}
+                          {title}
                         </h3>
                         
                         <p className="text-gray-500 text-[14px] lg:text-[15px] leading-relaxed line-clamp-3 font-light">
-                          {news.summary}
+                          {summary}
                         </p>
                       </div>
                     </Link>
-                  ))}
+                  )})}
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -164,11 +188,19 @@ export default function NewsClient({ newsItems }: { categories: string[], newsIt
                 >
                   <Link href={`/news/${filteredNews[currentIndex]?.slug || filteredNews[currentIndex]?.id || ''}`}>
                     <div {...handlers} className="group cursor-pointer flex flex-col w-full bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden">
+                      {(() => {
+                        const currentNews = filteredNews[currentIndex];
+                        const title = currentNews ? getLocalizedValue(currentNews, "title", locale) : "";
+                        const summary = currentNews ? getLocalizedValue(currentNews, "summary", locale) : "";
+                        const category = currentNews ? getLocalizedValue(currentNews, "category", locale) : "";
+
+                        return (
+                          <>
                       {/* Main Featured Image */}
                       <div className="relative aspect-[1.5] w-full overflow-hidden bg-gray-50">
                         <img 
                           src={filteredNews[currentIndex]?.image} 
-                          alt={filteredNews[currentIndex]?.title} 
+                          alt={title} 
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -176,19 +208,22 @@ export default function NewsClient({ newsItems }: { categories: string[], newsIt
                       {/* Content */}
                       <div className="flex flex-col p-5">
                         <h3 className="text-[17px] font-bold text-[#1E293B] mb-2 leading-[1.35] tracking-tight line-clamp-2 min-h-[46px]">
-                          {filteredNews[currentIndex]?.title}
+                          {title}
                         </h3>
                         
                         <p className="text-gray-500 text-[14px] leading-[1.5] mb-4 line-clamp-3 font-light min-h-[63px]">
-                          {filteredNews[currentIndex]?.summary}
+                          {summary}
                         </p>
                         
                         {/* Bottom Row */}
                         <div className="mt-auto flex items-center justify-between pt-3 border-t border-gray-100">
                           <span className="text-[#1E293B] font-extrabold text-[13px]">{filteredNews[currentIndex]?.date?.replace(/,/g, '')}</span>
-                          <span className="text-[#F05A22] text-[13px] font-bold tracking-wide">#{filteredNews[currentIndex]?.category}</span>
+                          <span className="text-[#F05A22] text-[13px] font-bold tracking-wide">#{category}</span>
                         </div>
                       </div>
+                          </>
+                        );
+                      })()}
                     </div>
                   </Link>
                 </motion.div>

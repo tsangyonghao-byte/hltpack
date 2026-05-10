@@ -315,6 +315,7 @@ export const siteContent = {
       contact: "Contacto",
       ourProducts: "Nuestros Productos",
       backToTop: "Volver arriba",
+      address: "No. 51, Lan'er Road, comunidad Longxin, calle Baolong, distrito Longgang, Shenzhen, China",
       successMessage: "¡Suscripción exitosa! Nuestro personal se pondrá en contacto con usted en breve.",
     },
     floating: { whatsapp: "WhatsApp", backToTop: "Volver arriba" },
@@ -328,6 +329,10 @@ export const siteContent = {
       certLabel: "Instalación Certificada",
       storyTag: "Nuestra Historia",
       storyTitle: "Soluciones de Empaque que Cuidan Nuestro Futuro",
+      storyBody1:
+        "Fundada en 2001 y ubicada estratégicamente en Shenzhen (distrito de Longgang), junto a Hong Kong, HAILITONG Packaging aporta más de 31 años de experiencia al sector de los envases flexibles. Con el respaldo de un equipo de técnicos profesionales con amplia experiencia, hemos construido una sólida reputación por ofrecer calidad estable, precios razonables y entregas rápidas.",
+      storyBody2:
+        "Nuestra planta de última generación está equipada con maquinaria avanzada para soplado de película, impresión rotograbada de alta velocidad, laminación, corte, plegado y fabricación de bolsas para alimentos, sellado de tres lados, sellado central, máquinas R, bolsas planas, corte longitudinal y secado con sílice. Nos especializamos en bolsas para alimentos, bolsas de aluminio, bolsas transparentes con foil, bolsas al vacío, pouches retort de alta temperatura, bolsas compuestas multicapa, bolsas antiestáticas, bolsas con boquilla, fundas para flores, bolsas con forma, bolsas para mascarillas faciales, bolsas doypack con zipper, bolsas PE con cierre zip, bolsas OPP transparentes con header card, films en rollo para empaque automático, bolsas planas transparentes y bolsas con asa. Guiados por el principio de 'Calidad premium, cliente primero', exportamos con orgullo a Europa, América, Rusia, Japón y otros mercados.",
       exploreProducts: "Explorar Nuestros Productos",
       getInTouch: "Contáctenos",
       stats: [
@@ -338,6 +343,32 @@ export const siteContent = {
       ],
       valuesTitle: "Nuestros Valores Fundamentales",
       valuesDescription: "Los principios que guían nuestra ingeniería, fabricación y servicio al cliente todos los días.",
+      values: [
+        {
+          id: "culture",
+          title: "Cultura Empresarial",
+          description:
+            "El trabajo duro, la honestidad y la fiabilidad forman la base cultural de nuestro equipo y garantizan calidad alta y procesos de producción estables.",
+        },
+        {
+          id: "mission",
+          title: "Nuestra Misión",
+          description:
+            "Producir soluciones respetuosas con el medio ambiente a tiempo con un equipo dinámico, manteniendo la frescura del producto y la satisfacción del cliente al más alto nivel.",
+        },
+        {
+          id: "vision",
+          title: "Nuestra Visión",
+          description:
+            "Ser uno de los principales fabricantes mundiales de envases plásticos, desarrollando soluciones ecológicas, de alta barrera, reciclables y compostables.",
+        },
+        {
+          id: "quality",
+          title: "Calidad Sin Concesiones",
+          description:
+            "Cumplimos los estándares internacionales más exigentes para garantizar que cada bolsa y cada film cumplan especificaciones exactas de seguridad y durabilidad.",
+        },
+      ],
       milestonesTitle: "Nuestro Viaje de Crecimiento",
     },
     contact: {
@@ -358,10 +389,31 @@ export const siteContent = {
       companyName: "Nombre de la Empresa",
       subject: "Asunto *",
       message: "Mensaje *",
+      placeholders: {
+        firstName: "Juan",
+        lastName: "Pérez",
+        email: "juan@empresa.com",
+        company: "Su empresa S.L.",
+        message:
+          "Comparta los detalles de sus necesidades de empaque (medidas, materiales, cantidades, etc.)...",
+      },
+      topics: {
+        default: "Seleccione un tema",
+        quote: "Solicitar cotización",
+        samples: "Solicitar muestras",
+        support: "Soporte técnico",
+        other: "Otra consulta",
+      },
       sending: "Enviando...",
       sent: "Mensaje enviado con éxito",
       successMessage: "¡Envío exitoso! Nuestro equipo se pondrá en contacto con usted en breve.",
       send: "Enviar Mensaje",
+      errors: {
+        failed: "No se pudo enviar el mensaje.",
+        unexpected: "Ocurrió un error inesperado.",
+      },
+      mapTitle: "Mapa interactivo",
+      mapDescription: "Inserte aquí su iframe de Google Maps",
     },
     howWeWork: {
       ...enContent.howWeWork,
@@ -474,7 +526,7 @@ export const siteContent = {
     navbar: {
       productChildren: ["أكياس التغليف البلاستيكية", "سلسلة الملصقات المنكمشة", "أفلام عالية الحاجز والمعدنية"],
       marketChildren: ["أخبار التغليف", "المعارض", "فيديو"],
-      languages: { en: "English", es: "Español", ar: "العربية" },
+      languages: { en: "الإنجليزية", es: "الإسبانية", ar: "العربية" },
       whatsapp: "واتساب",
     },
     footer: {
@@ -503,6 +555,7 @@ export const siteContent = {
       contact: "اتصل بنا",
       ourProducts: "منتجاتنا",
       backToTop: "العودة إلى الأعلى",
+      address: "رقم 51، طريق لانئر، مجتمع لونغشين، شارع باولونغ، منطقة لونغقانغ، شنتشن، الصين",
       successMessage: "تم الاشتراك بنجاح! سيقوم موظفونا بالاتصال بك قريباً.",
     },
     floating: { whatsapp: "واتساب", backToTop: "العودة إلى الأعلى" },
@@ -516,6 +569,8 @@ export const siteContent = {
       certLabel: "منشأة معتمدة",
       storyTag: "قصتنا",
       storyTitle: "حلول التغليف التي تهتم بمستقبلنا",
+      storyBody1: "تأسست HAILITONG Packaging في عام 2001 وتقع في شنتشن بالصين، بالقرب من هونغ كونغ. نمت الشركة لتصبح موردا موثوقا في قطاع التغليف المرن بفضل الخبرة الصناعية الطويلة وجودة المنتجات المستقرة والتسعير المناسب وسرعة التسليم.",
+      storyBody2: "يضم مصنعنا معدات متقدمة تشمل نفخ الفيلم والطباعة الروتوغرافية واللصق والتقطيع وصناعة الاكياس. وننتج مجموعة واسعة من اكياس التغليف مثل اكياس الاغذية واكياس الالمنيوم واكياس الفوهة واكياس التفريغ الحراري والحقائب المركبة متعددة الطبقات وغيرها، مسترشدين بمبدأ: الجودة الممتازة والعميل اولا.",
       exploreProducts: "استكشف منتجاتنا",
       getInTouch: "تواصل معنا",
       stats: [
@@ -526,6 +581,28 @@ export const siteContent = {
       ],
       valuesTitle: "قيمنا الأساسية",
       valuesDescription: "المبادئ التي توجه هندستنا وتصنيعنا وخدمة عملائنا كل يوم.",
+      values: [
+        {
+          id: "culture",
+          title: "ثقافة الشركة",
+          description: "العمل الجاد والامانة والاعتمادية تشكل الاساس الثقافي لفريقنا وتضمن جودة عالية واستمرارية مستقرة في الانتاج.",
+        },
+        {
+          id: "mission",
+          title: "رسالتنا",
+          description: "ننتج حلولا صديقة للبيئة في الوقت المحدد مع الحفاظ على نضارة المنتجات ورضا العملاء في اعلى مستوى.",
+        },
+        {
+          id: "vision",
+          title: "رؤيتنا",
+          description: "نسعى لنكون من ابرز مصنعي التغليف البلاستيكي عالميا مع تطوير حلول عالية الحاجز وقابلة لاعادة التدوير والتحلل.",
+        },
+        {
+          id: "quality",
+          title: "جودة بلا تنازل",
+          description: "نلتزم باكثر المعايير الدولية صرامة لضمان ان كل كيس وفيلم يطابق المتطلبات الدقيقة للسلامة والمتانة.",
+        },
+      ],
       milestonesTitle: "رحلة نمونا",
     },
     contact: {
@@ -535,9 +612,11 @@ export const siteContent = {
       breadcrumb: "اتصل بنا",
       headquarters: "المقر الرئيسي",
       headquarterLabel: "قاعدة التصنيع",
+      address: "رقم 51، طريق لانئر، مجتمع لونغشين،\nشارع باولونغ، منطقة لونغقانغ،\nشنتشن، قوانغدونغ، الصين",
       phoneLabel: "الهاتف",
       emailLabel: "البريد الإلكتروني",
       hoursLabel: "ساعات العمل",
+      hoursValue: "الاثنين - السبت: 9:00 - 18:00 (GMT+8)",
       formTitle: "أرسل لنا رسالة",
       formDescription: "املأ النموذج أدناه وسيقوم فريق المبيعات لدينا بالرد عليك في غضون 24 ساعة.",
       firstName: "الاسم الأول *",
@@ -546,10 +625,30 @@ export const siteContent = {
       companyName: "اسم الشركة",
       subject: "الموضوع *",
       message: "الرسالة *",
+      placeholders: {
+        firstName: "محمد",
+        lastName: "أحمد",
+        email: "name@company.com",
+        company: "اسم شركتك",
+        message: "يرجى تزويدنا بتفاصيل احتياجات التغليف مثل المقاس والمواد والكميات وغيرها...",
+      },
+      topics: {
+        default: "اختر نوع الاستفسار",
+        quote: "طلب عرض سعر",
+        samples: "طلب عينات",
+        support: "دعم فني",
+        other: "استفسار آخر",
+      },
       sending: "جاري الإرسال...",
       sent: "تم إرسال الرسالة بنجاح",
       successMessage: "تم الإرسال بنجاح! سيقوم فريقنا بالاتصال بك قريباً.",
       send: "إرسال الرسالة",
+      errors: {
+        failed: "تعذر إرسال الرسالة.",
+        unexpected: "حدث خطأ غير متوقع.",
+      },
+      mapTitle: "خريطة تفاعلية",
+      mapDescription: "يمكن تضمين خريطة Google هنا",
     },
     howWeWork: {
       ...enContent.howWeWork,

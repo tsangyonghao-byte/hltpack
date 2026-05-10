@@ -6,6 +6,11 @@ import { redirect } from "next/navigation";
 import { requireAdminSession } from "@/lib/adminAuth";
 import { getAdminActionText } from "./adminActionText";
 
+function getOptionalText(formData: FormData, key: string) {
+  const value = String(formData.get(key) || "").trim();
+  return value || null;
+}
+
 export async function deleteCategory(id: string) {
   await requireAdminSession();
   const text = await getAdminActionText();
@@ -81,8 +86,12 @@ export async function createCategory(prevState: any, formData: FormData) {
   await requireAdminSession();
   const text = await getAdminActionText();
   try {
-    const name = formData.get("name") as string;
-    const description = formData.get("description") as string;
+    const name = String(formData.get("name") || "").trim();
+    const nameEs = getOptionalText(formData, "nameEs");
+    const nameAr = getOptionalText(formData, "nameAr");
+    const description = String(formData.get("description") || "").trim();
+    const descriptionEs = getOptionalText(formData, "descriptionEs");
+    const descriptionAr = getOptionalText(formData, "descriptionAr");
 
     if (!name) {
       return { error: text.categoryNameRequired };
@@ -91,7 +100,11 @@ export async function createCategory(prevState: any, formData: FormData) {
     await prisma.category.create({
       data: {
         name,
+        nameEs,
+        nameAr,
         description: description || null,
+        descriptionEs,
+        descriptionAr,
       },
     });
 
@@ -109,8 +122,12 @@ export async function updateCategory(id: string, prevState: any, formData: FormD
   await requireAdminSession();
   const text = await getAdminActionText();
   try {
-    const name = formData.get("name") as string;
-    const description = formData.get("description") as string;
+    const name = String(formData.get("name") || "").trim();
+    const nameEs = getOptionalText(formData, "nameEs");
+    const nameAr = getOptionalText(formData, "nameAr");
+    const description = String(formData.get("description") || "").trim();
+    const descriptionEs = getOptionalText(formData, "descriptionEs");
+    const descriptionAr = getOptionalText(formData, "descriptionAr");
 
     if (!name) {
       return { error: text.categoryNameRequired };
@@ -120,7 +137,11 @@ export async function updateCategory(id: string, prevState: any, formData: FormD
       where: { id },
       data: {
         name,
+        nameEs,
+        nameAr,
         description: description || null,
+        descriptionEs,
+        descriptionAr,
       },
     });
 

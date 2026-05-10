@@ -8,13 +8,37 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import Link from "next/link";
 
 export default function Certificates() {
-  const { dict } = useLanguage();
+  const { dict, locale } = useLanguage();
+  const buttonText =
+    locale === "es"
+      ? "Ver todos los certificados"
+      : locale === "ar"
+        ? "عرض جميع الشهادات"
+        : "View All Certificates";
+  const certNames =
+    locale === "es"
+      ? [
+          "Certificado BRC grado A+ 1",
+          "Certificado BRC grado A+ 2",
+          "Certificacion de reciclabilidad",
+        ]
+      : locale === "ar"
+        ? [
+            "شهادة BRC درجة A+ 1",
+            "شهادة BRC درجة A+ 2",
+            "شهادة قابلية اعادة التدوير",
+          ]
+        : [
+            "BRC A+ Grade Certificate 1",
+            "BRC A+ Grade Certificate 2",
+            "Recyclable Certification",
+          ];
   
   // Only the 3 core certificates for the homepage layout
   const certs = [
-    { id: 1, name: "BRC A+ Grade Certificate 1", img: "/zs01.png" },
-    { id: 2, name: "BRC A+ Grade Certificate 2", img: "/zs02.png" },
-    { id: 3, name: "Recyclable Certification", img: "/zs03.png" },
+    { id: 1, name: certNames[0], img: "/zs01.png" },
+    { id: 2, name: certNames[1], img: "/zs02.png" },
+    { id: 3, name: certNames[2], img: "/zs03.png" },
   ];
 
   const [selectedCertIndex, setSelectedCertIndex] = useState<number | null>(null);
@@ -74,7 +98,7 @@ export default function Certificates() {
                   href="/certificates" 
                   className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-gray-300 text-gray-800 font-bold text-sm tracking-wide hover:bg-[#F05A22] hover:text-white hover:border-[#F05A22] transition-all duration-300 rounded-full group"
                 >
-                  View All Certificates
+                  {buttonText}
                   <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>

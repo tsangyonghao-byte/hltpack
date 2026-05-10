@@ -18,6 +18,11 @@ function isValidLink(value: string) {
   }
 }
 
+function getOptionalText(formData: FormData, key: string) {
+  const value = String(formData.get(key) || "").trim();
+  return value || null;
+}
+
 export async function deleteBanner(id: string) {
   await requireAdminSession();
   const text = await getAdminActionText();
@@ -66,8 +71,14 @@ export async function createBanner(prevState: any, formData: FormData) {
   const text = await getAdminActionText();
   try {
     const title = String(formData.get("title") || "").trim();
+    const titleEs = getOptionalText(formData, "titleEs");
+    const titleAr = getOptionalText(formData, "titleAr");
     const subtitle = String(formData.get("subtitle") || "").trim();
+    const subtitleEs = getOptionalText(formData, "subtitleEs");
+    const subtitleAr = getOptionalText(formData, "subtitleAr");
     const description = String(formData.get("description") || "").trim();
+    const descriptionEs = getOptionalText(formData, "descriptionEs");
+    const descriptionAr = getOptionalText(formData, "descriptionAr");
     const link = String(formData.get("link") || "").trim();
     const imageUrl = String(formData.get("imageUrl") || "").trim();
     const imageFile = formData.get("imageFile") as File | null;
@@ -107,8 +118,14 @@ export async function createBanner(prevState: any, formData: FormData) {
     await prisma.banner.create({
       data: {
         title,
+        titleEs,
+        titleAr,
         subtitle: subtitle || null,
+        subtitleEs,
+        subtitleAr,
         description: description || null,
+        descriptionEs,
+        descriptionAr,
         link: link || null,
         image,
         isActive,
@@ -131,8 +148,14 @@ export async function updateBanner(id: string, prevState: any, formData: FormDat
   const text = await getAdminActionText();
   try {
     const title = String(formData.get("title") || "").trim();
+    const titleEs = getOptionalText(formData, "titleEs");
+    const titleAr = getOptionalText(formData, "titleAr");
     const subtitle = String(formData.get("subtitle") || "").trim();
+    const subtitleEs = getOptionalText(formData, "subtitleEs");
+    const subtitleAr = getOptionalText(formData, "subtitleAr");
     const description = String(formData.get("description") || "").trim();
+    const descriptionEs = getOptionalText(formData, "descriptionEs");
+    const descriptionAr = getOptionalText(formData, "descriptionAr");
     const link = String(formData.get("link") || "").trim();
     const imageUrl = String(formData.get("imageUrl") || "").trim();
     const imageFile = formData.get("imageFile") as File | null;
@@ -173,8 +196,14 @@ export async function updateBanner(id: string, prevState: any, formData: FormDat
       where: { id },
       data: {
         title,
+        titleEs,
+        titleAr,
         subtitle: subtitle || null,
+        subtitleEs,
+        subtitleAr,
         description: description || null,
+        descriptionEs,
+        descriptionAr,
         link: link || null,
         image,
         isActive,

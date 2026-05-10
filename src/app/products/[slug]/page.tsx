@@ -9,6 +9,7 @@ import { getOrderedProductImages, parseProductGallery } from "@/lib/productImage
 import ProductsClient from "../ProductsClient";
 import { getProductsPageData } from "../shared";
 import { buildProductCategoryPath, getProductCategoryNameFromParam, isProductCategorySlug } from "@/lib/productCategorySlug";
+import { getLocalizedHtml, getLocalizedJsonArray, getLocalizedValue } from "@/lib/localizedContent";
 
 import type { Metadata } from "next";
 
@@ -32,6 +33,7 @@ const productDetailText = {
     samples: "Request Samples",
     relatedProducts: "Related Products",
     viewDetails: "View Details",
+    details: "Product Details",
   },
   es: {
     notFound: "Producto no encontrado | HAILITONG Packaging",
@@ -50,6 +52,7 @@ const productDetailText = {
     samples: "Solicitar muestras",
     relatedProducts: "Productos Relacionados",
     viewDetails: "Ver Detalles",
+    details: "Detalles del producto",
   },
   ar: {
     notFound: "المنتج غير موجود | HAILITONG Packaging",
@@ -68,6 +71,7 @@ const productDetailText = {
     samples: "طلب عينات",
     relatedProducts: "منتجات ذات صلة",
     viewDetails: "عرض التفاصيل",
+    details: "تفاصيل المنتج",
   },
 } as const;
 
@@ -106,10 +110,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   const canonicalPath = `/products/${product.slug || product.id}`;
+  const localizedName = getLocalizedValue(product, "name", locale) || product.name;
+  const localizedSeoTitle = getLocalizedValue(product, "seoTitle", locale);
+  const localizedSeoDescription = getLocalizedValue(product, "seoDescription", locale);
 
   return buildSeoMetadata({
-    title: product.seoTitle || `${product.name} | HAILITONG Packaging`,
-    description: product.seoDescription || text.description(product.name),
+    title: localizedSeoTitle || `${localizedName} | HAILITONG Packaging`,
+    description: localizedSeoDescription || text.description(localizedName),
     canonicalPath,
     image: product.image,
     robots: buildRobotsMetadata(`/products/${resolvedParams.slug}`, { siteNoindex, noindexPaths }),
@@ -146,19 +153,24 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     include: { category: true },
   });
 
-  const features = JSON.parse(product.features) as string[];
+  const productName = getLocalizedValue(product, "name", locale) || product.name;
+  const productCategoryLabel = getLocalizedValue(product.category, "name", locale) || product.category.name;
+  const productSeoDescription = getLocalizedValue(product, "seoDescription", locale);
+  const productContent = getLocalizedHtml(product, "content", locale);
+  const features = getLocalizedJsonArray(product, "features", locale);
   const gallery = parseProductGallery(product.gallery);
   const allImages = await getOrderedProductImages(product.image, gallery);
+  const detailImages = allImages.length > 1 ? allImages.slice(1) : allImages;
   const productPath = `/products/${canonicalSegment}`;
   const categoryPath = buildProductCategoryPath(product.category.name);
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: product.name,
+    name: productName,
     image: allImages.map((item) => toAbsoluteUrl(item)),
-    description: product.seoDescription || text.description(product.name),
+    description: productSeoDescription || text.description(productName),
     sku: product.id,
-    category: product.category.name,
+    category: productCategoryLabel,
     brand: {
       "@type": "Brand",
       name: "HAILITONG Packaging",
@@ -178,13 +190,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       {
         "@type": "ListItem",
         position: 2,
-        name: product.category.name,
+        name: productCategoryLabel,
         item: `${getSiteUrl()}${categoryPath}`,
       },
       {
         "@type": "ListItem",
         position: 3,
-        name: product.name,
+        name: productName,
         item: `${getSiteUrl()}${productPath}`,
       },
     ],
@@ -198,35 +210,35 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         <div className="max-w-[1200px] mx-auto flex items-center text-sm text-gray-400">
           <Link href="/" className="hover:text-white transition-colors">{text.home}</Link>
           <ChevronRight className="w-4 h-4 mx-2" />
-          <Link href={categoryPath} className="hover:text-white transition-colors">{product.category.name}</Link>
+          <Link href={categoryPath} className="hover:text-white transition-colors">{productCategoryLabel}</Link>
           <ChevronRight className="w-4 h-4 mx-2" />
-          <span className="text-white font-bold">{product.name}</span>
+          <span className="text-white font-bold">{productName}</span>
         </div>
       </div>
 
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
         <Link href={categoryPath} className="inline-flex items-center text-gray-500 hover:text-[#F05A22] font-bold text-sm uppercase tracking-wider mb-8 transition-colors group">
           <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-          {`${text.back}: ${product.category.name}`}
+          {`${text.back}: ${productCategoryLabel}`}
         </Link>
 
         <div className="bg-white rounded-none p-6 md:p-12 border border-gray-200 mb-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
             <div className="flex flex-col gap-4 w-full lg:max-w-md">
-              <ProductGallery images={allImages} alt={product.name} />
+              <ProductGallery images={allImages} alt={productName} />
             </div>
 
             <div className="flex flex-col justify-start">
               <div className="inline-flex px-3 py-1.5 rounded-none text-[11px] font-bold bg-[#1A1A1A] text-white uppercase tracking-widest mb-6 w-max">
-                {product.category.name}
+                {productCategoryLabel}
               </div>
 
               <h1 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-6 leading-tight tracking-tight">
-                {product.name}
+                {productName}
               </h1>
 
               <p className="text-base text-gray-500 mb-10 leading-relaxed font-light">
-                {text.intro(product.name)}
+                {text.intro(productName)}
               </p>
 
               {features.length > 0 && (
@@ -245,14 +257,14 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
               <div className="mt-auto pt-8 border-t border-gray-200 flex flex-col sm:flex-row gap-4">
                 <Link
-                  href={`/contact?type=quote&product=${encodeURIComponent(product.name)}&productId=${product.id}&source=${encodeURIComponent(productPath)}`}
+                  href={`/contact?type=quote&product=${encodeURIComponent(productName)}&productId=${product.id}&source=${encodeURIComponent(productPath)}`}
                   className="flex-1 flex items-center justify-center px-8 py-4 bg-[#F05A22] text-white rounded-none font-bold text-[14px] uppercase tracking-wider hover:bg-[#D44A18] transition-colors"
                 >
                   <MessageSquare className="w-5 h-5 mr-3" />
                   {text.quote}
                 </Link>
                 <Link
-                  href={`/contact?type=samples&product=${encodeURIComponent(product.name)}&productId=${product.id}&source=${encodeURIComponent(productPath)}`}
+                  href={`/contact?type=samples&product=${encodeURIComponent(productName)}&productId=${product.id}&source=${encodeURIComponent(productPath)}`}
                   className="flex-1 flex items-center justify-center px-8 py-4 bg-transparent text-[#1A1A1A] border border-gray-300 rounded-none font-bold text-[14px] uppercase tracking-wider hover:border-[#1A1A1A] hover:bg-gray-50 transition-colors"
                 >
                   {text.samples}
@@ -262,15 +274,33 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           </div>
         </div>
 
-        {product.content && (
+        {(productContent || detailImages.length > 0) && (
           <div className="bg-white rounded-none p-8 md:p-12 border border-gray-200 mb-16">
             <h2 className="text-2xl font-extrabold text-[#1A1A1A] mb-8 pb-4 border-b border-gray-200 relative after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:w-16 after:h-[2px] after:bg-[#F05A22] uppercase tracking-wider">
-              Product Details
+              {text.details}
             </h2>
-            <div
-              className="prose prose-lg max-w-none prose-gray prose-headings:text-[#1A1A1A] prose-a:text-[#F05A22] hover:prose-a:text-[#D44A18] prose-img:rounded-none"
-              dangerouslySetInnerHTML={{ __html: product.content }}
-            />
+            {detailImages.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {detailImages.map((imageUrl, index) => (
+                  <div
+                    key={`${imageUrl}-${index}`}
+                    className="bg-gray-50 border border-gray-100 p-6 flex items-center justify-center min-h-[260px]"
+                  >
+                    <img
+                      src={imageUrl}
+                      alt={`${productName} - Detail ${index + 1}`}
+                      className="w-full h-full max-h-[420px] object-contain mix-blend-multiply"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+            {productContent && (
+              <div
+                className="prose prose-lg max-w-none prose-gray prose-headings:text-[#1A1A1A] prose-a:text-[#F05A22] hover:prose-a:text-[#D44A18] prose-img:rounded-none"
+                dangerouslySetInnerHTML={{ __html: productContent }}
+              />
+            )}
           </div>
         )}
 
@@ -284,12 +314,17 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
               {relatedProducts.map((rp) => (
                 <Link key={rp.id} href={`/products/${rp.slug || rp.id}`} className="group flex flex-col bg-white rounded-none overflow-hidden border border-gray-200 hover:border-[#F05A22] transition-colors duration-500 cursor-pointer h-full">
+                  {(() => {
+                    const relatedName = getLocalizedValue(rp, "name", locale) || rp.name;
+
+                    return (
+                      <>
                   <div className="w-full aspect-[4/3] bg-white relative overflow-hidden flex items-center justify-center p-8 border-b border-gray-100">
-                    <img src={rp.image} alt={rp.name} className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105" />
+                    <img src={rp.image} alt={relatedName} className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105" />
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
                     <h4 className="text-[15px] font-bold text-[#1A1A1A] leading-snug mb-6 group-hover:text-[#F05A22] transition-colors line-clamp-2 tracking-wide">
-                      {rp.name}
+                      {relatedName}
                     </h4>
                     <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
                       <span className="text-[12px] font-bold text-[#1A1A1A] uppercase tracking-widest group-hover:text-[#F05A22] transition-colors">
@@ -300,6 +335,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                       </div>
                     </div>
                   </div>
+                      </>
+                    );
+                  })()}
                 </Link>
               ))}
             </div>

@@ -19,6 +19,11 @@ function isValidLink(value: string) {
   }
 }
 
+function getOptionalText(formData: FormData, key: string) {
+  const value = String(formData.get(key) || "").trim();
+  return value || null;
+}
+
 async function ensureUniqueNewsSlug(baseValue: string, excludeId?: string) {
   const baseSlug = slugify(baseValue);
   if (!baseSlug) {
@@ -88,15 +93,27 @@ export async function createNews(prevState: any, formData: FormData) {
   const text = await getAdminActionText();
   try {
     const title = String(formData.get("title") || "").trim();
+    const titleEs = getOptionalText(formData, "titleEs");
+    const titleAr = getOptionalText(formData, "titleAr");
     const summary = String(formData.get("summary") || "").trim();
+    const summaryEs = getOptionalText(formData, "summaryEs");
+    const summaryAr = getOptionalText(formData, "summaryAr");
     const category = String(formData.get("category") || "").trim();
+    const categoryEs = getOptionalText(formData, "categoryEs");
+    const categoryAr = getOptionalText(formData, "categoryAr");
     const date = String(formData.get("date") || "").trim();
     const imageUrl = String(formData.get("imageUrl") || "").trim();
     const imageFile = formData.get("imageFile") as File | null;
     const content = String(formData.get("content") || "").trim();
+    const contentEs = getOptionalText(formData, "contentEs");
+    const contentAr = getOptionalText(formData, "contentAr");
     const slugInput = String(formData.get("slug") || "").trim();
     const seoTitle = String(formData.get("seoTitle") || "").trim();
     const seoDescription = String(formData.get("seoDescription") || "").trim();
+    const seoTitleEs = getOptionalText(formData, "seoTitleEs");
+    const seoTitleAr = getOptionalText(formData, "seoTitleAr");
+    const seoDescriptionEs = getOptionalText(formData, "seoDescriptionEs");
+    const seoDescriptionAr = getOptionalText(formData, "seoDescriptionAr");
 
     let image = imageUrl;
     
@@ -137,14 +154,26 @@ export async function createNews(prevState: any, formData: FormData) {
     await prisma.news.create({
       data: {
         title,
+        titleEs,
+        titleAr,
         slug,
         seoTitle: seoTitle || null,
+        seoTitleEs,
+        seoTitleAr,
         seoDescription: seoDescription || null,
+        seoDescriptionEs,
+        seoDescriptionAr,
         summary,
+        summaryEs,
+        summaryAr,
         category,
+        categoryEs,
+        categoryAr,
         date,
         image,
         content,
+        contentEs,
+        contentAr,
       },
     });
 
@@ -163,15 +192,27 @@ export async function updateNews(id: string, prevState: any, formData: FormData)
   const text = await getAdminActionText();
   try {
     const title = String(formData.get("title") || "").trim();
+    const titleEs = getOptionalText(formData, "titleEs");
+    const titleAr = getOptionalText(formData, "titleAr");
     const summary = String(formData.get("summary") || "").trim();
+    const summaryEs = getOptionalText(formData, "summaryEs");
+    const summaryAr = getOptionalText(formData, "summaryAr");
     const category = String(formData.get("category") || "").trim();
+    const categoryEs = getOptionalText(formData, "categoryEs");
+    const categoryAr = getOptionalText(formData, "categoryAr");
     const date = String(formData.get("date") || "").trim();
     const imageUrl = String(formData.get("imageUrl") || "").trim();
     const imageFile = formData.get("imageFile") as File | null;
     const content = String(formData.get("content") || "").trim();
+    const contentEs = getOptionalText(formData, "contentEs");
+    const contentAr = getOptionalText(formData, "contentAr");
     const slugInput = String(formData.get("slug") || "").trim();
     const seoTitle = String(formData.get("seoTitle") || "").trim();
     const seoDescription = String(formData.get("seoDescription") || "").trim();
+    const seoTitleEs = getOptionalText(formData, "seoTitleEs");
+    const seoTitleAr = getOptionalText(formData, "seoTitleAr");
+    const seoDescriptionEs = getOptionalText(formData, "seoDescriptionEs");
+    const seoDescriptionAr = getOptionalText(formData, "seoDescriptionAr");
 
     let image = imageUrl;
     
@@ -213,14 +254,26 @@ export async function updateNews(id: string, prevState: any, formData: FormData)
       where: { id },
       data: {
         title,
+        titleEs,
+        titleAr,
         slug,
         seoTitle: seoTitle || null,
+        seoTitleEs,
+        seoTitleAr,
         seoDescription: seoDescription || null,
+        seoDescriptionEs,
+        seoDescriptionAr,
         summary,
+        summaryEs,
+        summaryAr,
         category,
+        categoryEs,
+        categoryAr,
         date,
         image,
         content,
+        contentEs,
+        contentAr,
       },
     });
 

@@ -3,8 +3,81 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, HeartHandshake, ShieldCheck, Layers } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/i18n/LanguageContext";
+
+const textMap = {
+  en: {
+    eyebrow: "Powerful Manufacturer",
+    titlePrefix: "Core",
+    titleSuffix: "Advantages.",
+    summary:
+      "With complete in-house production lines and a customer-first approach, we deliver premium packaging solutions tailored to your exact specifications.",
+    badge1: "Tailored For You",
+    title1: "Custom Solutions",
+    desc1:
+      "Tailored packaging solutions for food, medical, cosmetics, and electronics industries. We engineer the perfect structure for your product's unique needs.",
+    title2: "Fast Delivery",
+    desc2:
+      "Complete in-house facilities-from film blowing to pouch making-ensuring rapid and reliable turnaround.",
+    title3: "Certified Quality",
+    desc3:
+      "Rigorous multi-stage quality control by experienced technicians. Stable quality that meets international standards.",
+    badge4: "Customer First",
+    title4: "Dedicated Support & Service",
+    desc4:
+      "\"Premium Quality, Customer First.\" We stand behind every pouch we manufacture, providing seamless service from initial design consultation to global delivery.",
+    cta: "Get a Quote",
+  },
+  es: {
+    eyebrow: "Fabricante potente",
+    titlePrefix: "Ventajas",
+    titleSuffix: "clave.",
+    summary:
+      "Con lineas de produccion integrales y un enfoque centrado en el cliente, ofrecemos soluciones de empaque premium adaptadas a sus necesidades exactas.",
+    badge1: "Hecho para usted",
+    title1: "Soluciones personalizadas",
+    desc1:
+      "Soluciones de empaque a medida para alimentos, medicina, cosmeticos y electronica. Diseñamos la estructura ideal para las necesidades de su producto.",
+    title2: "Entrega rapida",
+    desc2:
+      "Instalaciones internas completas, desde soplado de pelicula hasta fabricacion de bolsas, para una entrega rapida y confiable.",
+    title3: "Calidad certificada",
+    desc3:
+      "Control de calidad riguroso en multiples etapas por tecnicos experimentados. Calidad estable conforme a estandares internacionales.",
+    badge4: "Cliente primero",
+    title4: "Soporte y servicio dedicados",
+    desc4:
+      "\"Calidad premium, cliente primero.\" Respaldamos cada bolsa que fabricamos con un servicio fluido desde el diseño hasta la entrega global.",
+    cta: "Solicitar cotizacion",
+  },
+  ar: {
+    eyebrow: "شركة تصنيع قوية",
+    titlePrefix: "المزايا",
+    titleSuffix: "الاساسية.",
+    summary:
+      "بفضل خطوط الانتاج المتكاملة ونهج يركز على العميل، نقدم حلول تغليف عالية الجودة مصممة وفقا لمتطلباتكم الدقيقة.",
+    badge1: "مصمم لكم",
+    title1: "حلول مخصصة",
+    desc1:
+      "حلول تغليف مخصصة لقطاعات الغذاء والطب ومستحضرات التجميل والالكترونيات. نصمم البنية المثالية لاحتياجات منتجكم.",
+    title2: "تسليم سريع",
+    desc2:
+      "مرافق داخلية متكاملة من نفخ الافلام الى تصنيع الاكياس لضمان تسليم سريع وموثوق.",
+    title3: "جودة معتمدة",
+    desc3:
+      "رقابة جودة صارمة متعددة المراحل ينفذها فنيون ذوو خبرة. جودة مستقرة تفي بالمعايير الدولية.",
+    badge4: "العميل اولا",
+    title4: "دعم وخدمة مخصصة",
+    desc4:
+      "\"جودة ممتازة، والعميل اولا.\" نحن ندعم كل كيس ننتجه بخدمة سلسة من التصميم الاولى حتى التسليم العالمي.",
+    cta: "اطلب عرض سعر",
+  },
+} as const;
 
 export default function BentoFeatures() {
+  const { locale } = useLanguage();
+  const text = textMap[locale as keyof typeof textMap] || textMap.en;
+
   return (
     <section className="py-24 md:py-32 bg-white relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,7 +92,7 @@ export default function BentoFeatures() {
             >
               <div className="w-8 h-[1px] bg-[#F05A22]"></div>
               <span className="text-xs font-semibold tracking-[0.2em] text-[#1A1A1A] uppercase">
-                Powerful Manufacturer
+                {text.eyebrow}
               </span>
             </motion.div>
             
@@ -30,7 +103,7 @@ export default function BentoFeatures() {
               transition={{ delay: 0.1 }}
               className="text-[40px] md:text-[64px] font-bold text-[#1A1A1A] tracking-[-0.02em] leading-[1.05]"
             >
-              <span className="text-[#F05A22]">Core</span> Advantages.
+              <span className="text-[#F05A22]">{text.titlePrefix}</span> {text.titleSuffix}
             </motion.h2>
           </div>
 
@@ -41,7 +114,7 @@ export default function BentoFeatures() {
             transition={{ delay: 0.2 }}
             className="text-[15px] md:text-[17px] text-gray-500 leading-[1.7] max-w-md font-light"
           >
-            With complete in-house production lines and a customer-first approach, we deliver premium packaging solutions tailored to your exact specifications.
+            {text.summary}
           </motion.p>
         </div>
 
@@ -58,7 +131,7 @@ export default function BentoFeatures() {
           >
             <div className="absolute inset-0 z-0">
               <img 
-                src="https://cdn.myxypt.com/f4a05196/24/07/eb7d0b54afe9c10e026f4a332c9cec3d4c4890f5.png?x-oss-process=image/resize,m_lfit,h_800,w_800" 
+                src="/images/factory/印刷车间/10101 (2).png?v=3"
                 alt="Custom Packaging Solutions" 
                 className="w-full h-full object-cover transition-all duration-1000 ease-out scale-105 group-hover:scale-100"
               />
@@ -68,7 +141,7 @@ export default function BentoFeatures() {
             <div className="relative z-10 p-8 md:p-12 flex flex-col h-full justify-between">
               <div className="flex justify-between items-start">
                 <span className="bg-white/10 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-2 border border-white/20">
-                  Tailored For You
+                  {text.badge1}
                 </span>
                 <span className="font-serif italic text-white/50 text-2xl md:text-3xl">01</span>
               </div>
@@ -77,11 +150,11 @@ export default function BentoFeatures() {
                 <div className="flex items-center gap-3 mb-4">
                   <Layers className="w-8 h-8 text-[#F05A22]" />
                   <h3 className="text-3xl md:text-[42px] font-bold text-white tracking-tight leading-tight">
-                    Custom Solutions
+                    {text.title1}
                   </h3>
                 </div>
                 <p className="text-white/80 text-sm md:text-base font-light leading-relaxed max-w-md">
-                  Tailored packaging solutions for food, medical, cosmetics, and electronics industries. We engineer the perfect structure for your product's unique needs.
+                  {text.desc1}
                 </p>
               </div>
             </div>
@@ -109,10 +182,10 @@ export default function BentoFeatures() {
             </div>
             <div className="relative z-10">
               <h3 className="text-xl md:text-2xl font-bold text-[#1A1A1A] mb-3 leading-tight tracking-tight">
-                Fast Delivery
+                {text.title2}
               </h3>
               <p className="text-gray-700 text-sm leading-relaxed font-light">
-                Complete in-house facilities—from film blowing to pouch making—ensuring rapid and reliable turnaround.
+                {text.desc2}
               </p>
             </div>
           </motion.div>
@@ -142,10 +215,10 @@ export default function BentoFeatures() {
             </div>
             <div className="relative z-10">
               <h3 className="text-xl md:text-2xl font-bold text-white mb-3 leading-tight tracking-tight">
-                Certified Quality
+                {text.title3}
               </h3>
               <p className="text-gray-400 text-sm leading-relaxed font-light mb-6">
-                Rigorous multi-stage quality control by experienced technicians. Stable quality that meets international standards.
+                {text.desc3}
               </p>
             </div>
           </motion.div>
@@ -170,7 +243,7 @@ export default function BentoFeatures() {
             
             <div className="relative z-10 flex justify-between items-start mb-8">
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/80 border-b border-white/20 pb-1">
-                Customer First
+                {text.badge4}
               </span>
               <span className="font-serif italic text-white/30 text-xl md:text-2xl group-hover:text-white transition-colors">04</span>
             </div>
@@ -178,14 +251,14 @@ export default function BentoFeatures() {
             <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="max-w-2xl">
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight tracking-tight">
-                  Dedicated Support & Service
+                  {text.title4}
                 </h3>
                 <p className="text-white/80 text-sm md:text-base leading-relaxed font-light">
-                  "Premium Quality, Customer First." We stand behind every pouch we manufacture, providing seamless service from initial design consultation to global delivery.
+                  {text.desc4}
                 </p>
               </div>
               <Link href="/contact" className="inline-flex items-center text-sm font-bold uppercase tracking-[0.15em] text-white hover:text-[#1A1A1A] transition-colors group/link shrink-0 bg-black/20 hover:bg-white px-6 py-4 rounded-none border border-white/30 hover:border-white backdrop-blur-sm">
-                Get a Quote 
+                {text.cta}
                 <ArrowRight className="w-5 h-5 ml-3 transform group-hover/link:translate-x-1 transition-transform" />
               </Link>
             </div>

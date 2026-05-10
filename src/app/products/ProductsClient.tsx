@@ -109,6 +109,71 @@ export default function ProductsClient({ categories, products }: { categories: s
     "Specialty & Functional Films",
     "Recyclable Mono-Materials"
   ];
+  const subcategoryLabels = {
+    en: {
+      "Custom Pet Supplies Bags": "Custom Pet Supplies Bags",
+      "Tea Bags": "Tea Bags",
+      "Custom Food Bags": "Custom Food Bags",
+      "Medical Mask Bags": "Medical Mask Bags",
+      "Toy Bags": "Toy Bags",
+      "Shaped Bags": "Shaped Bags",
+      "Ziplock Bags": "Ziplock Bags",
+      "Mask Bags": "Mask Bags",
+      "Kraft Paper Bags": "Kraft Paper Bags",
+      "Bubble Bags": "Bubble Bags",
+      "Spout Pouches": "Spout Pouches",
+      "Foil-Clear Bags": "Foil-Clear Bags",
+      "Transparent High-Barrier Films (AlOx)": "Transparent High-Barrier Films (AlOx)",
+      "Metallized Films (VMPET/VMCPP)": "Metallized Films (VMPET/VMCPP)",
+      "Specialty & Functional Films": "Specialty & Functional Films",
+      "Recyclable Mono-Materials": "Recyclable Mono-Materials",
+      "Shrink Label Series": productText.en.mainCat2,
+    },
+    es: {
+      "Custom Pet Supplies Bags": "Bolsas personalizadas para mascotas",
+      "Tea Bags": "Bolsas para te",
+      "Custom Food Bags": "Bolsas personalizadas para alimentos",
+      "Medical Mask Bags": "Bolsas para mascarillas medicas",
+      "Toy Bags": "Bolsas para juguetes",
+      "Shaped Bags": "Bolsas con forma",
+      "Ziplock Bags": "Bolsas ziplock",
+      "Mask Bags": "Bolsas para mascarillas",
+      "Kraft Paper Bags": "Bolsas de papel kraft",
+      "Bubble Bags": "Bolsas burbuja",
+      "Spout Pouches": "Bolsas con boquilla",
+      "Foil-Clear Bags": "Bolsas foil transparentes",
+      "Transparent High-Barrier Films (AlOx)": "Peliculas transparentes de alta barrera (AlOx)",
+      "Metallized Films (VMPET/VMCPP)": "Peliculas metalizadas (VMPET/VMCPP)",
+      "Specialty & Functional Films": "Peliculas especiales y funcionales",
+      "Recyclable Mono-Materials": "Monomateriales reciclables",
+      "Shrink Label Series": productText.es.mainCat2,
+    },
+    ar: {
+      "Custom Pet Supplies Bags": "اكياس مخصصة لمستلزمات الحيوانات الاليفة",
+      "Tea Bags": "اكياس الشاي",
+      "Custom Food Bags": "اكياس مخصصة للاغذية",
+      "Medical Mask Bags": "اكياس للكمامات الطبية",
+      "Toy Bags": "اكياس الالعاب",
+      "Shaped Bags": "اكياس مشكلة",
+      "Ziplock Bags": "اكياس بسحاب",
+      "Mask Bags": "اكياس الاقنعة",
+      "Kraft Paper Bags": "اكياس ورق كرافت",
+      "Bubble Bags": "اكياس فقاعية",
+      "Spout Pouches": "اكياس بفوهة",
+      "Foil-Clear Bags": "اكياس شفافة مع رقائق",
+      "Transparent High-Barrier Films (AlOx)": "افلام شفافة عالية الحاجز (AlOx)",
+      "Metallized Films (VMPET/VMCPP)": "افلام معدنية (VMPET/VMCPP)",
+      "Specialty & Functional Films": "افلام متخصصة ووظيفية",
+      "Recyclable Mono-Materials": "مواد احادية قابلة لاعادة التدوير",
+      "Shrink Label Series": productText.ar.mainCat2,
+    },
+  } as const;
+  const labelMap = subcategoryLabels[locale as keyof typeof subcategoryLabels] || subcategoryLabels.en;
+  const getCategoryLabel = (name: string) => labelMap[name as keyof typeof labelMap] || name;
+  const getCanonicalCategory = (name: string) => {
+    const matched = Object.entries(labelMap).find(([, value]) => value === name);
+    return matched?.[0] || name;
+  };
 
   const syncFiltersFromUrl = () => {
     const categoryParam =
@@ -144,7 +209,7 @@ export default function ProductsClient({ categories, products }: { categories: s
       return;
     }
 
-    setActiveCategory(categoryParam);
+    setActiveCategory(getCategoryLabel(categoryParam));
   };
 
   const updateUrlFilters = (nextCategory?: string, nextSearch?: string) => {
@@ -170,7 +235,9 @@ export default function ProductsClient({ categories, products }: { categories: s
             ? "Plastic Packaging Bags"
             : nextCategory === text.mainCat3
               ? "High-Barrier & Metallized Films"
-              : nextCategory;
+              : nextCategory === text.mainCat2
+                ? "Shrink Label Series"
+                : getCanonicalCategory(nextCategory);
         const categoryPath = buildProductCategoryPath(categoryName);
         const query = params.toString();
         router.push(query ? `${categoryPath}?${query}` : categoryPath, { scroll: false });
@@ -204,6 +271,7 @@ export default function ProductsClient({ categories, products }: { categories: s
 
   const matchesActiveCategory = (productCategory: string) => {
     let matchesCategory = false;
+    const activeCanonical = getCanonicalCategory(activeCategory);
 
     if (activeCategory === text.allProducts) {
       matchesCategory = true;
@@ -212,7 +280,7 @@ export default function ProductsClient({ categories, products }: { categories: s
     } else if (activeCategory === text.mainCat3) {
       matchesCategory = highBarrierSubs.includes(productCategory);
     } else {
-      matchesCategory = productCategory === activeCategory;
+      matchesCategory = productCategory === activeCanonical;
     }
 
     return matchesCategory;
@@ -221,7 +289,8 @@ export default function ProductsClient({ categories, products }: { categories: s
   const filteredProducts = products.filter((product) => {
     const matchesCategory = matchesActiveCategory(product.category);
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          product.category.toLowerCase().includes(searchQuery.toLowerCase());
+                          product.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          product.categoryLabel?.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -420,7 +489,7 @@ export default function ProductsClient({ categories, products }: { categories: s
                     <div
                       className={clsx(
                         "w-full text-left px-5 py-4 rounded-none text-[14px] font-bold transition-all duration-300 flex items-center justify-between group border-l-2 cursor-pointer",
-                        (activeCategory === text.mainCat1 || plasticBagSubs.includes(activeCategory))
+                        (activeCategory === text.mainCat1 || plasticBagSubs.includes(getCanonicalCategory(activeCategory)))
                           ? "bg-white border-[#F05A22] text-[#1A1A1A] shadow-sm" 
                           : "bg-transparent border-transparent text-gray-500 hover:bg-white hover:text-[#1A1A1A] hover:border-gray-200"
                       )}
@@ -437,7 +506,7 @@ export default function ProductsClient({ categories, products }: { categories: s
                       >
                         <ChevronDown className={clsx(
                           "w-4 h-4", 
-                          (activeCategory === text.mainCat1 || plasticBagSubs.includes(activeCategory)) ? "text-[#F05A22]" : "text-gray-400 group-hover:text-[#1A1A1A]"
+                          (activeCategory === text.mainCat1 || plasticBagSubs.includes(getCanonicalCategory(activeCategory))) ? "text-[#F05A22]" : "text-gray-400 group-hover:text-[#1A1A1A]"
                         )} />
                       </motion.div>
                     </div>
@@ -453,19 +522,19 @@ export default function ProductsClient({ categories, products }: { categories: s
                           <li key={sub}>
                             <button
                               onClick={() => {
-                                setActiveCategory(sub);
+                                setActiveCategory(getCategoryLabel(sub));
                                 setIsMobileFilterOpen(false);
-                                updateUrlFilters(sub);
+                                updateUrlFilters(getCategoryLabel(sub));
                               }}
                               className={clsx(
                                 "w-full text-left pl-10 pr-5 py-2.5 text-[13px] transition-colors flex items-center justify-between group",
-                                activeCategory === sub 
+                                getCanonicalCategory(activeCategory) === sub 
                                   ? "text-[#F05A22] font-bold bg-orange-50/50" 
                                   : "text-gray-500 hover:text-[#1A1A1A] hover:bg-gray-100"
                               )}
                             >
-                              {sub}
-                              {activeCategory === sub && <ChevronRight className="w-3 h-3 text-[#F05A22]" />}
+                              {getCategoryLabel(sub)}
+                              {getCanonicalCategory(activeCategory) === sub && <ChevronRight className="w-3 h-3 text-[#F05A22]" />}
                             </button>
                           </li>
                         ))}
@@ -477,19 +546,19 @@ export default function ProductsClient({ categories, products }: { categories: s
                   <li>
                     <button
                       onClick={() => {
-                        setActiveCategory("Shrink Label Series");
+                        setActiveCategory(text.mainCat2);
                         setIsMobileFilterOpen(false);
-                        updateUrlFilters("Shrink Label Series");
+                        updateUrlFilters(text.mainCat2);
                       }}
                       className={clsx(
                         "w-full text-left px-5 py-4 rounded-none text-[14px] font-bold transition-all duration-300 flex items-center justify-between group border-l-2",
-                        activeCategory === "Shrink Label Series" 
+                        activeCategory === text.mainCat2 
                           ? "bg-white border-[#F05A22] text-[#1A1A1A] shadow-sm" 
                           : "bg-transparent border-transparent text-gray-500 hover:bg-white hover:text-[#1A1A1A] hover:border-gray-200"
                       )}
                     >
                       {text.mainCat2}
-                      {activeCategory === "Shrink Label Series" && (
+                      {activeCategory === text.mainCat2 && (
                         <motion.div layoutId="activeArrow">
                           <ChevronRight className="w-4 h-4 text-[#F05A22]" />
                         </motion.div>
@@ -501,7 +570,7 @@ export default function ProductsClient({ categories, products }: { categories: s
                     <div
                       className={clsx(
                         "w-full text-left px-5 py-4 rounded-none text-[14px] font-bold transition-all duration-300 flex items-center justify-between group border-l-2 cursor-pointer",
-                        (activeCategory === text.mainCat3 || highBarrierSubs.includes(activeCategory))
+                        (activeCategory === text.mainCat3 || highBarrierSubs.includes(getCanonicalCategory(activeCategory)))
                           ? "bg-white border-[#F05A22] text-[#1A1A1A] shadow-sm" 
                           : "bg-transparent border-transparent text-gray-500 hover:bg-white hover:text-[#1A1A1A] hover:border-gray-200"
                       )}
@@ -518,7 +587,7 @@ export default function ProductsClient({ categories, products }: { categories: s
                       >
                         <ChevronDown className={clsx(
                           "w-4 h-4", 
-                          (activeCategory === text.mainCat3 || highBarrierSubs.includes(activeCategory)) ? "text-[#F05A22]" : "text-gray-400 group-hover:text-[#1A1A1A]"
+                          (activeCategory === text.mainCat3 || highBarrierSubs.includes(getCanonicalCategory(activeCategory))) ? "text-[#F05A22]" : "text-gray-400 group-hover:text-[#1A1A1A]"
                         )} />
                       </motion.div>
                     </div>
@@ -534,19 +603,19 @@ export default function ProductsClient({ categories, products }: { categories: s
                           <li key={sub}>
                             <button
                               onClick={() => {
-                                setActiveCategory(sub);
+                                setActiveCategory(getCategoryLabel(sub));
                                 setIsMobileFilterOpen(false);
-                                updateUrlFilters(sub);
+                                updateUrlFilters(getCategoryLabel(sub));
                               }}
                               className={clsx(
                                 "w-full text-left pl-10 pr-5 py-2.5 text-[13px] transition-colors flex items-center justify-between group",
-                                activeCategory === sub 
+                                getCanonicalCategory(activeCategory) === sub 
                                   ? "text-[#F05A22] font-bold bg-orange-50/50" 
                                   : "text-gray-500 hover:text-[#1A1A1A] hover:bg-gray-100"
                               )}
                             >
-                              {sub}
-                              {activeCategory === sub && <ChevronRight className="w-3 h-3 text-[#F05A22]" />}
+                              {getCategoryLabel(sub)}
+                              {getCanonicalCategory(activeCategory) === sub && <ChevronRight className="w-3 h-3 text-[#F05A22]" />}
                             </button>
                           </li>
                         ))}

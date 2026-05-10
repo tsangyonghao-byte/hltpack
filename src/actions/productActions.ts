@@ -19,6 +19,18 @@ function isValidLink(value: string) {
   }
 }
 
+function getOptionalText(formData: FormData, key: string) {
+  const value = String(formData.get(key) || "").trim();
+  return value || null;
+}
+
+function parseFeatures(value: string) {
+  return value
+    .split(",")
+    .map((feature) => feature.trim())
+    .filter(Boolean);
+}
+
 async function ensureUniqueProductSlug(baseValue: string, excludeId?: string) {
   const baseSlug = slugify(baseValue);
   if (!baseSlug) {
@@ -88,16 +100,26 @@ export async function createProduct(prevState: any, formData: FormData) {
   const text = await getAdminActionText();
   try {
     const name = String(formData.get("name") || "").trim();
+    const nameEs = getOptionalText(formData, "nameEs");
+    const nameAr = getOptionalText(formData, "nameAr");
     const categoryId = String(formData.get("categoryId") || "").trim();
     const imageUrl = String(formData.get("imageUrl") || "").trim();
     const imageFile = formData.get("imageFile") as File | null;
     const featuresString = String(formData.get("features") || "").trim();
+    const featuresEsString = String(formData.get("featuresEs") || "").trim();
+    const featuresArString = String(formData.get("featuresAr") || "").trim();
     const isFeatured = formData.get("isFeatured") === "on";
     const content = String(formData.get("content") || "").trim();
+    const contentEs = getOptionalText(formData, "contentEs");
+    const contentAr = getOptionalText(formData, "contentAr");
     const galleryUrls = String(formData.get("galleryUrls") || "[]").trim();
     const slugInput = String(formData.get("slug") || "").trim();
     const seoTitle = String(formData.get("seoTitle") || "").trim();
     const seoDescription = String(formData.get("seoDescription") || "").trim();
+    const seoTitleEs = getOptionalText(formData, "seoTitleEs");
+    const seoTitleAr = getOptionalText(formData, "seoTitleAr");
+    const seoDescriptionEs = getOptionalText(formData, "seoDescriptionEs");
+    const seoDescriptionAr = getOptionalText(formData, "seoDescriptionAr");
 
     let image = imageUrl;
     
@@ -129,7 +151,9 @@ export async function createProduct(prevState: any, formData: FormData) {
       throw new Error(text.productFeaturesRequired);
     }
 
-    const features = featuresString.split(",").map(f => f.trim()).filter(f => f);
+    const features = parseFeatures(featuresString);
+    const featuresEs = parseFeatures(featuresEsString);
+    const featuresAr = parseFeatures(featuresArString);
     const slug = await ensureUniqueProductSlug(slugInput || name);
 
     if (!features.length) {
@@ -139,14 +163,24 @@ export async function createProduct(prevState: any, formData: FormData) {
     await prisma.product.create({
       data: {
         name,
+        nameEs,
+        nameAr,
         categoryId,
         image,
         slug,
         seoTitle: seoTitle || null,
+        seoTitleEs,
+        seoTitleAr,
         seoDescription: seoDescription || null,
+        seoDescriptionEs,
+        seoDescriptionAr,
         gallery: galleryUrls,
         features: JSON.stringify(features),
+        featuresEs: featuresEs.length ? JSON.stringify(featuresEs) : null,
+        featuresAr: featuresAr.length ? JSON.stringify(featuresAr) : null,
         content: content || null,
+        contentEs,
+        contentAr,
         isFeatured,
       },
     });
@@ -166,16 +200,26 @@ export async function updateProduct(id: string, prevState: any, formData: FormDa
   const text = await getAdminActionText();
   try {
     const name = String(formData.get("name") || "").trim();
+    const nameEs = getOptionalText(formData, "nameEs");
+    const nameAr = getOptionalText(formData, "nameAr");
     const categoryId = String(formData.get("categoryId") || "").trim();
     const imageUrl = String(formData.get("imageUrl") || "").trim();
     const imageFile = formData.get("imageFile") as File | null;
     const featuresString = String(formData.get("features") || "").trim();
+    const featuresEsString = String(formData.get("featuresEs") || "").trim();
+    const featuresArString = String(formData.get("featuresAr") || "").trim();
     const isFeatured = formData.get("isFeatured") === "on";
     const content = String(formData.get("content") || "").trim();
+    const contentEs = getOptionalText(formData, "contentEs");
+    const contentAr = getOptionalText(formData, "contentAr");
     const galleryUrls = String(formData.get("galleryUrls") || "[]").trim();
     const slugInput = String(formData.get("slug") || "").trim();
     const seoTitle = String(formData.get("seoTitle") || "").trim();
     const seoDescription = String(formData.get("seoDescription") || "").trim();
+    const seoTitleEs = getOptionalText(formData, "seoTitleEs");
+    const seoTitleAr = getOptionalText(formData, "seoTitleAr");
+    const seoDescriptionEs = getOptionalText(formData, "seoDescriptionEs");
+    const seoDescriptionAr = getOptionalText(formData, "seoDescriptionAr");
 
     let image = imageUrl;
     
@@ -207,7 +251,9 @@ export async function updateProduct(id: string, prevState: any, formData: FormDa
       throw new Error(text.productFeaturesRequired);
     }
 
-    const features = featuresString.split(",").map(f => f.trim()).filter(f => f);
+    const features = parseFeatures(featuresString);
+    const featuresEs = parseFeatures(featuresEsString);
+    const featuresAr = parseFeatures(featuresArString);
     const slug = await ensureUniqueProductSlug(slugInput || name, id);
 
     if (!features.length) {
@@ -218,14 +264,24 @@ export async function updateProduct(id: string, prevState: any, formData: FormDa
       where: { id },
       data: {
         name,
+        nameEs,
+        nameAr,
         slug,
         seoTitle: seoTitle || null,
+        seoTitleEs,
+        seoTitleAr,
         seoDescription: seoDescription || null,
+        seoDescriptionEs,
+        seoDescriptionAr,
         categoryId,
         image,
         gallery: galleryUrls,
         features: JSON.stringify(features),
+        featuresEs: featuresEs.length ? JSON.stringify(featuresEs) : null,
+        featuresAr: featuresAr.length ? JSON.stringify(featuresAr) : null,
         content: content || null,
+        contentEs,
+        contentAr,
         isFeatured,
       },
     });

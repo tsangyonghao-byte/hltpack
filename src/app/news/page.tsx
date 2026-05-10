@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 
 import prisma from "@/lib/prisma";
 import { buildRobotsMetadata, buildSeoMetadata, composeSeoTitle, getSiteUrl, getSystemSeo, jsonLdScript, toAbsoluteUrl } from "@/lib/seo";
+import { getLocalizedValue } from "@/lib/localizedContent";
 
 export const dynamic = "force-dynamic";
 
@@ -88,7 +89,7 @@ export default async function NewsListPage({
     }),
     prisma.news.findMany({
       distinct: ["category"],
-      select: { category: true },
+      select: { category: true, categoryEs: true, categoryAr: true },
       orderBy: { category: "asc" },
     }),
     prisma.news.count({
@@ -97,10 +98,16 @@ export default async function NewsListPage({
   ]);
 
   const totalPages = Math.ceil(totalCount / pageSize);
-
-  const categories = categoryRows.map((item) => item.category).filter(Boolean);
+  const categories = categoryRows
+    .map((item) => ({
+      value: item.category,
+      label: getLocalizedValue(item, "category", locale),
+    }))
+    .filter((item) => item.value);
+  const selectedCategory = categoryRows.find((item) => item.category === category);
+  const selectedCategoryLabel = selectedCategory ? getLocalizedValue(selectedCategory, "category", locale) : category;
   const siteUrl = getSiteUrl();
-  const listTitle = category ? `${text.news}: ${category}` : text.news;
+  const listTitle = category ? `${text.news}: ${selectedCategoryLabel}` : text.news;
   const itemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -116,7 +123,7 @@ export default async function NewsListPage({
         "@type": "ListItem",
         position: index + 1,
         url: `${siteUrl}/news/${item.slug || item.id}`,
-        name: item.title,
+        name: getLocalizedValue(item, "title", locale),
         image: toAbsoluteUrl(item.image),
       })),
     },
@@ -173,15 +180,15 @@ export default async function NewsListPage({
           </Link>
           {categories.map((item) => (
             <Link
-              key={item}
-              href={`/news?category=${encodeURIComponent(item)}`}
+              key={item.value}
+              href={`/news?category=${encodeURIComponent(item.value)}`}
               className={`rounded-full border px-5 py-2 text-sm font-bold transition-colors ${
-                category === item
+                category === item.value
                   ? "border-[#F05A22] bg-[#F05A22] text-white"
                   : "border-gray-200 text-[#1E293B] hover:border-[#F05A22] hover:text-[#F05A22]"
               }`}
             >
-              {item}
+              {item.label}
             </Link>
           ))}
         </div>
@@ -192,7 +199,12 @@ export default async function NewsListPage({
           </div>
         ) : (
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-            {newsItems.map((newsItem) => (
+            {newsItems.map((newsItem) => {
+              const title = getLocalizedValue(newsItem, "title", locale);
+              const summary = getLocalizedValue(newsItem, "summary", locale);
+              const categoryLabel = getLocalizedValue(newsItem, "category", locale);
+
+              return (
               <Link
                 key={newsItem.id}
                 href={`/news/${newsItem.slug || newsItem.id}`}
@@ -201,7 +213,7 @@ export default async function NewsListPage({
                 <div className="aspect-video overflow-hidden bg-gray-100">
                   <img
                     src={newsItem.image}
-                    alt={newsItem.title}
+                    alt={title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
@@ -209,7 +221,7 @@ export default async function NewsListPage({
                   <div className="mb-4 flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-wider">
                     <span className="inline-flex items-center text-[#F05A22]">
                       <Tag className="mr-1 h-3.5 w-3.5" />
-                      {newsItem.category}
+                      {categoryLabel}
                     </span>
                     <span className="text-gray-300">•</span>
                     <span className="inline-flex items-center text-gray-500">
@@ -218,15 +230,15 @@ export default async function NewsListPage({
                     </span>
                   </div>
                   <h2 className="text-2xl font-extrabold leading-tight text-[#1E293B] transition-colors group-hover:text-[#F05A22]">
-                    {newsItem.title}
+                    {title}
                   </h2>
-                  <p className="mt-4 line-clamp-3 text-sm leading-7 text-gray-500">{newsItem.summary}</p>
+                  <p className="mt-4 line-clamp-3 text-sm leading-7 text-gray-500">{summary}</p>
                   <div className="mt-6 inline-flex items-center text-sm font-bold uppercase tracking-wider text-[#1E293B] transition-colors group-hover:text-[#F05A22]">
                     {text.readMore}
                   </div>
                 </div>
               </Link>
-            ))}
+            )})}
           </div>
         )}
 

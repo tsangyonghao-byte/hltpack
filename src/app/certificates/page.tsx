@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
 import { X, ChevronLeft, ChevronRight, Award, ShieldCheck } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const allCerts = [
   { id: 1, name: "Quality Management System Certificate", img: "/hltzs/质量管理体系认证证书01.png", category: "System Certification" },
@@ -22,13 +23,104 @@ const allCerts = [
   { id: 14, name: "Utility Model Patent Certificate", img: "/hltzs/专利证书/深圳市海利通包装用品有限公司-2025206156125-实用新型专利证书(签章)(1)(1)_01.png", category: "Patent" },
 ];
 
+const certificatePageText = {
+  en: {
+    tag: "Quality & Compliance",
+    titleLead: "Global",
+    titleAccent: "Certifications",
+    description:
+      "Our commitment to excellence is validated by international standards. We maintain rigorous quality control systems and hold multiple patents in flexible packaging technology.",
+    all: "All",
+    categories: {
+      "System Certification": "System Certification",
+      "Enterprise Qualification": "Enterprise Qualification",
+      "International Standard": "International Standard",
+      Patent: "Patent",
+    },
+    names: {} as Record<string, string>,
+  },
+  es: {
+    tag: "Calidad y cumplimiento",
+    titleLead: "Certificaciones",
+    titleAccent: "globales",
+    description:
+      "Nuestro compromiso con la excelencia esta respaldado por normas internacionales. Mantenemos sistemas rigurosos de control de calidad y contamos con multiples patentes en tecnologia de envases flexibles.",
+    all: "Todas",
+    categories: {
+      "System Certification": "Certificacion del sistema",
+      "Enterprise Qualification": "Calificacion empresarial",
+      "International Standard": "Norma internacional",
+      Patent: "Patente",
+    },
+    names: {
+      "Quality Management System Certificate": "Certificado del sistema de gestion de calidad",
+      "Occupational Health & Safety Certificate": "Certificado de seguridad y salud ocupacional",
+      "Environmental Management System Certificate": "Certificado del sistema de gestion ambiental",
+      "Food Safety Management System Certificate": "Certificado del sistema de gestion de seguridad alimentaria",
+      "High-Tech Enterprise Certificate": "Certificado de empresa de alta tecnologia",
+      "National Industrial Product Production License": "Licencia nacional de produccion de productos industriales",
+      "BRC A+ Grade Certificate 1": "Certificado BRC grado A+ 1",
+      "BRC A+ Grade Certificate 2": "Certificado BRC grado A+ 2",
+      "Recyclable Certification": "Certificacion de reciclabilidad",
+      "Additional Certification": "Certificacion adicional",
+      "Patent: PE Pouch Heat Sealing": "Patente: sellado termico para bolsa de PE",
+      "Patent: PVC Pouch Printing": "Patente: impresion para bolsa de PVC",
+      "Patent: PE Pouch Cutting Machine": "Patente: maquina de corte para bolsa de PE",
+      "Utility Model Patent Certificate": "Certificado de patente de modelo de utilidad",
+    },
+  },
+  ar: {
+    tag: "الجودة والامتثال",
+    titleLead: "شهادات",
+    titleAccent: "عالمية",
+    description:
+      "يلتزم مصنعنا بالتميز وفق المعايير الدولية. نحافظ على انظمة صارمة لمراقبة الجودة ونمتلك عدة براءات في تقنيات التغليف المرن.",
+    all: "الكل",
+    categories: {
+      "System Certification": "شهادات الانظمة",
+      "Enterprise Qualification": "تاهيل المؤسسة",
+      "International Standard": "معيار دولي",
+      Patent: "براءة اختراع",
+    },
+    names: {
+      "Quality Management System Certificate": "شهادة نظام ادارة الجودة",
+      "Occupational Health & Safety Certificate": "شهادة الصحة والسلامة المهنية",
+      "Environmental Management System Certificate": "شهادة نظام الادارة البيئية",
+      "Food Safety Management System Certificate": "شهادة نظام ادارة سلامة الغذاء",
+      "High-Tech Enterprise Certificate": "شهادة مؤسسة تقنية عالية",
+      "National Industrial Product Production License": "رخصة وطنية لانتاج المنتجات الصناعية",
+      "BRC A+ Grade Certificate 1": "شهادة BRC درجة A+ 1",
+      "BRC A+ Grade Certificate 2": "شهادة BRC درجة A+ 2",
+      "Recyclable Certification": "شهادة قابلية اعادة التدوير",
+      "Additional Certification": "شهادة اضافية",
+      "Patent: PE Pouch Heat Sealing": "براءة: ختم حراري لاكياس PE",
+      "Patent: PVC Pouch Printing": "براءة: طباعة لاكياس PVC",
+      "Patent: PE Pouch Cutting Machine": "براءة: ماكينة قص لاكياس PE",
+      "Utility Model Patent Certificate": "شهادة براءة نموذج منفعة",
+    },
+  },
+} as const;
+
 export default function CertificatesPage() {
+  const { locale } = useLanguage();
+  const text = certificatePageText[locale as keyof typeof certificatePageText] || certificatePageText.en;
   const [selectedCertIndex, setSelectedCertIndex] = useState<number | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [activeCategory, setActiveCategory] = useState<string>(text.all);
 
-  const categories = ["All", ...Array.from(new Set(allCerts.map(cert => cert.category)))];
+  useEffect(() => {
+    setActiveCategory(text.all);
+  }, [text.all]);
 
-  const filteredCerts = activeCategory === "All" 
+  const categories = [text.all, ...Array.from(new Set(allCerts.map(cert => cert.category)))];
+
+  const categoryLabels = text.categories as Record<string, string>;
+  const certNameLabels = text.names as Record<string, string>;
+
+  const getCategoryLabel = (category: string) => categoryLabels[category] || category;
+
+  const getCertName = (name: string) => certNameLabels[name] || name;
+
+  const filteredCerts = activeCategory === text.all
     ? allCerts 
     : allCerts.filter(cert => cert.category === activeCategory);
 
@@ -72,14 +164,14 @@ export default function CertificatesPage() {
             <div className="flex items-center gap-3 mb-6">
               <ShieldCheck className="w-6 h-6 text-[#F05A22]" />
               <span className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase">
-                Quality & Compliance
+                {text.tag}
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight">
-              Global <span className="text-[#F05A22]">Certifications</span>
+              {text.titleLead} <span className="text-[#F05A22]">{text.titleAccent}</span>
             </h1>
             <p className="text-lg text-gray-300 leading-relaxed font-light">
-              Our commitment to excellence is validated by international standards. We maintain rigorous quality control systems and hold multiple patents in flexible packaging technology.
+              {text.description}
             </p>
           </div>
         </div>
@@ -99,7 +191,7 @@ export default function CertificatesPage() {
                   : "bg-white text-gray-600 border-gray-200 hover:border-[#F05A22] hover:text-[#F05A22]"
               }`}
             >
-              {category}
+              {category === text.all ? text.all : getCategoryLabel(category)}
             </button>
           ))}
         </div>
@@ -139,10 +231,10 @@ export default function CertificatesPage() {
                   </div>
                   <div className="text-center">
                     <span className="text-[10px] font-bold text-[#F05A22] uppercase tracking-wider mb-2 block">
-                      {cert.category}
+                      {getCategoryLabel(cert.category)}
                     </span>
                     <h3 className="text-sm font-semibold text-gray-800 line-clamp-2 leading-snug">
-                      {cert.name}
+                      {getCertName(cert.name)}
                     </h3>
                   </div>
                 </div>
@@ -192,9 +284,9 @@ export default function CertificatesPage() {
                         />
                         <div className="mt-8 text-center" onClick={(e) => e.stopPropagation()}>
                           <span className="text-[#F05A22] text-xs font-bold uppercase tracking-widest mb-2 block">
-                            {cert.category}
+                            {getCategoryLabel(cert.category)}
                           </span>
-                          <p className="text-white/90 text-lg md:text-xl font-light tracking-wide">{cert.name}</p>
+                          <p className="text-white/90 text-lg md:text-xl font-light tracking-wide">{getCertName(cert.name)}</p>
                         </div>
                       </div>
                     </div>

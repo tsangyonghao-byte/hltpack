@@ -7,10 +7,37 @@ import { siteContent } from "@/i18n/siteContent";
 import { motion, useAnimation } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { subscribeNewsletter } from "@/actions/contactActions";
+import { getTranslatedFallback } from "@/lib/localizedContent";
 
 export default function Footer({ setting, navItems = [] }: { setting?: any, navItems?: any[] }) {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
+  const footerText = {
+    invalidEmail:
+      locale === "es"
+        ? "Ingrese primero un correo electronico valido."
+        : locale === "ar"
+          ? "يرجى ادخال بريد الكتروني صالح اولا."
+          : "Please enter a valid email address first.",
+    invalidDesktopEmail:
+      locale === "es"
+        ? "Ingrese un correo electronico valido."
+        : locale === "ar"
+          ? "يرجى ادخال بريد الكتروني صالح."
+          : "Please enter a valid email address.",
+    success:
+      locale === "es"
+        ? "Exito"
+        : locale === "ar"
+          ? "تم بنجاح"
+          : "Success",
+    copyrightSuffix:
+      locale === "es"
+        ? "Todos los derechos reservados."
+        : locale === "ar"
+          ? "جميع الحقوق محفوظة."
+          : "All rights reserved.",
+  };
   
   // Slider State
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -54,7 +81,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
       } else {
         // Email invalid, snap back
         controls.start({ x: 0 });
-        alert("Please enter a valid email address first.");
+        alert(footerText.invalidEmail);
       }
     } else {
       // Snap back to start
@@ -65,7 +92,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
   const handleDesktopSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!desktopEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(desktopEmail)) {
-      alert("Please enter a valid email address.");
+      alert(footerText.invalidDesktopEmail);
       return;
     }
     
@@ -87,7 +114,11 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
   const currentYear = new Date().getFullYear();
   const siteName = locale === "zh" ? (setting?.siteNameZh || "海力通包装") : (setting?.siteNameEn || "HAILITONG Packaging");
   const copyright = locale === "zh" ? setting?.footerCopyZh : setting?.footerCopyEn;
-  const address = locale === "zh" ? setting?.contactAddressZh : setting?.contactAddressEn;
+  const localizedAddress =
+    locale === "zh"
+      ? setting?.contactAddressZh
+      : getTranslatedFallback(setting?.contactAddressEn, locale);
+  const address = localizedAddress || content.footer.address;
 
   return (
     <>
@@ -167,7 +198,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
                   <div className="w-8 h-8 flex items-center justify-center shrink-0">
                     <MapPin className="w-5 h-5 text-[#F05A22]" />
                   </div>
-                  <span className="text-gray-400 leading-relaxed mt-1">{address || content.footer.address}</span>
+                  <span className="text-gray-400 leading-relaxed mt-1">{address}</span>
                 </li>
               )}
               {(setting?.contactPhone || true) && (
@@ -235,7 +266,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                   </span>
                 ) : isDesktopSubscribed ? (
-                  <span className="flex items-center justify-center gap-2"><CheckCircle2 className="w-4 h-4" /> Success</span>
+                  <span className="flex items-center justify-center gap-2"><CheckCircle2 className="w-4 h-4" /> {footerText.success}</span>
                 ) : (
                   content.footer.subscribeNow
                 )}
@@ -249,7 +280,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
           {copyright ? (
             <div dangerouslySetInnerHTML={{ __html: copyright }} />
           ) : (
-            <p>{`Copyright © ${currentYear} ${siteName}. All rights reserved.`}</p>
+            <p>{`Copyright © ${currentYear} ${siteName}. ${footerText.copyrightSuffix}`}</p>
           )}
         </div>
 
@@ -359,7 +390,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
                   style={{ touchAction: "none" }}
                 >
                   {isSubscribed ? (
-                    <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4" /> Success</span>
+                    <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4" /> {footerText.success}</span>
                   ) : (
                     <span className="flex items-center gap-1 pointer-events-none">{content.footer.submit} <ChevronsRight className="w-4 h-4" /></span>
                   )}

@@ -38,6 +38,72 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
   const currentCategory =
     getProductCategoryNameFromPathname(pathname) ||
     getProductCategoryNameFromParam(searchParams.get("category"));
+  const navbarText = {
+    toggleMenu: locale === "es" ? "Abrir menu" : locale === "ar" ? "فتح القائمة" : "Toggle Menu",
+    closeMenu: locale === "es" ? "Cerrar menu" : locale === "ar" ? "اغلاق القائمة" : "Close Menu",
+    exploreAll: locale === "es" ? "Explorar todo" : locale === "ar" ? "استكشاف الكل" : "Explore All",
+    featuredProduct: locale === "es" ? "Producto destacado" : locale === "ar" ? "منتج مميز" : "Featured Product",
+  };
+  const fallbackCategoryLabels = {
+    en: {
+      "Custom Pet Supplies Bags": "Custom Pet Supplies Bags",
+      "Tea Bags": "Tea Bags",
+      "Custom Food Bags": "Custom Food Bags",
+      "Medical Mask Bags": "Medical Mask Bags",
+      "Toy Bags": "Toy Bags",
+      "Shaped Bags": "Shaped Bags",
+      "Ziplock Bags": "Ziplock Bags",
+      "Mask Bags": "Mask Bags",
+      "Kraft Paper Bags": "Kraft Paper Bags",
+      "Bubble Bags": "Bubble Bags",
+      "Spout Pouches": "Spout Pouches",
+      "Foil-Clear Bags": "Foil-Clear Bags",
+      "Transparent High-Barrier Films (AlOx)": "Transparent High-Barrier Films (AlOx)",
+      "Metallized Films (VMPET/VMCPP)": "Metallized Films (VMPET/VMCPP)",
+      "Specialty & Functional Films": "Specialty & Functional Films",
+      "Recyclable Mono-Materials": "Recyclable Mono-Materials",
+    },
+    es: {
+      "Custom Pet Supplies Bags": "Bolsas personalizadas para mascotas",
+      "Tea Bags": "Bolsas para te",
+      "Custom Food Bags": "Bolsas personalizadas para alimentos",
+      "Medical Mask Bags": "Bolsas para mascarillas medicas",
+      "Toy Bags": "Bolsas para juguetes",
+      "Shaped Bags": "Bolsas con forma",
+      "Ziplock Bags": "Bolsas ziplock",
+      "Mask Bags": "Bolsas para mascarillas",
+      "Kraft Paper Bags": "Bolsas de papel kraft",
+      "Bubble Bags": "Bolsas burbuja",
+      "Spout Pouches": "Bolsas con boquilla",
+      "Foil-Clear Bags": "Bolsas foil transparentes",
+      "Transparent High-Barrier Films (AlOx)": "Peliculas transparentes de alta barrera (AlOx)",
+      "Metallized Films (VMPET/VMCPP)": "Peliculas metalizadas (VMPET/VMCPP)",
+      "Specialty & Functional Films": "Peliculas especiales y funcionales",
+      "Recyclable Mono-Materials": "Monomateriales reciclables",
+    },
+    ar: {
+      "Custom Pet Supplies Bags": "اكياس مخصصة لمستلزمات الحيوانات الاليفة",
+      "Tea Bags": "اكياس الشاي",
+      "Custom Food Bags": "اكياس مخصصة للاغذية",
+      "Medical Mask Bags": "اكياس للكمامات الطبية",
+      "Toy Bags": "اكياس الالعاب",
+      "Shaped Bags": "اكياس مشكلة",
+      "Ziplock Bags": "اكياس بسحاب",
+      "Mask Bags": "اكياس الاقنعة",
+      "Kraft Paper Bags": "اكياس ورق كرافت",
+      "Bubble Bags": "اكياس فقاعية",
+      "Spout Pouches": "اكياس بفوهة",
+      "Foil-Clear Bags": "اكياس شفافة مع رقائق",
+      "Transparent High-Barrier Films (AlOx)": "افلام شفافة عالية الحاجز (AlOx)",
+      "Metallized Films (VMPET/VMCPP)": "افلام معدنية (VMPET/VMCPP)",
+      "Specialty & Functional Films": "افلام متخصصة ووظيفية",
+      "Recyclable Mono-Materials": "مواد احادية قابلة لاعادة التدوير",
+    },
+  } as const;
+  const translateFallbackCategoryName = (name: string) => {
+    const labelMap = fallbackCategoryLabels[locale as keyof typeof fallbackCategoryLabels] || fallbackCategoryLabels.en;
+    return labelMap[name as keyof typeof labelMap] || name;
+  };
 
   const getHrefCategory = (href?: string) => {
     if (!href) return null;
@@ -128,6 +194,44 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
 
   // Build dynamic nav links from database
   const buildNavLinks = () => {
+    const getTranslatedName = (item: any) => {
+      if (locale === "zh") return item.nameZh || item.nameEn;
+      
+      let name = item.nameEn || item.nameZh;
+      
+      // Top level mapping
+      if (locale !== "en") {
+        if (item.nameEn === "Who we are") name = dict.nav.whoWeAre;
+        else if (item.nameEn === "Our Products") name = dict.nav.products;
+        else if (item.nameEn === "Packaging Market") name = dict.nav.packagingMarket;
+        else if (item.nameEn === "How we work") name = dict.nav.howWeWork;
+        else if (item.nameEn === "Packaging Safety") name = dict.nav.packagingSafety;
+        else if (item.nameEn === "Sustainability") name = dict.nav.sustainability;
+        else if (item.nameEn === "Contact Us") name = dict.nav.contact;
+      }
+
+      // Second level mapping
+      if (locale !== "en" && content?.navbar?.productChildren) {
+        if (item.nameEn === "Plastic Packaging Bags") name = content.navbar.productChildren[0];
+        else if (item.nameEn === "Shrink Label Series") name = content.navbar.productChildren[1];
+        else if (item.nameEn === "High-Barrier & Metallized Films") name = content.navbar.productChildren[2];
+      }
+
+      if (locale !== "en") {
+        name = translateFallbackCategoryName(name);
+      }
+
+      // Third level mapping (packaging market)
+      if (locale !== "en" && siteContent.en.packagingMarket?.markets) {
+        const index = siteContent.en.packagingMarket.markets.findIndex((m: any) => m.title === item.nameEn);
+        if (index !== -1 && content?.packagingMarket?.markets?.[index]) {
+          name = content.packagingMarket.markets[index].title;
+        }
+      }
+
+      return name || "";
+    };
+
     if (!navItems || navItems.length === 0) {
       // Fallback if db is empty
       return [
@@ -140,18 +244,18 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
               name: content.navbar.productChildren[0],
               href: buildProductCategoryPath("Plastic Packaging Bags"),
               children: [
-                { name: "Custom Pet Supplies Bags", href: buildProductCategoryPath("Custom Pet Supplies Bags"), image: "/images/factory/制袋车间/10001.png" },
-                { name: "Tea Bags", href: buildProductCategoryPath("Tea Bags"), image: "/images/factory/制袋车间/10002.png" },
-                { name: "Custom Food Bags", href: buildProductCategoryPath("Custom Food Bags"), image: "/images/factory/制袋车间/10003.png" },
-                { name: "Medical Mask Bags", href: buildProductCategoryPath("Medical Mask Bags"), image: "/images/factory/制袋车间/10004.png" },
-                { name: "Toy Bags", href: buildProductCategoryPath("Toy Bags"), image: "/images/factory/制袋车间/10005.png" },
-                { name: "Shaped Bags", href: buildProductCategoryPath("Shaped Bags"), image: "/products/塑料包装袋系列/异型袋/异型包装袋/10002.jpg" },
-                { name: "Ziplock Bags", href: buildProductCategoryPath("Ziplock Bags"), image: "/images/factory/制袋车间/10007.png" },
-                { name: "Mask Bags", href: buildProductCategoryPath("Mask Bags"), image: "/images/factory/制袋车间/10008.png" },
-                { name: "Kraft Paper Bags", href: buildProductCategoryPath("Kraft Paper Bags"), image: "/images/factory/制袋车间/10009.png" },
-                { name: "Bubble Bags", href: buildProductCategoryPath("Bubble Bags"), image: "/images/factory/制袋车间/10010.png" },
-                { name: "Spout Pouches", href: buildProductCategoryPath("Spout Pouches"), image: "/images/factory/制袋车间/10011.png" },
-                { name: "Foil-Clear Bags", href: buildProductCategoryPath("Foil-Clear Bags"), image: "/images/factory/制袋车间/10012.png" }
+                { name: translateFallbackCategoryName("Custom Pet Supplies Bags"), href: buildProductCategoryPath("Custom Pet Supplies Bags"), image: "/images/factory/制袋车间/10001.png" },
+                { name: translateFallbackCategoryName("Tea Bags"), href: buildProductCategoryPath("Tea Bags"), image: "/images/factory/制袋车间/10002.png" },
+                { name: translateFallbackCategoryName("Custom Food Bags"), href: buildProductCategoryPath("Custom Food Bags"), image: "/images/factory/制袋车间/10003.png" },
+                { name: translateFallbackCategoryName("Medical Mask Bags"), href: buildProductCategoryPath("Medical Mask Bags"), image: "/images/factory/制袋车间/10004.png" },
+                { name: translateFallbackCategoryName("Toy Bags"), href: buildProductCategoryPath("Toy Bags"), image: "/images/factory/制袋车间/10005.png" },
+                { name: translateFallbackCategoryName("Shaped Bags"), href: buildProductCategoryPath("Shaped Bags"), image: "/products/塑料包装袋系列/异型袋/异型包装袋/10002.jpg" },
+                { name: translateFallbackCategoryName("Ziplock Bags"), href: buildProductCategoryPath("Ziplock Bags"), image: "/images/factory/制袋车间/10007.png" },
+                { name: translateFallbackCategoryName("Mask Bags"), href: buildProductCategoryPath("Mask Bags"), image: "/images/factory/制袋车间/10008.png" },
+                { name: translateFallbackCategoryName("Kraft Paper Bags"), href: buildProductCategoryPath("Kraft Paper Bags"), image: "/images/factory/制袋车间/10009.png" },
+                { name: translateFallbackCategoryName("Bubble Bags"), href: buildProductCategoryPath("Bubble Bags"), image: "/images/factory/制袋车间/10010.png" },
+                { name: translateFallbackCategoryName("Spout Pouches"), href: buildProductCategoryPath("Spout Pouches"), image: "/images/factory/制袋车间/10011.png" },
+                { name: translateFallbackCategoryName("Foil-Clear Bags"), href: buildProductCategoryPath("Foil-Clear Bags"), image: "/images/factory/制袋车间/10012.png" }
               ]
             },
             {
@@ -164,22 +268,22 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
               href: buildProductCategoryPath("High-Barrier & Metallized Films"),
               children: [
                 {
-                  name: "Transparent High-Barrier Films (AlOx)",
+                  name: translateFallbackCategoryName("Transparent High-Barrier Films (AlOx)"),
                   href: buildProductCategoryPath("Transparent High-Barrier Films (AlOx)"),
                   image: "/images/factory/印刷车间/10003.png",
                 },
                 {
-                  name: "Metallized Films (VMPET/VMCPP)",
+                  name: translateFallbackCategoryName("Metallized Films (VMPET/VMCPP)"),
                   href: buildProductCategoryPath("Metallized Films (VMPET/VMCPP)"),
                   image: "/images/factory/制袋车间/10005.png",
                 },
                 {
-                  name: "Specialty & Functional Films",
+                  name: translateFallbackCategoryName("Specialty & Functional Films"),
                   href: buildProductCategoryPath("Specialty & Functional Films"),
                   image: "/images/factory/制袋车间/10006.png",
                 },
                 {
-                  name: "Recyclable Mono-Materials",
+                  name: translateFallbackCategoryName("Recyclable Mono-Materials"),
                   href: buildProductCategoryPath("Recyclable Mono-Materials"),
                   image: "/images/factory/制袋车间/10007.png",
                 },
@@ -206,16 +310,16 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
       const children = isProducts ? navItems.filter((i: any) => i.parentId === item.id).sort((a, b) => a.order - b.order) : [];
       
       return {
-        name: locale === "zh" ? item.nameZh : item.nameEn,
+        name: getTranslatedName(item),
         href: normalizeProductCategoryHref(item.link),
         children: children.length > 0 ? children.map((child: any) => {
           const subChildren = navItems.filter((i: any) => i.parentId === child.id).sort((a, b) => a.order - b.order);
           return {
-            name: locale === "zh" ? child.nameZh : child.nameEn,
+            name: getTranslatedName(child),
             href: normalizeProductCategoryHref(child.link),
             image: child.image,
             children: subChildren.length > 0 ? subChildren.map((subChild: any) => ({
-              name: locale === "zh" ? subChild.nameZh : subChild.nameEn,
+              name: getTranslatedName(subChild),
               href: normalizeProductCategoryHref(subChild.link),
               image: subChild.image
             })) : undefined
@@ -260,7 +364,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
           <button 
             className="md:hidden flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white text-[#1A1A1A] shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-gray-100 transition-transform duration-300 active:scale-95"
             onClick={() => setIsMobileMenuOpen(true)}
-            aria-label="Toggle Menu"
+            aria-label={navbarText.toggleMenu}
           >
             <Menu className="h-5 w-5" />
           </button>
@@ -418,7 +522,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                                   onClick={() => setActiveMegaMenu(null)}
                                   className="inline-flex items-center text-[#F05A22] font-bold hover:underline mt-auto pt-8 text-[15px] px-4"
                                 >
-                                  Explore All <ChevronRight className="w-4 h-4 ml-1" />
+                                  {navbarText.exploreAll} <ChevronRight className="w-4 h-4 ml-1" />
                                 </Link>
                               </>
                             );
@@ -449,7 +553,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                                   <img 
                                     key={imgSrc} // forces re-render/animation on source change
                                     src={imgSrc} 
-                                    alt={activeMegaSubCategory || activeMegaCategory || 'Featured Product'} 
+                                    alt={activeMegaSubCategory || activeMegaCategory || navbarText.featuredProduct} 
                                     className="max-w-[90%] max-h-[90%] object-contain mix-blend-multiply group-hover:scale-105 transition-all duration-500 ease-out"
                                   />
                                 ) : null}
@@ -494,7 +598,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                 <button
                   className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white text-[#1A1A1A] shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-gray-100 transition-transform duration-300 active:scale-95"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  aria-label="Close Menu"
+                  aria-label={navbarText.closeMenu}
                 >
                   <X className="h-6 w-6" />
                 </button>

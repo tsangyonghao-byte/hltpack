@@ -7,6 +7,7 @@ import { useHero } from "@/components/home/HeroContext";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Banner } from "@prisma/client";
+import { getLocalizedValue } from "@/lib/localizedContent";
 
 // 极简工业风的轮播数据
 const fallbackSlides = [
@@ -44,7 +45,7 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 40 });
   const { setCurrentSlideIndex: setCurrentSlide } = useHero();
-  const { dict } = useLanguage();
+  const { dict, locale } = useLanguage();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollPrev = useCallback(() => {
@@ -108,6 +109,13 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
         <div className="flex h-full w-full">
           {displaySlides.map((slide, index) => (
             <div key={slide.id} className="relative flex-[0_0_100%] min-w-0 h-full flex flex-col lg:flex-row items-center justify-start lg:justify-between px-6 md:px-12 lg:px-20 xl:px-24">
+              {(() => {
+                const slideTitle = getLocalizedValue(slide, "title", locale) || "";
+                const slideSubtitle = getLocalizedValue(slide, "subtitle", locale);
+                const slideDescription = getLocalizedValue(slide, "description", locale);
+
+                return (
+                  <>
               
               {/* Left Content: Elegant Typography */}
               <AnimatePresence mode="wait">
@@ -128,13 +136,13 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                     >
                       <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-white animate-pulse"></span>
                       <h3 className="text-white font-medium tracking-[0.05em] text-[11px] lg:text-[13px]">
-                        {slide.subtitle}
+                        {slideSubtitle}
                       </h3>
                     </motion.div>
                     
                     {/* Text is white on both mobile and desktop. On mobile it's placed at the top which is dark orange */}
                     <h2 className="text-white font-serif font-bold text-[36px] sm:text-[44px] md:text-[52px] lg:text-[72px] xl:text-[80px] leading-[1.05] tracking-[-0.02em] mb-4 lg:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
-                      {slide.title.split(' ').map((word: string, i: number) => (
+                      {slideTitle.split(" ").map((word: string, i: number) => (
                         <span key={i} className="inline-block overflow-hidden mr-[0.25em] pb-1 lg:pb-2">
                           <motion.span 
                             initial={{ y: "100%" }}
@@ -154,7 +162,7 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                       transition={{ duration: 0.8, delay: 0.4 }}
                       className="text-white text-[14px] lg:text-[18px] max-w-[500px] leading-[1.6] lg:leading-[1.7] mb-8 lg:mb-12 font-sans font-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
                     >
-                      {slide.description}
+                      {slideDescription}
                     </motion.p>
                     
                     <motion.div 
@@ -190,14 +198,16 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                     <div className="absolute inset-0 flex items-center justify-center">
                       <img
                         src={slide.image}
-                        alt={slide.title}
+                        alt={slideTitle}
                         className="relative z-10 w-full h-full object-contain lg:drop-shadow-[0_20px_40px_rgba(0,0,0,0.12)] hover:scale-105 transition-transform duration-700 ease-out"
                       />
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-
+                  </>
+                );
+              })()}
             </div>
           ))}
         </div>

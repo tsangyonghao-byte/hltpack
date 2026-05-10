@@ -10,6 +10,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { siteContent } from "@/i18n/siteContent";
 import { useSearchParams } from "next/navigation";
 import { useSystemSetting } from "@/components/layout/SystemSettingContext";
+import { getTranslatedFallback } from "@/lib/localizedContent";
 
 const rfqText = {
   en: {
@@ -152,15 +153,19 @@ export default function ContactPage() {
       sourcePage,
       message:
         productName && inquiryType
-          ? `Hello, I would like to ${inquiryType === "samples" ? "request samples for" : "get a quotation for"} ${productName}.`
+          ? locale === "ar"
+            ? `مرحبا، اود ${inquiryType === "samples" ? "طلب عينات من" : "الحصول على عرض سعر لـ"} ${productName}.`
+            : locale === "es"
+              ? `Hola, me gustaria ${inquiryType === "samples" ? "solicitar muestras de" : "recibir una cotizacion para"} ${productName}.`
+            : `Hello, I would like to ${inquiryType === "samples" ? "request samples for" : "get a quotation for"} ${productName}.`
           : "",
     };
-  }, [searchParams]);
+  }, [locale, searchParams]);
 
   const [selectedInquiryType, setSelectedInquiryType] = useState(defaults.inquiryType);
   const isDetailedRFQ = ['quote', 'custom', 'samples'].includes(selectedInquiryType);
   const contactAddress =
-    (locale === "zh" ? setting?.contactAddressZh : setting?.contactAddressEn) ||
+    (locale === "zh" ? setting?.contactAddressZh : getTranslatedFallback(setting?.contactAddressEn, locale)) ||
     content.contact.address;
   const contactPhone = setting?.contactPhone || content.footer.phone;
   const contactEmail = setting?.contactEmail || content.footer.email;

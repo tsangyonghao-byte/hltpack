@@ -47,6 +47,30 @@ export default function BannerForm({ banner }: { banner?: Banner }) {
               />
             </AdminField>
 
+            <AdminField label="Title (Spanish)" htmlFor="titleEs" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
+              <AdminInput
+                type="text"
+                id="titleEs"
+                name="titleEs"
+                defaultValue={banner?.titleEs || ""}
+                minLength={2}
+                maxLength={120}
+                className="border-gray-300 py-2"
+              />
+            </AdminField>
+
+            <AdminField label="Title (Arabic)" htmlFor="titleAr" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
+              <AdminInput
+                type="text"
+                id="titleAr"
+                name="titleAr"
+                defaultValue={banner?.titleAr || ""}
+                minLength={2}
+                maxLength={120}
+                className="border-gray-300 py-2"
+              />
+            </AdminField>
+
             <AdminField label={dict.banners.form.subtitle} htmlFor="subtitle" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
               <AdminInput
                 type="text"
@@ -57,11 +81,51 @@ export default function BannerForm({ banner }: { banner?: Banner }) {
               />
             </AdminField>
 
+            <AdminField label="Subtitle (Spanish)" htmlFor="subtitleEs" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
+              <AdminInput
+                type="text"
+                id="subtitleEs"
+                name="subtitleEs"
+                defaultValue={banner?.subtitleEs || ""}
+                className="border-gray-300 py-2"
+              />
+            </AdminField>
+
+            <AdminField label="Subtitle (Arabic)" htmlFor="subtitleAr" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
+              <AdminInput
+                type="text"
+                id="subtitleAr"
+                name="subtitleAr"
+                defaultValue={banner?.subtitleAr || ""}
+                className="border-gray-300 py-2"
+              />
+            </AdminField>
+
             <AdminField label={dict.banners.form.description} htmlFor="description" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
               <AdminTextarea
                 id="description"
                 name="description"
                 defaultValue={banner?.description || ""}
+                rows={3}
+                className="border-gray-300 py-2"
+              />
+            </AdminField>
+
+            <AdminField label="Description (Spanish)" htmlFor="descriptionEs" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
+              <AdminTextarea
+                id="descriptionEs"
+                name="descriptionEs"
+                defaultValue={banner?.descriptionEs || ""}
+                rows={3}
+                className="border-gray-300 py-2"
+              />
+            </AdminField>
+
+            <AdminField label="Description (Arabic)" htmlFor="descriptionAr" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
+              <AdminTextarea
+                id="descriptionAr"
+                name="descriptionAr"
+                defaultValue={banner?.descriptionAr || ""}
                 rows={3}
                 className="border-gray-300 py-2"
               />

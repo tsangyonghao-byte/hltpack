@@ -43,6 +43,28 @@ export default function CategoryForm({ category }: { category?: Category }) {
           />
         </AdminField>
 
+        <AdminField label="Name (Spanish)" htmlFor="nameEs" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
+          <AdminInput
+            type="text"
+            id="nameEs"
+            name="nameEs"
+            defaultValue={category?.nameEs || ""}
+            className="border-gray-300 py-2 focus:border-transparent"
+            placeholder="Spanish category name"
+          />
+        </AdminField>
+
+        <AdminField label="Name (Arabic)" htmlFor="nameAr" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
+          <AdminInput
+            type="text"
+            id="nameAr"
+            name="nameAr"
+            defaultValue={category?.nameAr || ""}
+            className="border-gray-300 py-2 focus:border-transparent"
+            placeholder="Arabic category name"
+          />
+        </AdminField>
+
         <AdminField label={dict.categories.form.description} htmlFor="description" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
           <AdminTextarea
             id="description"
@@ -51,6 +73,28 @@ export default function CategoryForm({ category }: { category?: Category }) {
             rows={4}
             className="border-gray-300 py-2 focus:border-transparent"
             placeholder={dict.categories.form.descriptionPlaceholder}
+          />
+        </AdminField>
+
+        <AdminField label="Description (Spanish)" htmlFor="descriptionEs" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
+          <AdminTextarea
+            id="descriptionEs"
+            name="descriptionEs"
+            defaultValue={category?.descriptionEs || ""}
+            rows={4}
+            className="border-gray-300 py-2 focus:border-transparent"
+            placeholder="Spanish description"
+          />
+        </AdminField>
+
+        <AdminField label="Description (Arabic)" htmlFor="descriptionAr" labelClassName="block text-sm font-medium text-gray-700 mb-2" className="">
+          <AdminTextarea
+            id="descriptionAr"
+            name="descriptionAr"
+            defaultValue={category?.descriptionAr || ""}
+            rows={4}
+            className="border-gray-300 py-2 focus:border-transparent"
+            placeholder="Arabic description"
           />
         </AdminField>
 

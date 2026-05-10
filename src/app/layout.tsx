@@ -58,7 +58,8 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const dict = dictionaries[locale as keyof typeof dictionaries] || dictionaries.en;
-  const isRtl = locale === "ar";
+  // Temporarily disable RTL layout for Arabic to prevent styling issues until a full RTL redesign is implemented
+  const isRtl = false; // locale === "ar";
 
   const [rawNavItems, setting] = await Promise.all([
     prisma.navigationItem.findMany({

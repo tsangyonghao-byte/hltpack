@@ -8,40 +8,98 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function AboutUs() {
-  const { dict } = useLanguage();
+  const { locale } = useLanguage();
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+
+  const textMap = {
+    en: {
+      eyebrow: "About HLT Packaging",
+      title1: "Pioneering",
+      accent: "Flexible",
+      title2: "Packaging Since 2001",
+      story1:
+        "Established in 2001 and located in Shenzhen, China, HAILITONG Packaging has evolved into a global leader in flexible packaging manufacturing. We specialize in engineering premium, sustainable, and high-barrier pouch solutions.",
+      story2:
+        "Equipped with world-class multi-color rotogravure presses, solventless laminators, and advanced pouch-making lines, we deliver uncompromising quality to brands worldwide. Our mission is simple: ",
+      mission: "\"Premium Quality, Customer First\".",
+      cta: "Discover Our Story",
+      stats: [
+        ["Years of Experience", "Over three decades of expertise in designing and manufacturing premium packaging."],
+        ["Advanced Equipments", "State-of-the-art rotogravure printing, lamination, and pouch making lines."],
+        ["Square Meters", "Modernized manufacturing facility with rigorous quality control systems."],
+        ["Global Delivery", "Trusted by clients across the US, EU, Japan, and Southeast Asia."],
+      ],
+    },
+    es: {
+      eyebrow: "Sobre HLT Packaging",
+      title1: "Pioneros en",
+      accent: "empaque",
+      title2: "flexible desde 2001",
+      story1:
+        "Fundada en 2001 en Shenzhen, China, HAILITONG Packaging se ha convertido en un referente global en la fabricacion de empaques flexibles. Nos especializamos en soluciones premium, sostenibles y de alta barrera.",
+      story2:
+        "Con prensas de huecograbado multicolor, laminadoras sin solventes y lineas avanzadas de fabricacion de bolsas, ofrecemos calidad sin concesiones a marcas de todo el mundo. Nuestra mision es simple: ",
+      mission: "\"Calidad premium, cliente primero\".",
+      cta: "Descubrir nuestra historia",
+      stats: [
+        ["Años de experiencia", "Mas de tres decadas de experiencia en diseño y fabricacion de empaques premium."],
+        ["Equipos avanzados", "Lineas de impresion en huecograbado, laminacion y fabricacion de bolsas de ultima generacion."],
+        ["Metros cuadrados", "Planta moderna de produccion con sistemas rigurosos de control de calidad."],
+        ["Entrega global", "La confianza de clientes en EE. UU., la UE, Japon y el Sudeste Asiatico."],
+      ],
+    },
+    ar: {
+      eyebrow: "عن HLT Packaging",
+      title1: "رواد في",
+      accent: "التغليف",
+      title2: "المرن منذ 2001",
+      story1:
+        "تأسست HAILITONG Packaging عام 2001 في شنتشن بالصين، وتطورت لتصبح شركة رائدة عالميا في تصنيع التغليف المرن. نحن متخصصون في الحلول عالية الجودة والمستدامة وذات الحواجز العالية.",
+      story2:
+        "بفضل مطابع الروتوغرافور متعددة الالوان، وآلات الترقق بدون مذيبات، وخطوط تصنيع الاكياس المتقدمة، نقدم جودة ثابتة لعلامات تجارية حول العالم. مهمتنا بسيطة: ",
+      mission: "\"جودة ممتازة، والعميل اولا\".",
+      cta: "اكتشف قصتنا",
+      stats: [
+        ["سنوات الخبرة", "اكثر من ثلاثة عقود من الخبرة في تصميم وتصنيع حلول التغليف عالية الجودة."],
+        ["معدات متقدمة", "خطوط متطورة للطباعة واللصق وتصنيع الاكياس."],
+        ["امتار مربعة", "منشأة انتاج حديثة مزودة بانظمة صارمة لمراقبة الجودة."],
+        ["تسليم عالمي", "موثوق من قبل عملاء في الولايات المتحدة والاتحاد الاوروبي واليابان وجنوب شرق اسيا."],
+      ],
+    },
+  } as const;
+  const text = textMap[locale as keyof typeof textMap] || textMap.en;
 
   const stats = [
     {
       id: 1,
       value: 31,
       suffix: "+",
-      label: "Years of Experience",
-      description: "Over three decades of expertise in designing and manufacturing premium packaging.",
+      label: text.stats[0][0],
+      description: text.stats[0][1],
     },
     {
       id: 2,
       value: 100,
       suffix: "+",
-      label: "Advanced Equipments",
-      description: "State-of-the-art rotogravure printing, lamination, and pouch making lines.",
+      label: text.stats[1][0],
+      description: text.stats[1][1],
     },
     {
       id: 3,
       value: 30,
       suffix: "K+",
-      label: "Square Meters",
-      description: "Modernized manufacturing facility with rigorous quality control systems.",
+      label: text.stats[2][0],
+      description: text.stats[2][1],
     },
     {
       id: 4,
       value: 100,
       suffix: "%",
-      label: "Global Delivery",
-      description: "Trusted by clients across the US, EU, Japan, and Southeast Asia.",
+      label: text.stats[3][0],
+      description: text.stats[3][1],
     },
   ];
 
@@ -70,21 +128,21 @@ export default function AboutUs() {
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-[2px] bg-[#F05A22]"></div>
               <span className="text-xs font-bold tracking-[0.25em] text-white uppercase">
-                About HLT Packaging
+                {text.eyebrow}
               </span>
             </div>
 
             <h2 className="text-4xl md:text-5xl lg:text-[64px] font-extrabold text-white leading-[1.1] tracking-tight mb-8">
-              Pioneering <span className="text-[#F05A22]">Flexible</span><br />
-              Packaging Since 2001
+              {text.title1} <span className="text-[#F05A22]">{text.accent}</span><br />
+              {text.title2}
             </h2>
 
             <div className="space-y-6 text-gray-400 text-lg leading-relaxed font-light mb-10 max-w-xl">
               <p>
-                Established in 2001 and located in Shenzhen, China, HAILITONG Packaging has evolved into a global leader in flexible packaging manufacturing. We specialize in engineering premium, sustainable, and high-barrier pouch solutions.
+                {text.story1}
               </p>
               <p>
-                Equipped with world-class multi-color rotogravure presses, solventless laminators, and advanced pouch-making lines, we deliver uncompromising quality to brands worldwide. Our mission is simple: <strong className="text-white font-medium">"Premium Quality, Customer First"</strong>.
+                {text.story2}<strong className="text-white font-medium">{text.mission}</strong>
               </p>
             </div>
 
@@ -93,7 +151,7 @@ export default function AboutUs() {
                 href="/about" 
                 className="inline-flex items-center justify-center px-8 py-4 bg-[#F05A22] text-white font-bold text-sm tracking-wide hover:bg-white hover:text-[#111111] transition-colors duration-300 rounded-full"
               >
-                Discover Our Story
+                {text.cta}
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </div>

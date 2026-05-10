@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Play, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface VideoModalProps {
   videoId: string;
@@ -10,7 +11,29 @@ interface VideoModalProps {
 }
 
 export default function VideoModal({ videoId, coverImage }: VideoModalProps) {
+  const { locale } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
+  const text =
+    locale === "ar"
+      ? {
+          cover: "غلاف الفيديو التعريفي",
+          eyebrow: "فيديو الشركة",
+          play: "تشغيل فيديو الشركة",
+          frameTitle: "الفيديو التعريفي لشركة HAILITONG",
+        }
+      : locale === "es"
+        ? {
+            cover: "Portada del video corporativo",
+            eyebrow: "Video corporativo",
+            play: "Reproducir video de la empresa",
+            frameTitle: "Video corporativo de HAILITONG",
+          }
+      : {
+          cover: "Corporate Video Cover",
+          eyebrow: "Corporate Video",
+          play: "Play Company Video",
+          frameTitle: "HAILITONG corporate video",
+        };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -33,7 +56,7 @@ export default function VideoModal({ videoId, coverImage }: VideoModalProps) {
         <div className="aspect-[16/10] w-full relative">
           <img
             src={coverImage}
-            alt="Corporate Video Cover"
+            alt={text.cover}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/25 transition-colors duration-300 group-hover:bg-black/15"></div>
@@ -46,9 +69,9 @@ export default function VideoModal({ videoId, coverImage }: VideoModalProps) {
 
           <div className="absolute bottom-4 left-4 bg-black/70 px-4 py-3 text-white">
             <p className="text-[11px] font-bold tracking-[0.28em] uppercase text-white/70">
-              Corporate Video
+              {text.eyebrow}
             </p>
-            <p className="mt-1 text-sm font-semibold">Play Company Video</p>
+            <p className="mt-1 text-sm font-semibold">{text.play}</p>
           </div>
         </div>
       </button>
@@ -78,7 +101,7 @@ export default function VideoModal({ videoId, coverImage }: VideoModalProps) {
                 <div className="aspect-video w-full">
                   <iframe
                     src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
-                    title="HAILITONG corporate video"
+                    title={text.frameTitle}
                     className="h-full w-full"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"

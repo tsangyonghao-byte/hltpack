@@ -5,6 +5,7 @@ import { ChevronRight, ArrowLeft, Calendar, Tag } from "lucide-react";
 import { cookies } from "next/headers";
 import { buildRobotsMetadata, buildSeoMetadata, getSiteUrl, getSystemSeo, jsonLdScript, toAbsoluteUrl } from "@/lib/seo";
 import { getPreferredProductImage, parseProductGallery } from "@/lib/productImages";
+import { getLocalizedHtml, getLocalizedValue } from "@/lib/localizedContent";
 
 import type { Metadata } from "next";
 
@@ -69,10 +70,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   const canonicalPath = `/news/${newsItem.slug || newsItem.id}`;
+  const localizedTitle = getLocalizedValue(newsItem, "title", locale) || newsItem.title;
+  const localizedSeoTitle = getLocalizedValue(newsItem, "seoTitle", locale);
+  const localizedSeoDescription = getLocalizedValue(newsItem, "seoDescription", locale);
+  const localizedSummary = getLocalizedValue(newsItem, "summary", locale);
 
   return buildSeoMetadata({
-    title: newsItem.seoTitle || `${newsItem.title} | HAILITONG News`,
-    description: newsItem.seoDescription || newsItem.summary,
+    title: localizedSeoTitle || `${localizedTitle} | HAILITONG News`,
+    description: localizedSeoDescription || localizedSummary,
     canonicalPath,
     image: newsItem.image,
     robots: buildRobotsMetadata(`/news/${resolvedParams.slug}`, { siteNoindex, noindexPaths }),
@@ -95,32 +100,51 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
     permanentRedirect(`/news/${canonicalSegment}`);
   }
 
-  const [recentNews, categoriesData, featuredProducts] = await Promise.all([
+  const [recentNews, categoryRows, featuredProducts] = await Promise.all([
     prisma.news.findMany({
       orderBy: { date: "desc" },
       take: 5,
       where: { id: { not: newsItem.id } },
     }),
-    prisma.news.groupBy({
-      by: ["category"],
-      _count: { category: true },
+    prisma.news.findMany({
+      select: { category: true, categoryEs: true, categoryAr: true },
+      orderBy: { category: "asc" },
     }),
     prisma.product.findMany({
       take: 3,
       orderBy: [{ isFeatured: "desc" }, { createdAt: "desc" }],
     }),
   ]);
+  const categoriesData = Array.from(
+    categoryRows.reduce((map, item) => {
+      const existing = map.get(item.category);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        map.set(item.category, {
+          ...item,
+          count: 1,
+        });
+      }
+      return map;
+    }, new Map<string, { category: string; categoryEs: string | null; categoryAr: string | null; count: number }>())
+  ).map(([, value]) => value);
   const featuredProductsWithMainImage = await Promise.all(
     featuredProducts.map(async (product) => ({
       ...product,
       image: await getPreferredProductImage(product.image, parseProductGallery(product.gallery)),
     }))
   );
+  const newsTitle = getLocalizedValue(newsItem, "title", locale) || newsItem.title;
+  const newsSummary = getLocalizedValue(newsItem, "summary", locale);
+  const newsCategory = getLocalizedValue(newsItem, "category", locale);
+  const newsContent = getLocalizedHtml(newsItem, "content", locale);
+  const newsSeoDescription = getLocalizedValue(newsItem, "seoDescription", locale);
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
-    headline: newsItem.title,
-    description: newsItem.seoDescription || newsItem.summary,
+    headline: newsTitle,
+    description: newsSeoDescription || newsSummary,
     image: [toAbsoluteUrl(newsItem.image)],
     datePublished: newsItem.date,
     dateModified: newsItem.updatedAt?.toISOString?.() || undefined,
@@ -153,7 +177,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
       {
         "@type": "ListItem",
         position: 3,
-        name: newsItem.title,
+        name: newsTitle,
         item: `${getSiteUrl()}/news/${canonicalSegment}`,
       },
     ],
@@ -169,7 +193,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
           <ChevronRight className="w-4 h-4 mx-2" />
           <Link href="/news" className="hover:text-white transition-colors">{text.news}</Link>
           <ChevronRight className="w-4 h-4 mx-2" />
-          <span className="text-[#F05A22] font-medium truncate max-w-[200px] md:max-w-none">{newsItem.title}</span>
+          <span className="text-[#F05A22] font-medium truncate max-w-[200px] md:max-w-none">{newsTitle}</span>
         </div>
       </div>
 
@@ -184,7 +208,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
             <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-gray-500 mb-6">
               <div className="flex items-center text-[#F05A22] bg-orange-50 px-3 py-1.5 rounded-full border border-orange-100">
                 <Tag className="w-4 h-4 mr-2" />
-                {newsItem.category}
+                {newsCategory}
               </div>
               <div className="flex items-center">
                 <Calendar className="w-4 h-4 mr-2" />
@@ -193,27 +217,27 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#1E293B] leading-[1.2] mb-8">
-              {newsItem.title}
+              {newsTitle}
             </h1>
 
             <p className="text-lg md:text-xl text-gray-500 font-light leading-relaxed border-l-4 border-[#F05A22] pl-6 mb-12">
-              {newsItem.summary}
+              {newsSummary}
             </p>
 
             <div className="w-full aspect-[16/9] rounded-3xl overflow-hidden bg-gray-100 mb-12 shadow-lg border border-gray-100 relative group">
               <img
                 src={newsItem.image}
-                alt={newsItem.title}
+                alt={newsTitle}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
           </header>
 
           <div className="prose prose-lg prose-gray max-w-none prose-headings:text-[#1E293B] prose-headings:font-bold prose-a:text-[#F05A22] hover:prose-a:text-[#D44A18] prose-img:rounded-2xl">
-            {newsItem.content ? (
+            {newsContent ? (
               <div
                 className="text-gray-700 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: newsItem.content }}
+                dangerouslySetInnerHTML={{ __html: newsContent }}
               />
             ) : (
               <div className="rounded-2xl border border-gray-200 bg-gray-50 px-6 py-5 text-gray-600">
@@ -232,13 +256,18 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {featuredProductsWithMainImage.map((product) => (
                   <Link key={product.id} href={`/products/${product.slug || product.id}`} className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    {(() => {
+                      const productName = getLocalizedValue(product, "name", locale) || product.name;
+
+                      return (
+                        <>
                     <div className="w-full aspect-[4/3] bg-gray-50 relative overflow-hidden">
-                      <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                      <img src={product.image} alt={productName} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
                     <div className="p-6 flex flex-col flex-grow">
                       <h4 className="text-[16px] font-bold text-[#1E293B] leading-snug mb-4 group-hover:text-[#F05A22] transition-colors line-clamp-2">
-                        {product.name}
+                        {productName}
                       </h4>
                       <div className="mt-auto flex items-center justify-between">
                         <span className="text-sm font-bold text-[#F05A22] flex items-center group-hover:translate-x-1 transition-transform">
@@ -246,6 +275,9 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
                         </span>
                       </div>
                     </div>
+                        </>
+                      );
+                    })()}
                   </Link>
                 ))}
               </div>
@@ -270,18 +302,26 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
             <div className="flex flex-col gap-6">
               {recentNews.map((recent) => (
                 <Link key={recent.id} href={`/news/${recent.slug || recent.id}`} className="group flex gap-4 items-start">
+                  {(() => {
+                    const recentTitle = getLocalizedValue(recent, "title", locale) || recent.title;
+
+                    return (
+                      <>
                   <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-white border border-gray-100 shadow-sm">
-                    <img src={recent.image} alt={recent.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <img src={recent.image} alt={recentTitle} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   </div>
                   <div className="flex flex-col">
                     <h4 className="text-[15px] font-bold text-[#1E293B] leading-tight mb-2 group-hover:text-[#F05A22] transition-colors line-clamp-2">
-                      {recent.title}
+                      {recentTitle}
                     </h4>
                     <span className="text-xs text-gray-500 font-medium flex items-center">
                       <Calendar className="w-3 h-3 mr-1" />
                       {recent.date}
                     </span>
                   </div>
+                      </>
+                    );
+                  })()}
                 </Link>
               ))}
             </div>
@@ -299,10 +339,10 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
                     className="flex items-center justify-between p-3 rounded-xl hover:bg-white hover:shadow-sm hover:text-[#F05A22] transition-all group border border-transparent hover:border-gray-100"
                   >
                     <span className="font-medium text-gray-700 group-hover:text-[#F05A22] transition-colors">
-                      {cat.category}
+                      {getLocalizedValue(cat, "category", locale)}
                     </span>
                     <span className="bg-white group-hover:bg-orange-50 text-gray-500 group-hover:text-[#F05A22] text-xs font-bold px-2.5 py-1 rounded-full transition-colors border border-gray-100 group-hover:border-orange-100">
-                      {cat._count.category}
+                      {cat.count}
                     </span>
                   </Link>
                 </li>

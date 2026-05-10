@@ -33,13 +33,28 @@ export default function ProductForm({
   const [state, formAction, isPending] = useActionState(action, null);
 
   const [name, setName] = useState(product?.name || "");
+  const [nameEs, setNameEs] = useState(product?.nameEs || "");
+  const [nameAr, setNameAr] = useState(product?.nameAr || "");
   const [slug, setSlug] = useState(product?.slug || "");
   const [seoTitle, setSeoTitle] = useState(product?.seoTitle || "");
+  const [seoTitleEs, setSeoTitleEs] = useState(product?.seoTitleEs || "");
+  const [seoTitleAr, setSeoTitleAr] = useState(product?.seoTitleAr || "");
   const [seoDescription, setSeoDescription] = useState(product?.seoDescription || "");
+  const [seoDescriptionEs, setSeoDescriptionEs] = useState(product?.seoDescriptionEs || "");
+  const [seoDescriptionAr, setSeoDescriptionAr] = useState(product?.seoDescriptionAr || "");
   const [image, setImage] = useState(product?.image || "");
   const [featuresText, setFeaturesText] = useState(
     isEditing ? JSON.parse(product.features).join(", ") : ""
   );
+  const [featuresEsText, setFeaturesEsText] = useState(
+    isEditing && product?.featuresEs ? JSON.parse(product.featuresEs).join(", ") : ""
+  );
+  const [featuresArText, setFeaturesArText] = useState(
+    isEditing && product?.featuresAr ? JSON.parse(product.featuresAr).join(", ") : ""
+  );
+  const [content, setContent] = useState(product?.content || "");
+  const [contentEs, setContentEs] = useState(product?.contentEs || "");
+  const [contentAr, setContentAr] = useState(product?.contentAr || "");
   const fallbackDescription =
     name?.trim()
       ? locale === "zh"
@@ -91,6 +106,34 @@ export default function ProductForm({
             />
           </AdminField>
 
+          <AdminField label="Product Name (Spanish)" htmlFor="nameEs">
+            <AdminInput
+              type="text"
+              id="nameEs"
+              name="nameEs"
+              minLength={2}
+              maxLength={120}
+              value={nameEs}
+              onChange={(e) => setNameEs(e.target.value)}
+              placeholder="Spanish product name"
+            />
+          </AdminField>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <AdminField label="Product Name (Arabic)" htmlFor="nameAr">
+            <AdminInput
+              type="text"
+              id="nameAr"
+              name="nameAr"
+              minLength={2}
+              maxLength={120}
+              value={nameAr}
+              onChange={(e) => setNameAr(e.target.value)}
+              placeholder="Arabic product name"
+            />
+          </AdminField>
+
           <AdminField label={dict.products.form.category} htmlFor="categoryId">
             <AdminSelect
               id="categoryId"
@@ -133,6 +176,32 @@ export default function ProductForm({
           </AdminField>
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <AdminField label="SEO Title (Spanish)" htmlFor="seoTitleEs">
+            <AdminInput
+              type="text"
+              id="seoTitleEs"
+              name="seoTitleEs"
+              maxLength={180}
+              value={seoTitleEs}
+              onChange={(e) => setSeoTitleEs(e.target.value)}
+              placeholder="Spanish SEO title"
+            />
+          </AdminField>
+
+          <AdminField label="SEO Title (Arabic)" htmlFor="seoTitleAr">
+            <AdminInput
+              type="text"
+              id="seoTitleAr"
+              name="seoTitleAr"
+              maxLength={180}
+              value={seoTitleAr}
+              onChange={(e) => setSeoTitleAr(e.target.value)}
+              placeholder="Arabic SEO title"
+            />
+          </AdminField>
+        </div>
+
         <AdminField label={dict.products.form.seoDescription} htmlFor="seoDescription">
           <AdminTextarea
             id="seoDescription"
@@ -144,6 +213,32 @@ export default function ProductForm({
             placeholder={dict.products.form.seoDescriptionPlaceholder}
           />
         </AdminField>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <AdminField label="SEO Description (Spanish)" htmlFor="seoDescriptionEs">
+            <AdminTextarea
+              id="seoDescriptionEs"
+              name="seoDescriptionEs"
+              rows={3}
+              maxLength={300}
+              value={seoDescriptionEs}
+              onChange={(e) => setSeoDescriptionEs(e.target.value)}
+              placeholder="Spanish SEO description"
+            />
+          </AdminField>
+
+          <AdminField label="SEO Description (Arabic)" htmlFor="seoDescriptionAr">
+            <AdminTextarea
+              id="seoDescriptionAr"
+              name="seoDescriptionAr"
+              rows={3}
+              maxLength={300}
+              value={seoDescriptionAr}
+              onChange={(e) => setSeoDescriptionAr(e.target.value)}
+              placeholder="Arabic SEO description"
+            />
+          </AdminField>
+        </div>
 
         <AdminImageUploadField
           fieldId="product-image"
@@ -180,14 +275,61 @@ export default function ProductForm({
           />
         </AdminField>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <AdminField
+            label="Features (Spanish)"
+            htmlFor="featuresEs"
+            hint="Separate multiple features with commas."
+          >
+            <AdminTextarea
+              id="featuresEs"
+              name="featuresEs"
+              rows={3}
+              minLength={2}
+              value={featuresEsText}
+              onChange={(e) => setFeaturesEsText(e.target.value)}
+              placeholder="Spanish features"
+            />
+          </AdminField>
+
+          <AdminField
+            label="Features (Arabic)"
+            htmlFor="featuresAr"
+            hint="Separate multiple features with commas."
+          >
+            <AdminTextarea
+              id="featuresAr"
+              name="featuresAr"
+              rows={3}
+              minLength={2}
+              value={featuresArText}
+              onChange={(e) => setFeaturesArText(e.target.value)}
+              placeholder="Arabic features"
+            />
+          </AdminField>
+        </div>
+
         <AdminField label={dict.products.form.content || "Content"} htmlFor="content">
-          <input type="hidden" name="content" id="content" />
+          <input type="hidden" name="content" value={content} />
           <RichTextEditor
-            content={product?.content || ""}
-            onChange={(html) => {
-              const input = document.getElementById("content") as HTMLInputElement;
-              if (input) input.value = html;
-            }}
+            content={content}
+            onChange={setContent}
+          />
+        </AdminField>
+
+        <AdminField label="Content (Spanish)" htmlFor="contentEs">
+          <input type="hidden" name="contentEs" value={contentEs} />
+          <RichTextEditor
+            content={contentEs}
+            onChange={setContentEs}
+          />
+        </AdminField>
+
+        <AdminField label="Content (Arabic)" htmlFor="contentAr">
+          <input type="hidden" name="contentAr" value={contentAr} />
+          <RichTextEditor
+            content={contentAr}
+            onChange={setContentAr}
           />
         </AdminField>
 

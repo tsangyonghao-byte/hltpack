@@ -29,12 +29,22 @@ export default function NewsForm({
   const action = isEditing ? updateNews.bind(null, newsItem.id) : createNews;
   const [state, formAction, isPending] = useActionState(action, null);
   const [title, setTitle] = useState(newsItem?.title || "");
+  const [titleEs, setTitleEs] = useState(newsItem?.titleEs || "");
+  const [titleAr, setTitleAr] = useState(newsItem?.titleAr || "");
   const [slug, setSlug] = useState(newsItem?.slug || "");
   const [seoTitle, setSeoTitle] = useState(newsItem?.seoTitle || "");
+  const [seoTitleEs, setSeoTitleEs] = useState(newsItem?.seoTitleEs || "");
+  const [seoTitleAr, setSeoTitleAr] = useState(newsItem?.seoTitleAr || "");
   const [seoDescription, setSeoDescription] = useState(newsItem?.seoDescription || "");
+  const [seoDescriptionEs, setSeoDescriptionEs] = useState(newsItem?.seoDescriptionEs || "");
+  const [seoDescriptionAr, setSeoDescriptionAr] = useState(newsItem?.seoDescriptionAr || "");
   const [image, setImage] = useState(newsItem?.image || "");
   const [summary, setSummary] = useState(newsItem?.summary || "");
+  const [summaryEs, setSummaryEs] = useState(newsItem?.summaryEs || "");
+  const [summaryAr, setSummaryAr] = useState(newsItem?.summaryAr || "");
   const [content, setContent] = useState(newsItem?.content || "");
+  const [contentEs, setContentEs] = useState(newsItem?.contentEs || "");
+  const [contentAr, setContentAr] = useState(newsItem?.contentAr || "");
 
   // Auto-fill today's date if it's a new post
   const today = new Date().toLocaleDateString(locale === "zh" ? "zh-CN" : "en-US", {
@@ -89,6 +99,36 @@ export default function NewsForm({
         </AdminField>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <AdminField label="Article Title (Spanish)" htmlFor="titleEs">
+            <AdminInput
+              type="text"
+              id="titleEs"
+              name="titleEs"
+              minLength={4}
+              maxLength={180}
+              value={titleEs}
+              onChange={(e) => setTitleEs(e.target.value)}
+              tone="green"
+              placeholder="Spanish article title"
+            />
+          </AdminField>
+
+          <AdminField label="Article Title (Arabic)" htmlFor="titleAr">
+            <AdminInput
+              type="text"
+              id="titleAr"
+              name="titleAr"
+              minLength={4}
+              maxLength={180}
+              value={titleAr}
+              onChange={(e) => setTitleAr(e.target.value)}
+              tone="green"
+              placeholder="Arabic article title"
+            />
+          </AdminField>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <AdminField label={dict.news.form.category} htmlFor="category">
             <AdminInput
               type="text"
@@ -99,6 +139,32 @@ export default function NewsForm({
               defaultValue={newsItem?.category || dict.news.form.defaultCategory}
               tone="green"
               placeholder={dict.news.form.categoryPlaceholder}
+            />
+          </AdminField>
+
+          <AdminField label="Category (Spanish)" htmlFor="categoryEs">
+            <AdminInput
+              type="text"
+              id="categoryEs"
+              name="categoryEs"
+              maxLength={60}
+              defaultValue={newsItem?.categoryEs || ""}
+              tone="green"
+              placeholder="Spanish category"
+            />
+          </AdminField>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <AdminField label="Category (Arabic)" htmlFor="categoryAr">
+            <AdminInput
+              type="text"
+              id="categoryAr"
+              name="categoryAr"
+              maxLength={60}
+              defaultValue={newsItem?.categoryAr || ""}
+              tone="green"
+              placeholder="Arabic category"
             />
           </AdminField>
 
@@ -145,6 +211,34 @@ export default function NewsForm({
           </AdminField>
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <AdminField label="SEO Title (Spanish)" htmlFor="seoTitleEs">
+            <AdminInput
+              type="text"
+              id="seoTitleEs"
+              name="seoTitleEs"
+              maxLength={180}
+              value={seoTitleEs}
+              onChange={(e) => setSeoTitleEs(e.target.value)}
+              tone="green"
+              placeholder="Spanish SEO title"
+            />
+          </AdminField>
+
+          <AdminField label="SEO Title (Arabic)" htmlFor="seoTitleAr">
+            <AdminInput
+              type="text"
+              id="seoTitleAr"
+              name="seoTitleAr"
+              maxLength={180}
+              value={seoTitleAr}
+              onChange={(e) => setSeoTitleAr(e.target.value)}
+              tone="green"
+              placeholder="Arabic SEO title"
+            />
+          </AdminField>
+        </div>
+
         <AdminField label={dict.news.form.seoDescription} htmlFor="seoDescription">
           <AdminTextarea
             id="seoDescription"
@@ -157,6 +251,34 @@ export default function NewsForm({
             placeholder={dict.news.form.seoDescriptionPlaceholder}
           />
         </AdminField>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <AdminField label="SEO Description (Spanish)" htmlFor="seoDescriptionEs">
+            <AdminTextarea
+              id="seoDescriptionEs"
+              name="seoDescriptionEs"
+              rows={3}
+              maxLength={300}
+              value={seoDescriptionEs}
+              onChange={(e) => setSeoDescriptionEs(e.target.value)}
+              tone="green"
+              placeholder="Spanish SEO description"
+            />
+          </AdminField>
+
+          <AdminField label="SEO Description (Arabic)" htmlFor="seoDescriptionAr">
+            <AdminTextarea
+              id="seoDescriptionAr"
+              name="seoDescriptionAr"
+              rows={3}
+              maxLength={300}
+              value={seoDescriptionAr}
+              onChange={(e) => setSeoDescriptionAr(e.target.value)}
+              tone="green"
+              placeholder="Arabic SEO description"
+            />
+          </AdminField>
+        </div>
 
         <AdminImageUploadField
           fieldId="news-image"
@@ -188,9 +310,49 @@ export default function NewsForm({
           />
         </AdminField>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <AdminField label="Summary (Spanish)" htmlFor="summaryEs">
+            <AdminTextarea
+              id="summaryEs"
+              name="summaryEs"
+              rows={2}
+              minLength={10}
+              maxLength={240}
+              value={summaryEs}
+              onChange={(e) => setSummaryEs(e.target.value)}
+              tone="green"
+              placeholder="Spanish summary"
+            />
+          </AdminField>
+
+          <AdminField label="Summary (Arabic)" htmlFor="summaryAr">
+            <AdminTextarea
+              id="summaryAr"
+              name="summaryAr"
+              rows={2}
+              minLength={10}
+              maxLength={240}
+              value={summaryAr}
+              onChange={(e) => setSummaryAr(e.target.value)}
+              tone="green"
+              placeholder="Arabic summary"
+            />
+          </AdminField>
+        </div>
+
         <AdminField label={dict.news.form.content} htmlFor="content">
           <input type="hidden" name="content" value={content} />
           <RichTextEditor content={content} onChange={setContent} />
+        </AdminField>
+
+        <AdminField label="Content (Spanish)" htmlFor="contentEs">
+          <input type="hidden" name="contentEs" value={contentEs} />
+          <RichTextEditor content={contentEs} onChange={setContentEs} />
+        </AdminField>
+
+        <AdminField label="Content (Arabic)" htmlFor="contentAr">
+          <input type="hidden" name="contentAr" value={contentAr} />
+          <RichTextEditor content={contentAr} onChange={setContentAr} />
         </AdminField>
 
         <AdminFormActions

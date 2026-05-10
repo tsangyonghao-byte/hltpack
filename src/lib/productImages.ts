@@ -28,6 +28,12 @@ function toPublicFilePath(imageUrl: string) {
   return path.join(process.cwd(), "public", relativePath);
 }
 
+function toPublicUrlFromFilePath(filePath: string) {
+  const publicRoot = path.join(process.cwd(), "public");
+  const relativePath = path.relative(publicRoot, filePath);
+  return `/${relativePath.split(path.sep).join("/")}`;
+}
+
 function readPngDimensions(buffer: Buffer): ImageDimensions | null {
   if (buffer.length < 24) {
     return null;
@@ -121,6 +127,35 @@ async function getImageDimensions(imageUrl: string) {
   }
 }
 
+async function discoverSiblingImages(primaryImage: string) {
+  const normalizedUrl = normalizeImageUrl(primaryImage);
+  if (!normalizedUrl || /^https?:\/\//i.test(normalizedUrl)) {
+    return [];
+  }
+
+  const primaryPath = toPublicFilePath(normalizedUrl);
+  if (!primaryPath) {
+    return [];
+  }
+
+  try {
+    const directoryPath = path.dirname(primaryPath);
+    const fileNames = await fs.readdir(directoryPath);
+    const imageNames = fileNames
+      .filter((name) => /\.(png|jpe?g|webp)$/i.test(name))
+      .sort((a, b) =>
+        a.localeCompare(b, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        })
+      );
+
+    return imageNames.map((name) => toPublicUrlFromFilePath(path.join(directoryPath, name)));
+  } catch {
+    return [];
+  }
+}
+
 export function parseProductGallery(gallery: string | null | undefined) {
   if (!gallery) {
     return [];
@@ -135,8 +170,9 @@ export function parseProductGallery(gallery: string | null | undefined) {
 }
 
 export async function getOrderedProductImages(primaryImage: string, galleryImages: string[] = []) {
+  const siblingImages = await discoverSiblingImages(primaryImage);
   const uniqueImages = Array.from(
-    new Set([primaryImage, ...galleryImages].map((item) => normalizeImageUrl(item)).filter(Boolean) as string[])
+    new Set([primaryImage, ...galleryImages, ...siblingImages].map((item) => normalizeImageUrl(item)).filter(Boolean) as string[])
   );
 
   const imagesWithDimensions = await Promise.all(

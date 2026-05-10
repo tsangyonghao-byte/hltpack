@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, X, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 // Using real factory images mapped to specific workshops
 const factoryData = {
@@ -42,10 +43,37 @@ const tabs = [
 ];
 
 export default function FactoryTour() {
+  const { locale } = useLanguage();
   const [activeTab, setActiveTab] = useState<keyof typeof factoryData>("printing");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const textMap = {
+    en: {
+      facility: "13,000 SQM FACILITY",
+      title: "Inside HAILITONG Factory",
+      tabs: ["Printing Workshop", "Pouch Making Workshop"],
+      cta: "VIEW FULL PROCESS",
+    },
+    es: {
+      facility: "PLANTA DE 13.000 M2",
+      title: "Dentro de la fabrica HAILITONG",
+      tabs: ["Taller de impresion", "Taller de fabricacion de bolsas"],
+      cta: "VER PROCESO COMPLETO",
+    },
+    ar: {
+      facility: "منشأة بمساحة 13,000 متر مربع",
+      title: "داخل مصنع HAILITONG",
+      tabs: ["ورشة الطباعة", "ورشة تصنيع الاكياس"],
+      cta: "عرض العملية الكاملة",
+    },
+  } as const;
+  const text = textMap[locale as keyof typeof textMap] || textMap.en;
+  const localizedTabs = [
+    { ...tabs[0], label: text.tabs[0] },
+    { ...tabs[1], label: text.tabs[1] },
+  ];
 
   // Auto-scroll logic (Marquee)
   useEffect(() => {
@@ -103,7 +131,7 @@ export default function FactoryTour() {
             className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-gray-200 mb-6"
           >
             <span className="w-2 h-2 bg-[#F05A22]"></span>
-            <span className="text-xs font-bold tracking-widest text-gray-600 uppercase">13,000 SQM FACILITY</span>
+            <span className="text-xs font-bold tracking-widest text-gray-600 uppercase">{text.facility}</span>
           </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -112,14 +140,14 @@ export default function FactoryTour() {
             transition={{ delay: 0.1 }}
             className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight"
           >
-            Inside HAILITONG Factory
+            {text.title}
           </motion.h2>
         </div>
 
         {/* Custom Hardcore Tabs */}
         <div className="flex justify-center mb-12">
           <div className="inline-flex w-full md:w-auto overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            {tabs.map((tab) => (
+            {localizedTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as keyof typeof factoryData)}
@@ -202,7 +230,7 @@ export default function FactoryTour() {
             href="/factory" 
             className="inline-flex items-center justify-center bg-[#F05A22] text-white px-8 py-4 text-sm font-bold tracking-wider hover:bg-[#d94f1c] transition-colors rounded-none"
           >
-            VIEW FULL PROCESS
+            {text.cta}
             <ArrowRight className="ml-2 w-4 h-4" />
           </Link>
         </motion.div>

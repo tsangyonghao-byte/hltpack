@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { siteContent } from "@/i18n/siteContent";
 import { useSystemSetting } from "@/components/layout/SystemSettingContext";
+import { getTranslatedFallback } from "@/lib/localizedContent";
 import VideoModal from "./VideoModal";
 
 function AnimatedCounter({ value, suffix = "" }: { value: number, suffix?: string }) {
@@ -45,20 +46,94 @@ export default function AboutPage() {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
   const setting = useSystemSetting();
+  const aboutUiText = locale === "ar"
+    ? {
+        introHighlights: [
+          {
+            title: "مركز تصدير في شنتشن",
+            description: "موقعنا القريب من هونغ كونغ يساعدنا على دعم الشحن العالمي السريع والتنسيق المرن للمشاريع.",
+          },
+          {
+            title: "معتمد وفق BRC و ISO",
+            description: "تعتمد منظومة المصنع على رقابة جودة مستقرة وانضباط انتاج غذائي وتسليم موثوق.",
+          },
+        ],
+        gallery: ["ورشة الطباعة", "ورشة تصنيع الاكياس", "خط الانتاج"],
+        locations: ["المقر والمصنع في شنتشن", "مكتب نيويورك", "مكتب هونغ كونغ"],
+        principles: "المبادئ التوجيهية",
+        capabilitiesTag: "قدراتنا",
+        capabilitiesTitle: "مرافق تصنيع متقدمة",
+        capabilitiesDesc: "مزودون بـ 113 مجموعة من المعدات الحديثة عبر 5 ورش رئيسية: الطباعة، والتصفيح، والتقطيع، وتصنيع الاكياس، ولحام الفوهات.",
+        cards: [
+          ["طباعة عالية السرعة", "طباعة روتوغرافور دقيقة توفر الوانا قوية وثابتة ورسومات حادة."],
+          ["تحويل الاكياس", "خطوط مؤتمتة للاكياس القائمة وذات القاع المسطح واكياس الفوهة والاشكال المخصصة."],
+          ["مراقبة الجودة", "فحص واختبارات صارمة لضمان التوافق الكامل مع المعايير الدولية."],
+        ],
+        factoryTour: "عرض جولة المصنع الكاملة",
+        presence: "حضور عالمي",
+        presenceTitle: "مكاتبنا العالمية ومصنعنا",
+        presenceDesc: "لدينا فروع في شنتشن ونيويورك وهونغ كونغ لنقدم حلولا عالمية مع خدمة محلية.",
+      }
+    : locale === "es"
+      ? {
+          introHighlights: [
+            {
+              title: "Centro de exportacion en Shenzhen",
+              description: "Nuestra ubicacion junto a Hong Kong nos ayuda a coordinar proyectos con rapidez y a enviar a todo el mundo con agilidad.",
+            },
+            {
+              title: "Certificados BRC e ISO",
+              description: "Los sistemas de fabrica se apoyan en un control de calidad estable, disciplina de produccion alimentaria y entregas fiables.",
+            },
+          ],
+          gallery: ["Taller de impresion", "Taller de fabricacion de bolsas", "Linea de produccion"],
+          locations: ["Sede y fabrica de Shenzhen", "Oficina de Nueva York", "Oficina de Hong Kong"],
+          principles: "Principios rectores",
+          capabilitiesTag: "Nuestras capacidades",
+          capabilitiesTitle: "Instalaciones avanzadas de fabricacion",
+          capabilitiesDesc: "Contamos con 113 equipos de ultima generacion distribuidos en 5 talleres principales: impresion, laminacion, corte, fabricacion de bolsas y sellado de boquillas.",
+          cards: [
+            ["Impresion de alta velocidad", "Impresion rotograbada de precision para lograr colores intensos, uniformes y graficos nitidos."],
+            ["Conversion de pouches", "Lineas automatizadas para bolsas stand-up, fondo plano, bolsas con boquilla y formatos personalizados."],
+            ["Control de calidad", "Inspeccion y pruebas rigurosas para asegurar el 100% de cumplimiento con los estandares internacionales."],
+          ],
+          factoryTour: "Ver recorrido completo de la fabrica",
+          presence: "Presencia global",
+          presenceTitle: "Nuestras oficinas globales y fabrica",
+          presenceDesc: "Con sedes en Shenzhen, Nueva York y Hong Kong, ofrecemos soluciones globales de empaque con servicio localizado.",
+        }
+      : {
+          introHighlights: [
+            {
+              title: "Shenzhen-Based Export Hub",
+              description: "Located next to Hong Kong, we support fast global shipping and responsive project coordination.",
+            },
+            {
+              title: "BRC / ISO Certified",
+              description: "Factory systems are built around stable quality control, food-grade production discipline, and reliable delivery.",
+            },
+          ],
+          gallery: ["Printing Workshop", "Bag Making Workshop", "Production Line"],
+          locations: ["Shenzhen Headquarters & Factory", "New York Office", "Hong Kong Office"],
+          principles: "Guiding Principles",
+          capabilitiesTag: "Our Capabilities",
+          capabilitiesTitle: "Advanced Manufacturing Facilities",
+          capabilitiesDesc: "Equipped with 113 sets of state-of-the-art machinery across 5 major workshops: Printing, Lamination, Slitting, Bag Making, and Spout Sealing.",
+          cards: [
+            ["High-Speed Printing", "Precision rotogravure printing for vibrant, consistent colors and sharp graphics."],
+            ["Pouch Converting", "Automated lines for stand-up, flat-bottom, spout pouches, and custom shaped formats."],
+            ["Quality Control", "Rigorous inspection and testing to ensure 100% compliance with international standards."],
+          ],
+          factoryTour: "View Full Factory Tour",
+          presence: "Global Presence",
+          presenceTitle: "Our Global Offices & Factory",
+          presenceDesc: "With branches in Shenzhen, New York, and Hong Kong, we provide global packaging solutions with localized service.",
+        };
   const contactAddress =
-    (locale === "zh" ? setting?.contactAddressZh : setting?.contactAddressEn) ||
+    (locale === "zh" ? setting?.contactAddressZh : getTranslatedFallback(setting?.contactAddressEn, locale)) ||
     content.contact?.address || 
-    "No.51, Lan'er Road, Longxin Community, Baolong Street, Longgang District, Shenzhen, China";
-  const introHighlights = [
-    {
-      title: "Shenzhen-Based Export Hub",
-      description: "Located next to Hong Kong, we support fast global shipping and responsive project coordination.",
-    },
-    {
-      title: "BRC / ISO Certified",
-      description: "Factory systems are built around stable quality control, food-grade production discipline, and reliable delivery.",
-    },
-  ];
+    getTranslatedFallback("No.51, Lan'er Road, Longxin Community, Baolong Street, Longgang District, Shenzhen, China", locale);
+  const introHighlights = aboutUiText.introHighlights;
   const stats = content.about.stats.map((item: { value: number; suffix: string; label: string }, index: number) => ({
     ...item,
     icon: [Building2, Globe, ShieldCheck, Users][index],
@@ -71,17 +146,17 @@ export default function AboutPage() {
   }));
   const factoryGallery = [
     {
-      name: "Printing Workshop",
+      name: aboutUiText.gallery[0],
       img: "/images/factory/印刷车间/10001.png",
       className: "absolute left-0 top-0 w-[58%] z-10",
     },
     {
-      name: "Bag Making Workshop",
+      name: aboutUiText.gallery[1],
       img: "/images/factory/制袋车间/10006.png",
       className: "absolute right-0 top-12 w-[48%] z-20",
     },
     {
-      name: "Production Line",
+      name: aboutUiText.gallery[2],
       img: "/images/factory/制袋车间/10001.png",
       className: "absolute bottom-0 left-1/2 w-[52%] -translate-x-1/2 z-30",
     },
@@ -92,20 +167,20 @@ export default function AboutPage() {
   const locations = [
     {
       id: 0,
-      title: locale === "zh" ? "深圳总部及工厂" : "Shenzhen Headquarters & Factory",
+      title: locale === "zh" ? "深圳总部及工厂" : aboutUiText.locations[0],
       address: contactAddress,
       query: "广东省深圳市龙岗区宝龙街道龙新社区兰二路51号深圳市海利通包装用品有限公司"
     },
     {
       id: 1,
-      title: locale === "zh" ? "纽约办事处" : "New York Office",
-      address: "1178 Broadway, 3rd Floor #3886 , New York , New York 10001, US",
+      title: locale === "zh" ? "纽约办事处" : aboutUiText.locations[1],
+      address: locale === "es" ? "1178 Broadway, 3.er piso #3886, New York, NY 10001, EE. UU." : "1178 Broadway, 3rd Floor #3886 , New York , New York 10001, US",
       query: "1178 Broadway, 3rd Floor #3886, New York, NY 10001, USA"
     },
     {
       id: 2,
-      title: locale === "zh" ? "香港办事处" : "Hong Kong Office",
-      address: "Good Hope Commercial Centre, 2–16 Fa Yuen Street, Hong Kong, HK",
+      title: locale === "zh" ? "香港办事处" : aboutUiText.locations[2],
+      address: locale === "es" ? "Good Hope Commercial Centre, 2-16 Fa Yuen Street, Hong Kong" : "Good Hope Commercial Centre, 2–16 Fa Yuen Street, Hong Kong, HK",
       query: "Good Hope Commercial Centre, 2–16 Fa Yuen Street, Hong Kong"
     }
   ];
@@ -245,8 +320,7 @@ export default function AboutPage() {
                 </div>
 
                 <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-8 leading-tight tracking-tight">
-                  {content.about.storyTitle.split("Our Future")[0]}
-                  <span className="text-[#F05A22]">Our Future</span>
+                  {content.about.storyTitle}
                 </h2>
 
                 <div className="space-y-6 text-gray-500 text-[16px] leading-8 font-light mb-10">
@@ -310,7 +384,7 @@ export default function AboutPage() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-8 h-[1px] bg-[#F05A22]"></div>
               <span className="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">
-                Guiding Principles
+                {aboutUiText.principles}
               </span>
               <div className="w-8 h-[1px] bg-[#F05A22]"></div>
             </div>
@@ -352,15 +426,15 @@ export default function AboutPage() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-8 h-[1px] bg-[#F05A22]"></div>
               <span className="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">
-                Our Capabilities
+                {aboutUiText.capabilitiesTag}
               </span>
               <div className="w-8 h-[1px] bg-[#F05A22]"></div>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-6 tracking-tight">
-              Advanced Manufacturing Facilities
+              {aboutUiText.capabilitiesTitle}
             </h2>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
-              Equipped with 113 sets of state-of-the-art machinery across 5 major workshops: Printing, Lamination, Slitting, Bag Making, and Spout Sealing.
+              {aboutUiText.capabilitiesDesc}
             </p>
           </div>
 
@@ -373,12 +447,12 @@ export default function AboutPage() {
               transition={{ duration: 0.5 }}
               className="group relative aspect-[4/3] overflow-hidden bg-gray-100 border border-gray-200 shadow-sm"
             >
-              <img src="/images/factory/印刷车间/10002.png" alt="High-Speed Printing Workshop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img src="/images/factory/印刷车间/10002.png" alt={aboutUiText.cards[0][0]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/90 via-[#111111]/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute bottom-6 left-6 right-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="text-xl font-bold text-white mb-2 tracking-wide uppercase">High-Speed Printing</h3>
+                <h3 className="text-xl font-bold text-white mb-2 tracking-wide uppercase">{aboutUiText.cards[0][0]}</h3>
                 <div className="h-[2px] w-12 bg-[#F05A22] mb-3 transition-all duration-300 group-hover:w-20"></div>
-                <p className="text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">Precision rotogravure printing for vibrant, consistent colors and sharp graphics.</p>
+                <p className="text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{aboutUiText.cards[0][1]}</p>
               </div>
             </motion.div>
 
@@ -390,12 +464,12 @@ export default function AboutPage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="group relative aspect-[4/3] overflow-hidden bg-gray-100 border border-gray-200 shadow-sm"
             >
-              <img src="/images/factory/制袋车间/10006.png" alt="Pouch Converting Workshop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img src="/images/factory/制袋车间/10006.png" alt={aboutUiText.cards[1][0]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/90 via-[#111111]/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute bottom-6 left-6 right-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="text-xl font-bold text-white mb-2 tracking-wide uppercase">Pouch Converting</h3>
+                <h3 className="text-xl font-bold text-white mb-2 tracking-wide uppercase">{aboutUiText.cards[1][0]}</h3>
                 <div className="h-[2px] w-12 bg-[#F05A22] mb-3 transition-all duration-300 group-hover:w-20"></div>
-                <p className="text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">Automated lines for stand-up, flat-bottom, spout pouches, and custom shaped formats.</p>
+                <p className="text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{aboutUiText.cards[1][1]}</p>
               </div>
             </motion.div>
 
@@ -407,12 +481,12 @@ export default function AboutPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="group relative aspect-[4/3] overflow-hidden bg-gray-100 border border-gray-200 shadow-sm"
             >
-              <img src="/images/factory/印刷车间/10101 (2).png" alt="Strict Quality Control" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img src="/images/factory/印刷车间/10101 (2).png" alt={aboutUiText.cards[2][0]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/90 via-[#111111]/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute bottom-6 left-6 right-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="text-xl font-bold text-white mb-2 tracking-wide uppercase">Quality Control</h3>
+                <h3 className="text-xl font-bold text-white mb-2 tracking-wide uppercase">{aboutUiText.cards[2][0]}</h3>
                 <div className="h-[2px] w-12 bg-[#F05A22] mb-3 transition-all duration-300 group-hover:w-20"></div>
-                <p className="text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">Rigorous inspection and testing to ensure 100% compliance with international standards.</p>
+                <p className="text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{aboutUiText.cards[2][1]}</p>
               </div>
             </motion.div>
           </div>
@@ -422,7 +496,7 @@ export default function AboutPage() {
               href="/factory" 
               className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-gray-300 text-gray-800 font-bold text-sm tracking-wide hover:bg-[#F05A22] hover:text-white hover:border-[#F05A22] transition-all duration-300 rounded-none group"
             >
-              View Full Factory Tour
+              {aboutUiText.factoryTour}
               <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -436,15 +510,15 @@ export default function AboutPage() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-8 h-[1px] bg-[#F05A22]"></div>
               <span className="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">
-                Global Presence
+                {aboutUiText.presence}
               </span>
               <div className="w-8 h-[1px] bg-[#F05A22]"></div>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-6 tracking-tight">
-              {locale === "zh" ? "全球办事处及工厂" : "Our Global Offices & Factory"}
+              {locale === "zh" ? "全球办事处及工厂" : aboutUiText.presenceTitle}
             </h2>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto font-light leading-relaxed whitespace-pre-line">
-              {locale === "zh" ? "我们在深圳、纽约和香港均设有分支机构，为您提供全球化的包装解决方案与本地化服务。" : "With branches in Shenzhen, New York, and Hong Kong, we provide global packaging solutions with localized service."}
+              {locale === "zh" ? "我们在深圳、纽约和香港均设有分支机构，为您提供全球化的包装解决方案与本地化服务。" : aboutUiText.presenceDesc}
             </p>
           </div>
           

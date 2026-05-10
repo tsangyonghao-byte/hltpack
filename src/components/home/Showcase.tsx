@@ -8,56 +8,43 @@ import clsx from "clsx";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function Showcase({ products: dbProducts = [] }: { products?: any[] }) {
-  const { dict } = useLanguage();
-  const defaultProducts = [
-    {
-      id: 1,
-      name: "Nestlé Premium Coffee Pouch",
-      client: "Nestlé",
-      image: "/products/塑料包装袋系列/茶叶袋/自立自封袋/10001.jpg",
-    },
-    {
-      id: 2,
-      name: "Heinz Ketchup Spout Pouch",
-      image: "https://www.logospack.com.hk/cache/img/03b562fb9ec251c3164c6e1171c0273ae7fb098bccd4.png",
-      client: "Heinz",
-    },
-    {
-      id: 3,
-      name: "L'Oréal Cosmetic Sachet",
-      image: "https://www.logospack.com.hk/cache/img/eeed8b33e36f4d104ab1dca068141170f510340e80ee.png",
-      client: "L'Oréal",
-    },
-    {
-      id: 4,
-      name: "FamilyMart Snack Packaging",
-      image: "https://www.logospack.com.hk/cache/img/88c2f8ae74bd774aacc80bdb24f848fe4ea1c7a533ae.png",
-      client: "FamilyMart",
-    },
-    {
-      id: 5,
-      name: "Danone Dairy Stand-up Pouch",
-      image: "https://www.logospack.com.hk/cache/img/3627074e7ea60b3b8ba8c434283822d39ad600ab7b3b.png",
-      client: "Danone",
-    },
-    {
-      id: 6,
-      name: "Mondelez Cookie Roll Film",
-      image: "https://www.logospack.com.hk/cache/img/596de946fdb47fa3480f1a1bc5d5dfab839845a8fbb1.png",
-      client: "Mondelez",
-    },
-    {
-      id: 7,
-      name: "Unilever Detergent Refill",
-      image: "https://www.logospack.com.hk/cache/img/d1e1f6a53f3251fbbb5782fa9bae5dee8a87a9c6d70e.png",
-      client: "Unilever",
-    },
-  ];
+  const { dict, locale } = useLanguage();
+  const defaultsByLocale = {
+    en: [
+      { id: 1, name: "Nestle Premium Coffee Pouch", client: "Nestle", image: "/products/塑料包装袋系列/茶叶袋/自立自封袋/10001.jpg" },
+      { id: 2, name: "Heinz Ketchup Spout Pouch", image: "https://www.logospack.com.hk/cache/img/03b562fb9ec251c3164c6e1171c0273ae7fb098bccd4.png", client: "Heinz" },
+      { id: 3, name: "L'Oreal Cosmetic Sachet", image: "https://www.logospack.com.hk/cache/img/eeed8b33e36f4d104ab1dca068141170f510340e80ee.png", client: "L'Oreal" },
+      { id: 4, name: "FamilyMart Snack Packaging", image: "https://www.logospack.com.hk/cache/img/88c2f8ae74bd774aacc80bdb24f848fe4ea1c7a533ae.png", client: "FamilyMart" },
+      { id: 5, name: "Danone Dairy Stand-up Pouch", image: "https://www.logospack.com.hk/cache/img/3627074e7ea60b3b8ba8c434283822d39ad600ab7b3b.png", client: "Danone" },
+      { id: 6, name: "Mondelez Cookie Roll Film", image: "https://www.logospack.com.hk/cache/img/596de946fdb47fa3480f1a1bc5d5dfab839845a8fbb1.png", client: "Mondelez" },
+      { id: 7, name: "Unilever Detergent Refill", image: "https://www.logospack.com.hk/cache/img/d1e1f6a53f3251fbbb5782fa9bae5dee8a87a9c6d70e.png", client: "Unilever" },
+    ],
+    es: [
+      { id: 1, name: "Bolsa premium de cafe Nestle", client: "Nestle", image: "/products/塑料包装袋系列/茶叶袋/自立自封袋/10001.jpg" },
+      { id: 2, name: "Bolsa con boquilla para ketchup Heinz", image: "https://www.logospack.com.hk/cache/img/03b562fb9ec251c3164c6e1171c0273ae7fb098bccd4.png", client: "Heinz" },
+      { id: 3, name: "Sachet cosmetico L'Oreal", image: "https://www.logospack.com.hk/cache/img/eeed8b33e36f4d104ab1dca068141170f510340e80ee.png", client: "L'Oreal" },
+      { id: 4, name: "Empaque para snacks FamilyMart", image: "https://www.logospack.com.hk/cache/img/88c2f8ae74bd774aacc80bdb24f848fe4ea1c7a533ae.png", client: "FamilyMart" },
+      { id: 5, name: "Bolsa doypack lactea Danone", image: "https://www.logospack.com.hk/cache/img/3627074e7ea60b3b8ba8c434283822d39ad600ab7b3b.png", client: "Danone" },
+      { id: 6, name: "Film en rollo para galletas Mondelez", image: "https://www.logospack.com.hk/cache/img/596de946fdb47fa3480f1a1bc5d5dfab839845a8fbb1.png", client: "Mondelez" },
+      { id: 7, name: "Recarga de detergente Unilever", image: "https://www.logospack.com.hk/cache/img/d1e1f6a53f3251fbbb5782fa9bae5dee8a87a9c6d70e.png", client: "Unilever" },
+    ],
+    ar: [
+      { id: 1, name: "كيس قهوة فاخر من نستله", client: "Nestle", image: "/products/塑料包装袋系列/茶叶袋/自立自封袋/10001.jpg" },
+      { id: 2, name: "كيس صلصة هاينز بفوهة", image: "https://www.logospack.com.hk/cache/img/03b562fb9ec251c3164c6e1171c0273ae7fb098bccd4.png", client: "Heinz" },
+      { id: 3, name: "ساشيه تجميلي من لوريال", image: "https://www.logospack.com.hk/cache/img/eeed8b33e36f4d104ab1dca068141170f510340e80ee.png", client: "L'Oreal" },
+      { id: 4, name: "تغليف وجبات خفيفة من فاميلي مارت", image: "https://www.logospack.com.hk/cache/img/88c2f8ae74bd774aacc80bdb24f848fe4ea1c7a533ae.png", client: "FamilyMart" },
+      { id: 5, name: "كيس قائم لمنتجات دانون", image: "https://www.logospack.com.hk/cache/img/3627074e7ea60b3b8ba8c434283822d39ad600ab7b3b.png", client: "Danone" },
+      { id: 6, name: "رول فيلم لبسكويت مونديليز", image: "https://www.logospack.com.hk/cache/img/596de946fdb47fa3480f1a1bc5d5dfab839845a8fbb1.png", client: "Mondelez" },
+      { id: 7, name: "عبوة اعادة تعبئة منظف يونيليفر", image: "https://www.logospack.com.hk/cache/img/d1e1f6a53f3251fbbb5782fa9bae5dee8a87a9c6d70e.png", client: "Unilever" },
+    ],
+  } as const;
+  const defaultProducts = defaultsByLocale[locale as keyof typeof defaultsByLocale] || defaultsByLocale.en;
+  const featuredLabel = locale === "es" ? "Destacado" : locale === "ar" ? "مميز" : "Featured";
 
   const products = dbProducts.length > 0 ? dbProducts.map(p => ({
     id: p.id,
     name: p.name,
-    client: p.category?.name || "Featured",
+    client: p.category?.name || featuredLabel,
     image: p.image
   })) : defaultProducts;
 
@@ -111,7 +98,7 @@ export default function Showcase({ products: dbProducts = [] }: { products?: any
           >
             <div className="w-8 h-[1px] bg-[#F05A22]"></div>
             <span className="text-xs font-semibold tracking-[0.2em] text-[#1A1A1A] uppercase">
-              Our Products
+              {dict.nav.products}
             </span>
             <div className="w-8 h-[1px] bg-[#F05A22]"></div>
           </motion.div>

@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { getPreferredProductImage, parseProductGallery } from "@/lib/productImages";
+import { getLocalizedJsonArray, getLocalizedValue } from "@/lib/localizedContent";
 
 export async function getProductsPageData(locale: string) {
   const allProductsLabel =
@@ -12,16 +13,17 @@ export async function getProductsPageData(locale: string) {
     },
   });
 
-  const categories = [allProductsLabel, ...dbCategories.map((c) => c.name)];
+  const categories = [allProductsLabel, ...dbCategories.map((c) => getLocalizedValue(c, "name", locale))];
 
   const products = await Promise.all(
     dbProducts.map(async (p) => ({
       id: p.id,
       slug: p.slug,
-      name: p.name,
+        name: getLocalizedValue(p, "name", locale),
       category: p.category.name,
+        categoryLabel: getLocalizedValue(p.category, "name", locale),
       image: await getPreferredProductImage(p.image, parseProductGallery(p.gallery)),
-      features: JSON.parse(p.features),
+        features: getLocalizedJsonArray(p, "features", locale),
     }))
   );
 

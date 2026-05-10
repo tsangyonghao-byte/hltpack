@@ -4,47 +4,87 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
-const industries = [
-  {
-    id: "fresh-food",
-    title: "Fresh Food",
-    desc: "Advanced barrier solutions to preserve the freshness and flavor of seafood and meat.",
-    img: "https://cdn.myxypt.com/f4a05196/24/07/6b210c18853122be0ddf2bda9143f2ea45132cb9.png"
+const industriesMap = {
+  en: {
+    eyebrow: "Industries We Serve",
+    title: "Packaging Solutions for",
+    title2: "Every Market.",
+    cta: "Explore All Solutions",
+    items: [
+      {
+        id: "fresh-food",
+        title: "Fresh Food",
+        desc: "Advanced barrier solutions to preserve the freshness and flavor of seafood and meat.",
+        img: "https://cdn.myxypt.com/f4a05196/24/07/6b210c18853122be0ddf2bda9143f2ea45132cb9.png"
+      },
+      {
+        id: "fruits-veggies",
+        title: "Fruits & Vegetables",
+        desc: "Breathable and anti-fog packaging engineered specifically for fresh produce.",
+        img: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=800&auto=format&fit=crop"
+      },
+      {
+        id: "cosmetics",
+        title: "Cosmetics",
+        desc: "Premium, leak-proof, and aesthetically pleasing packaging for personal care products.",
+        img: "https://cdn.myxypt.com/f4a05196/24/07/cb963b68dbc2a4edd2b071eafc8a0c995cf1c837.png"
+      },
+      {
+        id: "hardware",
+        title: "Hardware",
+        desc: "Heavy-duty, puncture-resistant bags designed for sharp tools and metal parts.",
+        img: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?q=80&w=800&auto=format&fit=crop"
+      },
+      {
+        id: "electronics",
+        title: "Electronics",
+        desc: "Anti-static and moisture-barrier shielding bags for sensitive electronic components.",
+        img: "https://cdn.myxypt.com/f4a05196/24/07/5d12a7b528119b505ed1dde4240b035482e18dfd.png"
+      },
+      {
+        id: "medicine",
+        title: "Medicine",
+        desc: "Strictly controlled, high-barrier packaging ensuring medical-grade safety and hygiene.",
+        img: "https://cdn.myxypt.com/f4a05196/24/07/44cab68946517370d455e027d846775a1b71c154.png"
+      }
+    ],
   },
-  {
-    id: "fruits-veggies",
-    title: "Fruits & Vegetables",
-    desc: "Breathable and anti-fog packaging engineered specifically for fresh produce.",
-    img: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=800&auto=format&fit=crop"
+  es: {
+    eyebrow: "Industrias a las que servimos",
+    title: "Soluciones de empaque para",
+    title2: "cada mercado.",
+    cta: "Explorar todas las soluciones",
+    items: [
+      { id: "fresh-food", title: "Alimentos frescos", desc: "Soluciones avanzadas de barrera para preservar la frescura y el sabor de mariscos y carnes.", img: "https://cdn.myxypt.com/f4a05196/24/07/6b210c18853122be0ddf2bda9143f2ea45132cb9.png" },
+      { id: "fruits-veggies", title: "Frutas y verduras", desc: "Empaques transpirables y antiempañantes diseñados especificamente para productos frescos.", img: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=800&auto=format&fit=crop" },
+      { id: "cosmetics", title: "Cosmeticos", desc: "Empaques premium, hermeticos y visualmente atractivos para productos de cuidado personal.", img: "https://cdn.myxypt.com/f4a05196/24/07/cb963b68dbc2a4edd2b071eafc8a0c995cf1c837.png" },
+      { id: "hardware", title: "Ferreteria", desc: "Bolsas resistentes a perforaciones para herramientas afiladas y piezas metalicas.", img: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?q=80&w=800&auto=format&fit=crop" },
+      { id: "electronics", title: "Electronica", desc: "Bolsas antiestaticas y con barrera contra humedad para componentes electronicos sensibles.", img: "https://cdn.myxypt.com/f4a05196/24/07/5d12a7b528119b505ed1dde4240b035482e18dfd.png" },
+      { id: "medicine", title: "Medicina", desc: "Empaques de alta barrera con control estricto para seguridad e higiene de grado medico.", img: "https://cdn.myxypt.com/f4a05196/24/07/44cab68946517370d455e027d846775a1b71c154.png" },
+    ],
   },
-  {
-    id: "cosmetics",
-    title: "Cosmetics",
-    desc: "Premium, leak-proof, and aesthetically pleasing packaging for personal care products.",
-    img: "https://cdn.myxypt.com/f4a05196/24/07/cb963b68dbc2a4edd2b071eafc8a0c995cf1c837.png"
+  ar: {
+    eyebrow: "القطاعات التي نخدمها",
+    title: "حلول تغليف لكل",
+    title2: "سوق.",
+    cta: "استكشف جميع الحلول",
+    items: [
+      { id: "fresh-food", title: "الاغذية الطازجة", desc: "حلول حاجزة متقدمة للحفاظ على نضارة ونكهة المأكولات البحرية واللحوم.", img: "https://cdn.myxypt.com/f4a05196/24/07/6b210c18853122be0ddf2bda9143f2ea45132cb9.png" },
+      { id: "fruits-veggies", title: "الفواكه والخضروات", desc: "عبوات قابلة للتنفس ومضادة للضباب مصممة خصيصا للمنتجات الطازجة.", img: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=800&auto=format&fit=crop" },
+      { id: "cosmetics", title: "مستحضرات التجميل", desc: "عبوات فاخرة ومحكمة وجذابة بصريا لمنتجات العناية الشخصية.", img: "https://cdn.myxypt.com/f4a05196/24/07/cb963b68dbc2a4edd2b071eafc8a0c995cf1c837.png" },
+      { id: "hardware", title: "الادوات المعدنية", desc: "اكياس متينة مقاومة للثقب مصممة للاجزاء المعدنية والادوات الحادة.", img: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?q=80&w=800&auto=format&fit=crop" },
+      { id: "electronics", title: "الالكترونيات", desc: "اكياس مضادة للكهرباء الساكنة ومانعة للرطوبة للمكونات الالكترونية الحساسة.", img: "https://cdn.myxypt.com/f4a05196/24/07/5d12a7b528119b505ed1dde4240b035482e18dfd.png" },
+      { id: "medicine", title: "القطاع الطبي", desc: "عبوات عالية الحاجز مع رقابة صارمة لضمان السلامة والنظافة الطبية.", img: "https://cdn.myxypt.com/f4a05196/24/07/44cab68946517370d455e027d846775a1b71c154.png" },
+    ],
   },
-  {
-    id: "hardware",
-    title: "Hardware",
-    desc: "Heavy-duty, puncture-resistant bags designed for sharp tools and metal parts.",
-    img: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?q=80&w=800&auto=format&fit=crop"
-  },
-  {
-    id: "electronics",
-    title: "Electronics",
-    desc: "Anti-static and moisture-barrier shielding bags for sensitive electronic components.",
-    img: "https://cdn.myxypt.com/f4a05196/24/07/5d12a7b528119b505ed1dde4240b035482e18dfd.png"
-  },
-  {
-    id: "medicine",
-    title: "Medicine",
-    desc: "Strictly controlled, high-barrier packaging ensuring medical-grade safety and hygiene.",
-    img: "https://cdn.myxypt.com/f4a05196/24/07/44cab68946517370d455e027d846775a1b71c154.png"
-  }
-];
+} as const;
 
 export default function Industries() {
+  const { locale } = useLanguage();
+  const text = industriesMap[locale as keyof typeof industriesMap] || industriesMap.en;
+  const industries = text.items;
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -108,18 +148,18 @@ export default function Industries() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[1px] bg-[#F05A22]"></div>
               <span className="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">
-                Industries We Serve
+                {text.eyebrow}
               </span>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-[44px] font-bold text-[#1A1A1A] leading-tight tracking-tight">
-              Packaging Solutions for <br /> Every Market.
+              {text.title} <br /> {text.title2}
             </h2>
           </div>
           <Link 
             href="/products" 
             className="group inline-flex items-center gap-2 text-[14px] font-bold text-[#1A1A1A] hover:text-[#F05A22] transition-colors pb-2 border-b-2 border-[#1A1A1A] hover:border-[#F05A22]"
           >
-            Explore All Solutions
+            {text.cta}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
