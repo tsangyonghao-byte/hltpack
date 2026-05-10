@@ -26,6 +26,7 @@ export default function AboutUs() {
         "Equipped with world-class multi-color rotogravure presses, solventless laminators, and advanced pouch-making lines, we deliver uncompromising quality to brands worldwide. Our mission is simple: ",
       mission: "\"Premium Quality, Customer First\".",
       cta: "Discover Our Story",
+      imageAlt: "HLT Packaging Facility",
       stats: [
         ["Years of Experience", "Over three decades of expertise in designing and manufacturing premium packaging."],
         ["Advanced Equipments", "State-of-the-art rotogravure printing, lamination, and pouch making lines."],
@@ -44,6 +45,7 @@ export default function AboutUs() {
         "Con prensas de huecograbado multicolor, laminadoras sin solventes y lineas avanzadas de fabricacion de bolsas, ofrecemos calidad sin concesiones a marcas de todo el mundo. Nuestra mision es simple: ",
       mission: "\"Calidad premium, cliente primero\".",
       cta: "Descubrir nuestra historia",
+      imageAlt: "Instalaciones de HLT Packaging",
       stats: [
         ["Años de experiencia", "Mas de tres decadas de experiencia en diseño y fabricacion de empaques premium."],
         ["Equipos avanzados", "Lineas de impresion en huecograbado, laminacion y fabricacion de bolsas de ultima generacion."],
@@ -62,6 +64,7 @@ export default function AboutUs() {
         "بفضل مطابع الروتوغرافور متعددة الالوان، وآلات الترقق بدون مذيبات، وخطوط تصنيع الاكياس المتقدمة، نقدم جودة ثابتة لعلامات تجارية حول العالم. مهمتنا بسيطة: ",
       mission: "\"جودة ممتازة، والعميل اولا\".",
       cta: "اكتشف قصتنا",
+      imageAlt: "منشأة HLT Packaging",
       stats: [
         ["سنوات الخبرة", "اكثر من ثلاثة عقود من الخبرة في تصميم وتصنيع حلول التغليف عالية الجودة."],
         ["معدات متقدمة", "خطوط متطورة للطباعة واللصق وتصنيع الاكياس."],
@@ -111,7 +114,7 @@ export default function AboutUs() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#111111] z-10" />
         <img
           src="https://cdn.myxypt.com/f4a05196/24/07/f361e0c436a1a8876ad142848f16194bb6e87a7f.png?x-oss-process=image/resize,m_lfit,h_800,w_800"
-          alt="HLT Packaging Facility"
+          alt={text.imageAlt}
           className="w-full h-full object-cover opacity-30 mix-blend-luminosity grayscale"
         />
       </div>

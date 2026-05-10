@@ -36,9 +36,9 @@ export default function ProductGallery({ images, alt }: { images: string[]; alt:
       {/* Main Image */}
       <div className="w-full aspect-[4/3] sm:aspect-square bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 relative group overflow-hidden p-8">
         <div className="absolute inset-0 bg-gradient-to-tr from-gray-100 to-transparent opacity-50 pointer-events-none"></div>
-        <img 
-          src={images[currentIndex]} 
-          alt={`${alt} - Image ${currentIndex + 1}`} 
+        <img
+          src={images[currentIndex]}
+          alt={`${alt} ${currentIndex + 1}`}
           className="relative z-10 w-full h-full object-contain mix-blend-multiply transition-all duration-500 ease-out"
         />
         
@@ -68,7 +68,7 @@ export default function ProductGallery({ images, alt }: { images: string[]; alt:
             }`}
           >
             <div className="absolute inset-0 bg-gray-50 pointer-events-none"></div>
-            <img src={img} alt={`Thumbnail ${idx + 1}`} className="relative z-10 w-full h-full object-contain mix-blend-multiply p-2" />
+            <img src={img} alt={`${alt} ${idx + 1}`} className="relative z-10 w-full h-full object-contain mix-blend-multiply p-2" />
           </button>
         ))}
       </div>

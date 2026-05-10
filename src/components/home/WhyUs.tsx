@@ -7,7 +7,13 @@ import { useCallback } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function WhyUs() {
-  const { dict } = useLanguage();
+  const { dict, locale } = useLanguage();
+  const slideControlsText =
+    locale === "es"
+      ? { previous: "Diapositiva anterior", next: "Diapositiva siguiente" }
+      : locale === "ar"
+        ? { previous: "الشريحة السابقة", next: "الشريحة التالية" }
+        : { previous: "Previous slide", next: "Next slide" };
   const features = [
     {
       title: dict.home.whyUs.points[0].title,
@@ -109,14 +115,14 @@ export default function WhyUs() {
             <button 
               onClick={scrollPrev}
               className="w-12 h-12 bg-white rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex items-center justify-center text-[#1A1A1A] transition-all active:scale-95 border border-gray-100"
-              aria-label="Previous slide"
+              aria-label={slideControlsText.previous}
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button 
               onClick={scrollNext}
               className="w-12 h-12 bg-white rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex items-center justify-center text-[#1A1A1A] transition-all active:scale-95 border border-gray-100"
-              aria-label="Next slide"
+              aria-label={slideControlsText.next}
             >
               <ChevronRight className="w-5 h-5" />
             </button>

@@ -29,6 +29,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
   const [activeMegaCategory, setActiveMegaCategory] = useState<string | null>(null);
   const [activeMegaSubCategory, setActiveMegaSubCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isSwitchingLanguage, setIsSwitchingLanguage] = useState(false);
   const { currentSlideIndex } = useHero();
   const { dict, locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
@@ -151,6 +152,29 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
     if (searchQuery.trim()) {
       router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
       setIsMobileMenuOpen(false);
+    }
+  };
+
+  const handleLanguageChange = async (nextLocale: string) => {
+    if (isSwitchingLanguage || nextLocale === locale) {
+      setActiveMegaMenu(null);
+      return;
+    }
+
+    const currentQuery = searchParams.toString();
+    const currentUrl = currentQuery ? `${pathname}?${currentQuery}` : pathname || "/";
+
+    try {
+      setIsSwitchingLanguage(true);
+      setActiveMegaMenu(null);
+      setActiveMobileGroup(null);
+      setIsMobileMenuOpen(false);
+      await setLanguage(nextLocale);
+
+      // Force a full reload so server components, cookies, and dynamic images stay in sync.
+      window.location.replace(currentUrl);
+    } finally {
+      setIsSwitchingLanguage(false);
     }
   };
 
@@ -407,9 +431,9 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                   <div className="absolute top-full right-0 pt-[15px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[110]">
                     <div className="w-32 bg-white rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden text-gray-800">
                       <div className="py-2 flex flex-col relative z-20">
-                        <button onClick={async () => await setLanguage('en')} className={`px-4 py-2 hover:bg-orange-50 hover:text-[#F05A22] text-[15px] font-medium transition-colors text-left ${locale === 'en' ? 'text-[#F05A22] bg-orange-50' : ''}`}>{content.navbar.languages.en}</button>
-                        <button onClick={async () => await setLanguage('es')} className={`px-4 py-2 hover:bg-orange-50 hover:text-[#F05A22] text-[15px] font-medium transition-colors text-left ${locale === 'es' ? 'text-[#F05A22] bg-orange-50' : ''}`}>{content.navbar.languages.es}</button>
-                        <button onClick={async () => await setLanguage('ar')} className={`px-4 py-2 hover:bg-orange-50 hover:text-[#F05A22] text-[15px] font-medium transition-colors text-left ${locale === 'ar' ? 'text-[#F05A22] bg-orange-50' : ''}`}>{content.navbar.languages.ar}</button>
+                        <button disabled={isSwitchingLanguage} onClick={() => void handleLanguageChange('en')} className={`px-4 py-2 hover:bg-orange-50 hover:text-[#F05A22] text-[15px] font-medium transition-colors text-left disabled:opacity-60 disabled:cursor-not-allowed ${locale === 'en' ? 'text-[#F05A22] bg-orange-50' : ''}`}>{content.navbar.languages.en}</button>
+                        <button disabled={isSwitchingLanguage} onClick={() => void handleLanguageChange('es')} className={`px-4 py-2 hover:bg-orange-50 hover:text-[#F05A22] text-[15px] font-medium transition-colors text-left disabled:opacity-60 disabled:cursor-not-allowed ${locale === 'es' ? 'text-[#F05A22] bg-orange-50' : ''}`}>{content.navbar.languages.es}</button>
+                        <button disabled={isSwitchingLanguage} onClick={() => void handleLanguageChange('ar')} className={`px-4 py-2 hover:bg-orange-50 hover:text-[#F05A22] text-[15px] font-medium transition-colors text-left disabled:opacity-60 disabled:cursor-not-allowed ${locale === 'ar' ? 'text-[#F05A22] bg-orange-50' : ''}`}>{content.navbar.languages.ar}</button>
                       </div>
                     </div>
                   </div>
@@ -627,9 +651,9 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                           exit={{ opacity: 0, y: -10, height: 0 }}
                           className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-32 bg-white rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden z-10 flex flex-col"
                         >
-                          <button onClick={async () => { await setLanguage('en'); setIsMobileMenuOpen(false); }} className={`px-4 py-3 text-center text-[15px] font-medium hover:bg-orange-50 hover:text-[#F05A22] transition-colors border-b border-gray-50 ${locale === 'en' ? 'text-[#F05A22] bg-orange-50' : ''}`}>{content.navbar.languages.en}</button>
-                          <button onClick={async () => { await setLanguage('es'); setIsMobileMenuOpen(false); }} className={`px-4 py-3 text-center text-[15px] font-medium hover:bg-orange-50 hover:text-[#F05A22] transition-colors border-b border-gray-50 ${locale === 'es' ? 'text-[#F05A22] bg-orange-50' : ''}`}>{content.navbar.languages.es}</button>
-                          <button onClick={async () => { await setLanguage('ar'); setIsMobileMenuOpen(false); }} className={`px-4 py-3 text-center text-[15px] font-medium hover:bg-orange-50 hover:text-[#F05A22] transition-colors ${locale === 'ar' ? 'text-[#F05A22] bg-orange-50' : ''}`}>{content.navbar.languages.ar}</button>
+                          <button disabled={isSwitchingLanguage} onClick={() => void handleLanguageChange('en')} className={`px-4 py-3 text-center text-[15px] font-medium hover:bg-orange-50 hover:text-[#F05A22] transition-colors border-b border-gray-50 disabled:opacity-60 disabled:cursor-not-allowed ${locale === 'en' ? 'text-[#F05A22] bg-orange-50' : ''}`}>{content.navbar.languages.en}</button>
+                          <button disabled={isSwitchingLanguage} onClick={() => void handleLanguageChange('es')} className={`px-4 py-3 text-center text-[15px] font-medium hover:bg-orange-50 hover:text-[#F05A22] transition-colors border-b border-gray-50 disabled:opacity-60 disabled:cursor-not-allowed ${locale === 'es' ? 'text-[#F05A22] bg-orange-50' : ''}`}>{content.navbar.languages.es}</button>
+                          <button disabled={isSwitchingLanguage} onClick={() => void handleLanguageChange('ar')} className={`px-4 py-3 text-center text-[15px] font-medium hover:bg-orange-50 hover:text-[#F05A22] transition-colors disabled:opacity-60 disabled:cursor-not-allowed ${locale === 'ar' ? 'text-[#F05A22] bg-orange-50' : ''}`}>{content.navbar.languages.ar}</button>
                         </motion.div>
                       )}
                     </AnimatePresence>

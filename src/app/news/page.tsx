@@ -57,8 +57,10 @@ export async function generateMetadata(): Promise<Metadata> {
           : "Explore the latest HAILITONG news, packaging trends, and industry updates.";
 
   return buildSeoMetadata({
-    title: composeSeoTitle(text.news, titleSuffix, siteName),
+    title: text.news,
     description,
+    siteName,
+    socialTitle: composeSeoTitle(text.news, titleSuffix, siteName),
     keywords,
     canonicalPath: "/news",
     defaultImage,
@@ -114,7 +116,7 @@ export default async function NewsListPage({
     name: listTitle,
     description:
       category
-        ? `${text.news} - ${category}`
+        ? `${text.news} - ${selectedCategoryLabel}`
         : text.heading,
     url: `${siteUrl}/news${category ? `?category=${encodeURIComponent(category)}` : ""}`,
     mainEntity: {

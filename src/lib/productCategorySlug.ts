@@ -20,6 +20,72 @@ const PRODUCT_CATEGORY_SLUGS: Record<string, string> = {
   "Recyclable Mono-Materials": "recyclable-mono-materials",
 };
 
+const PRODUCT_CATEGORY_LABELS = {
+  en: {
+    "Plastic Packaging Bags": "Plastic Packaging Bags",
+    "Shrink Label Series": "Shrink Label Series",
+    "High-Barrier & Metallized Films": "High-Barrier & Metallized Films",
+    "Custom Pet Supplies Bags": "Custom Pet Supplies Bags",
+    "Tea Bags": "Tea Bags",
+    "Custom Food Bags": "Custom Food Bags",
+    "Medical Mask Bags": "Medical Mask Bags",
+    "Toy Bags": "Toy Bags",
+    "Shaped Bags": "Shaped Bags",
+    "Ziplock Bags": "Ziplock Bags",
+    "Mask Bags": "Mask Bags",
+    "Kraft Paper Bags": "Kraft Paper Bags",
+    "Bubble Bags": "Bubble Bags",
+    "Spout Pouches": "Spout Pouches",
+    "Foil-Clear Bags": "Foil-Clear Bags",
+    "Transparent High-Barrier Films (AlOx)": "Transparent High-Barrier Films (AlOx)",
+    "Metallized Films (VMPET/VMCPP)": "Metallized Films (VMPET/VMCPP)",
+    "Specialty & Functional Films": "Specialty & Functional Films",
+    "Recyclable Mono-Materials": "Recyclable Mono-Materials",
+  },
+  es: {
+    "Plastic Packaging Bags": "Bolsas de Embalaje de Plastico",
+    "Shrink Label Series": "Serie de Etiquetas Termoencogibles",
+    "High-Barrier & Metallized Films": "Peliculas Metalizadas y de Alta Barrera",
+    "Custom Pet Supplies Bags": "Bolsas personalizadas para mascotas",
+    "Tea Bags": "Bolsas para te",
+    "Custom Food Bags": "Bolsas personalizadas para alimentos",
+    "Medical Mask Bags": "Bolsas para mascarillas medicas",
+    "Toy Bags": "Bolsas para juguetes",
+    "Shaped Bags": "Bolsas con forma",
+    "Ziplock Bags": "Bolsas ziplock",
+    "Mask Bags": "Bolsas para mascarillas",
+    "Kraft Paper Bags": "Bolsas de papel kraft",
+    "Bubble Bags": "Bolsas burbuja",
+    "Spout Pouches": "Bolsas con boquilla",
+    "Foil-Clear Bags": "Bolsas foil transparentes",
+    "Transparent High-Barrier Films (AlOx)": "Peliculas transparentes de alta barrera (AlOx)",
+    "Metallized Films (VMPET/VMCPP)": "Peliculas metalizadas (VMPET/VMCPP)",
+    "Specialty & Functional Films": "Peliculas especiales y funcionales",
+    "Recyclable Mono-Materials": "Monomateriales reciclables",
+  },
+  ar: {
+    "Plastic Packaging Bags": "سلسلة اكياس التغليف البلاستيكية",
+    "Shrink Label Series": "سلسلة الملصقات المنكمشة",
+    "High-Barrier & Metallized Films": "افلام عالية الحاجز ومعدنية",
+    "Custom Pet Supplies Bags": "اكياس مخصصة لمستلزمات الحيوانات الاليفة",
+    "Tea Bags": "اكياس الشاي",
+    "Custom Food Bags": "اكياس مخصصة للاغذية",
+    "Medical Mask Bags": "اكياس للكمامات الطبية",
+    "Toy Bags": "اكياس الالعاب",
+    "Shaped Bags": "اكياس مشكلة",
+    "Ziplock Bags": "اكياس بسحاب",
+    "Mask Bags": "اكياس الكمامات",
+    "Kraft Paper Bags": "اكياس ورق كرافت",
+    "Bubble Bags": "اكياس فقاعية",
+    "Spout Pouches": "اكياس بفوهة",
+    "Foil-Clear Bags": "اكياس شفافة مع رقائق",
+    "Transparent High-Barrier Films (AlOx)": "افلام شفافة عالية الحاجز (AlOx)",
+    "Metallized Films (VMPET/VMCPP)": "افلام معدنية (VMPET/VMCPP)",
+    "Specialty & Functional Films": "افلام متخصصة ووظيفية",
+    "Recyclable Mono-Materials": "مواد احادية قابلة لاعادة التدوير",
+  },
+} as const;
+
 const SLUG_TO_PRODUCT_CATEGORY = Object.fromEntries(
   Object.entries(PRODUCT_CATEGORY_SLUGS).map(([name, slug]) => [slug, name])
 );
@@ -49,6 +115,17 @@ export function getProductCategoryNameFromPathname(pathname?: string | null) {
 export function buildProductCategoryPath(categoryName?: string | null) {
   const slug = getProductCategorySlug(categoryName);
   return slug ? `/products/${slug}` : "/products";
+}
+
+export function getLocalizedProductCategoryName(
+  categoryName?: string | null,
+  locale?: string | null
+) {
+  if (!categoryName) return "";
+  const labels =
+    PRODUCT_CATEGORY_LABELS[(locale as keyof typeof PRODUCT_CATEGORY_LABELS) || "en"] ||
+    PRODUCT_CATEGORY_LABELS.en;
+  return labels[categoryName as keyof typeof labels] || categoryName;
 }
 
 export function normalizeProductCategoryHref(href?: string) {

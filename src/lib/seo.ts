@@ -1,12 +1,21 @@
 import prisma from "@/lib/prisma";
 import type { Metadata } from "next";
 
+const DEFAULT_SEO_DESCRIPTION = {
+  zh: "为您提供创新和可持续的包装解决方案。",
+  en: "Providing innovative and sustainable packaging solutions globally.",
+  es: "Ofrecemos soluciones innovadoras y sostenibles de envases flexibles a nivel global.",
+  ar: "نقدم حلول تغليف مرنة مبتكرة ومستدامة على مستوى العالم.",
+} as const;
+
 export async function getSystemSeo(locale: string) {
   const setting = await prisma.systemSetting.findUnique({
     where: { id: "global" },
   });
 
   const isZh = locale === "zh";
+  const isEs = locale === "es";
+  const isAr = locale === "ar";
   const siteName = isZh
     ? setting?.siteNameZh || "海力通包装"
     : setting?.siteNameEn || "Logos Packaging";
@@ -14,8 +23,12 @@ export async function getSystemSeo(locale: string) {
     ? setting?.seoTitleZh || `| ${siteName}`
     : setting?.seoTitleEn || `| ${siteName}`;
   const description = isZh
-    ? setting?.seoDescZh || "为您提供创新和可持续的包装解决方案。"
-    : setting?.seoDescEn || "Providing innovative and sustainable packaging solutions globally.";
+    ? setting?.seoDescZh || DEFAULT_SEO_DESCRIPTION.zh
+    : isEs
+      ? DEFAULT_SEO_DESCRIPTION.es
+      : isAr
+        ? DEFAULT_SEO_DESCRIPTION.ar
+        : setting?.seoDescEn || DEFAULT_SEO_DESCRIPTION.en;
   const keywords = isZh ? setting?.seoKeywordsZh || undefined : setting?.seoKeywordsEn || undefined;
   const defaultImage = setting?.defaultSeoImageUrl
     ? toAbsoluteUrl(setting.defaultSeoImageUrl)
@@ -104,6 +117,8 @@ export function buildRobotsMetadata(
 type SharedMetadataInput = {
   title: string;
   description: string;
+  siteName?: string;
+  socialTitle?: string;
   canonicalPath?: string;
   image?: string;
   defaultImage?: string;
@@ -114,6 +129,8 @@ type SharedMetadataInput = {
 export function buildSeoMetadata({
   title,
   description,
+  siteName,
+  socialTitle,
   canonicalPath,
   image,
   defaultImage,
@@ -122,6 +139,7 @@ export function buildSeoMetadata({
 }: SharedMetadataInput): Metadata {
   const resolvedImage = toAbsoluteUrl(image || defaultImage || getDefaultSeoImage());
   const canonicalUrl = canonicalPath ? toAbsoluteUrl(canonicalPath) : undefined;
+  const resolvedSocialTitle = socialTitle || title;
 
   return {
     title,
@@ -135,16 +153,16 @@ export function buildSeoMetadata({
         }
       : undefined,
     openGraph: {
-      title,
+      title: resolvedSocialTitle,
       description,
       url: canonicalUrl,
-      siteName: title,
+      siteName: siteName || title,
       images: [{ url: resolvedImage }],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: resolvedSocialTitle,
       description,
       images: [resolvedImage],
     },

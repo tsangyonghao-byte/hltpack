@@ -9,31 +9,31 @@ import { useLanguage } from "@/i18n/LanguageContext";
 // Using real factory images mapped to specific workshops
 const factoryData = {
   printing: [
-    { id: 1, src: "/images/factory/印刷车间/10001.png", alt: "Printing workshop overview" },
-    { id: 2, src: "/images/factory/印刷车间/10002.png", alt: "Rotogravure press" },
-    { id: 3, src: "/images/factory/印刷车间/10003.png", alt: "Color checking" },
-    { id: 4, src: "/images/factory/印刷车间/10004.png", alt: "Printing control" },
-    { id: 5, src: "/images/factory/印刷车间/10005.png", alt: "Printing details" },
-    { id: 6, src: "/images/factory/印刷车间/10101 (1).png", alt: "Printing facility 1" },
-    { id: 7, src: "/images/factory/印刷车间/10101 (2).png", alt: "Printing facility 2" },
+    { id: 1, src: "/images/factory/印刷车间/10001.png", alt: { en: "Printing workshop overview", es: "Vista general del taller de impresion", ar: "نظرة عامة على ورشة الطباعة" } },
+    { id: 2, src: "/images/factory/印刷车间/10002.png", alt: { en: "Rotogravure press", es: "Prensa de huecograbado", ar: "مطبعة روتوغرافور" } },
+    { id: 3, src: "/images/factory/印刷车间/10003.png", alt: { en: "Color checking", es: "Revision de color", ar: "فحص الالوان" } },
+    { id: 4, src: "/images/factory/印刷车间/10004.png", alt: { en: "Printing control", es: "Control de impresion", ar: "التحكم في الطباعة" } },
+    { id: 5, src: "/images/factory/印刷车间/10005.png", alt: { en: "Printing details", es: "Detalles de impresion", ar: "تفاصيل الطباعة" } },
+    { id: 6, src: "/images/factory/印刷车间/10101 (1).png", alt: { en: "Printing facility 1", es: "Instalacion de impresion 1", ar: "منشأة الطباعة 1" } },
+    { id: 7, src: "/images/factory/印刷车间/10101 (2).png", alt: { en: "Printing facility 2", es: "Instalacion de impresion 2", ar: "منشأة الطباعة 2" } },
   ],
   bagMaking: [
-    { id: 8, src: "/images/factory/制袋车间/10001.png", alt: "Pouch making machine" },
-    { id: 9, src: "/images/factory/制袋车间/10002.png", alt: "Quality inspection" },
-    { id: 10, src: "/images/factory/制袋车间/10003.png", alt: "Sorting" },
-    { id: 11, src: "/images/factory/制袋车间/10004.png", alt: "Workshop overview" },
-    { id: 12, src: "/images/factory/制袋车间/10005.png", alt: "Workshop overview 2" },
-    { id: 13, src: "/images/factory/制袋车间/10006.png", alt: "Workshop overview 3" },
-    { id: 14, src: "/images/factory/制袋车间/10007.png", alt: "Workshop overview 4" },
-    { id: 15, src: "/images/factory/制袋车间/10008.png", alt: "Workshop overview 5" },
-    { id: 16, src: "/images/factory/制袋车间/10009.png", alt: "Workshop overview 6" },
-    { id: 17, src: "/images/factory/制袋车间/10010.png", alt: "Workshop overview 7" },
-    { id: 18, src: "/images/factory/制袋车间/10011.png", alt: "Workshop overview 8" },
-    { id: 19, src: "/images/factory/制袋车间/10012.png", alt: "Workshop overview 9" },
-    { id: 20, src: "/images/factory/制袋车间/100011 (1).png", alt: "Workshop detail 1" },
-    { id: 21, src: "/images/factory/制袋车间/100011 (2).png", alt: "Workshop detail 2" },
-    { id: 22, src: "/images/factory/制袋车间/100011 (3).png", alt: "Workshop detail 3" },
-    { id: 23, src: "/images/factory/制袋车间/100011 (4).png", alt: "Workshop detail 4" },
+    { id: 8, src: "/images/factory/制袋车间/10001.png", alt: { en: "Pouch making machine", es: "Maquina de fabricacion de bolsas", ar: "آلة تصنيع الاكياس" } },
+    { id: 9, src: "/images/factory/制袋车间/10002.png", alt: { en: "Quality inspection", es: "Inspeccion de calidad", ar: "فحص الجودة" } },
+    { id: 10, src: "/images/factory/制袋车间/10003.png", alt: { en: "Sorting", es: "Clasificacion", ar: "الفرز" } },
+    { id: 11, src: "/images/factory/制袋车间/10004.png", alt: { en: "Workshop overview", es: "Vista general del taller", ar: "نظرة عامة على الورشة" } },
+    { id: 12, src: "/images/factory/制袋车间/10005.png", alt: { en: "Workshop overview 2", es: "Vista general del taller 2", ar: "نظرة عامة على الورشة 2" } },
+    { id: 13, src: "/images/factory/制袋车间/10006.png", alt: { en: "Workshop overview 3", es: "Vista general del taller 3", ar: "نظرة عامة على الورشة 3" } },
+    { id: 14, src: "/images/factory/制袋车间/10007.png", alt: { en: "Workshop overview 4", es: "Vista general del taller 4", ar: "نظرة عامة على الورشة 4" } },
+    { id: 15, src: "/images/factory/制袋车间/10008.png", alt: { en: "Workshop overview 5", es: "Vista general del taller 5", ar: "نظرة عامة على الورشة 5" } },
+    { id: 16, src: "/images/factory/制袋车间/10009.png", alt: { en: "Workshop overview 6", es: "Vista general del taller 6", ar: "نظرة عامة على الورشة 6" } },
+    { id: 17, src: "/images/factory/制袋车间/10010.png", alt: { en: "Workshop overview 7", es: "Vista general del taller 7", ar: "نظرة عامة على الورشة 7" } },
+    { id: 18, src: "/images/factory/制袋车间/10011.png", alt: { en: "Workshop overview 8", es: "Vista general del taller 8", ar: "نظرة عامة على الورشة 8" } },
+    { id: 19, src: "/images/factory/制袋车间/10012.png", alt: { en: "Workshop overview 9", es: "Vista general del taller 9", ar: "نظرة عامة على الورشة 9" } },
+    { id: 20, src: "/images/factory/制袋车间/100011 (1).png", alt: { en: "Workshop detail 1", es: "Detalle del taller 1", ar: "تفاصيل الورشة 1" } },
+    { id: 21, src: "/images/factory/制袋车间/100011 (2).png", alt: { en: "Workshop detail 2", es: "Detalle del taller 2", ar: "تفاصيل الورشة 2" } },
+    { id: 22, src: "/images/factory/制袋车间/100011 (3).png", alt: { en: "Workshop detail 3", es: "Detalle del taller 3", ar: "تفاصيل الورشة 3" } },
+    { id: 23, src: "/images/factory/制袋车间/100011 (4).png", alt: { en: "Workshop detail 4", es: "Detalle del taller 4", ar: "تفاصيل الورشة 4" } },
   ]
 };
 
@@ -55,18 +55,27 @@ export default function FactoryTour() {
       title: "Inside HAILITONG Factory",
       tabs: ["Printing Workshop", "Pouch Making Workshop"],
       cta: "VIEW FULL PROCESS",
+      scrollLeft: "Scroll left",
+      scrollRight: "Scroll right",
+      enlargedImage: "Enlarged factory view",
     },
     es: {
       facility: "PLANTA DE 13.000 M2",
       title: "Dentro de la fabrica HAILITONG",
       tabs: ["Taller de impresion", "Taller de fabricacion de bolsas"],
       cta: "VER PROCESO COMPLETO",
+      scrollLeft: "Desplazar a la izquierda",
+      scrollRight: "Desplazar a la derecha",
+      enlargedImage: "Vista ampliada de la fabrica",
     },
     ar: {
       facility: "منشأة بمساحة 13,000 متر مربع",
       title: "داخل مصنع HAILITONG",
       tabs: ["ورشة الطباعة", "ورشة تصنيع الاكياس"],
       cta: "عرض العملية الكاملة",
+      scrollLeft: "التمرير الى اليسار",
+      scrollRight: "التمرير الى اليمين",
+      enlargedImage: "عرض مكبر للمصنع",
     },
   } as const;
   const text = textMap[locale as keyof typeof textMap] || textMap.en;
@@ -175,12 +184,14 @@ export default function FactoryTour() {
             <button 
               onClick={() => scroll('left')}
               className="w-10 h-10 flex items-center justify-center border border-gray-200 bg-white transition-all hover:bg-gray-50 hover:text-[#F05A22] active:scale-95 cursor-pointer"
+              aria-label={text.scrollLeft}
             >
               <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
             </button>
             <button 
               onClick={() => scroll('right')}
               className="w-10 h-10 flex items-center justify-center border border-gray-200 bg-white transition-all hover:bg-gray-50 hover:text-[#F05A22] active:scale-95 cursor-pointer"
+              aria-label={text.scrollRight}
             >
               <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
             </button>
@@ -207,7 +218,7 @@ export default function FactoryTour() {
                 >
                   <img 
                     src={image.src} 
-                    alt={image.alt}
+                      alt={image.alt[locale as keyof typeof image.alt] || image.alt.en}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
@@ -259,7 +270,7 @@ export default function FactoryTour() {
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               src={selectedImage}
-              alt="Enlarged factory view"
+              alt={text.enlargedImage}
               className="max-w-full max-h-full object-contain shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             />

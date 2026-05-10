@@ -16,6 +16,7 @@ const newsDetailText = {
     notFound: "Article Not Found | HAILITONG News",
     home: "Home",
     news: "News",
+    newsBrand: "HAILITONG News",
     back: "Back to Home",
     contact: "Contact us for more details",
     recentPosts: "Recent Posts",
@@ -24,9 +25,10 @@ const newsDetailText = {
     viewProduct: "View Details",
   },
   es: {
-    notFound: "Articulo no encontrado | HAILITONG News",
+    notFound: "Articulo no encontrado | Noticias HAILITONG",
     home: "Inicio",
     news: "Noticias",
+    newsBrand: "Noticias HAILITONG",
     back: "Volver a noticias",
     contact: "Contactenos para mas detalles",
     recentPosts: "Publicaciones Recientes",
@@ -35,9 +37,10 @@ const newsDetailText = {
     viewProduct: "Ver Detalles",
   },
   ar: {
-    notFound: "المقال غير موجود | HAILITONG News",
+    notFound: "المقال غير موجود | اخبار HAILITONG",
     home: "الرئيسية",
     news: "الأخبار",
+    newsBrand: "اخبار HAILITONG",
     back: "العودة إلى الأخبار",
     contact: "اتصل بنا لمزيد من التفاصيل",
     recentPosts: "المنشورات الأخيرة",
@@ -59,7 +62,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const cookieStore = await cookies();
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const text = newsDetailText[locale as keyof typeof newsDetailText] || newsDetailText.en;
-  const { siteNoindex, noindexPaths } = await getSystemSeo(locale);
+  const { siteName, siteNoindex, noindexPaths } = await getSystemSeo(locale);
   const resolvedParams = await params;
   const newsItem = await findNewsByParam(resolvedParams.slug);
 
@@ -76,8 +79,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const localizedSummary = getLocalizedValue(newsItem, "summary", locale);
 
   return buildSeoMetadata({
-    title: localizedSeoTitle || `${localizedTitle} | HAILITONG News`,
+    title: localizedSeoTitle || localizedTitle,
     description: localizedSeoDescription || localizedSummary,
+    siteName,
+    socialTitle: localizedSeoTitle || `${localizedTitle} | ${text.newsBrand}`,
     canonicalPath,
     image: newsItem.image,
     robots: buildRobotsMetadata(`/news/${resolvedParams.slug}`, { siteNoindex, noindexPaths }),

@@ -12,6 +12,8 @@ const industriesMap = {
     title: "Packaging Solutions for",
     title2: "Every Market.",
     cta: "Explore All Solutions",
+    scrollLeft: "Scroll left",
+    scrollRight: "Scroll right",
     items: [
       {
         id: "fresh-food",
@@ -56,6 +58,8 @@ const industriesMap = {
     title: "Soluciones de empaque para",
     title2: "cada mercado.",
     cta: "Explorar todas las soluciones",
+    scrollLeft: "Desplazar a la izquierda",
+    scrollRight: "Desplazar a la derecha",
     items: [
       { id: "fresh-food", title: "Alimentos frescos", desc: "Soluciones avanzadas de barrera para preservar la frescura y el sabor de mariscos y carnes.", img: "https://cdn.myxypt.com/f4a05196/24/07/6b210c18853122be0ddf2bda9143f2ea45132cb9.png" },
       { id: "fruits-veggies", title: "Frutas y verduras", desc: "Empaques transpirables y antiempañantes diseñados especificamente para productos frescos.", img: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=800&auto=format&fit=crop" },
@@ -70,6 +74,8 @@ const industriesMap = {
     title: "حلول تغليف لكل",
     title2: "سوق.",
     cta: "استكشف جميع الحلول",
+    scrollLeft: "التمرير الى اليسار",
+    scrollRight: "التمرير الى اليمين",
     items: [
       { id: "fresh-food", title: "الاغذية الطازجة", desc: "حلول حاجزة متقدمة للحفاظ على نضارة ونكهة المأكولات البحرية واللحوم.", img: "https://cdn.myxypt.com/f4a05196/24/07/6b210c18853122be0ddf2bda9143f2ea45132cb9.png" },
       { id: "fruits-veggies", title: "الفواكه والخضروات", desc: "عبوات قابلة للتنفس ومضادة للضباب مصممة خصيصا للمنتجات الطازجة.", img: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=800&auto=format&fit=crop" },
@@ -169,14 +175,14 @@ export default function Industries() {
           <button 
             onClick={() => scrollMobile('left')}
             className="w-10 h-10 flex items-center justify-center border border-gray-200 bg-white transition-all hover:bg-gray-50 hover:text-[#F05A22] active:scale-95 cursor-pointer"
-            aria-label="Scroll Left"
+            aria-label={text.scrollLeft}
           >
             <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
           </button>
           <button 
             onClick={() => scrollMobile('right')}
             className="w-10 h-10 flex items-center justify-center border border-gray-200 bg-white transition-all hover:bg-gray-50 hover:text-[#F05A22] active:scale-95 cursor-pointer"
-            aria-label="Scroll Right"
+            aria-label={text.scrollRight}
           >
             <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
           </button>

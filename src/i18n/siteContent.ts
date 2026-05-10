@@ -370,6 +370,16 @@ export const siteContent = {
         },
       ],
       milestonesTitle: "Nuestro Viaje de Crecimiento",
+      milestones: [
+        { year: "2009", title: "Primera base establecida", description: "Fundamos nuestra primera base de manufactura en Huizhou para atender la creciente demanda de envases flexibles." },
+        { year: "2012", title: "Segunda base establecida", description: "Ampliamos nuestras operaciones y establecimos nuestra segunda base de manufactura en Tianjin." },
+        { year: "2013", title: "Produccion de bolsas de fondo plano", description: "Iniciamos la produccion de innovadoras bolsas de fondo plano para responder a las necesidades del mercado premium." },
+        { year: "2018", title: "Traslado de la sede", description: "Nos mudamos a nuestra nueva base y la establecimos oficialmente como sede corporativa." },
+        { year: "2019", title: "Fabrica inteligente y reciclables", description: "Iniciamos el plan de fabrica inteligente y comenzamos a centrarnos en la produccion de materiales reciclables." },
+        { year: "2023", title: "Tercera base de fabrica", description: "Continuamos nuestra expansion con el establecimiento de una tercera base de fabrica." },
+        { year: "2025", title: "Operacion de fabrica inteligente", description: "Puesta en marcha completa de nuestra fabrica SMART altamente automatizada." },
+        { year: "2030", title: "Objetivo futuro", description: "Apuntamos a alcanzar ingresos por ventas de 2 mil millones de CNY como lider global del sector." },
+      ],
     },
     contact: {
       ...enContent.contact,

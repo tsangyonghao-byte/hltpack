@@ -8,8 +8,17 @@ import { buildRobotsMetadata, buildSeoMetadata, getSiteUrl, getSystemSeo, jsonLd
 import { getOrderedProductImages, parseProductGallery } from "@/lib/productImages";
 import ProductsClient from "../ProductsClient";
 import { getProductsPageData } from "../shared";
-import { buildProductCategoryPath, getProductCategoryNameFromParam, isProductCategorySlug } from "@/lib/productCategorySlug";
-import { getLocalizedHtml, getLocalizedJsonArray, getLocalizedValue } from "@/lib/localizedContent";
+import {
+  buildProductCategoryPath,
+  getLocalizedProductCategoryName,
+  getProductCategoryNameFromParam,
+  isProductCategorySlug,
+} from "@/lib/productCategorySlug";
+import {
+  getLocalizedHtml,
+  getLocalizedJsonArray,
+  getLocalizedValue,
+} from "@/lib/localizedContent";
 
 import type { Metadata } from "next";
 
@@ -17,7 +26,7 @@ export const dynamic = "force-dynamic";
 
 const productDetailText = {
   en: {
-    notFound: "Product Not Found | HAILITONG Packaging",
+    notFound: "Product Not Found",
     description: (name: string) =>
       `Discover our ${name}, designed with premium protection and sustainability. Explore key features and request a quote.`,
     ogTitle: (name: string) => `${name} - Flexible Packaging Solutions`,
@@ -34,9 +43,10 @@ const productDetailText = {
     relatedProducts: "Related Products",
     viewDetails: "View Details",
     details: "Product Details",
+    detailImageAlt: (name: string, index: number) => `${name} - Detail ${index}`,
   },
   es: {
-    notFound: "Producto no encontrado | HAILITONG Packaging",
+    notFound: "Producto no encontrado",
     description: (name: string) =>
       `Descubra nuestro ${name}, disenado con proteccion premium y sostenibilidad. Explore caracteristicas clave y solicite una cotizacion.`,
     ogTitle: (name: string) => `${name} - Soluciones de envases flexibles`,
@@ -53,9 +63,10 @@ const productDetailText = {
     relatedProducts: "Productos Relacionados",
     viewDetails: "Ver Detalles",
     details: "Detalles del producto",
+    detailImageAlt: (name: string, index: number) => `${name} - Vista ${index}`,
   },
   ar: {
-    notFound: "المنتج غير موجود | HAILITONG Packaging",
+    notFound: "المنتج غير موجود",
     description: (name: string) =>
       `اكتشف ${name} المصمم بحماية عالية واستدامة. تعرّف على الميزات الأساسية واطلب عرض سعر.`,
     ogTitle: (name: string) => `${name} - حلول تغليف مرنة`,
@@ -72,8 +83,20 @@ const productDetailText = {
     relatedProducts: "منتجات ذات صلة",
     viewDetails: "عرض التفاصيل",
     details: "تفاصيل المنتج",
+    detailImageAlt: (name: string, index: number) => `${name} - صورة ${index}`,
   },
 } as const;
+
+function stripTrailingSiteSuffix(title: string, siteName: string) {
+  const suffix = `| ${siteName}`;
+  let normalized = title.trim();
+
+  while (normalized.endsWith(suffix)) {
+    normalized = normalized.slice(0, -suffix.length).trim();
+  }
+
+  return normalized;
+}
 
 async function findProductByParam(value: string) {
   return prisma.product.findFirst({
@@ -88,14 +111,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const cookieStore = await cookies();
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const text = productDetailText[locale as keyof typeof productDetailText] || productDetailText.en;
-  const { siteNoindex, noindexPaths } = await getSystemSeo(locale);
+  const { siteName, siteNoindex, noindexPaths } = await getSystemSeo(locale);
   const resolvedParams = await params;
   const categoryName = getProductCategoryNameFromParam(resolvedParams.slug);
 
   if (isProductCategorySlug(resolvedParams.slug) && categoryName) {
+    const localizedCategoryName = getLocalizedProductCategoryName(categoryName, locale);
     return buildSeoMetadata({
-      title: `${categoryName} | HAILITONG Packaging`,
-      description: `Browse ${categoryName.toLowerCase()} from HAILITONG Packaging.`,
+      title: localizedCategoryName,
+      description:
+        locale === "es"
+          ? `Explore ${localizedCategoryName.toLowerCase()} de HAILITONG Packaging.`
+          : locale === "ar"
+            ? `استعرض ${localizedCategoryName} من HAILITONG Packaging.`
+            : `Browse ${localizedCategoryName.toLowerCase()} from HAILITONG Packaging.`,
+      siteName,
+      socialTitle: `${localizedCategoryName} | ${siteName}`,
       canonicalPath: `/products/${resolvedParams.slug}`,
       robots: buildRobotsMetadata(`/products/${resolvedParams.slug}`, { siteNoindex, noindexPaths }),
     });
@@ -111,12 +142,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const canonicalPath = `/products/${product.slug || product.id}`;
   const localizedName = getLocalizedValue(product, "name", locale) || product.name;
-  const localizedSeoTitle = getLocalizedValue(product, "seoTitle", locale);
-  const localizedSeoDescription = getLocalizedValue(product, "seoDescription", locale);
+  const localizedSeoTitle =
+    locale === "es"
+      ? product.seoTitleEs?.trim()
+      : locale === "ar"
+        ? product.seoTitleAr?.trim()
+        : product.seoTitle?.trim();
+  const normalizedSeoTitle = localizedSeoTitle
+    ? stripTrailingSiteSuffix(localizedSeoTitle, siteName)
+    : "";
+  const localizedSeoDescription =
+    locale === "es"
+      ? product.seoDescriptionEs?.trim()
+      : locale === "ar"
+        ? product.seoDescriptionAr?.trim()
+        : product.seoDescription?.trim();
 
   return buildSeoMetadata({
-    title: localizedSeoTitle || `${localizedName} | HAILITONG Packaging`,
+    title: normalizedSeoTitle || localizedName,
     description: localizedSeoDescription || text.description(localizedName),
+    siteName,
+    socialTitle: `${normalizedSeoTitle || localizedName} | ${siteName}`,
     canonicalPath,
     image: product.image,
     robots: buildRobotsMetadata(`/products/${resolvedParams.slug}`, { siteNoindex, noindexPaths }),
@@ -155,9 +201,15 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
   const productName = getLocalizedValue(product, "name", locale) || product.name;
   const productCategoryLabel = getLocalizedValue(product.category, "name", locale) || product.category.name;
-  const productSeoDescription = getLocalizedValue(product, "seoDescription", locale);
+  const productSeoDescription =
+    locale === "es"
+      ? product.seoDescriptionEs?.trim()
+      : locale === "ar"
+        ? product.seoDescriptionAr?.trim()
+        : product.seoDescription?.trim();
   const productContent = getLocalizedHtml(product, "content", locale);
   const features = getLocalizedJsonArray(product, "features", locale);
+  const productLead = productSeoDescription || text.intro(productName);
   const gallery = parseProductGallery(product.gallery);
   const allImages = await getOrderedProductImages(product.image, gallery);
   const detailImages = allImages.length > 1 ? allImages.slice(1) : allImages;
@@ -238,7 +290,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </h1>
 
               <p className="text-base text-gray-500 mb-10 leading-relaxed font-light">
-                {text.intro(productName)}
+                {productLead}
               </p>
 
               {features.length > 0 && (
@@ -288,7 +340,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                   >
                     <img
                       src={imageUrl}
-                      alt={`${productName} - Detail ${index + 1}`}
+                      alt={text.detailImageAlt(productName, index + 1)}
                       className="w-full h-full max-h-[420px] object-contain mix-blend-multiply"
                     />
                   </div>

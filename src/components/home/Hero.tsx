@@ -14,24 +14,42 @@ const fallbackSlides = [
   {
     id: 1,
     title: "INNOVATIVE PACKAGING SOLUTIONS",
+    titleEs: "SOLUCIONES INNOVADORAS DE EMPAQUE",
+    titleAr: "حلول تغليف مبتكرة",
     subtitle: "Elevate your brand with premium quality",
+    subtitleEs: "Impulse su marca con calidad premium",
+    subtitleAr: "ارتق بعلامتك التجارية بجودة فائقة",
     description: "We provide state-of-the-art packaging materials for the food and pet industry, ensuring freshness, safety, and shelf appeal.",
+    descriptionEs: "Ofrecemos materiales de empaque de ultima generacion para las industrias de alimentos y mascotas, garantizando frescura, seguridad y atractivo en el anaquel.",
+    descriptionAr: "نوفر مواد تغليف متطورة لصناعات الاغذية ومستلزمات الحيوانات الاليفة، بما يضمن النضارة والسلامة وجاذبية العرض.",
     product: "https://cdn.myxypt.com/f4a05196/24/07/6b210c18853122be0ddf2bda9143f2ea45132cb9.png",
     link: null,
   },
   {
     id: 2,
     title: "SUSTAINABLE & RECYCLABLE",
+    titleEs: "SOSTENIBLE Y RECICLABLE",
+    titleAr: "مستدام وقابل لاعادة التدوير",
     subtitle: "Packaging that cares for the future",
+    subtitleEs: "Empaque que cuida el futuro",
+    subtitleAr: "تغليف يهتم بالمستقبل",
     description: "Our eco-friendly pouches reduce carbon footprint without compromising on durability or barrier properties.",
+    descriptionEs: "Nuestras bolsas ecologicas reducen la huella de carbono sin comprometer la durabilidad ni las propiedades de barrera.",
+    descriptionAr: "تقلل اكياسنا الصديقة للبيئة البصمة الكربونية دون المساس بالمتانة او خصائص الحاجز.",
     product: "https://cdn.myxypt.com/f4a05196/24/07/cb963b68dbc2a4edd2b071eafc8a0c995cf1c837.png",
     link: null,
   },
   {
     id: 3,
     title: "LEAK-PROOF SPOUT POUCHES",
+    titleEs: "BOLSAS CON BOQUILLA A PRUEBA DE FUGAS",
+    titleAr: "اكياس بفوهة مانعة للتسرب",
     subtitle: "Perfect for liquids and purees",
+    subtitleEs: "Perfectas para liquidos y pures",
+    subtitleAr: "مثالية للسوائل والمهروس",
     description: "Advanced sealing technology guarantees zero leakage, making it the ideal choice for baby food and beverages.",
+    descriptionEs: "La tecnologia avanzada de sellado garantiza cero fugas, convirtiendola en la opcion ideal para alimentos infantiles y bebidas.",
+    descriptionAr: "تضمن تقنية الختم المتقدمة عدم حدوث اي تسرب، مما يجعلها الخيار المثالي لاغذية الاطفال والمشروبات.",
     product: "https://cdn.myxypt.com/f4a05196/24/07/44cab68946517370d455e027d846775a1b71c154.png",
     link: null,
   }
@@ -47,6 +65,12 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
   const { setCurrentSlideIndex: setCurrentSlide } = useHero();
   const { dict, locale } = useLanguage();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const slideControlsText =
+    locale === "es"
+      ? { previous: "Diapositiva anterior", next: "Diapositiva siguiente" }
+      : locale === "ar"
+        ? { previous: "الشريحة السابقة", next: "الشريحة التالية" }
+        : { previous: "Previous slide", next: "Next slide" };
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -221,7 +245,7 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
             <button
               onClick={scrollPrev}
               className="w-10 h-10 flex items-center justify-center text-[#1A1A1A]/40 transition-colors hover:text-[#F05A22]"
-              aria-label="Previous slide"
+              aria-label={slideControlsText.previous}
             >
               <ArrowRight className="w-5 h-5 rotate-180" strokeWidth={1.5} />
             </button>
@@ -235,7 +259,7 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
             <button
               onClick={scrollNext}
               className="w-10 h-10 flex items-center justify-center text-[#1A1A1A]/40 transition-colors hover:text-[#F05A22]"
-              aria-label="Next slide"
+              aria-label={slideControlsText.next}
             >
               <ArrowRight className="w-5 h-5" strokeWidth={1.5} />
             </button>

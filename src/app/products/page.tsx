@@ -37,8 +37,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const { siteName, titleSuffix, keywords, defaultImage, siteNoindex, noindexPaths } = await getSystemSeo(locale);
 
   return buildSeoMetadata({
-    title: composeSeoTitle(text.title, titleSuffix, siteName),
+    title: text.title,
     description: text.description,
+    siteName,
+    socialTitle: composeSeoTitle(text.title, titleSuffix, siteName),
     keywords,
     canonicalPath: "/products",
     defaultImage,

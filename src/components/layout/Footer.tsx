@@ -37,6 +37,12 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
         : locale === "ar"
           ? "جميع الحقوق محفوظة."
           : "All rights reserved.",
+    copyrightPrefix:
+      locale === "es"
+        ? "Derechos de autor ©"
+        : locale === "ar"
+          ? "© حقوق النشر"
+          : "Copyright ©",
   };
   
   // Slider State
@@ -280,7 +286,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
           {copyright ? (
             <div dangerouslySetInnerHTML={{ __html: copyright }} />
           ) : (
-            <p>{`Copyright © ${currentYear} ${siteName}. ${footerText.copyrightSuffix}`}</p>
+            <p>{`${footerText.copyrightPrefix} ${currentYear} ${siteName}. ${footerText.copyrightSuffix}`}</p>
           )}
         </div>
 
@@ -416,7 +422,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
               {copyright ? (
                 <div dangerouslySetInnerHTML={{ __html: copyright }} />
               ) : (
-                <p>{`Copyright © ${currentYear} ${siteName}`}</p>
+                <p>{`${footerText.copyrightPrefix} ${currentYear} ${siteName}`}</p>
               )}
             </div>
           </div>

@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import clsx from "clsx";
 
 import { useLanguage } from "@/i18n/LanguageContext";
+import { getLocalizedValue } from "@/lib/localizedContent";
 
 export default function Showcase({ products: dbProducts = [] }: { products?: any[] }) {
   const { dict, locale } = useLanguage();
@@ -41,11 +42,11 @@ export default function Showcase({ products: dbProducts = [] }: { products?: any
   const defaultProducts = defaultsByLocale[locale as keyof typeof defaultsByLocale] || defaultsByLocale.en;
   const featuredLabel = locale === "es" ? "Destacado" : locale === "ar" ? "مميز" : "Featured";
 
-  const products = dbProducts.length > 0 ? dbProducts.map(p => ({
+  const products = dbProducts.length > 0 ? dbProducts.map((p) => ({
     id: p.id,
-    name: p.name,
-    client: p.category?.name || featuredLabel,
-    image: p.image
+    name: getLocalizedValue(p, "name", locale) || p.name,
+    client: p.category ? getLocalizedValue(p.category, "name", locale) || p.category.name : featuredLabel,
+    image: p.image,
   })) : defaultProducts;
 
   // Create a massive array to simulate an infinite loop perfectly

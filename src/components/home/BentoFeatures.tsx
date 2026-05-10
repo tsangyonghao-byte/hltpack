@@ -14,16 +14,20 @@ const textMap = {
       "With complete in-house production lines and a customer-first approach, we deliver premium packaging solutions tailored to your exact specifications.",
     badge1: "Tailored For You",
     title1: "Custom Solutions",
+    imageAlt1: "Custom Packaging Solutions",
     desc1:
       "Tailored packaging solutions for food, medical, cosmetics, and electronics industries. We engineer the perfect structure for your product's unique needs.",
     title2: "Fast Delivery",
+    imageAlt2: "Fast Delivery",
     desc2:
       "Complete in-house facilities-from film blowing to pouch making-ensuring rapid and reliable turnaround.",
     title3: "Certified Quality",
+    imageAlt3: "Certified Quality",
     desc3:
       "Rigorous multi-stage quality control by experienced technicians. Stable quality that meets international standards.",
     badge4: "Customer First",
     title4: "Dedicated Support & Service",
+    imageAlt4: "Dedicated Support",
     desc4:
       "\"Premium Quality, Customer First.\" We stand behind every pouch we manufacture, providing seamless service from initial design consultation to global delivery.",
     cta: "Get a Quote",
@@ -36,16 +40,20 @@ const textMap = {
       "Con lineas de produccion integrales y un enfoque centrado en el cliente, ofrecemos soluciones de empaque premium adaptadas a sus necesidades exactas.",
     badge1: "Hecho para usted",
     title1: "Soluciones personalizadas",
+    imageAlt1: "Soluciones personalizadas de empaque",
     desc1:
       "Soluciones de empaque a medida para alimentos, medicina, cosmeticos y electronica. Diseñamos la estructura ideal para las necesidades de su producto.",
     title2: "Entrega rapida",
+    imageAlt2: "Entrega rapida",
     desc2:
       "Instalaciones internas completas, desde soplado de pelicula hasta fabricacion de bolsas, para una entrega rapida y confiable.",
     title3: "Calidad certificada",
+    imageAlt3: "Calidad certificada",
     desc3:
       "Control de calidad riguroso en multiples etapas por tecnicos experimentados. Calidad estable conforme a estandares internacionales.",
     badge4: "Cliente primero",
     title4: "Soporte y servicio dedicados",
+    imageAlt4: "Soporte dedicado",
     desc4:
       "\"Calidad premium, cliente primero.\" Respaldamos cada bolsa que fabricamos con un servicio fluido desde el diseño hasta la entrega global.",
     cta: "Solicitar cotizacion",
@@ -58,16 +66,20 @@ const textMap = {
       "بفضل خطوط الانتاج المتكاملة ونهج يركز على العميل، نقدم حلول تغليف عالية الجودة مصممة وفقا لمتطلباتكم الدقيقة.",
     badge1: "مصمم لكم",
     title1: "حلول مخصصة",
+    imageAlt1: "حلول تغليف مخصصة",
     desc1:
       "حلول تغليف مخصصة لقطاعات الغذاء والطب ومستحضرات التجميل والالكترونيات. نصمم البنية المثالية لاحتياجات منتجكم.",
     title2: "تسليم سريع",
+    imageAlt2: "تسليم سريع",
     desc2:
       "مرافق داخلية متكاملة من نفخ الافلام الى تصنيع الاكياس لضمان تسليم سريع وموثوق.",
     title3: "جودة معتمدة",
+    imageAlt3: "جودة معتمدة",
     desc3:
       "رقابة جودة صارمة متعددة المراحل ينفذها فنيون ذوو خبرة. جودة مستقرة تفي بالمعايير الدولية.",
     badge4: "العميل اولا",
     title4: "دعم وخدمة مخصصة",
+    imageAlt4: "دعم مخصص",
     desc4:
       "\"جودة ممتازة، والعميل اولا.\" نحن ندعم كل كيس ننتجه بخدمة سلسة من التصميم الاولى حتى التسليم العالمي.",
     cta: "اطلب عرض سعر",
@@ -132,7 +144,7 @@ export default function BentoFeatures() {
             <div className="absolute inset-0 z-0">
               <img 
                 src="/images/factory/印刷车间/10101 (2).png?v=3"
-                alt="Custom Packaging Solutions" 
+                alt={text.imageAlt1} 
                 className="w-full h-full object-cover transition-all duration-1000 ease-out scale-105 group-hover:scale-100"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -171,7 +183,7 @@ export default function BentoFeatures() {
             <div className="absolute inset-0 z-0 pointer-events-none">
               <img 
                 src="https://cdn.myxypt.com/f4a05196/24/07/8e799c5f492b56bb55203b31cd615bf8b9cc3da3.jpg" 
-                alt="Fast Delivery" 
+                alt={text.imageAlt2} 
                 className="w-full h-full object-cover transition-transform duration-1000 ease-out scale-105 group-hover:scale-100"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/70 to-white/30 group-hover:from-white/85 group-hover:via-white/50 transition-colors duration-500"></div>
@@ -201,7 +213,7 @@ export default function BentoFeatures() {
             <div className="absolute inset-0 z-0 pointer-events-none">
               <img 
                 src="https://cdn.myxypt.com/f4a05196/24/07/b3adb55ea799b1b2c5518c8c7f78f19936c96c9a.jpg" 
-                alt="Certified Quality" 
+                alt={text.imageAlt3} 
                 className="w-full h-full object-cover transition-transform duration-1000 ease-out scale-105 group-hover:scale-100"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/95 via-[#1A1A1A]/70 to-[#1A1A1A]/30 group-hover:from-[#1A1A1A]/85 group-hover:via-[#1A1A1A]/50 transition-colors duration-500"></div>
@@ -234,7 +246,7 @@ export default function BentoFeatures() {
             <div className="absolute inset-0 z-0 pointer-events-none">
               <img 
                 src="https://cdn.myxypt.com/f4a05196/24/07/d867f072ab512595ae08791c4f35689a8801d47e.png" 
-                alt="Dedicated Support" 
+                alt={text.imageAlt4} 
                 className="w-full h-full object-cover opacity-[0.15] mix-blend-overlay group-hover:scale-105 transition-all duration-1000 ease-out"
               />
             </div>

@@ -19,6 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildSeoMetadata({
     title: siteName,
     description,
+    siteName,
     keywords,
     canonicalPath: "/",
     defaultImage,
