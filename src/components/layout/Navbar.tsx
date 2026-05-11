@@ -109,9 +109,12 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
   const getHrefCategory = (href?: string) => {
     if (!href) return null;
     try {
-      return getProductCategoryNameFromParam(
-        new URL(href, "https://hltpack.local").searchParams.get("category")
-      );
+      const url = new URL(href, "https://hltpack.local");
+      const categoryParam = url.searchParams.get("category");
+      if (categoryParam) {
+        return getProductCategoryNameFromParam(categoryParam);
+      }
+      return getProductCategoryNameFromPathname(url.pathname);
     } catch {
       return null;
     }
