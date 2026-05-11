@@ -150,7 +150,7 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -40 }}
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col items-start text-left w-full lg:w-[45%] z-20 shrink-0 pt-6 sm:pt-8 lg:pt-0 order-1 lg:order-1"
+                    className="flex flex-col items-start text-left w-full lg:w-[45%] z-20 shrink-0 pt-6 sm:pt-8 lg:pt-0 order-2 lg:order-1"
                   >
                     <motion.div 
                       initial={{ opacity: 0, y: 20 }}
@@ -216,7 +216,7 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="relative w-full lg:w-[45%] h-[280px] sm:h-[350px] lg:h-[550px] flex items-center justify-center z-10 shrink order-2 lg:order-2"
+                    className="relative w-full lg:w-[45%] h-[280px] sm:h-[350px] lg:h-[550px] flex items-center justify-center z-10 shrink order-1 lg:order-2"
                   >
                     {/* Product Image Container */}
                     <div className="absolute inset-0 flex items-center justify-center">

@@ -8,6 +8,7 @@ import AdminFormHeader from "../AdminFormHeader";
 import AdminFormError from "../AdminFormError";
 import AdminFormActions from "../AdminFormActions";
 import { AdminField, AdminInput, AdminSelect, AdminToggleField } from "../AdminFormFields";
+import AdminImageUploadField from "../AdminImageUploadField";
 import { ADMIN_FORM_CARD } from "../adminUi";
 
 export default function NavigationForm({
@@ -27,7 +28,11 @@ export default function NavigationForm({
     nameZh: "中文名称 *",
     nameEn: "英文名称 *",
     link: "链接 *",
-    image: "导航图片链接",
+    image: "导航图片",
+    imageUploadLabel: "上传导航图片",
+    imageUrlLabel: "或输入图片 URL",
+    imageUrlPlaceholder: "https://...",
+    imageHint: "推荐尺寸: 800x800px，小于 2MB，可用于 Mega Menu 菜单右侧显示的图片",
     order: "排序值",
     parent: "父级菜单",
     parentPlaceholder: "无 (作为顶级菜单)",
@@ -41,7 +46,11 @@ export default function NavigationForm({
     nameZh: "Chinese Name *",
     nameEn: "English Name *",
     link: "Link *",
-    image: "Menu Image URL",
+    image: "Menu Image",
+    imageUploadLabel: "Upload Image",
+    imageUrlLabel: "Or Image URL",
+    imageUrlPlaceholder: "https://...",
+    imageHint: "Recommended size: 800x800px, < 2MB, used for the right side of Mega Menu",
     order: "Order",
     parent: "Parent Menu",
     parentPlaceholder: "None (Top Level)",
@@ -137,14 +146,17 @@ export default function NavigationForm({
           </AdminField>
         </div>
 
-        <AdminField label={t.image} htmlFor="image" hint="可用于 Mega Menu 菜单右侧显示的图片">
-          <AdminInput
-            type="text"
-            id="image"
-            name="image"
-            defaultValue={item?.image || ""}
+        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+          <AdminImageUploadField
+            fieldId="image"
+            title={t.image}
+            uploadLabel={t.imageUploadLabel}
+            urlLabel={t.imageUrlLabel}
+            urlPlaceholder={t.imageUrlPlaceholder}
+            hint={t.imageHint}
+            initialImage={item?.image || ""}
           />
-        </AdminField>
+        </div>
 
         <AdminToggleField
           id="isVisible"

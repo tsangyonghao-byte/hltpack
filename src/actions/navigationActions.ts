@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { requireAdminSession } from "@/lib/adminAuth";
+import { uploadFile } from "@/lib/upload";
 
 export async function createNavItem(prevState: any, formData: FormData) {
   await requireAdminSession();
@@ -13,7 +14,16 @@ export async function createNavItem(prevState: any, formData: FormData) {
     const order = parseInt(String(formData.get("order") || "0"), 10);
     const parentId = formData.get("parentId") as string | null;
     const isVisible = formData.get("isVisible") === "on";
-    const image = formData.get("image") as string | null;
+    const imageUrl = formData.get("imageUrl") as string | null;
+    const imageFile = formData.get("imageFile") as File | null;
+
+    let image = imageUrl;
+    if (imageFile && imageFile.size > 0) {
+      const uploadedPath = await uploadFile(imageFile);
+      if (uploadedPath) {
+        image = uploadedPath;
+      }
+    }
 
     if (!nameZh || !nameEn || !link) {
       throw new Error("中文名、英文名和链接都是必填项");
@@ -48,7 +58,16 @@ export async function updateNavItem(id: string, prevState: any, formData: FormDa
     const order = parseInt(String(formData.get("order") || "0"), 10);
     const parentId = formData.get("parentId") as string | null;
     const isVisible = formData.get("isVisible") === "on";
-    const image = formData.get("image") as string | null;
+    const imageUrl = formData.get("imageUrl") as string | null;
+    const imageFile = formData.get("imageFile") as File | null;
+
+    let image = imageUrl;
+    if (imageFile && imageFile.size > 0) {
+      const uploadedPath = await uploadFile(imageFile);
+      if (uploadedPath) {
+        image = uploadedPath;
+      }
+    }
 
     if (!nameZh || !nameEn || !link) {
       throw new Error("中文名、英文名和链接都是必填项");
