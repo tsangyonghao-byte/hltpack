@@ -64,7 +64,7 @@ const MARKETS = [
 export default function PackagingMarketPage({ setting }: { setting?: any }) {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
-  const heroImage = setting?.marketHeroImage || '/images/factory/制袋车间/10010.png';
+  const heroImage = setting?.marketHeroImage?.trim() || '/images/factory/制袋车间/10010.png';
 
   return (
     <div className="min-h-screen bg-white">

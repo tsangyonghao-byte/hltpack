@@ -98,7 +98,7 @@ export default function PackagingSafetyPage({ setting }: { setting?: any }) {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
   const localizedImageAlt = imageAltText[locale as keyof typeof imageAltText] || imageAltText.en;
-  const heroImage = setting?.safetyHeroImage || '/images/factory/制袋车间/10002.png';
+  const heroImage = setting?.safetyHeroImage?.trim() || '/images/factory/制袋车间/10002.png';
 
   return (
     <div className="min-h-screen bg-white">

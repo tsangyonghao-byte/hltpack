@@ -84,7 +84,7 @@ export default function FactoryGallery({ setting }: { setting?: any }) {
     { id: "printing", label: text.tabs.printing },
     { id: "bagMaking", label: text.tabs.bagMaking },
   ];
-  const heroImage = setting?.factoryHeroImage || "/images/factory/印刷车间/10101 (2).png";
+  const heroImage = setting?.factoryHeroImage?.trim() || "/images/factory/印刷车间/10101 (2).png";
 
   // Filter images based on tab
   const displayImages = activeTab === "all" 
