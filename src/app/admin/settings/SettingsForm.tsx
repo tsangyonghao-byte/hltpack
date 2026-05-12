@@ -254,37 +254,37 @@ export default function SettingsForm({ setting }: { setting: any }) {
   const [footerCopyZh, setFooterCopyZh] = useState(setting?.footerCopyZh || "");
   const [footerCopyEn, setFooterCopyEn] = useState(setting?.footerCopyEn || "");
   const [aboutYears, setAboutYears] = useState(setting?.aboutYears || "31");
-  const [aboutEquipments, setAboutEquipments] = useState(setting?.aboutEquipments || "100");
+  const [aboutEquipments, setAboutEquipments] = useState(setting?.aboutEquipments || "113");
   const [aboutArea, setAboutArea] = useState(setting?.aboutArea || "30");
-  const [aboutGlobal, setAboutGlobal] = useState(setting?.aboutGlobal || "100");
+  const [aboutGlobal, setAboutGlobal] = useState(setting?.aboutGlobal || "50");
   const [homeAboutEyebrowZh, setHomeAboutEyebrowZh] = useState(setting?.homeAboutEyebrowZh || "");
-  const [homeAboutEyebrowEn, setHomeAboutEyebrowEn] = useState(setting?.homeAboutEyebrowEn || "");
+  const [homeAboutEyebrowEn, setHomeAboutEyebrowEn] = useState(setting?.homeAboutEyebrowEn || "About HLT Packaging");
   const [homeAboutTitleLine1Zh, setHomeAboutTitleLine1Zh] = useState(setting?.homeAboutTitleLine1Zh || "");
-  const [homeAboutTitleLine1En, setHomeAboutTitleLine1En] = useState(setting?.homeAboutTitleLine1En || "");
+  const [homeAboutTitleLine1En, setHomeAboutTitleLine1En] = useState(setting?.homeAboutTitleLine1En || "Pioneering");
   const [homeAboutTitleAccentZh, setHomeAboutTitleAccentZh] = useState(setting?.homeAboutTitleAccentZh || "");
-  const [homeAboutTitleAccentEn, setHomeAboutTitleAccentEn] = useState(setting?.homeAboutTitleAccentEn || "");
+  const [homeAboutTitleAccentEn, setHomeAboutTitleAccentEn] = useState(setting?.homeAboutTitleAccentEn || "Flexible");
   const [homeAboutTitleLine2Zh, setHomeAboutTitleLine2Zh] = useState(setting?.homeAboutTitleLine2Zh || "");
-  const [homeAboutTitleLine2En, setHomeAboutTitleLine2En] = useState(setting?.homeAboutTitleLine2En || "");
+  const [homeAboutTitleLine2En, setHomeAboutTitleLine2En] = useState(setting?.homeAboutTitleLine2En || "Packaging Since 2001");
   const [homeAboutStory1Zh, setHomeAboutStory1Zh] = useState(setting?.homeAboutStory1Zh || "");
-  const [homeAboutStory1En, setHomeAboutStory1En] = useState(setting?.homeAboutStory1En || "");
+  const [homeAboutStory1En, setHomeAboutStory1En] = useState(setting?.homeAboutStory1En || "Established in 2001 and located in Shenzhen, China, HAILITONG Packaging has evolved into a global leader in flexible packaging manufacturing. We specialize in engineering premium, sustainable, and high-barrier pouch solutions.");
   const [homeAboutStory2Zh, setHomeAboutStory2Zh] = useState(setting?.homeAboutStory2Zh || "");
-  const [homeAboutStory2En, setHomeAboutStory2En] = useState(setting?.homeAboutStory2En || "");
+  const [homeAboutStory2En, setHomeAboutStory2En] = useState(setting?.homeAboutStory2En || "Equipped with world-class multi-color rotogravure presses, solventless laminators, and advanced pouch-making lines, we deliver uncompromising quality to brands worldwide. Our mission is simple: ");
   const [homeAboutMissionZh, setHomeAboutMissionZh] = useState(setting?.homeAboutMissionZh || "");
-  const [homeAboutMissionEn, setHomeAboutMissionEn] = useState(setting?.homeAboutMissionEn || "");
+  const [homeAboutMissionEn, setHomeAboutMissionEn] = useState(setting?.homeAboutMissionEn || '"Premium Quality, Customer First".');
   const [homeAboutCtaZh, setHomeAboutCtaZh] = useState(setting?.homeAboutCtaZh || "");
-  const [homeAboutCtaEn, setHomeAboutCtaEn] = useState(setting?.homeAboutCtaEn || "");
+  const [homeAboutCtaEn, setHomeAboutCtaEn] = useState(setting?.homeAboutCtaEn || "Discover Our Story");
   const [aboutStoryTagZh, setAboutStoryTagZh] = useState(setting?.aboutStoryTagZh || "");
-  const [aboutStoryTagEn, setAboutStoryTagEn] = useState(setting?.aboutStoryTagEn || "");
+  const [aboutStoryTagEn, setAboutStoryTagEn] = useState(setting?.aboutStoryTagEn || "Our Story");
   const [aboutStoryTitleZh, setAboutStoryTitleZh] = useState(setting?.aboutStoryTitleZh || "");
-  const [aboutStoryTitleEn, setAboutStoryTitleEn] = useState(setting?.aboutStoryTitleEn || "");
+  const [aboutStoryTitleEn, setAboutStoryTitleEn] = useState(setting?.aboutStoryTitleEn || "Packaging Solutions That Care About Our Future");
   const [aboutStoryBody1Zh, setAboutStoryBody1Zh] = useState(setting?.aboutStoryBody1Zh || "");
-  const [aboutStoryBody1En, setAboutStoryBody1En] = useState(setting?.aboutStoryBody1En || "");
+  const [aboutStoryBody1En, setAboutStoryBody1En] = useState(setting?.aboutStoryBody1En || "Established in 2001 and strategically located in Shenzhen (Longgang District), adjacent to Hong Kong, HAILITONG Packaging brings over 31 years of industry experience to the flexible packaging sector. Supported by a team of experienced professional technicians, we have built a solid reputation for delivering stable product quality, reasonable pricing, and rapid delivery.");
   const [aboutStoryBody2Zh, setAboutStoryBody2Zh] = useState(setting?.aboutStoryBody2Zh || "");
-  const [aboutStoryBody2En, setAboutStoryBody2En] = useState(setting?.aboutStoryBody2En || "");
+  const [aboutStoryBody2En, setAboutStoryBody2En] = useState(setting?.aboutStoryBody2En || "Our state-of-the-art facility is equipped with comprehensive advanced machinery, including film blowing machines, high-speed rotogravure presses, laminating machines, slitting machines, folding machines, food pouch making machines, three-side sealing machines, center sealing machines, R-machines, flat bag machines, slicing machines, and silica gel drying machines. We specialize in producing a wide range of plastic packaging bags, including food bags, aluminum foil bags, foil-clear bags, vacuum bags, high-temperature retort pouches, multi-layer composite bags, anti-static bags, spout pouches, flower sleeves, shaped bags, facial mask bags, zipper stand-up pouches, PE zip-lock bags, high-transparency OPP header bags, automatic packaging roll films, high-transparency flat bags, and handle bags. Guided by our principle: 'Premium Quality, Customer First', we proudly export our solutions to Europe, America, Russia, Japan, and beyond.");
   const [aboutStoryPrimaryCtaZh, setAboutStoryPrimaryCtaZh] = useState(setting?.aboutStoryPrimaryCtaZh || "");
-  const [aboutStoryPrimaryCtaEn, setAboutStoryPrimaryCtaEn] = useState(setting?.aboutStoryPrimaryCtaEn || "");
+  const [aboutStoryPrimaryCtaEn, setAboutStoryPrimaryCtaEn] = useState(setting?.aboutStoryPrimaryCtaEn || "Explore Our Products");
   const [aboutStorySecondaryCtaZh, setAboutStorySecondaryCtaZh] = useState(setting?.aboutStorySecondaryCtaZh || "");
-  const [aboutStorySecondaryCtaEn, setAboutStorySecondaryCtaEn] = useState(setting?.aboutStorySecondaryCtaEn || "");
+  const [aboutStorySecondaryCtaEn, setAboutStorySecondaryCtaEn] = useState(setting?.aboutStorySecondaryCtaEn || "Get in Touch");
   const [aboutHeroImage, setAboutHeroImage] = useState(setting?.aboutHeroImage || "");
   const [marketHeroImage, setMarketHeroImage] = useState(setting?.marketHeroImage || "");
   const [safetyHeroImage, setSafetyHeroImage] = useState(setting?.safetyHeroImage || "");
@@ -393,37 +393,37 @@ export default function SettingsForm({ setting }: { setting: any }) {
     }),
     about: JSON.stringify({
       aboutYears: setting?.aboutYears || "31",
-      aboutEquipments: setting?.aboutEquipments || "100",
+      aboutEquipments: setting?.aboutEquipments || "113",
       aboutArea: setting?.aboutArea || "30",
-      aboutGlobal: setting?.aboutGlobal || "100",
+      aboutGlobal: setting?.aboutGlobal || "50",
       homeAboutEyebrowZh: setting?.homeAboutEyebrowZh || "",
-      homeAboutEyebrowEn: setting?.homeAboutEyebrowEn || "",
+      homeAboutEyebrowEn: setting?.homeAboutEyebrowEn || "About HLT Packaging",
       homeAboutTitleLine1Zh: setting?.homeAboutTitleLine1Zh || "",
-      homeAboutTitleLine1En: setting?.homeAboutTitleLine1En || "",
+      homeAboutTitleLine1En: setting?.homeAboutTitleLine1En || "Pioneering",
       homeAboutTitleAccentZh: setting?.homeAboutTitleAccentZh || "",
-      homeAboutTitleAccentEn: setting?.homeAboutTitleAccentEn || "",
+      homeAboutTitleAccentEn: setting?.homeAboutTitleAccentEn || "Flexible",
       homeAboutTitleLine2Zh: setting?.homeAboutTitleLine2Zh || "",
-      homeAboutTitleLine2En: setting?.homeAboutTitleLine2En || "",
+      homeAboutTitleLine2En: setting?.homeAboutTitleLine2En || "Packaging Since 2001",
       homeAboutStory1Zh: setting?.homeAboutStory1Zh || "",
-      homeAboutStory1En: setting?.homeAboutStory1En || "",
+      homeAboutStory1En: setting?.homeAboutStory1En || "Established in 2001 and located in Shenzhen, China, HAILITONG Packaging has evolved into a global leader in flexible packaging manufacturing. We specialize in engineering premium, sustainable, and high-barrier pouch solutions.",
       homeAboutStory2Zh: setting?.homeAboutStory2Zh || "",
-      homeAboutStory2En: setting?.homeAboutStory2En || "",
+      homeAboutStory2En: setting?.homeAboutStory2En || "Equipped with world-class multi-color rotogravure presses, solventless laminators, and advanced pouch-making lines, we deliver uncompromising quality to brands worldwide. Our mission is simple: ",
       homeAboutMissionZh: setting?.homeAboutMissionZh || "",
-      homeAboutMissionEn: setting?.homeAboutMissionEn || "",
+      homeAboutMissionEn: setting?.homeAboutMissionEn || '"Premium Quality, Customer First".',
       homeAboutCtaZh: setting?.homeAboutCtaZh || "",
-      homeAboutCtaEn: setting?.homeAboutCtaEn || "",
+      homeAboutCtaEn: setting?.homeAboutCtaEn || "Discover Our Story",
       aboutStoryTagZh: setting?.aboutStoryTagZh || "",
-      aboutStoryTagEn: setting?.aboutStoryTagEn || "",
+      aboutStoryTagEn: setting?.aboutStoryTagEn || "Our Story",
       aboutStoryTitleZh: setting?.aboutStoryTitleZh || "",
-      aboutStoryTitleEn: setting?.aboutStoryTitleEn || "",
+      aboutStoryTitleEn: setting?.aboutStoryTitleEn || "Packaging Solutions That Care About Our Future",
       aboutStoryBody1Zh: setting?.aboutStoryBody1Zh || "",
-      aboutStoryBody1En: setting?.aboutStoryBody1En || "",
+      aboutStoryBody1En: setting?.aboutStoryBody1En || "Established in 2001 and strategically located in Shenzhen (Longgang District), adjacent to Hong Kong, HAILITONG Packaging brings over 31 years of industry experience to the flexible packaging sector. Supported by a team of experienced professional technicians, we have built a solid reputation for delivering stable product quality, reasonable pricing, and rapid delivery.",
       aboutStoryBody2Zh: setting?.aboutStoryBody2Zh || "",
-      aboutStoryBody2En: setting?.aboutStoryBody2En || "",
+      aboutStoryBody2En: setting?.aboutStoryBody2En || "Our state-of-the-art facility is equipped with comprehensive advanced machinery, including film blowing machines, high-speed rotogravure presses, laminating machines, slitting machines, folding machines, food pouch making machines, three-side sealing machines, center sealing machines, R-machines, flat bag machines, slicing machines, and silica gel drying machines. We specialize in producing a wide range of plastic packaging bags, including food bags, aluminum foil bags, foil-clear bags, vacuum bags, high-temperature retort pouches, multi-layer composite bags, anti-static bags, spout pouches, flower sleeves, shaped bags, facial mask bags, zipper stand-up pouches, PE zip-lock bags, high-transparency OPP header bags, automatic packaging roll films, high-transparency flat bags, and handle bags. Guided by our principle: 'Premium Quality, Customer First', we proudly export our solutions to Europe, America, Russia, Japan, and beyond.",
       aboutStoryPrimaryCtaZh: setting?.aboutStoryPrimaryCtaZh || "",
-      aboutStoryPrimaryCtaEn: setting?.aboutStoryPrimaryCtaEn || "",
+      aboutStoryPrimaryCtaEn: setting?.aboutStoryPrimaryCtaEn || "Explore Our Products",
       aboutStorySecondaryCtaZh: setting?.aboutStorySecondaryCtaZh || "",
-      aboutStorySecondaryCtaEn: setting?.aboutStorySecondaryCtaEn || "",
+      aboutStorySecondaryCtaEn: setting?.aboutStorySecondaryCtaEn || "Get in Touch",
     }),
     images: JSON.stringify({
       aboutHeroImage: setting?.aboutHeroImage || "",
@@ -881,52 +881,28 @@ export default function SettingsForm({ setting }: { setting: any }) {
           <div className="mt-8 rounded-2xl border border-gray-200 p-6">
             <h4 className="text-base font-semibold text-gray-900 mb-4">{t.homeIntroGroup}</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <AdminField label={`${t.homeAboutEyebrow} (${t.fieldZh})`} htmlFor="homeAboutEyebrowZh">
-                <AdminInput id="homeAboutEyebrowZh" name="homeAboutEyebrowZh" value={homeAboutEyebrowZh} onChange={(e) => setHomeAboutEyebrowZh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.homeAboutEyebrow} (${t.fieldEn})`} htmlFor="homeAboutEyebrowEn">
+              <AdminField label={t.homeAboutEyebrow} htmlFor="homeAboutEyebrowEn">
                 <AdminInput id="homeAboutEyebrowEn" name="homeAboutEyebrowEn" value={homeAboutEyebrowEn} onChange={(e) => setHomeAboutEyebrowEn(e.target.value)} />
               </AdminField>
-              <AdminField label={`${t.homeAboutTitleLine1} (${t.fieldZh})`} htmlFor="homeAboutTitleLine1Zh">
-                <AdminInput id="homeAboutTitleLine1Zh" name="homeAboutTitleLine1Zh" value={homeAboutTitleLine1Zh} onChange={(e) => setHomeAboutTitleLine1Zh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.homeAboutTitleLine1} (${t.fieldEn})`} htmlFor="homeAboutTitleLine1En">
+              <AdminField label={t.homeAboutTitleLine1} htmlFor="homeAboutTitleLine1En">
                 <AdminInput id="homeAboutTitleLine1En" name="homeAboutTitleLine1En" value={homeAboutTitleLine1En} onChange={(e) => setHomeAboutTitleLine1En(e.target.value)} />
               </AdminField>
-              <AdminField label={`${t.homeAboutTitleAccent} (${t.fieldZh})`} htmlFor="homeAboutTitleAccentZh">
-                <AdminInput id="homeAboutTitleAccentZh" name="homeAboutTitleAccentZh" value={homeAboutTitleAccentZh} onChange={(e) => setHomeAboutTitleAccentZh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.homeAboutTitleAccent} (${t.fieldEn})`} htmlFor="homeAboutTitleAccentEn">
+              <AdminField label={t.homeAboutTitleAccent} htmlFor="homeAboutTitleAccentEn">
                 <AdminInput id="homeAboutTitleAccentEn" name="homeAboutTitleAccentEn" value={homeAboutTitleAccentEn} onChange={(e) => setHomeAboutTitleAccentEn(e.target.value)} />
               </AdminField>
-              <AdminField label={`${t.homeAboutTitleLine2} (${t.fieldZh})`} htmlFor="homeAboutTitleLine2Zh">
-                <AdminInput id="homeAboutTitleLine2Zh" name="homeAboutTitleLine2Zh" value={homeAboutTitleLine2Zh} onChange={(e) => setHomeAboutTitleLine2Zh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.homeAboutTitleLine2} (${t.fieldEn})`} htmlFor="homeAboutTitleLine2En">
+              <AdminField label={t.homeAboutTitleLine2} htmlFor="homeAboutTitleLine2En">
                 <AdminInput id="homeAboutTitleLine2En" name="homeAboutTitleLine2En" value={homeAboutTitleLine2En} onChange={(e) => setHomeAboutTitleLine2En(e.target.value)} />
               </AdminField>
-              <AdminField label={`${t.homeAboutStory1} (${t.fieldZh})`} htmlFor="homeAboutStory1Zh" className="md:col-span-2">
-                <AdminTextarea id="homeAboutStory1Zh" name="homeAboutStory1Zh" rows={3} value={homeAboutStory1Zh} onChange={(e) => setHomeAboutStory1Zh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.homeAboutStory1} (${t.fieldEn})`} htmlFor="homeAboutStory1En" className="md:col-span-2">
+              <AdminField label={t.homeAboutStory1} htmlFor="homeAboutStory1En" className="md:col-span-2">
                 <AdminTextarea id="homeAboutStory1En" name="homeAboutStory1En" rows={3} value={homeAboutStory1En} onChange={(e) => setHomeAboutStory1En(e.target.value)} />
               </AdminField>
-              <AdminField label={`${t.homeAboutStory2} (${t.fieldZh})`} htmlFor="homeAboutStory2Zh" className="md:col-span-2">
-                <AdminTextarea id="homeAboutStory2Zh" name="homeAboutStory2Zh" rows={3} value={homeAboutStory2Zh} onChange={(e) => setHomeAboutStory2Zh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.homeAboutStory2} (${t.fieldEn})`} htmlFor="homeAboutStory2En" className="md:col-span-2">
+              <AdminField label={t.homeAboutStory2} htmlFor="homeAboutStory2En" className="md:col-span-2">
                 <AdminTextarea id="homeAboutStory2En" name="homeAboutStory2En" rows={3} value={homeAboutStory2En} onChange={(e) => setHomeAboutStory2En(e.target.value)} />
               </AdminField>
-              <AdminField label={`${t.homeAboutMission} (${t.fieldZh})`} htmlFor="homeAboutMissionZh">
-                <AdminInput id="homeAboutMissionZh" name="homeAboutMissionZh" value={homeAboutMissionZh} onChange={(e) => setHomeAboutMissionZh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.homeAboutMission} (${t.fieldEn})`} htmlFor="homeAboutMissionEn">
+              <AdminField label={t.homeAboutMission} htmlFor="homeAboutMissionEn">
                 <AdminInput id="homeAboutMissionEn" name="homeAboutMissionEn" value={homeAboutMissionEn} onChange={(e) => setHomeAboutMissionEn(e.target.value)} />
               </AdminField>
-              <AdminField label={`${t.homeAboutCta} (${t.fieldZh})`} htmlFor="homeAboutCtaZh">
-                <AdminInput id="homeAboutCtaZh" name="homeAboutCtaZh" value={homeAboutCtaZh} onChange={(e) => setHomeAboutCtaZh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.homeAboutCta} (${t.fieldEn})`} htmlFor="homeAboutCtaEn">
+              <AdminField label={t.homeAboutCta} htmlFor="homeAboutCtaEn">
                 <AdminInput id="homeAboutCtaEn" name="homeAboutCtaEn" value={homeAboutCtaEn} onChange={(e) => setHomeAboutCtaEn(e.target.value)} />
               </AdminField>
             </div>
@@ -934,40 +910,22 @@ export default function SettingsForm({ setting }: { setting: any }) {
           <div className="mt-8 rounded-2xl border border-gray-200 p-6">
             <h4 className="text-base font-semibold text-gray-900 mb-4">{t.aboutStoryGroup}</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <AdminField label={`${t.aboutStoryTag} (${t.fieldZh})`} htmlFor="aboutStoryTagZh">
-                <AdminInput id="aboutStoryTagZh" name="aboutStoryTagZh" value={aboutStoryTagZh} onChange={(e) => setAboutStoryTagZh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.aboutStoryTag} (${t.fieldEn})`} htmlFor="aboutStoryTagEn">
+              <AdminField label={t.aboutStoryTag} htmlFor="aboutStoryTagEn">
                 <AdminInput id="aboutStoryTagEn" name="aboutStoryTagEn" value={aboutStoryTagEn} onChange={(e) => setAboutStoryTagEn(e.target.value)} />
               </AdminField>
-              <AdminField label={`${t.aboutStoryTitle} (${t.fieldZh})`} htmlFor="aboutStoryTitleZh">
-                <AdminInput id="aboutStoryTitleZh" name="aboutStoryTitleZh" value={aboutStoryTitleZh} onChange={(e) => setAboutStoryTitleZh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.aboutStoryTitle} (${t.fieldEn})`} htmlFor="aboutStoryTitleEn">
+              <AdminField label={t.aboutStoryTitle} htmlFor="aboutStoryTitleEn">
                 <AdminInput id="aboutStoryTitleEn" name="aboutStoryTitleEn" value={aboutStoryTitleEn} onChange={(e) => setAboutStoryTitleEn(e.target.value)} />
               </AdminField>
-              <AdminField label={`${t.aboutStoryBody1} (${t.fieldZh})`} htmlFor="aboutStoryBody1Zh" className="md:col-span-2">
-                <AdminTextarea id="aboutStoryBody1Zh" name="aboutStoryBody1Zh" rows={4} value={aboutStoryBody1Zh} onChange={(e) => setAboutStoryBody1Zh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.aboutStoryBody1} (${t.fieldEn})`} htmlFor="aboutStoryBody1En" className="md:col-span-2">
+              <AdminField label={t.aboutStoryBody1} htmlFor="aboutStoryBody1En" className="md:col-span-2">
                 <AdminTextarea id="aboutStoryBody1En" name="aboutStoryBody1En" rows={4} value={aboutStoryBody1En} onChange={(e) => setAboutStoryBody1En(e.target.value)} />
               </AdminField>
-              <AdminField label={`${t.aboutStoryBody2} (${t.fieldZh})`} htmlFor="aboutStoryBody2Zh" className="md:col-span-2">
-                <AdminTextarea id="aboutStoryBody2Zh" name="aboutStoryBody2Zh" rows={5} value={aboutStoryBody2Zh} onChange={(e) => setAboutStoryBody2Zh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.aboutStoryBody2} (${t.fieldEn})`} htmlFor="aboutStoryBody2En" className="md:col-span-2">
+              <AdminField label={t.aboutStoryBody2} htmlFor="aboutStoryBody2En" className="md:col-span-2">
                 <AdminTextarea id="aboutStoryBody2En" name="aboutStoryBody2En" rows={5} value={aboutStoryBody2En} onChange={(e) => setAboutStoryBody2En(e.target.value)} />
               </AdminField>
-              <AdminField label={`${t.aboutStoryPrimaryCta} (${t.fieldZh})`} htmlFor="aboutStoryPrimaryCtaZh">
-                <AdminInput id="aboutStoryPrimaryCtaZh" name="aboutStoryPrimaryCtaZh" value={aboutStoryPrimaryCtaZh} onChange={(e) => setAboutStoryPrimaryCtaZh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.aboutStoryPrimaryCta} (${t.fieldEn})`} htmlFor="aboutStoryPrimaryCtaEn">
+              <AdminField label={t.aboutStoryPrimaryCta} htmlFor="aboutStoryPrimaryCtaEn">
                 <AdminInput id="aboutStoryPrimaryCtaEn" name="aboutStoryPrimaryCtaEn" value={aboutStoryPrimaryCtaEn} onChange={(e) => setAboutStoryPrimaryCtaEn(e.target.value)} />
               </AdminField>
-              <AdminField label={`${t.aboutStorySecondaryCta} (${t.fieldZh})`} htmlFor="aboutStorySecondaryCtaZh">
-                <AdminInput id="aboutStorySecondaryCtaZh" name="aboutStorySecondaryCtaZh" value={aboutStorySecondaryCtaZh} onChange={(e) => setAboutStorySecondaryCtaZh(e.target.value)} />
-              </AdminField>
-              <AdminField label={`${t.aboutStorySecondaryCta} (${t.fieldEn})`} htmlFor="aboutStorySecondaryCtaEn">
+              <AdminField label={t.aboutStorySecondaryCta} htmlFor="aboutStorySecondaryCtaEn">
                 <AdminInput id="aboutStorySecondaryCtaEn" name="aboutStorySecondaryCtaEn" value={aboutStorySecondaryCtaEn} onChange={(e) => setAboutStorySecondaryCtaEn(e.target.value)} />
               </AdminField>
             </div>
