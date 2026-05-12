@@ -252,7 +252,7 @@ export default function SettingsForm({ setting }: { setting: any }) {
   const [robotsDisallowPaths, setRobotsDisallowPaths] = useState(setting?.robotsDisallowPaths || "/admin/*\n/api/*");
   const [noindexPaths, setNoindexPaths] = useState(setting?.noindexPaths || "");
   const [footerCopyZh, setFooterCopyZh] = useState(setting?.footerCopyZh || "");
-  const [footerCopyEn, setFooterCopyEn] = useState(setting?.footerCopyEn || "");
+  const [footerCopyEn, setFooterCopyEn] = useState(setting?.footerCopyEn || "HAILITONG Packaging. All Rights Reserved.");
   const [aboutYears, setAboutYears] = useState(setting?.aboutYears || "31");
   const [aboutEquipments, setAboutEquipments] = useState(setting?.aboutEquipments || "113");
   const [aboutArea, setAboutArea] = useState(setting?.aboutArea || "30");
@@ -313,7 +313,7 @@ export default function SettingsForm({ setting }: { setting: any }) {
           noindexPaths,
         };
       case "footer":
-        return { footerCopyZh, footerCopyEn };
+        return { footerCopyEn };
       case "about":
         return {
           aboutYears,
@@ -388,8 +388,7 @@ export default function SettingsForm({ setting }: { setting: any }) {
       noindexPaths: setting?.noindexPaths || "",
     }),
     footer: JSON.stringify({
-      footerCopyZh: setting?.footerCopyZh || "",
-      footerCopyEn: setting?.footerCopyEn || "",
+      footerCopyEn: setting?.footerCopyEn || "HAILITONG Packaging. All Rights Reserved.",
     }),
     about: JSON.stringify({
       aboutYears: setting?.aboutYears || "31",
@@ -995,9 +994,6 @@ export default function SettingsForm({ setting }: { setting: any }) {
         <section>
           <h3 className="text-lg font-bold text-gray-900 mb-4 border-b pb-2">{t.footer}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <AdminField label={t.footerCopyZh} htmlFor="footerCopyZh">
-              <AdminInput type="text" id="footerCopyZh" name="footerCopyZh" value={footerCopyZh} onChange={(e) => setFooterCopyZh(e.target.value)} />
-            </AdminField>
             <AdminField label={t.footerCopyEn} htmlFor="footerCopyEn">
               <AdminInput type="text" id="footerCopyEn" name="footerCopyEn" value={footerCopyEn} onChange={(e) => setFooterCopyEn(e.target.value)} />
             </AdminField>
