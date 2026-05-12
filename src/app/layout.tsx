@@ -22,7 +22,14 @@ const playfair = Playfair_Display({
 export async function generateMetadata(): Promise<Metadata> {
   const cookieStore = await cookies();
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
-  const { siteName, titleSuffix, description, keywords, defaultImage, siteNoindex } = await getSystemSeo(locale);
+  const [{ siteName, titleSuffix, description, keywords, defaultImage, siteNoindex }, setting] = await Promise.all([
+    getSystemSeo(locale),
+    prisma.systemSetting.findUnique({
+      where: { id: "global" },
+      select: { faviconUrl: true },
+    }),
+  ]);
+  const faviconUrl = setting?.faviconUrl || undefined;
 
   return {
     metadataBase: new URL(getSiteUrl()),
@@ -32,6 +39,13 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description,
     keywords,
+    icons: faviconUrl
+      ? {
+          icon: faviconUrl,
+          shortcut: faviconUrl,
+          apple: faviconUrl,
+        }
+      : undefined,
     robots: buildRobotsMetadata("/", { siteNoindex }),
     openGraph: {
       title: siteName,

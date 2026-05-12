@@ -61,9 +61,11 @@ const MARKETS = [
   }
 ];
 
-export default function PackagingMarketPage() {
+export default function PackagingMarketPage({ setting }: { setting?: any }) {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
+  const heroImage = setting?.marketHeroImage || '/images/factory/制袋车间/10010.png';
+
   return (
     <div className="min-h-screen bg-white">
       {/* Page Hero Banner */}
@@ -71,7 +73,7 @@ export default function PackagingMarketPage() {
         {/* Background Image / Pattern */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
-          style={{ backgroundImage: "url('/images/factory/制袋车间/10010.png')" }}
+          style={{ backgroundImage: `url('${heroImage}')` }}
         ></div>
         {/* Dark Overlay for Text Readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>

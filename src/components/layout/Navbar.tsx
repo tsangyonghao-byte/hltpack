@@ -34,6 +34,8 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
   const { dict, locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
   const setting = useSystemSetting();
+  const logoSrc = setting?.logoUrl || "/logo.png";
+  const logoAlt = locale === "zh" ? setting?.siteNameZh || "海力通包装" : setting?.siteNameEn || "HAILITONG Packaging";
   const contactPhone = setting?.contactPhone || "";
   const phoneHref = contactPhone ? `tel:${contactPhone.replace(/\s+/g, "")}` : "/contact";
   const currentCategory =
@@ -383,8 +385,8 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
             isSolid ? "scale-[0.85] origin-left md:scale-[0.68] xl:scale-[0.75] md:-translate-y-[22px] xl:-translate-y-[28px]" : "scale-[0.85] md:scale-[0.9] xl:scale-100 origin-left translate-y-[10px]"
           }`}>
             <img 
-              src="/logo.png" 
-              alt="HAILITONG Packaging" 
+              src={logoSrc} 
+              alt={logoAlt} 
               className={`w-[140px] md:w-[160px] xl:w-[180px] h-auto object-contain transition-all duration-[750ms] drop-shadow-md ${!isSolid ? 'brightness-0 invert' : ''}`} 
             />
           </Link>
@@ -622,7 +624,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
             >
               <div className="flex items-center justify-between px-5 pt-5">
                 <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
-                  <img src="/logo.png" alt="HAILITONG Packaging" className="w-[106px] h-auto object-contain" />
+                  <img src={logoSrc} alt={logoAlt} className="w-[106px] h-auto object-contain" />
                 </Link>
                 <button
                   className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white text-[#1A1A1A] shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-gray-100 transition-transform duration-300 active:scale-95"

@@ -7,7 +7,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import Link from "next/link";
 
-export default function Certificates() {
+export default function Certificates({ certificates = [] }: { certificates?: any[] }) {
   const { dict, locale } = useLanguage();
   const buttonText =
     locale === "es"
@@ -35,11 +35,19 @@ export default function Certificates() {
           ];
   
   // Only the 3 core certificates for the homepage layout
-  const certs = [
+  const defaultCerts = [
     { id: 1, name: certNames[0], img: "/zs01.png" },
     { id: 2, name: certNames[1], img: "/zs02.png" },
     { id: 3, name: certNames[2], img: "/zs03.png" },
   ];
+
+  const certs = certificates && certificates.length >= 3 
+    ? certificates.slice(0, 3).map(c => ({
+        id: c.id,
+        name: locale === 'es' && c.nameEs ? c.nameEs : locale === 'ar' && c.nameAr ? c.nameAr : c.name,
+        img: c.image
+      }))
+    : defaultCerts;
 
   const [selectedCertIndex, setSelectedCertIndex] = useState<number | null>(null);
 

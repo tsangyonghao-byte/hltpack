@@ -94,10 +94,12 @@ const imageAltText = {
   },
 } as const;
 
-export default function PackagingSafetyPage() {
+export default function PackagingSafetyPage({ setting }: { setting?: any }) {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
   const localizedImageAlt = imageAltText[locale as keyof typeof imageAltText] || imageAltText.en;
+  const heroImage = setting?.safetyHeroImage || '/images/factory/制袋车间/10002.png';
+
   return (
     <div className="min-h-screen bg-white">
       {/* Page Hero Banner */}
@@ -105,7 +107,7 @@ export default function PackagingSafetyPage() {
         {/* Background Image / Pattern */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
-          style={{ backgroundImage: "url('/images/factory/制袋车间/10002.png')" }}
+          style={{ backgroundImage: `url('${heroImage}')` }}
         ></div>
         {/* Dark Overlay for Text Readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>

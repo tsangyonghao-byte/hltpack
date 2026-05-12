@@ -46,6 +46,10 @@ export default function AboutPage() {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
   const setting = useSystemSetting();
+  const getSettingText = (zhValue: any, enValue: any, fallback: string) => {
+    if (locale === "zh") return zhValue || fallback;
+    return getTranslatedFallback(enValue, locale) || fallback;
+  };
   const aboutUiText = locale === "ar"
     ? {
         introHighlights: [
@@ -133,6 +137,12 @@ export default function AboutPage() {
     (locale === "zh" ? setting?.contactAddressZh : getTranslatedFallback(setting?.contactAddressEn, locale)) ||
     content.contact?.address || 
     getTranslatedFallback("No.51, Lan'er Road, Longxin Community, Baolong Street, Longgang District, Shenzhen, China", locale);
+  const storyTag = getSettingText(setting?.aboutStoryTagZh, setting?.aboutStoryTagEn, content.about.storyTag);
+  const storyTitle = getSettingText(setting?.aboutStoryTitleZh, setting?.aboutStoryTitleEn, content.about.storyTitle);
+  const storyBody1 = getSettingText(setting?.aboutStoryBody1Zh, setting?.aboutStoryBody1En, content.about.storyBody1);
+  const storyBody2 = getSettingText(setting?.aboutStoryBody2Zh, setting?.aboutStoryBody2En, content.about.storyBody2);
+  const storyPrimaryCta = getSettingText(setting?.aboutStoryPrimaryCtaZh, setting?.aboutStoryPrimaryCtaEn, content.about.exploreProducts);
+  const storySecondaryCta = getSettingText(setting?.aboutStorySecondaryCtaZh, setting?.aboutStorySecondaryCtaEn, content.about.getInTouch);
   const introHighlights = aboutUiText.introHighlights;
   const stats = content.about.stats.map((item: { value: number; suffix: string; label: string }, index: number) => ({
     ...item,
@@ -226,7 +236,7 @@ export default function AboutPage() {
         {/* Background Image / Pattern */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
-          style={{ backgroundImage: "url('/images/factory/印刷车间/10001.png')" }}
+          style={{ backgroundImage: `url('${setting?.aboutHeroImage || "/images/factory/印刷车间/10001.png"}')` }}
         ></div>
         {/* Dark Overlay for Text Readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>
@@ -315,17 +325,17 @@ export default function AboutPage() {
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-8 h-[2px] bg-[#F05A22]"></div>
                   <span className="text-xs font-bold tracking-[0.25em] text-gray-500 uppercase">
-                    {content.about.storyTag}
+                    {storyTag}
                   </span>
                 </div>
 
                 <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#1A1A1A] mb-8 leading-tight tracking-tight">
-                  {content.about.storyTitle}
+                  {storyTitle}
                 </h2>
 
                 <div className="space-y-6 text-gray-500 text-[16px] leading-8 font-light mb-10">
-                  <p>{content.about.storyBody1}</p>
-                  <p>{content.about.storyBody2}</p>
+                  <p>{storyBody1}</p>
+                  <p>{storyBody2}</p>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-4 mt-auto pt-6 border-t border-gray-100">
@@ -333,13 +343,13 @@ export default function AboutPage() {
                     href="/products" 
                     className="inline-flex items-center justify-center px-8 py-4 bg-[#1A1A1A] text-white rounded-none font-bold text-[14px] uppercase tracking-wider hover:bg-[#F05A22] transition-colors duration-300"
                   >
-                    {content.about.exploreProducts}
+                    {storyPrimaryCta}
                   </Link>
                   <Link 
                     href="/contact" 
                     className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-[#1A1A1A] border border-gray-300 rounded-none font-bold text-[14px] uppercase tracking-wider hover:border-[#1A1A1A] hover:bg-gray-50 transition-colors duration-300 group"
                   >
-                    {content.about.getInTouch}
+                    {storySecondaryCta}
                     <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>

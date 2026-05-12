@@ -74,7 +74,7 @@ const pageText = {
   },
 } as const;
 
-export default function FactoryGallery() {
+export default function FactoryGallery({ setting }: { setting?: any }) {
   const { locale } = useLanguage();
   const [activeTab, setActiveTab] = useState<string>("all");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -84,6 +84,7 @@ export default function FactoryGallery() {
     { id: "printing", label: text.tabs.printing },
     { id: "bagMaking", label: text.tabs.bagMaking },
   ];
+  const heroImage = setting?.factoryHeroImage || "/images/factory/印刷车间/10101 (2).png";
 
   // Filter images based on tab
   const displayImages = activeTab === "all" 
@@ -91,24 +92,33 @@ export default function FactoryGallery() {
     : factoryData[activeTab as keyof typeof factoryData];
 
   return (
-    <main className="pt-24 pb-32 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <main className="bg-gray-50 min-h-screen">
+      {/* Page Hero Banner */}
+      <section className="relative w-full pt-[140px] pb-16 md:pt-[180px] md:pb-20 bg-[#111111] flex flex-col items-center justify-center overflow-hidden min-h-[350px] md:min-h-[450px]">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
+          style={{ backgroundImage: `url('${heroImage}')` }}
+        ></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>
         
-        {/* Header */}
-        <div className="text-center mb-16 pt-12">
-          <motion.div
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center justify-center flex-grow">
+          <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-gray-200 mb-6"
+            className="flex items-center justify-center gap-3 mb-6"
           >
-            <span className="w-2 h-2 bg-[#F05A22]"></span>
-            <span className="text-xs font-bold tracking-widest text-gray-600 uppercase">{text.badge}</span>
+            <div className="w-8 h-[1px] bg-[#F05A22]"></div>
+            <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">
+              {text.badge}
+            </span>
+            <div className="w-8 h-[1px] bg-[#F05A22]"></div>
           </motion.div>
+
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight"
+            className="text-4xl md:text-5xl lg:text-[64px] font-extrabold text-white mb-6 tracking-tight uppercase leading-tight"
           >
             {text.title}
           </motion.h1>
@@ -116,12 +126,15 @@ export default function FactoryGallery() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto"
+            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed"
           >
             {text.description}
           </motion.p>
         </div>
+      </section>
 
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+        
         {/* Filter Tabs */}
         <div className="flex flex-wrap justify-center gap-4 mb-16">
           {tabs.map((tab) => (

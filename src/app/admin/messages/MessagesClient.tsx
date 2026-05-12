@@ -381,95 +381,95 @@ export default function MessagesClient({
         selectAllLabel={dict.messages.bulk.selectAll}
         selectedLabel={selectedLabel}
         actions={
-          <>
-          <button
-            type="button"
-            onClick={() => setSelectedIds([])}
-            disabled={!selectedIds.length || loading === "bulk-read" || loading === "bulk-delete" || loading === "bulk-status" || loading === "bulk-owner" || loading === "bulk-followup"}
-            className={ADMIN_SECONDARY_BUTTON}
-          >
-            {dict.messages.bulk.clear}
-          </button>
-          <input
-            type="text"
-            value={bulkOwner}
-            onChange={(e) => setBulkOwner(e.target.value)}
-            placeholder={dict.messages.bulk.ownerPlaceholder}
-            className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 outline-none transition focus:border-[#F05A22]"
-          />
-          <button
-            type="button"
-            onClick={handleBulkOwnerUpdate}
-            disabled={!selectedIds.length || loading === "bulk-read" || loading === "bulk-delete" || loading === "bulk-status" || loading === "bulk-owner" || loading === "bulk-followup"}
-            className={ADMIN_SECONDARY_BUTTON}
-          >
-            {dict.messages.bulk.applyOwner}
-          </button>
-          <input
-            type="datetime-local"
-            value={bulkFollowUpAt}
-            onChange={(e) => setBulkFollowUpAt(e.target.value)}
-            aria-label={dict.messages.bulk.followUpPlaceholder}
-            className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 outline-none transition focus:border-[#F05A22]"
-          />
-          <button
-            type="button"
-            onClick={handleBulkFollowUpUpdate}
-            disabled={!selectedIds.length || loading === "bulk-read" || loading === "bulk-delete" || loading === "bulk-status" || loading === "bulk-owner" || loading === "bulk-followup"}
-            className={ADMIN_SECONDARY_BUTTON}
-          >
-            {dict.messages.bulk.applyFollowUp}
-          </button>
-          <select
-            value={bulkStatus}
-            onChange={(e) => setBulkStatus(e.target.value)}
-            className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 outline-none transition focus:border-[#F05A22]"
-          >
-            <option value="new">{dict.messages.statusNew}</option>
-            <option value="in_progress">{dict.messages.statusInProgress}</option>
-            <option value="quoted">{dict.messages.statusQuoted}</option>
-            <option value="won">{dict.messages.statusWon}</option>
-            <option value="lost">{dict.messages.statusLost}</option>
-          </select>
-          <button
-            type="button"
-            onClick={handleBulkStatusUpdate}
-            disabled={!selectedIds.length || loading === "bulk-read" || loading === "bulk-delete" || loading === "bulk-status" || loading === "bulk-owner" || loading === "bulk-followup"}
-            className={ADMIN_SUCCESS_BUTTON}
-          >
-            {dict.messages.bulk.applyStatus}
-          </button>
-          <button
-            type="button"
-            onClick={handleBulkMarkRead}
-            disabled={!selectedIds.length || loading === "bulk-read" || loading === "bulk-delete" || loading === "bulk-status" || loading === "bulk-owner" || loading === "bulk-followup"}
-            className={ADMIN_SUCCESS_BUTTON}
-          >
-            <CheckCircle className="h-4 w-4" />
-            {dict.messages.bulk.markRead}
-          </button>
-          <AdminConfirmButton
-            onConfirm={handleBulkDelete}
-            disabled={!selectedIds.length || loading === "bulk-read" || loading === "bulk-delete" || loading === "bulk-status" || loading === "bulk-owner" || loading === "bulk-followup"}
-            className={ADMIN_DANGER_BUTTON}
-            armedClassName="inline-flex items-center gap-2 rounded-lg bg-red-700 px-3 py-2 text-sm font-medium text-white transition hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-50"
-            armedChildren={
-              <>
-                <Trash2 className="h-4 w-4" />
-                {dict.common.confirmAction}
-              </>
-            }
-            armedTitle={dict.messages.bulk.confirmDelete}
-          >
-            <Trash2 className="h-4 w-4" />
-            {dict.messages.bulk.delete}
-          </AdminConfirmButton>
-          </>
+          <div className="flex flex-wrap items-center gap-2 max-w-full">
+            <button
+              type="button"
+              onClick={() => setSelectedIds([])}
+              disabled={!selectedIds.length || loading === "bulk-read" || loading === "bulk-delete" || loading === "bulk-status" || loading === "bulk-owner" || loading === "bulk-followup"}
+              className={ADMIN_SECONDARY_BUTTON}
+            >
+              {dict.messages.bulk.clear}
+            </button>
+            <input
+              type="text"
+              value={bulkOwner}
+              onChange={(e) => setBulkOwner(e.target.value)}
+              placeholder={dict.messages.bulk.ownerPlaceholder}
+              className="w-28 md:w-36 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 outline-none transition focus:border-[#F05A22]"
+            />
+            <button
+              type="button"
+              onClick={handleBulkOwnerUpdate}
+              disabled={!selectedIds.length || loading === "bulk-read" || loading === "bulk-delete" || loading === "bulk-status" || loading === "bulk-owner" || loading === "bulk-followup"}
+              className={ADMIN_SECONDARY_BUTTON}
+            >
+              {dict.messages.bulk.applyOwner}
+            </button>
+            <input
+              type="datetime-local"
+              value={bulkFollowUpAt}
+              onChange={(e) => setBulkFollowUpAt(e.target.value)}
+              aria-label={dict.messages.bulk.followUpPlaceholder}
+              className="w-36 md:w-auto rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 outline-none transition focus:border-[#F05A22]"
+            />
+            <button
+              type="button"
+              onClick={handleBulkFollowUpUpdate}
+              disabled={!selectedIds.length || loading === "bulk-read" || loading === "bulk-delete" || loading === "bulk-status" || loading === "bulk-owner" || loading === "bulk-followup"}
+              className={ADMIN_SECONDARY_BUTTON}
+            >
+              {dict.messages.bulk.applyFollowUp}
+            </button>
+            <select
+              value={bulkStatus}
+              onChange={(e) => setBulkStatus(e.target.value)}
+              className="w-28 md:w-32 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 outline-none transition focus:border-[#F05A22]"
+            >
+              <option value="new">{dict.messages.statusNew}</option>
+              <option value="in_progress">{dict.messages.statusInProgress}</option>
+              <option value="quoted">{dict.messages.statusQuoted}</option>
+              <option value="won">{dict.messages.statusWon}</option>
+              <option value="lost">{dict.messages.statusLost}</option>
+            </select>
+            <button
+              type="button"
+              onClick={handleBulkStatusUpdate}
+              disabled={!selectedIds.length || loading === "bulk-read" || loading === "bulk-delete" || loading === "bulk-status" || loading === "bulk-owner" || loading === "bulk-followup"}
+              className={ADMIN_SUCCESS_BUTTON}
+            >
+              {dict.messages.bulk.applyStatus}
+            </button>
+            <button
+              type="button"
+              onClick={handleBulkMarkRead}
+              disabled={!selectedIds.length || loading === "bulk-read" || loading === "bulk-delete" || loading === "bulk-status" || loading === "bulk-owner" || loading === "bulk-followup"}
+              className={ADMIN_SUCCESS_BUTTON}
+            >
+              <CheckCircle className="h-4 w-4 hidden sm:inline" />
+              {dict.messages.bulk.markRead}
+            </button>
+            <AdminConfirmButton
+              onConfirm={handleBulkDelete}
+              disabled={!selectedIds.length || loading === "bulk-read" || loading === "bulk-delete" || loading === "bulk-status" || loading === "bulk-owner" || loading === "bulk-followup"}
+              className={ADMIN_DANGER_BUTTON}
+              armedClassName="inline-flex items-center gap-2 rounded-lg bg-red-700 px-3 py-2 text-sm font-medium text-white transition hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-50"
+              armedChildren={
+                <>
+                  <Trash2 className="h-4 w-4" />
+                  {dict.common.confirmAction}
+                </>
+              }
+              armedTitle={dict.messages.bulk.confirmDelete}
+            >
+              <Trash2 className="h-4 w-4 hidden sm:inline" />
+              {dict.messages.bulk.delete}
+            </AdminConfirmButton>
+          </div>
         }
       />
 
       <AdminFilterForm
-        gridClassName="grid gap-3 md:grid-cols-[minmax(0,1fr)_180px_180px_180px_auto_auto]"
+        gridClassName="grid gap-3 md:flex md:flex-wrap md:items-center"
         submitLabel={labels.search}
         resetLabel={labels.reset}
         resetHref="/admin/messages"
@@ -479,10 +479,12 @@ export default function MessagesClient({
             name="q"
             defaultValue={filters.q}
             placeholder={labels.searchPlaceholder}
+            className="w-full md:w-56"
           />
           <AdminFilterSelect
             name="status"
             defaultValue={filters.status}
+            className="w-full md:w-36"
           >
             <option value="">{labels.statusAll}</option>
             <option value="new">{labels.statusNew}</option>
@@ -494,6 +496,7 @@ export default function MessagesClient({
           <AdminFilterSelect
             name="followUp"
             defaultValue={filters.followUp}
+            className="w-full md:w-36"
           >
             <option value="">{labels.followUpAll}</option>
             <option value="overdue">{labels.followUpOverdue}</option>
@@ -504,6 +507,7 @@ export default function MessagesClient({
           <AdminFilterSelect
             name="sort"
             defaultValue={filters.sort}
+            className="w-full md:w-36"
           >
             <option value="due_priority">{labels.sortDuePriority}</option>
             <option value="newest">{labels.sortNewest}</option>

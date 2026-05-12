@@ -175,8 +175,64 @@ model SystemSetting {
   noindexPaths     String?
   footerCopyZh     String?
   footerCopyEn     String?
+
+  // About Us Home Page Stats
+  aboutYears       String? @default("31")
+  aboutEquipments  String? @default("100")
+  aboutArea        String? @default("30")
+  aboutGlobal      String? @default("100")
+  homeAboutEyebrowZh String?
+  homeAboutEyebrowEn String?
+  homeAboutTitleLine1Zh String?
+  homeAboutTitleLine1En String?
+  homeAboutTitleAccentZh String?
+  homeAboutTitleAccentEn String?
+  homeAboutTitleLine2Zh String?
+  homeAboutTitleLine2En String?
+  homeAboutStory1Zh String?
+  homeAboutStory1En String?
+  homeAboutStory2Zh String?
+  homeAboutStory2En String?
+  homeAboutMissionZh String?
+  homeAboutMissionEn String?
+  homeAboutCtaZh String?
+  homeAboutCtaEn String?
+  aboutStoryTagZh String?
+  aboutStoryTagEn String?
+  aboutStoryTitleZh String?
+  aboutStoryTitleEn String?
+  aboutStoryBody1Zh String?
+  aboutStoryBody1En String?
+  aboutStoryBody2Zh String?
+  aboutStoryBody2En String?
+  aboutStoryPrimaryCtaZh String?
+  aboutStoryPrimaryCtaEn String?
+  aboutStorySecondaryCtaZh String?
+  aboutStorySecondaryCtaEn String?
+
+  // Hero Images for Explanation Pages
+  aboutHeroImage          String?
+  marketHeroImage         String?
+  safetyHeroImage         String?
+  sustainabilityHeroImage String?
+  factoryHeroImage        String?
+  contactHeroImage        String?
+
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+model Certificate {
+  id        String   @id @default(cuid())
+  name      String
+  nameEs    String?
+  nameAr    String?
+  image     String
+  category  String   @default("System Certification")
+  order     Int      @default(0)
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model FriendLink {

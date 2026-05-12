@@ -125,6 +125,55 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
       ? setting?.contactAddressZh
       : getTranslatedFallback(setting?.contactAddressEn, locale);
   const address = localizedAddress || content.footer.address;
+  const getFooterLinkLabel = (item: { nameZh?: string; nameEn?: string }) => {
+    const nameEn = item.nameEn || "";
+    const nameZh = item.nameZh || nameEn;
+    if (locale === "zh") return nameZh;
+
+    const knownLabelMap: Record<string, string> = {
+      Home: content.footer.home,
+      "Who we are": content.footer.whoWeAre,
+      "Our Products": content.footer.ourProducts,
+      Products: content.footer.products,
+      "Packaging Market": content.footer.packagingMarket,
+      "How we work": content.footer.howWeWork,
+      "Packaging Safety": content.footer.packagingSafety,
+      Sustainability: content.footer.sustainability,
+      "News Center": content.footer.news,
+      News: content.footer.news,
+      "Contact Us": content.footer.contact,
+    };
+
+    return knownLabelMap[nameEn] || getTranslatedFallback(nameEn, locale) || nameEn || nameZh;
+  };
+  const defaultDesktopLinks = [
+    { href: "/about", label: content.footer.whoWeAre },
+    { href: "/products", label: content.footer.ourProducts },
+    { href: "/packaging-market", label: content.footer.packagingMarket },
+    { href: "/how-we-work", label: content.footer.howWeWork },
+    { href: "/packaging-safety", label: content.footer.packagingSafety },
+    { href: "/sustainability", label: content.footer.sustainability },
+    { href: "/news", label: content.footer.news },
+  ];
+  const managedTopLevelLinks = Array.isArray(navItems)
+    ? navItems
+        .filter((item: any) => !item.parentId && item.link && item.link !== "/contact")
+        .sort((a: any, b: any) => a.order - b.order)
+        .map((item: any) => ({
+          href: item.link,
+          label: getFooterLinkLabel(item),
+        }))
+    : [];
+  const desktopQuickLinks =
+    managedTopLevelLinks.length > 0
+      ? managedTopLevelLinks.filter((item) => item.href !== "/")
+      : defaultDesktopLinks;
+  const mobileQuickLinks = [
+    { href: "/", label: content.footer.home },
+    ...desktopQuickLinks.filter((item) => item.href !== "/"),
+  ];
+  const contactHref =
+    navItems.find((item: any) => !item?.parentId && item?.link === "/contact")?.link || "/contact";
 
   return (
     <>
@@ -182,13 +231,13 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
               <div className="absolute -bottom-3 left-0 w-12 h-[2px] bg-[#F05A22]"></div>
             </h3>
             <ul className="space-y-4 text-[15px]">
-              <li><Link href="/about" className="text-gray-400 hover:text-[#F05A22] transition-all duration-300">{content.footer.whoWeAre}</Link></li>
-              <li><Link href="/products" className="text-gray-400 hover:text-[#F05A22] transition-all duration-300">{content.footer.ourProducts}</Link></li>
-              <li><Link href="/packaging-market" className="text-gray-400 hover:text-[#F05A22] transition-all duration-300">{content.footer.packagingMarket}</Link></li>
-              <li><Link href="/how-we-work" className="text-gray-400 hover:text-[#F05A22] transition-all duration-300">{content.footer.howWeWork}</Link></li>
-              <li><Link href="/packaging-safety" className="text-gray-400 hover:text-[#F05A22] transition-all duration-300">{content.footer.packagingSafety}</Link></li>
-              <li><Link href="/sustainability" className="text-gray-400 hover:text-[#F05A22] transition-all duration-300">{content.footer.sustainability}</Link></li>
-              <li><Link href="/news" className="text-gray-400 hover:text-[#F05A22] transition-all duration-300">{content.footer.news}</Link></li>
+              {desktopQuickLinks.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="text-gray-400 hover:text-[#F05A22] transition-all duration-300">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -225,7 +274,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
               )}
             </ul>
             <Link
-              href="/contact"
+              href={contactHref}
               className="mt-8 inline-flex items-center rounded-full bg-[#F05A22] px-6 py-3 text-[14px] font-bold uppercase tracking-wider text-white transition-all duration-300 hover:bg-[#D64816] hover:shadow-[0_12px_30px_rgba(240,90,34,0.28)]"
             >
               {content.footer.contact}
@@ -303,17 +352,14 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
           
           {/* 2-Column Links */}
           <div className="grid grid-cols-2 gap-y-6 gap-x-4 text-white text-[15px] font-bold mb-10">
-            <Link href="/" className="hover:text-[#F05A22]">{content.footer.home}</Link>
-            <Link href="/how-we-work" className="hover:text-[#F05A22]">{content.footer.howWeWork}</Link>
-            <Link href="/about" className="hover:text-[#F05A22]">{content.footer.whoWeAre}</Link>
-            <Link href="/packaging-safety" className="hover:text-[#F05A22]">{content.footer.packagingSafety}</Link>
-            <Link href="/products" className="hover:text-[#F05A22]">{content.footer.products}</Link>
-            <Link href="/sustainability" className="hover:text-[#F05A22]">{content.footer.sustainability}</Link>
-            <Link href="/packaging-market" className="hover:text-[#F05A22]">{content.footer.packagingMarket}</Link>
-            <Link href="/news" className="hover:text-[#F05A22]">{content.footer.news}</Link>
+            {mobileQuickLinks.map((item) => (
+              <Link key={`${item.href}-${item.label}`} href={item.href} className="hover:text-[#F05A22]">
+                {item.label}
+              </Link>
+            ))}
           </div>
           <Link
-            href="/contact"
+            href={contactHref}
             className="mb-8 inline-flex w-full items-center justify-center rounded-[30px] bg-[#F05A22] px-6 py-4 text-[15px] font-extrabold uppercase tracking-wider text-white transition-colors hover:bg-[#D64816]"
           >
             {content.footer.contact}
@@ -431,15 +477,6 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
       </div>
     </footer>
 
-    {/* Fixed WhatsApp Bar (Mobile Only) */}
-    {(setting?.whatsapp || true) && (
-      <div className="md:hidden fixed bottom-0 left-0 w-full bg-[#25D366] h-[55px] flex items-center justify-center z-50 shadow-[0_-2px_10px_rgba(0,0,0,0.1)]">
-        <a href={setting?.whatsapp || "#"} className="flex items-center gap-2 text-white font-extrabold text-[17px] tracking-wide w-full h-full justify-center">
-          <img src="/WhatsApp2.png" alt="WhatsApp" className="w-7 h-7 object-contain drop-shadow-sm" />
-          {content.floating.whatsapp}
-        </a>
-      </div>
-    )}
     </>
   );
 }

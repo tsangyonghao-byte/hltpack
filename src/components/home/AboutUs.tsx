@@ -6,8 +6,9 @@ import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { getTranslatedFallback } from "@/lib/localizedContent";
 
-export default function AboutUs() {
+export default function AboutUs({ setting }: { setting?: any }) {
   const { locale } = useLanguage();
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -74,37 +75,51 @@ export default function AboutUs() {
     },
   } as const;
   const text = textMap[locale as keyof typeof textMap] || textMap.en;
+  const getSettingText = (zhValue: any, enValue: any, fallback: string) => {
+    if (locale === "zh") return zhValue || fallback;
+    return getTranslatedFallback(enValue, locale) || fallback;
+  };
+  const eyebrow = getSettingText(setting?.homeAboutEyebrowZh, setting?.homeAboutEyebrowEn, text.eyebrow);
+  const title1 = getSettingText(setting?.homeAboutTitleLine1Zh, setting?.homeAboutTitleLine1En, text.title1);
+  const accent = getSettingText(setting?.homeAboutTitleAccentZh, setting?.homeAboutTitleAccentEn, text.accent);
+  const title2 = getSettingText(setting?.homeAboutTitleLine2Zh, setting?.homeAboutTitleLine2En, text.title2);
+  const story1 = getSettingText(setting?.homeAboutStory1Zh, setting?.homeAboutStory1En, text.story1);
+  const story2 = getSettingText(setting?.homeAboutStory2Zh, setting?.homeAboutStory2En, text.story2);
+  const mission = getSettingText(setting?.homeAboutMissionZh, setting?.homeAboutMissionEn, text.mission);
+  const cta = getSettingText(setting?.homeAboutCtaZh, setting?.homeAboutCtaEn, text.cta);
 
   const stats = [
     {
       id: 1,
-      value: 31,
+      value: parseInt(setting?.aboutYears || "31"),
       suffix: "+",
       label: text.stats[0][0],
       description: text.stats[0][1],
     },
     {
       id: 2,
-      value: 100,
+      value: parseInt(setting?.aboutEquipments || "100"),
       suffix: "+",
       label: text.stats[1][0],
       description: text.stats[1][1],
     },
     {
       id: 3,
-      value: 30,
+      value: parseInt(setting?.aboutArea || "30"),
       suffix: "K+",
       label: text.stats[2][0],
       description: text.stats[2][1],
     },
     {
       id: 4,
-      value: 100,
+      value: parseInt(setting?.aboutGlobal || "100"),
       suffix: "%",
       label: text.stats[3][0],
       description: text.stats[3][1],
     },
   ];
+
+  const heroImage = setting?.aboutHeroImage || "https://cdn.myxypt.com/f4a05196/24/07/f361e0c436a1a8876ad142848f16194bb6e87a7f.png?x-oss-process=image/resize,m_lfit,h_800,w_800";
 
   return (
     <section className="relative w-full py-24 md:py-32 bg-[#111111] overflow-hidden" ref={ref}>
@@ -113,7 +128,7 @@ export default function AboutUs() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#111111] via-[#111111]/80 to-transparent z-10" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#111111] z-10" />
         <img
-          src="https://cdn.myxypt.com/f4a05196/24/07/f361e0c436a1a8876ad142848f16194bb6e87a7f.png?x-oss-process=image/resize,m_lfit,h_800,w_800"
+          src={heroImage}
           alt={text.imageAlt}
           className="w-full h-full object-cover opacity-30 mix-blend-luminosity grayscale"
         />
@@ -131,21 +146,21 @@ export default function AboutUs() {
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-[2px] bg-[#F05A22]"></div>
               <span className="text-xs font-bold tracking-[0.25em] text-white uppercase">
-                {text.eyebrow}
+                {eyebrow}
               </span>
             </div>
 
             <h2 className="text-4xl md:text-5xl lg:text-[64px] font-extrabold text-white leading-[1.1] tracking-tight mb-8">
-              {text.title1} <span className="text-[#F05A22]">{text.accent}</span><br />
-              {text.title2}
+              {title1} <span className="text-[#F05A22]">{accent}</span><br />
+              {title2}
             </h2>
 
             <div className="space-y-6 text-gray-400 text-lg leading-relaxed font-light mb-10 max-w-xl">
               <p>
-                {text.story1}
+                {story1}
               </p>
               <p>
-                {text.story2}<strong className="text-white font-medium">{text.mission}</strong>
+                {story2}<strong className="text-white font-medium">{mission}</strong>
               </p>
             </div>
 
@@ -154,7 +169,7 @@ export default function AboutUs() {
                 href="/about" 
                 className="inline-flex items-center justify-center px-8 py-4 bg-[#F05A22] text-white font-bold text-sm tracking-wide hover:bg-white hover:text-[#111111] transition-colors duration-300 rounded-full"
               >
-                {text.cta}
+                {cta}
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </div>

@@ -7,6 +7,7 @@ import {
   composeSeoTitle,
   getSystemSeo,
 } from "@/lib/seo";
+import prisma from "@/lib/prisma";
 import PackagingMarketPageClient from "./PackagingMarketPageClient";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -14,6 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
   const { siteName, titleSuffix, keywords, siteNoindex, noindexPaths } = await getSystemSeo(locale);
+  const setting = await prisma.systemSetting.findUnique({ where: { id: "global" } });
 
   return buildSeoMetadata({
     title: content.packagingMarket.heroTitle,
@@ -22,11 +24,12 @@ export async function generateMetadata(): Promise<Metadata> {
     socialTitle: composeSeoTitle(content.packagingMarket.heroTitle, titleSuffix, siteName),
     keywords,
     canonicalPath: "/packaging-market",
-    image: "/images/factory/制袋车间/10010.png",
+    image: setting?.marketHeroImage || "/images/factory/制袋车间/10010.png",
     robots: buildRobotsMetadata("/packaging-market", { siteNoindex, noindexPaths }),
   });
 }
 
-export default function PackagingMarketPage() {
-  return <PackagingMarketPageClient />;
+export default async function PackagingMarketPage() {
+  const setting = await prisma.systemSetting.findUnique({ where: { id: "global" } });
+  return <PackagingMarketPageClient setting={setting} />;
 }

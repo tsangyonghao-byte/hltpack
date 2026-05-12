@@ -7,6 +7,7 @@ import {
   composeSeoTitle,
   getSystemSeo,
 } from "@/lib/seo";
+import prisma from "@/lib/prisma";
 import SustainabilityPageClient from "./SustainabilityPageClient";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -14,6 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
   const { siteName, titleSuffix, keywords, siteNoindex, noindexPaths } = await getSystemSeo(locale);
+  const setting = await prisma.systemSetting.findUnique({ where: { id: "global" } });
 
   return buildSeoMetadata({
     title: content.sustainability.heroTitle,
@@ -22,11 +24,12 @@ export async function generateMetadata(): Promise<Metadata> {
     socialTitle: composeSeoTitle(content.sustainability.heroTitle, titleSuffix, siteName),
     keywords,
     canonicalPath: "/sustainability",
-    image: "/images/factory/制袋车间/10008.png",
+    image: setting?.sustainabilityHeroImage || "/images/factory/制袋车间/10008.png",
     robots: buildRobotsMetadata("/sustainability", { siteNoindex, noindexPaths }),
   });
 }
 
-export default function SustainabilityPage() {
-  return <SustainabilityPageClient />;
+export default async function SustainabilityPage() {
+  const setting = await prisma.systemSetting.findUnique({ where: { id: "global" } });
+  return <SustainabilityPageClient setting={setting} />;
 }

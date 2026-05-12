@@ -31,7 +31,7 @@ export default async function Home() {
   const cookieStore = await cookies();
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const { siteName, description } = await getSystemSeo(locale);
-  const [banners, allNews, categoryRows, setting] = await Promise.all([
+  const [banners, allNews, categoryRows, setting, certificates] = await Promise.all([
     prisma.banner.findMany({
       where: { isActive: true },
       orderBy: { order: "asc" },
@@ -46,6 +46,11 @@ export default async function Home() {
     }),
     prisma.systemSetting.findUnique({
       where: { id: "global" },
+    }),
+    prisma.certificate.findMany({
+      where: { isVisible: true },
+      orderBy: { order: "asc" },
+      take: 3,
     }),
   ]);
 
@@ -99,9 +104,9 @@ export default async function Home() {
       <div className="relative z-10 bg-white">
         <BentoFeatures />
         <Industries />
-        <AboutUs />
+        <AboutUs setting={setting} />
         <FactoryTour />
-        <Certificates />
+        <Certificates certificates={certificates} />
         <News news={allNews} categories={newsCategories} />
         <BottomCTA />
       </div>

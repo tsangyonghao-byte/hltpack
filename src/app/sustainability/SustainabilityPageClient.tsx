@@ -55,9 +55,10 @@ const GREEN_PRACTICES = [
   },
 ];
 
-export default function SustainabilityPage() {
+export default function SustainabilityPage({ setting }: { setting?: any }) {
   const { locale } = useLanguage();
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
+  const heroImage = setting?.sustainabilityHeroImage || '/images/factory/制袋车间/10008.png';
   const localizedFactoryAlt =
     locale === "es"
       ? "Instalacion de produccion sostenible"
@@ -71,7 +72,7 @@ export default function SustainabilityPage() {
         {/* Background Image / Pattern */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
-          style={{ backgroundImage: "url('/images/factory/制袋车间/10008.png')" }} 
+          style={{ backgroundImage: `url('${heroImage}')` }} 
         ></div>
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>

@@ -6,6 +6,7 @@ import {
   composeSeoTitle,
   getSystemSeo,
 } from "@/lib/seo";
+import prisma from "@/lib/prisma";
 import FactoryGalleryClient from "./FactoryGalleryClient";
 
 const FACTORY_METADATA_TEXT = {
@@ -44,6 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default function FactoryGalleryPage() {
-  return <FactoryGalleryClient />;
+export default async function FactoryGalleryPage() {
+  const setting = await prisma.systemSetting.findUnique({ where: { id: "global" } });
+  return <FactoryGalleryClient setting={setting} />;
 }
