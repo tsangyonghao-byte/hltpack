@@ -36,7 +36,8 @@ export default function AdminImageUploadField({
     if (file) {
       const url = URL.createObjectURL(file);
       setPreviewImage(url);
-      onImageChange?.(url);
+      // 注意：不要把 blob url 传给父组件，否则会覆盖原本真实的 imageUrl
+      // onImageChange?.(url);
     }
   };
 
