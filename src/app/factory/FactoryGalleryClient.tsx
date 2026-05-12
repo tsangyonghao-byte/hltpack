@@ -97,7 +97,7 @@ export default function FactoryGallery({ setting }: { setting?: any }) {
       <section className="relative w-full pt-[140px] pb-16 md:pt-[180px] md:pb-20 bg-[#111111] flex flex-col items-center justify-center overflow-hidden min-h-[350px] md:min-h-[450px]">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
-          style={{ backgroundImage: `url('${heroImage}')` }}
+          style={{ backgroundImage: `url('${encodeURI(heroImage)}')` }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>
         

@@ -285,12 +285,12 @@ export default function SettingsForm({ setting }: { setting: any }) {
   const [aboutStoryPrimaryCtaEn, setAboutStoryPrimaryCtaEn] = useState(setting?.aboutStoryPrimaryCtaEn || "Explore Our Products");
   const [aboutStorySecondaryCtaZh, setAboutStorySecondaryCtaZh] = useState(setting?.aboutStorySecondaryCtaZh || "");
   const [aboutStorySecondaryCtaEn, setAboutStorySecondaryCtaEn] = useState(setting?.aboutStorySecondaryCtaEn || "Get in Touch");
-  const [aboutHeroImage, setAboutHeroImage] = useState(setting?.aboutHeroImage || "");
-  const [marketHeroImage, setMarketHeroImage] = useState(setting?.marketHeroImage || "");
-  const [safetyHeroImage, setSafetyHeroImage] = useState(setting?.safetyHeroImage || "");
-  const [sustainabilityHeroImage, setSustainabilityHeroImage] = useState(setting?.sustainabilityHeroImage || "");
-  const [factoryHeroImage, setFactoryHeroImage] = useState(setting?.factoryHeroImage || "");
-  const [contactHeroImage, setContactHeroImage] = useState(setting?.contactHeroImage || "");
+  const [aboutHeroImage, setAboutHeroImage] = useState(setting?.aboutHeroImage || "/images/factory/印刷车间/10001.png");
+  const [marketHeroImage, setMarketHeroImage] = useState(setting?.marketHeroImage || "/images/factory/制袋车间/10010.png");
+  const [safetyHeroImage, setSafetyHeroImage] = useState(setting?.safetyHeroImage || "/images/factory/制袋车间/10002.png");
+  const [sustainabilityHeroImage, setSustainabilityHeroImage] = useState(setting?.sustainabilityHeroImage || "/images/factory/制袋车间/10008.png");
+  const [factoryHeroImage, setFactoryHeroImage] = useState(setting?.factoryHeroImage || "/images/factory/印刷车间/10101 (2).png");
+  const [contactHeroImage, setContactHeroImage] = useState(setting?.contactHeroImage || "/images/factory/制袋车间/10006.png");
   const getSectionSnapshot = (tab: SettingsTab) => {
     switch (tab) {
       case "basic":
@@ -425,12 +425,12 @@ export default function SettingsForm({ setting }: { setting: any }) {
       aboutStorySecondaryCtaEn: setting?.aboutStorySecondaryCtaEn || "Get in Touch",
     }),
     images: JSON.stringify({
-      aboutHeroImage: setting?.aboutHeroImage || "",
-      marketHeroImage: setting?.marketHeroImage || "",
-      safetyHeroImage: setting?.safetyHeroImage || "",
-      sustainabilityHeroImage: setting?.sustainabilityHeroImage || "",
-      factoryHeroImage: setting?.factoryHeroImage || "",
-      contactHeroImage: setting?.contactHeroImage || "",
+      aboutHeroImage: setting?.aboutHeroImage || "/images/factory/印刷车间/10001.png",
+      marketHeroImage: setting?.marketHeroImage || "/images/factory/制袋车间/10010.png",
+      safetyHeroImage: setting?.safetyHeroImage || "/images/factory/制袋车间/10002.png",
+      sustainabilityHeroImage: setting?.sustainabilityHeroImage || "/images/factory/制袋车间/10008.png",
+      factoryHeroImage: setting?.factoryHeroImage || "/images/factory/印刷车间/10101 (2).png",
+      contactHeroImage: setting?.contactHeroImage || "/images/factory/制袋车间/10006.png",
     }),
   });
 

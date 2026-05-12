@@ -72,7 +72,7 @@ export default function SustainabilityPage({ setting }: { setting?: any }) {
         {/* Background Image / Pattern */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
-          style={{ backgroundImage: `url('${heroImage}')` }} 
+          style={{ backgroundImage: `url('${encodeURI(heroImage)}')` }}
         ></div>
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>

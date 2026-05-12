@@ -232,7 +232,7 @@ export default function ContactPage() {
         {/* Background Image / Pattern */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
-          style={{ backgroundImage: `url('${setting?.contactHeroImage?.trim() || "/images/factory/制袋车间/10006.png"}')` }}
+          style={{ backgroundImage: `url('${encodeURI(setting?.contactHeroImage?.trim() || "/images/factory/制袋车间/10006.png")}')` }}
         ></div>
         {/* Dark Overlay for Text Readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>

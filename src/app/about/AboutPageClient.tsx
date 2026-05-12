@@ -236,7 +236,7 @@ export default function AboutPage() {
         {/* Background Image / Pattern */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity grayscale"
-          style={{ backgroundImage: `url('${setting?.aboutHeroImage?.trim() || "/images/factory/印刷车间/10001.png"}')` }}
+          style={{ backgroundImage: `url('${encodeURI(setting?.aboutHeroImage?.trim() || "/images/factory/印刷车间/10001.png")}')` }}
         ></div>
         {/* Dark Overlay for Text Readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent"></div>
