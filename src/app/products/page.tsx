@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import { buildRobotsMetadata, buildSeoMetadata, composeSeoTitle, getSiteUrl, getSystemSeo, jsonLdScript, toAbsoluteUrl } from "@/lib/seo";
 import { getProductsPageData } from "./shared";
+import { getProductCategoryNameFromParam } from "@/lib/productCategorySlug";
 
 export const dynamic = "force-dynamic";
 
@@ -48,11 +49,20 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default async function ProductsPage() {
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const cookieStore = await cookies();
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const text = productsListText[locale as keyof typeof productsListText] || productsListText.en;
   const { categories, products } = await getProductsPageData(locale);
+  const resolvedSearchParams = await searchParams;
+  const categoryParam = typeof resolvedSearchParams.category === "string" ? resolvedSearchParams.category : null;
+  const searchParam = typeof resolvedSearchParams.search === "string" ? resolvedSearchParams.search : null;
+  const initialCategory = getProductCategoryNameFromParam(categoryParam);
+
   const siteUrl = getSiteUrl();
   const itemListJsonLd = {
     "@context": "https://schema.org",
@@ -94,7 +104,13 @@ export default async function ProductsPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(itemListJsonLd)} />
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(breadcrumbJsonLd)} />
-      <ProductsClient categories={categories} products={products} />
+      <ProductsClient
+        key={categoryParam || "all"}
+        categories={categories}
+        products={products}
+        initialCategory={initialCategory}
+        initialSearchQuery={searchParam}
+      />
     </>
   );
 }

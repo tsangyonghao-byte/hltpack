@@ -272,17 +272,18 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
             {
               name: content.navbar.productChildren[0],
               href: buildProductCategoryPath("Plastic Packaging Bags"),
+              image: "/products/塑料包装袋系列/定制共挤膜快递袋/2.png",
               children: [
                 { name: translateFallbackCategoryName("Custom Pet Supplies Bags"), href: buildProductCategoryPath("Custom Pet Supplies Bags"), image: "/products/塑料包装袋系列/宠物用品包装袋/定制宠物食品包装袋/10001.jpg" },
                 { name: translateFallbackCategoryName("Tea Bags"), href: buildProductCategoryPath("Tea Bags"), image: "/products/塑料包装袋系列/茶叶袋/茶叶袋/10002.jpg" },
-                { name: translateFallbackCategoryName("Custom Food Bags"), href: buildProductCategoryPath("Custom Food Bags"), image: "/products/塑料包装袋系列/定制食品袋/定制印刷拉链塑料立式自封包装袋食品零食软包装袋/10002.jpg" },
+                { name: translateFallbackCategoryName("Custom Food Bags"), href: buildProductCategoryPath("Custom Food Bags"), image: "/products/塑料包装袋系列/高温蒸煮食品包装袋/4.png" },
                 { name: translateFallbackCategoryName("Medical Mask Bags"), href: buildProductCategoryPath("Medical Mask Bags"), image: "/products/塑料包装袋系列/口罩袋/医用口罩包装袋/10002.jpg" },
                 { name: translateFallbackCategoryName("Toy Bags"), href: buildProductCategoryPath("Toy Bags"), image: "/products/塑料包装袋系列/玩具袋/可重复密封自立拉链包装袋/10001.jpg" },
                 { name: translateFallbackCategoryName("Shaped Bags"), href: buildProductCategoryPath("Shaped Bags"), image: "/products/塑料包装袋系列/异型袋/异型包装袋/10002.jpg" },
-                { name: translateFallbackCategoryName("Ziplock Bags"), href: buildProductCategoryPath("Ziplock Bags"), image: "/products/塑料包装袋系列/自封袋/定制自立袋带拉链全彩色零食食品铝箔站立袋/10001.jpg" },
+                { name: translateFallbackCategoryName("Ziplock Bags"), href: buildProductCategoryPath("Ziplock Bags"), image: "/products/塑料包装袋系列/防静电自封屏蔽袋/3.png" },
                 { name: translateFallbackCategoryName("Mask Bags"), href: buildProductCategoryPath("Mask Bags"), image: "/products/塑料包装袋系列/口罩袋/口罩袋/10001.jpg" },
                 { name: translateFallbackCategoryName("Kraft Paper Bags"), href: buildProductCategoryPath("Kraft Paper Bags"), image: "/products/塑料包装袋系列/牛皮纸袋/带拉链站立袋可重新密封牛皮纸袋/10001.jpg" },
-                { name: translateFallbackCategoryName("Bubble Bags"), href: buildProductCategoryPath("Bubble Bags"), image: "/products/塑料包装袋系列/气泡袋/自封气泡邮寄袋/10002.jpg" },
+                { name: translateFallbackCategoryName("Bubble Bags"), href: buildProductCategoryPath("Bubble Bags"), image: "/products/塑料包装袋系列/气泡袋/1.png" },
                 { name: translateFallbackCategoryName("Spout Pouches"), href: buildProductCategoryPath("Spout Pouches"), image: "/products/塑料包装袋系列/吸嘴袋/带喷嘴塑料袋/10001.jpg" },
                 { name: translateFallbackCategoryName("Foil-Clear Bags"), href: buildProductCategoryPath("Foil-Clear Bags"), image: "/products/塑料包装袋系列/阴阳袋/带自封口的直立铝箔阴阳拉链袋/10001.jpg" }
               ]
@@ -290,33 +291,35 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
             {
               name: content.navbar.productChildren[1],
               href: buildProductCategoryPath("Shrink Label Series"),
+              image: "/hltbz-new/收缩膜全图.png",
               children: [
-                { name: translateFallbackCategoryName("Heat Shrink Sleeve Label"), href: buildProductCategoryPath("Heat Shrink Sleeve Label"), image: "/products/收缩标签系列/热收缩标签/10001.jpg" }
+                { name: translateFallbackCategoryName("Heat Shrink Sleeve Label"), href: buildProductCategoryPath("Heat Shrink Sleeve Label"), image: "/products/收缩标签系列/热收缩标签/1.png" }
               ]
             },
             {
               name: content.navbar.productChildren[2],
               href: buildProductCategoryPath("High-Barrier & Metallized Films"),
+              image: "/hltbz-new/Rollstock & Films/卷膜hero图1.png",
               children: [
                 {
                   name: translateFallbackCategoryName("Transparent High-Barrier Films (AlOx)"),
                   href: buildProductCategoryPath("Transparent High-Barrier Films (AlOx)"),
-                  image: "/products/高阻隔及镀铝薄膜系列/透明高阻隔薄膜（AlOx）/高阻隔透明PET-AlOx薄膜（可水煮）- PET-AlOx-010/10001.jpg",
+                  image: "/products/transparent-high-barrier-films-alox/transparent-high-barrier-pet-alox-film-boilable-pet-alox-010/1.png",
                 },
                 {
                   name: translateFallbackCategoryName("Metallized Films (VMPET/VMCPP)"),
                   href: buildProductCategoryPath("Metallized Films (VMPET/VMCPP)"),
-                  image: "/products/高阻隔及镀铝薄膜系列/镀铝薄膜（VMPET VMCPP）/高阻隔PET镀铝薄膜-VMPET/10001.jpg",
+                  image: "/products/metallized-films-vmpet-vmcpp/aluminum-silver-paste-metallized-pet-film-vmpet/1.png",
                 },
                 {
                   name: translateFallbackCategoryName("Specialty & Functional Films"),
                   href: buildProductCategoryPath("Specialty & Functional Films"),
-                  image: "/products/高阻隔及镀铝薄膜系列/特种与功能性薄膜/高阻隔可降解镀铝薄膜-VMPLA/10001.jpg",
+                  image: "/products/specialty-functional-films/anti-explosion-window-film-vmpet/1.png",
                 },
                 {
                   name: translateFallbackCategoryName("Recyclable Mono-Materials"),
                   href: buildProductCategoryPath("Recyclable Mono-Materials"),
-                  image: "/products/高阻隔及镀铝薄膜系列/单一可回收材料/可回收高阻隔镀铝薄膜-VMPE/10001.jpg",
+                  image: "/products/recyclable-mono-materials/mono-pe-recyclable-rollstock/1.png",
                 },
               ]
             }
@@ -574,7 +577,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
                             if (activeMegaSubCategory) {
                                 const activeSub = subItems.find((s: any) => s.name === activeMegaSubCategory);
                                 if (activeSub && activeSub.image) imgSrc = activeSub.image;
-                            } else if (subItems.length > 0 && subItems[0].image) {
+                            } else if (!imgSrc && subItems.length > 0 && subItems[0].image) {
                                 imgSrc = subItems[0].image;
                             }
                             

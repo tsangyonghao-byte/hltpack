@@ -169,16 +169,32 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   });
 }
 
-export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ProductDetailPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const cookieStore = await cookies();
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const text = productDetailText[locale as keyof typeof productDetailText] || productDetailText.en;
   const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const categoryName = getProductCategoryNameFromParam(resolvedParams.slug);
 
   if (isProductCategorySlug(resolvedParams.slug) && categoryName) {
     const { categories, products } = await getProductsPageData(locale);
-    return <ProductsClient categories={categories} products={products} />;
+    const searchParam = typeof resolvedSearchParams.search === "string" ? resolvedSearchParams.search : null;
+    return (
+      <ProductsClient
+        key={resolvedParams.slug}
+        categories={categories}
+        products={products}
+        initialCategory={categoryName}
+        initialSearchQuery={searchParam}
+      />
+    );
   }
 
   const product = await findProductByParam(resolvedParams.slug);
@@ -332,16 +348,16 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               {text.details}
             </h2>
             {detailImages.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="flex flex-col gap-8 mb-8">
                 {detailImages.map((imageUrl, index) => (
                   <div
                     key={`${imageUrl}-${index}`}
-                    className="bg-gray-50 border border-gray-100 p-6 flex items-center justify-center min-h-[260px]"
+                    className="bg-gray-50 border border-gray-100 p-4 sm:p-8 flex items-center justify-center min-h-[260px]"
                   >
                     <img
                       src={imageUrl}
                       alt={text.detailImageAlt(productName, index + 1)}
-                      className="w-full h-full max-h-[420px] object-contain mix-blend-multiply"
+                      className="w-full h-auto max-h-[800px] object-contain mix-blend-multiply"
                     />
                   </div>
                 ))}

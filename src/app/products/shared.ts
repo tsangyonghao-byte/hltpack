@@ -8,6 +8,9 @@ export async function getProductsPageData(locale: string) {
 
   const dbCategories = await prisma.category.findMany();
   const dbProducts = await prisma.product.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
     include: {
       category: true,
     },

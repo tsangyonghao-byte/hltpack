@@ -72,21 +72,23 @@ const productText = {
   },
 } as const;
 
-export default function ProductsClient({ categories, products }: { categories: string[], products: any[] }) {
+export default function ProductsClient({
+  categories,
+  products,
+  initialCategory,
+  initialSearchQuery
+}: {
+  categories: string[];
+  products: any[];
+  initialCategory?: string | null;
+  initialSearchQuery?: string | null;
+}) {
   const { dict, locale } = useLanguage();
   const text = productText[locale as keyof typeof productText] || productText.en;
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [activeCategory, setActiveCategory] = useState<string>(text.allProducts);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [isPlasticBagsOpen, setIsPlasticBagsOpen] = useState(true);
-  const [isHighBarrierOpen, setIsHighBarrierOpen] = useState(true);
-  const ITEMS_PER_PAGE = 9;
 
-  // Hardcoded subcategories for the first main category based on DB seeds
   const plasticBagSubs = [
     "Custom Pet Supplies Bags",
     "Tea Bags",
@@ -102,7 +104,6 @@ export default function ProductsClient({ categories, products }: { categories: s
     "Foil-Clear Bags"
   ];
 
-  // Hardcoded subcategories for the new High-Barrier & Metallized Films category
   const highBarrierSubs = [
     "Transparent High-Barrier Films (AlOx)",
     "Metallized Films (VMPET/VMCPP)",
@@ -175,6 +176,38 @@ export default function ProductsClient({ categories, products }: { categories: s
     return matched?.[0] || name;
   };
 
+  const categoryParam =
+    initialCategory ||
+    getProductCategoryNameFromPathname(pathname) ||
+    getProductCategoryNameFromParam(searchParams.get("category"));
+  const searchParam = initialSearchQuery || searchParams.get("search") || "";
+
+  const isPlasticCategory =
+    categoryParam === "Plastic Packaging Bags" || Boolean(categoryParam && plasticBagSubs.includes(categoryParam));
+  const isHighBarrierCategory =
+    categoryParam === "High-Barrier & Metallized Films" || Boolean(categoryParam && highBarrierSubs.includes(categoryParam));
+
+  const getInitialActiveCategory = () => {
+    if (!categoryParam) {
+      return text.allProducts;
+    }
+    if (categoryParam === "Plastic Packaging Bags") {
+      return text.mainCat1;
+    }
+    if (categoryParam === "High-Barrier & Metallized Films") {
+      return text.mainCat3;
+    }
+    return getCategoryLabel(categoryParam);
+  };
+
+  const [activeCategory, setActiveCategory] = useState<string>(getInitialActiveCategory());
+  const [searchQuery, setSearchQuery] = useState(searchParam);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isPlasticBagsOpen, setIsPlasticBagsOpen] = useState(isPlasticCategory || !categoryParam);
+  const [isHighBarrierOpen, setIsHighBarrierOpen] = useState(isHighBarrierCategory || !categoryParam);
+  const ITEMS_PER_PAGE = 9;
+
   const syncFiltersFromUrl = () => {
     const categoryParam =
       getProductCategoryNameFromPathname(pathname) ||
@@ -229,6 +262,9 @@ export default function ProductsClient({ categories, products }: { categories: s
         !nextCategory
       ) {
         params.delete("category");
+        const query = params.toString();
+        router.push(query ? `/products?${query}` : "/products", { scroll: false });
+        return;
       } else {
         const categoryName =
           nextCategory === text.mainCat1
@@ -249,10 +285,10 @@ export default function ProductsClient({ categories, products }: { categories: s
     router.push(query ? `${pathname}?${query}` : pathname, { scroll: false });
   };
 
-  // Read URL params whenever route search params change
+  // Read URL params whenever route search params or pathname changes
   useEffect(() => {
     syncFiltersFromUrl();
-  }, [searchParams, text.allProducts, text.mainCat1, text.mainCat3]);
+  }, [searchParams, pathname, text.allProducts, text.mainCat1, text.mainCat3]);
 
   // Reset page when filters change
   useEffect(() => {
@@ -652,17 +688,12 @@ export default function ProductsClient({ categories, products }: { categories: s
                         href={`/products/${product.slug || product.id}`}
                         key={product.id}
                       >
-                      <motion.div 
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: index * 0.05 }}
-                        className="group bg-white rounded-none overflow-hidden border border-gray-200 hover:border-[#F05A22] transition-colors duration-500 cursor-pointer flex flex-col h-full"
-                      >
+                      <div className="group bg-white rounded-none overflow-hidden border border-gray-200 hover:border-[#F05A22] transition-colors duration-500 cursor-pointer flex flex-col h-full">
                         <div className="relative aspect-square overflow-hidden bg-gray-50 border-b border-gray-100">
                           <img 
                             src={product.image} 
                             alt={product.name} 
-                            className="object-contain w-full h-full p-2 sm:p-4 transition-transform duration-700 group-hover:scale-105 mix-blend-multiply"
+                            className="w-full h-full transition-transform duration-700 group-hover:scale-105 mix-blend-multiply object-contain p-2 sm:p-4"
                           />
                         </div>
 
@@ -679,7 +710,7 @@ export default function ProductsClient({ categories, products }: { categories: s
                             </span>
                           </div>
                         </div>
-                      </motion.div>
+                      </div>
                       </Link>
                     ))}
                   </div>
