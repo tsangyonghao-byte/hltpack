@@ -291,7 +291,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
             {
               name: content.navbar.productChildren[1],
               href: buildProductCategoryPath("Shrink Label Series"),
-              image: "/hltbz-new/收缩膜全图.png",
+              image: "/images/nav/shrink-film-all.png",
               children: [
                 { name: translateFallbackCategoryName("Heat Shrink Sleeve Label"), href: buildProductCategoryPath("Heat Shrink Sleeve Label"), image: "/products/收缩标签系列/热收缩标签/1.png" }
               ]
@@ -299,7 +299,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
             {
               name: content.navbar.productChildren[2],
               href: buildProductCategoryPath("High-Barrier & Metallized Films"),
-              image: "/hltbz-new/Rollstock & Films/卷膜hero图1.png",
+              image: "/images/nav/rollstock-hero-1.png",
               children: [
                 {
                   name: translateFallbackCategoryName("Transparent High-Barrier Films (AlOx)"),
