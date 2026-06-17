@@ -331,12 +331,17 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
         </div>
 
         {/* Bottom bar */}
-        <div className="hidden md:flex border-t border-gray-800 pt-8 pb-4 flex-col md:flex-row justify-center items-center text-[14px] text-gray-500">
+        <div className="hidden md:flex border-t border-gray-800 pt-8 pb-4 flex-col md:flex-row justify-between items-center text-[14px] text-gray-500 w-full">
           {copyright ? (
             <div dangerouslySetInnerHTML={{ __html: copyright }} />
           ) : (
             <p>{`${footerText.copyrightPrefix} ${currentYear} ${siteName}. ${footerText.copyrightSuffix}`}</p>
           )}
+          <div className="mt-4 md:mt-0 flex space-x-6 shrink-0">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">
+              {locale === "es" ? "Política de privacidad" : locale === "ar" ? "سياسة الخصوصية" : "Privacy Policy"}
+            </Link>
+          </div>
         </div>
 
         {/* ========================================= */}
@@ -463,13 +468,18 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
           </div>
 
           {/* Bottom */}
-          <div className="flex justify-between items-end pb-4">
+          <div className="flex flex-col gap-3 pb-4">
             <div className="text-gray-400 text-[12px] leading-[1.6]">
               {copyright ? (
                 <div dangerouslySetInnerHTML={{ __html: copyright }} />
               ) : (
                 <p>{`${footerText.copyrightPrefix} ${currentYear} ${siteName}`}</p>
               )}
+            </div>
+            <div className="text-[12px] text-gray-400">
+              <Link href="/privacy-policy" className="hover:text-white transition-colors underline">
+                {locale === "es" ? "Política de privacidad" : locale === "ar" ? "سياسة الخصوصية" : "Privacy Policy"}
+              </Link>
             </div>
           </div>
         </div>

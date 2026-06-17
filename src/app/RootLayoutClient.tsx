@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FloatingWidgets from "@/components/layout/FloatingWidgets";
+import CookieConsent from "@/components/layout/CookieConsent";
 import { HeroProvider } from "@/components/home/HeroContext";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { SystemSettingProvider } from "@/components/layout/SystemSettingContext";
@@ -38,6 +39,7 @@ export default function RootLayoutClient({
             <main className="flex-grow">{children}</main>
             <Footer setting={setting} navItems={navItems} />
             <FloatingWidgets />
+            <CookieConsent />
           </HeroProvider>
         </div>
       </SystemSettingProvider>
