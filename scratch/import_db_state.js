@@ -17,6 +17,9 @@ async function main() {
   console.log('Importing database tables (preserving Message and MessageActivityLog)...');
 
   await prisma.$transaction(async (tx) => {
+    // Disable foreign key checks for SQLite
+    await tx.$executeRawUnsafe('PRAGMA foreign_keys = OFF;');
+
     // 1. Delete dependent tables first
     console.log('Clearing old product and category records...');
     await tx.product.deleteMany();
@@ -94,6 +97,9 @@ async function main() {
         await tx.adminUser.create({ data: admin });
       }
     }
+
+    // Re-enable foreign key checks for SQLite
+    await tx.$executeRawUnsafe('PRAGMA foreign_keys = ON;');
   });
 
   console.log('🎉 Database successfully imported without affecting visitor inquiries!');
