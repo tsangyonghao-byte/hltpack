@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 export default function ProductGallery({ images, alt }: { images: string[]; alt: string }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -14,11 +15,16 @@ export default function ProductGallery({ images, alt }: { images: string[]; alt:
     return (
       <div className="w-full aspect-[4/3] sm:aspect-square bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 relative group overflow-hidden p-8">
         <div className="absolute inset-0 bg-gradient-to-tr from-gray-100 to-transparent opacity-50"></div>
-        <img 
-          src={images[0]} 
-          alt={alt} 
-          className="relative z-10 w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-700 ease-out"
-        />
+        <div className="relative z-10 w-full h-full">
+          <Image 
+            src={images[0]} 
+            alt={alt} 
+            fill
+            sizes="(max-width: 640px) 100vw, 500px"
+            priority
+            className="object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-700 ease-out"
+          />
+        </div>
       </div>
     );
   }
@@ -36,11 +42,16 @@ export default function ProductGallery({ images, alt }: { images: string[]; alt:
       {/* Main Image */}
       <div className="w-full aspect-[4/3] sm:aspect-square bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 relative group overflow-hidden p-8">
         <div className="absolute inset-0 bg-gradient-to-tr from-gray-100 to-transparent opacity-50 pointer-events-none"></div>
-        <img
-          src={images[currentIndex]}
-          alt={`${alt} ${currentIndex + 1}`}
-          className="relative z-10 w-full h-full object-contain mix-blend-multiply transition-all duration-500 ease-out"
-        />
+        <div className="relative z-10 w-full h-full">
+          <Image
+            src={images[currentIndex]}
+            alt={`${alt} ${currentIndex + 1}`}
+            fill
+            sizes="(max-width: 640px) 100vw, 500px"
+            priority={currentIndex === 0}
+            className="object-contain mix-blend-multiply transition-all duration-500 ease-out"
+          />
+        </div>
         
         {/* Arrows */}
         <button 
@@ -68,7 +79,15 @@ export default function ProductGallery({ images, alt }: { images: string[]; alt:
             }`}
           >
             <div className="absolute inset-0 bg-gray-50 pointer-events-none"></div>
-            <img src={img} alt={`${alt} ${idx + 1}`} className="relative z-10 w-full h-full object-contain mix-blend-multiply p-2" />
+            <div className="relative z-10 w-full h-full p-2">
+              <Image 
+                src={img} 
+                alt={`${alt} ${idx + 1}`} 
+                fill
+                sizes="80px"
+                className="object-contain mix-blend-multiply p-2" 
+              />
+            </div>
           </button>
         ))}
       </div>

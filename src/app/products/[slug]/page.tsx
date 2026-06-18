@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ChevronRight, ArrowLeft, CheckCircle2, MessageSquare } from "lucide-react";
 import { cookies } from "next/headers";
 import ProductGallery from "@/components/products/ProductGallery";
+import Image from "next/image";
 import { buildRobotsMetadata, buildSeoMetadata, getSiteUrl, getSystemSeo, jsonLdScript, toAbsoluteUrl } from "@/lib/seo";
 import { getOrderedProductImages, parseProductGallery } from "@/lib/productImages";
 import ProductsClient from "../ProductsClient";
@@ -354,9 +355,12 @@ export default async function ProductDetailPage({
                     key={`${imageUrl}-${index}`}
                     className="bg-gray-50 border border-gray-100 p-4 sm:p-8 flex items-center justify-center min-h-[260px]"
                   >
-                    <img
+                    <Image
                       src={imageUrl}
                       alt={text.detailImageAlt(productName, index + 1)}
+                      width={1200}
+                      height={900}
+                      sizes="(max-width: 1200px) 100vw, 1200px"
                       className="w-full h-auto max-h-[800px] object-contain mix-blend-multiply"
                     />
                   </div>
@@ -388,7 +392,15 @@ export default async function ProductDetailPage({
                     return (
                       <>
                   <div className="w-full aspect-[4/3] bg-white relative overflow-hidden flex items-center justify-center p-8 border-b border-gray-100">
-                    <img src={rp.image} alt={relatedName} className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105" />
+                    <div className="relative w-full h-full">
+                      <Image 
+                        src={rp.image} 
+                        alt={relatedName} 
+                        fill
+                        sizes="(max-width: 640px) 100vw, 250px"
+                        className="object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105" 
+                      />
+                    </div>
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
                     <h4 className="text-[15px] font-bold text-[#1A1A1A] leading-snug mb-6 group-hover:text-[#F05A22] transition-colors line-clamp-2 tracking-wide">

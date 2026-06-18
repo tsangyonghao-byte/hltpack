@@ -6,6 +6,7 @@ import { X, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Certificates({ certificates = [] }: { certificates?: any[] }) {
   const { dict, locale } = useLanguage();
@@ -124,7 +125,14 @@ export default function Certificates({ certificates = [] }: { certificates?: any
                 onClick={() => setSelectedCertIndex(0)}
               >
                 <div className="relative bg-white shadow-[0_20px_40px_rgba(0,0,0,0.08)] group-hover:shadow-[0_30px_60px_rgba(240,90,34,0.15)] group-hover:-translate-y-3 transition-all duration-500 p-2 md:p-4 rounded-lg">
-                  <img src={certs[0].img} alt={certs[0].name} className="w-full h-auto object-contain" />
+                  <Image 
+                    src={certs[0].img} 
+                    alt={certs[0].name} 
+                    width={350} 
+                    height={495} 
+                    sizes="(max-width: 768px) 45vw, 20vw"
+                    className="w-full h-auto object-contain" 
+                  />
                 </div>
               </motion.div>
 
@@ -138,7 +146,14 @@ export default function Certificates({ certificates = [] }: { certificates?: any
                 onClick={() => setSelectedCertIndex(1)}
               >
                 <div className="relative bg-white shadow-[0_20px_40px_rgba(0,0,0,0.1)] group-hover:shadow-[0_30px_60px_rgba(240,90,34,0.15)] group-hover:-translate-y-3 transition-all duration-500 p-2 md:p-4 rounded-lg">
-                  <img src={certs[1].img} alt={certs[1].name} className="w-full h-auto object-contain" />
+                  <Image 
+                    src={certs[1].img} 
+                    alt={certs[1].name} 
+                    width={350} 
+                    height={495} 
+                    sizes="(max-width: 768px) 45vw, 20vw"
+                    className="w-full h-auto object-contain" 
+                  />
                 </div>
               </motion.div>
 
@@ -152,7 +167,14 @@ export default function Certificates({ certificates = [] }: { certificates?: any
                 onClick={() => setSelectedCertIndex(2)}
               >
                 <div className="relative bg-white shadow-[0_20px_40px_rgba(0,0,0,0.12)] group-hover:shadow-[0_30px_60px_rgba(240,90,34,0.15)] group-hover:-translate-y-3 transition-all duration-500 p-2 md:p-4 rounded-lg">
-                  <img src={certs[2].img} alt={certs[2].name} className="w-full h-auto object-contain" />
+                  <Image 
+                    src={certs[2].img} 
+                    alt={certs[2].name} 
+                    width={350} 
+                    height={495} 
+                    sizes="(max-width: 768px) 45vw, 20vw"
+                    className="w-full h-auto object-contain" 
+                  />
                 </div>
               </motion.div>
             </div>
@@ -196,12 +218,16 @@ export default function Certificates({ certificates = [] }: { certificates?: any
                         }
                       }}
                     >
-                      <img
-                        src={cert.img}
-                        alt={cert.name}
-                        className="max-w-full max-h-full object-contain drop-shadow-2xl cursor-default"
-                        onClick={(e) => e.stopPropagation()}
-                      />
+                      <div className="relative w-full h-[70vh]">
+                        <Image
+                          src={cert.img}
+                          alt={cert.name}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 80vw"
+                          className="object-contain drop-shadow-2xl cursor-default"
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>

@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'www.szhltbz.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.myxypt.com',
+      },
     ],
   },
 };

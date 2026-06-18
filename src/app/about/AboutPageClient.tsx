@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, Target, ShieldCheck, Users, ArrowRight, Globe, Building2, X } from "lucide-react";
 import clsx from "clsx";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -308,11 +309,13 @@ export default function AboutPage() {
                       )}
                       onClick={() => setSelectedFactoryIndex(index)}
                     >
-                      <div className="aspect-[4/5] overflow-hidden">
-                        <img
+                      <div className="relative aspect-[4/5] overflow-hidden w-full h-full">
+                        <Image
                           src={item.img}
                           alt={item.name}
-                          className="h-full w-full object-cover"
+                          fill
+                          sizes="(max-width: 768px) 50vw, 30vw"
+                          className="object-cover"
                         />
                       </div>
                     </motion.button>
@@ -457,7 +460,7 @@ export default function AboutPage() {
               transition={{ duration: 0.5 }}
               className="group relative aspect-[4/3] overflow-hidden bg-gray-100 border border-gray-200 shadow-sm"
             >
-              <img src="/images/factory/印刷车间/10002.png" alt={aboutUiText.cards[0][0]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <Image src="/images/factory/印刷车间/10002.png" alt={aboutUiText.cards[0][0]} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/90 via-[#111111]/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute bottom-6 left-6 right-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                 <h3 className="text-xl font-bold text-white mb-2 tracking-wide uppercase">{aboutUiText.cards[0][0]}</h3>
@@ -474,7 +477,7 @@ export default function AboutPage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="group relative aspect-[4/3] overflow-hidden bg-gray-100 border border-gray-200 shadow-sm"
             >
-              <img src="/images/factory/制袋车间/10006.png" alt={aboutUiText.cards[1][0]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <Image src="/images/factory/制袋车间/10006.png" alt={aboutUiText.cards[1][0]} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/90 via-[#111111]/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute bottom-6 left-6 right-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                 <h3 className="text-xl font-bold text-white mb-2 tracking-wide uppercase">{aboutUiText.cards[1][0]}</h3>
@@ -491,7 +494,7 @@ export default function AboutPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="group relative aspect-[4/3] overflow-hidden bg-gray-100 border border-gray-200 shadow-sm"
             >
-              <img src="/images/factory/印刷车间/10101 (2).png" alt={aboutUiText.cards[2][0]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <Image src="/images/factory/印刷车间/10101 (2).png" alt={aboutUiText.cards[2][0]} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/90 via-[#111111]/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute bottom-6 left-6 right-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                 <h3 className="text-xl font-bold text-white mb-2 tracking-wide uppercase">{aboutUiText.cards[2][0]}</h3>
@@ -599,10 +602,12 @@ export default function AboutPage() {
 
           <div className="relative z-[10000] flex h-full w-full items-center justify-center px-4 md:px-16 pointer-events-none">
             <div className="pointer-events-auto relative flex h-[82vh] w-full max-w-5xl items-center justify-center">
-              <img
+              <Image
                 src={factoryGallery[selectedFactoryIndex].img}
                 alt={factoryGallery[selectedFactoryIndex].name}
-                className="max-h-full max-w-full object-contain drop-shadow-2xl"
+                fill
+                sizes="(max-width: 1024px) 100vw, 80vw"
+                className="object-contain drop-shadow-2xl"
               />
 
               <button

@@ -8,6 +8,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Banner } from "@prisma/client";
 import { getLocalizedValue } from "@/lib/localizedContent";
+import Image from "next/image";
 
 // 极简工业风的轮播数据
 const fallbackSlides = [
@@ -220,9 +221,12 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
                   >
                     {/* Product Image Container */}
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <img
+                      <Image
                         src={slide.image}
                         alt={slideTitle}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        priority
                         className="relative z-10 w-full h-full object-contain lg:drop-shadow-[0_20px_40px_rgba(0,0,0,0.12)] hover:scale-105 transition-transform duration-700 ease-out"
                       />
                     </div>
