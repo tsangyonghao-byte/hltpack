@@ -35,7 +35,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
   const content = siteContent[locale as keyof typeof siteContent] || siteContent.en;
   const setting = useSystemSetting();
   const logoSrc = setting?.logoUrl || "/logo.png";
-  const logoAlt = locale === "zh" ? setting?.siteNameZh || "海力通包装" : setting?.siteNameEn || "HAILITONG Packaging";
+  const logoAlt = locale === "zh" ? setting?.siteNameZh || "海力通包装" : setting?.siteNameEn || "HLT PACK";
   const contactPhone = setting?.contactPhone || "";
   const phoneHref = contactPhone ? `tel:${contactPhone.replace(/\s+/g, "")}` : "/contact";
   const currentCategory =

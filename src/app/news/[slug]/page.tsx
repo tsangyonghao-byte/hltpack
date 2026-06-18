@@ -13,10 +13,10 @@ export const dynamic = "force-dynamic";
 
 const newsDetailText = {
   en: {
-    notFound: "Article Not Found | HAILITONG News",
+    notFound: "Article Not Found | HLT PACK News",
     home: "Home",
     news: "News",
-    newsBrand: "HAILITONG News",
+    newsBrand: "HLT PACK News",
     back: "Back to Home",
     contact: "Contact us for more details",
     recentPosts: "Recent Posts",
@@ -25,10 +25,10 @@ const newsDetailText = {
     viewProduct: "View Details",
   },
   es: {
-    notFound: "Articulo no encontrado | Noticias HAILITONG",
+    notFound: "Articulo no encontrado | Noticias HLT PACK",
     home: "Inicio",
     news: "Noticias",
-    newsBrand: "Noticias HAILITONG",
+    newsBrand: "Noticias HLT PACK",
     back: "Volver a noticias",
     contact: "Contactenos para mas detalles",
     recentPosts: "Publicaciones Recientes",
@@ -37,10 +37,10 @@ const newsDetailText = {
     viewProduct: "Ver Detalles",
   },
   ar: {
-    notFound: "المقال غير موجود | اخبار HAILITONG",
+    notFound: "المقال غير موجود | اخبار HLT PACK",
     home: "الرئيسية",
     news: "الأخبار",
-    newsBrand: "اخبار HAILITONG",
+    newsBrand: "اخبار HLT PACK",
     back: "العودة إلى الأخبار",
     contact: "اتصل بنا لمزيد من التفاصيل",
     recentPosts: "المنشورات الأخيرة",
@@ -155,11 +155,11 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
     dateModified: newsItem.updatedAt?.toISOString?.() || undefined,
     author: {
       "@type": "Organization",
-      name: "HAILITONG Packaging",
+      name: "HLT PACK",
     },
     publisher: {
       "@type": "Organization",
-      name: "HAILITONG Packaging",
+      name: "HLT PACK",
     },
     mainEntityOfPage: `${getSiteUrl()}/news/${canonicalSegment}`,
   };

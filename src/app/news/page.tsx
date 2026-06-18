@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 const newsListText = {
   en: {
-    title: "News | HAILITONG",
+    title: "News | HLT PACK",
     heading: "Latest Insights",
     subtitle: "INDUSTRY NEWS & UPDATES",
     home: "Home",
@@ -21,7 +21,7 @@ const newsListText = {
     readMore: "Read More",
   },
   es: {
-    title: "Noticias | HAILITONG",
+    title: "Noticias | HLT PACK",
     heading: "Ultimas Perspectivas",
     subtitle: "NOTICIAS Y ACTUALIZACIONES DE LA INDUSTRIA",
     home: "Inicio",
@@ -31,7 +31,7 @@ const newsListText = {
     readMore: "Leer Mas",
   },
   ar: {
-    title: "الاخبار | HAILITONG",
+    title: "الاخبار | HLT PACK",
     heading: "احدث الرؤى",
     subtitle: "اخبار وتحديثات الصناعة",
     home: "الرئيسية",
@@ -51,10 +51,10 @@ export async function generateMetadata(): Promise<Metadata> {
     locale === "zh"
       ? "查看海力通最新包装新闻、行业趋势与企业动态。"
       : locale === "es"
-        ? "Consulte las ultimas noticias, tendencias del sector y actualizaciones de HAILITONG."
+        ? "Consulte las ultimas noticias, tendencias del sector y actualizaciones de HLT PACK."
         : locale === "ar"
-          ? "اطلع على آخر أخبار HAILITONG واتجاهات الصناعة وتحديثات التعبئة."
-          : "Explore the latest HAILITONG news, packaging trends, and industry updates.";
+          ? "اطلع على آخر أخبار HLT PACK واتجاهات الصناعة وتحديثات التعبئة."
+          : "Explore the latest HLT PACK news, packaging trends, and industry updates.";
 
   return buildSeoMetadata({
     title: text.news,

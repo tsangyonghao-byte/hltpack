@@ -22,9 +22,9 @@ const enContent = {
     submit: "Submit",
     slideToRight: "Slide to Right",
     copyright:
-      "HAILITONG Packaging. All Rights Reserved.",
+      "HLT PACK. All Rights Reserved.",
     mobileCopyright:
-      "HAILITONG Packaging Holdings Limited. All Rights Reserved.",
+      "HLT PACK Holdings Limited. All Rights Reserved.",
     backToTop: "Back to top",
     address: "No.51, Lan'er Road, Longxin Community, Baolong Street, Longgang District, Shenzhen, China",
     phone: "+86 136 8241 2949",
@@ -76,7 +76,7 @@ const enContent = {
     storyTag: "Our Story",
     storyTitle: "Packaging Solutions That Care About Our Future",
     storyBody1:
-      "Established in 2001 and strategically located in Shenzhen (Longgang District), adjacent to Hong Kong, HAILITONG Packaging brings over 31 years of industry experience to the flexible packaging sector. Supported by a team of experienced professional technicians, we have built a solid reputation for delivering stable product quality, reasonable pricing, and rapid delivery.",
+      "Established in 2001 and strategically located in Shenzhen (Longgang District), adjacent to Hong Kong, HLT PACK brings over 31 years of industry experience to the flexible packaging sector. Supported by a team of experienced professional technicians, we have built a solid reputation for delivering stable product quality, reasonable pricing, and rapid delivery.",
     storyBody2:
       "Our state-of-the-art facility is equipped with comprehensive advanced machinery, including film blowing machines, high-speed rotogravure presses, laminating machines, slitting machines, folding machines, food pouch making machines, three-side sealing machines, center sealing machines, R-machines, flat bag machines, slicing machines, and silica gel drying machines. We specialize in producing a wide range of plastic packaging bags, including food bags, aluminum foil bags, foil-clear bags, vacuum bags, high-temperature retort pouches, multi-layer composite bags, anti-static bags, spout pouches, flower sleeves, shaped bags, facial mask bags, zipper stand-up pouches, PE zip-lock bags, high-transparency OPP header bags, automatic packaging roll films, high-transparency flat bags, and handle bags. Guided by our principle: 'Premium Quality, Customer First', we proudly export our solutions to Europe, America, Russia, Japan, and beyond.",
     exploreProducts: "Explore Our Products",
@@ -231,7 +231,7 @@ const enContent = {
     commitmentTag: "Our Commitment",
     introTitle: "Safety Built Into Every Micron",
     introDescription:
-      "Whether you are packaging infant nutrition, pharmaceutical liquids, or pet treats, product safety is non-negotiable. At HAILITONG, safety protocols are embedded at every stage, from resin selection to final lamination.",
+      "Whether you are packaging infant nutrition, pharmaceutical liquids, or pet treats, product safety is non-negotiable. At HLT PACK, safety protocols are embedded at every stage, from resin selection to final lamination.",
     bullets: [
       "100% Traceability of raw materials",
       "Class 100,000 Cleanroom manufacturing",
@@ -266,7 +266,7 @@ const enContent = {
     breadcrumb: "Sustainability",
     introTitle: "The Transition to Circular Packaging",
     introDescription:
-      "As global awareness of plastic pollution grows, brands are under increasing pressure to adopt sustainable practices. At HAILITONG, we do not just see this as a challenge, we see it as our responsibility. We have invested heavily in R&D to develop packaging that reduces environmental impact without compromising on barrier performance, aesthetics, or functionality.",
+      "As global awareness of plastic pollution grows, brands are under increasing pressure to adopt sustainable practices. At HLT PACK, we do not just see this as a challenge, we see it as our responsibility. We have invested heavily in R&D to develop packaging that reduces environmental impact without compromising on barrier performance, aesthetics, or functionality.",
     portfolioTag: "Our Green Portfolio",
     solutionsTitle: "Eco-Friendly Solutions",
     manufacturingTitle: "Sustainable Manufacturing",
@@ -357,7 +357,7 @@ export const siteContent = {
       storyTag: "Nuestra Historia",
       storyTitle: "Soluciones de Empaque que Cuidan Nuestro Futuro",
       storyBody1:
-        "Fundada en 2001 y ubicada estratégicamente en Shenzhen (distrito de Longgang), junto a Hong Kong, HAILITONG Packaging aporta más de 31 años de experiencia al sector de los envases flexibles. Con el respaldo de un equipo de técnicos profesionales con amplia experiencia, hemos construido una sólida reputación por ofrecer calidad estable, precios razonables y entregas rápidas.",
+        "Fundada en 2001 y ubicada estratégicamente en Shenzhen (distrito de Longgang), junto a Hong Kong, HLT PACK aporta más de 31 años de experiencia al sector de los envases flexibles. Con el respaldo de un equipo de técnicos profesionales con amplia experiencia, hemos construido una sólida reputación por ofrecer calidad estable, precios razonables y entregas rápidas.",
       storyBody2:
         "Nuestra planta de última generación está equipada con maquinaria avanzada para soplado de película, impresión rotograbada de alta velocidad, laminación, corte, plegado y fabricación de bolsas para alimentos, sellado de tres lados, sellado central, máquinas R, bolsas planas, corte longitudinal y secado con sílice. Nos especializamos en bolsas para alimentos, bolsas de aluminio, bolsas transparentes con foil, bolsas al vacío, pouches retort de alta temperatura, bolsas compuestas multicapa, bolsas antiestáticas, bolsas con boquilla, fundas para flores, bolsas con forma, bolsas para mascarillas faciales, bolsas doypack con zipper, bolsas PE con cierre zip, bolsas OPP transparentes con header card, films en rollo para empaque automático, bolsas planas transparentes y bolsas con asa. Guiados por el principio de 'Calidad premium, cliente primero', exportamos con orgullo a Europa, América, Rusia, Japón y otros mercados.",
       exploreProducts: "Explorar Nuestros Productos",
@@ -621,7 +621,7 @@ export const siteContent = {
       certLabel: "منشأة معتمدة",
       storyTag: "قصتنا",
       storyTitle: "حلول التغليف التي تهتم بمستقبلنا",
-      storyBody1: "تأسست HAILITONG Packaging في عام 2001 وتقع في شنتشن بالصين، بالقرب من هونغ كونغ. نمت الشركة لتصبح موردا موثوقا في قطاع التغليف المرن بفضل الخبرة الصناعية الطويلة وجودة المنتجات المستقرة والتسعير المناسب وسرعة التسليم.",
+      storyBody1: "تأسست HLT PACK في عام 2001 وتقع في شنتشن بالصين، بالقرب من هونغ كونغ. نمت الشركة لتصبح موردا موثوقا في قطاع التغليف المرن بفضل الخبرة الصناعية الطويلة وجودة المنتجات المستقرة والتسعير المناسب وسرعة التسليم.",
       storyBody2: "يضم مصنعنا معدات متقدمة تشمل نفخ الفيلم والطباعة الروتوغرافية واللصق والتقطيع وصناعة الاكياس. وننتج مجموعة واسعة من اكياس التغليف مثل اكياس الاغذية واكياس الالمنيوم واكياس الفوهة واكياس التفريغ الحراري والحقائب المركبة متعددة الطبقات وغيرها، مسترشدين بمبدأ: الجودة الممتازة والعميل اولا.",
       exploreProducts: "استكشف منتجاتنا",
       getInTouch: "تواصل معنا",

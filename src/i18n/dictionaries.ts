@@ -19,7 +19,7 @@ export const en = {
       trustedBy: "Trusted by Global Brands"
     },
     whyUs: {
-      title: "Why HAILITONG?",
+      title: "Why HLT PACK?",
       subtitle: "EXCELLENCE IN PACKAGING",
       points: [
         {
@@ -90,7 +90,7 @@ export const es = {
       trustedBy: "Con la confianza de marcas globales"
     },
     whyUs: {
-      title: "¿Por qué HAILITONG?",
+      title: "¿Por qué HLT PACK?",
       subtitle: "EXCELENCIA EN ENVASES",
       points: [
         {
@@ -161,7 +161,7 @@ export const ar = {
       trustedBy: "موثوق به من قبل العلامات التجارية العالمية"
     },
     whyUs: {
-      title: "لماذا HAILITONG؟",
+      title: "لماذا HLT PACK؟",
       subtitle: "التميز في التغليف",
       points: [
         {

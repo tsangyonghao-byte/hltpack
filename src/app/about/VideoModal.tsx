@@ -19,20 +19,20 @@ export default function VideoModal({ videoId, coverImage }: VideoModalProps) {
           cover: "غلاف الفيديو التعريفي",
           eyebrow: "فيديو الشركة",
           play: "تشغيل فيديو الشركة",
-          frameTitle: "الفيديو التعريفي لشركة HAILITONG",
+          frameTitle: "الفيديو التعريفي لشركة HLT PACK",
         }
       : locale === "es"
         ? {
             cover: "Portada del video corporativo",
             eyebrow: "Video corporativo",
             play: "Reproducir video de la empresa",
-            frameTitle: "Video corporativo de HAILITONG",
+            frameTitle: "Video corporativo de HLT PACK",
           }
       : {
           cover: "Corporate Video Cover",
           eyebrow: "Corporate Video",
           play: "Play Company Video",
-          frameTitle: "HAILITONG corporate video",
+          frameTitle: "HLT PACK corporate video",
         };
 
   useEffect(() => {

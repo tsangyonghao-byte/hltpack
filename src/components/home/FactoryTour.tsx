@@ -52,7 +52,7 @@ export default function FactoryTour() {
   const textMap = {
     en: {
       facility: "13,000 SQM FACILITY",
-      title: "Inside HAILITONG Factory",
+      title: "Inside HLT PACK Factory",
       tabs: ["Printing Workshop", "Pouch Making Workshop"],
       cta: "VIEW FULL PROCESS",
       scrollLeft: "Scroll left",
@@ -61,7 +61,7 @@ export default function FactoryTour() {
     },
     es: {
       facility: "PLANTA DE 13.000 M2",
-      title: "Dentro de la fabrica HAILITONG",
+      title: "Dentro de la fabrica HLT PACK",
       tabs: ["Taller de impresion", "Taller de fabricacion de bolsas"],
       cta: "VER PROCESO COMPLETO",
       scrollLeft: "Desplazar a la izquierda",
@@ -70,7 +70,7 @@ export default function FactoryTour() {
     },
     ar: {
       facility: "منشأة بمساحة 13,000 متر مربع",
-      title: "داخل مصنع HAILITONG",
+      title: "داخل مصنع HLT PACK",
       tabs: ["ورشة الطباعة", "ورشة تصنيع الاكياس"],
       cta: "عرض العملية الكاملة",
       scrollLeft: "التمرير الى اليسار",

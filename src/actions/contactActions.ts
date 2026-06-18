@@ -81,7 +81,7 @@ export async function sendContactEmail(formData: FormData) {
     const mailOptions = {
       from: `"Website Contact Form" <${process.env.SMTP_USER || "noreply@hailitong.com"}>`, // sender address
       to: process.env.CONTACT_RECEIVER_EMAIL || "info@hailitong.com", // list of receivers
-      subject: `${subject || "New Inquiry"} from ${name} via HAILITONG Website`, // Subject line
+      subject: `${subject || "New Inquiry"} from ${name} via HLT PACK Website`, // Subject line
       text: `Name: ${name}\nEmail: ${email}\n${phone ? `Phone: ${phone}\n` : ""}${company ? `Company: ${company}\n` : ""}${productName ? `Product: ${productName}\n` : ""}${inquiryType ? `Inquiry Type: ${inquiryType}\n` : ""}\n${formattedContent}`, // plain text body
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">

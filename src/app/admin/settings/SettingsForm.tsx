@@ -252,7 +252,7 @@ export default function SettingsForm({ setting }: { setting: any }) {
   const [robotsDisallowPaths, setRobotsDisallowPaths] = useState(setting?.robotsDisallowPaths || "/admin/*\n/api/*");
   const [noindexPaths, setNoindexPaths] = useState(setting?.noindexPaths || "");
   const [footerCopyZh, setFooterCopyZh] = useState(setting?.footerCopyZh || "");
-  const [footerCopyEn, setFooterCopyEn] = useState(setting?.footerCopyEn || "HAILITONG Packaging. All Rights Reserved.");
+  const [footerCopyEn, setFooterCopyEn] = useState(setting?.footerCopyEn || "HLT PACK. All Rights Reserved.");
   const [aboutYears, setAboutYears] = useState(setting?.aboutYears || "31");
   const [aboutEquipments, setAboutEquipments] = useState(setting?.aboutEquipments || "113");
   const [aboutArea, setAboutArea] = useState(setting?.aboutArea || "30");
@@ -266,7 +266,7 @@ export default function SettingsForm({ setting }: { setting: any }) {
   const [homeAboutTitleLine2Zh, setHomeAboutTitleLine2Zh] = useState(setting?.homeAboutTitleLine2Zh || "");
   const [homeAboutTitleLine2En, setHomeAboutTitleLine2En] = useState(setting?.homeAboutTitleLine2En || "Packaging Since 2001");
   const [homeAboutStory1Zh, setHomeAboutStory1Zh] = useState(setting?.homeAboutStory1Zh || "");
-  const [homeAboutStory1En, setHomeAboutStory1En] = useState(setting?.homeAboutStory1En || "Established in 2001 and located in Shenzhen, China, HAILITONG Packaging has evolved into a global leader in flexible packaging manufacturing. We specialize in engineering premium, sustainable, and high-barrier pouch solutions.");
+  const [homeAboutStory1En, setHomeAboutStory1En] = useState(setting?.homeAboutStory1En || "Established in 2001 and located in Shenzhen, China, HLT PACK has evolved into a global leader in flexible packaging manufacturing. We specialize in engineering premium, sustainable, and high-barrier pouch solutions.");
   const [homeAboutStory2Zh, setHomeAboutStory2Zh] = useState(setting?.homeAboutStory2Zh || "");
   const [homeAboutStory2En, setHomeAboutStory2En] = useState(setting?.homeAboutStory2En || "Equipped with world-class multi-color rotogravure presses, solventless laminators, and advanced pouch-making lines, we deliver uncompromising quality to brands worldwide. Our mission is simple: ");
   const [homeAboutMissionZh, setHomeAboutMissionZh] = useState(setting?.homeAboutMissionZh || "");
@@ -278,7 +278,7 @@ export default function SettingsForm({ setting }: { setting: any }) {
   const [aboutStoryTitleZh, setAboutStoryTitleZh] = useState(setting?.aboutStoryTitleZh || "");
   const [aboutStoryTitleEn, setAboutStoryTitleEn] = useState(setting?.aboutStoryTitleEn || "Packaging Solutions That Care About Our Future");
   const [aboutStoryBody1Zh, setAboutStoryBody1Zh] = useState(setting?.aboutStoryBody1Zh || "");
-  const [aboutStoryBody1En, setAboutStoryBody1En] = useState(setting?.aboutStoryBody1En || "Established in 2001 and strategically located in Shenzhen (Longgang District), adjacent to Hong Kong, HAILITONG Packaging brings over 31 years of industry experience to the flexible packaging sector. Supported by a team of experienced professional technicians, we have built a solid reputation for delivering stable product quality, reasonable pricing, and rapid delivery.");
+  const [aboutStoryBody1En, setAboutStoryBody1En] = useState(setting?.aboutStoryBody1En || "Established in 2001 and strategically located in Shenzhen (Longgang District), adjacent to Hong Kong, HLT PACK brings over 31 years of industry experience to the flexible packaging sector. Supported by a team of experienced professional technicians, we have built a solid reputation for delivering stable product quality, reasonable pricing, and rapid delivery.");
   const [aboutStoryBody2Zh, setAboutStoryBody2Zh] = useState(setting?.aboutStoryBody2Zh || "");
   const [aboutStoryBody2En, setAboutStoryBody2En] = useState(setting?.aboutStoryBody2En || "Our state-of-the-art facility is equipped with comprehensive advanced machinery, including film blowing machines, high-speed rotogravure presses, laminating machines, slitting machines, folding machines, food pouch making machines, three-side sealing machines, center sealing machines, R-machines, flat bag machines, slicing machines, and silica gel drying machines. We specialize in producing a wide range of plastic packaging bags, including food bags, aluminum foil bags, foil-clear bags, vacuum bags, high-temperature retort pouches, multi-layer composite bags, anti-static bags, spout pouches, flower sleeves, shaped bags, facial mask bags, zipper stand-up pouches, PE zip-lock bags, high-transparency OPP header bags, automatic packaging roll films, high-transparency flat bags, and handle bags. Guided by our principle: 'Premium Quality, Customer First', we proudly export our solutions to Europe, America, Russia, Japan, and beyond.");
   const [aboutStoryPrimaryCtaZh, setAboutStoryPrimaryCtaZh] = useState(setting?.aboutStoryPrimaryCtaZh || "");
@@ -388,7 +388,7 @@ export default function SettingsForm({ setting }: { setting: any }) {
       noindexPaths: setting?.noindexPaths || "",
     }),
     footer: JSON.stringify({
-      footerCopyEn: setting?.footerCopyEn || "HAILITONG Packaging. All Rights Reserved.",
+      footerCopyEn: setting?.footerCopyEn || "HLT PACK. All Rights Reserved.",
     }),
     about: JSON.stringify({
       aboutYears: setting?.aboutYears || "31",
@@ -404,7 +404,7 @@ export default function SettingsForm({ setting }: { setting: any }) {
       homeAboutTitleLine2Zh: setting?.homeAboutTitleLine2Zh || "",
       homeAboutTitleLine2En: setting?.homeAboutTitleLine2En || "Packaging Since 2001",
       homeAboutStory1Zh: setting?.homeAboutStory1Zh || "",
-      homeAboutStory1En: setting?.homeAboutStory1En || "Established in 2001 and located in Shenzhen, China, HAILITONG Packaging has evolved into a global leader in flexible packaging manufacturing. We specialize in engineering premium, sustainable, and high-barrier pouch solutions.",
+      homeAboutStory1En: setting?.homeAboutStory1En || "Established in 2001 and located in Shenzhen, China, HLT PACK has evolved into a global leader in flexible packaging manufacturing. We specialize in engineering premium, sustainable, and high-barrier pouch solutions.",
       homeAboutStory2Zh: setting?.homeAboutStory2Zh || "",
       homeAboutStory2En: setting?.homeAboutStory2En || "Equipped with world-class multi-color rotogravure presses, solventless laminators, and advanced pouch-making lines, we deliver uncompromising quality to brands worldwide. Our mission is simple: ",
       homeAboutMissionZh: setting?.homeAboutMissionZh || "",
@@ -416,7 +416,7 @@ export default function SettingsForm({ setting }: { setting: any }) {
       aboutStoryTitleZh: setting?.aboutStoryTitleZh || "",
       aboutStoryTitleEn: setting?.aboutStoryTitleEn || "Packaging Solutions That Care About Our Future",
       aboutStoryBody1Zh: setting?.aboutStoryBody1Zh || "",
-      aboutStoryBody1En: setting?.aboutStoryBody1En || "Established in 2001 and strategically located in Shenzhen (Longgang District), adjacent to Hong Kong, HAILITONG Packaging brings over 31 years of industry experience to the flexible packaging sector. Supported by a team of experienced professional technicians, we have built a solid reputation for delivering stable product quality, reasonable pricing, and rapid delivery.",
+      aboutStoryBody1En: setting?.aboutStoryBody1En || "Established in 2001 and strategically located in Shenzhen (Longgang District), adjacent to Hong Kong, HLT PACK brings over 31 years of industry experience to the flexible packaging sector. Supported by a team of experienced professional technicians, we have built a solid reputation for delivering stable product quality, reasonable pricing, and rapid delivery.",
       aboutStoryBody2Zh: setting?.aboutStoryBody2Zh || "",
       aboutStoryBody2En: setting?.aboutStoryBody2En || "Our state-of-the-art facility is equipped with comprehensive advanced machinery, including film blowing machines, high-speed rotogravure presses, laminating machines, slitting machines, folding machines, food pouch making machines, three-side sealing machines, center sealing machines, R-machines, flat bag machines, slicing machines, and silica gel drying machines. We specialize in producing a wide range of plastic packaging bags, including food bags, aluminum foil bags, foil-clear bags, vacuum bags, high-temperature retort pouches, multi-layer composite bags, anti-static bags, spout pouches, flower sleeves, shaped bags, facial mask bags, zipper stand-up pouches, PE zip-lock bags, high-transparency OPP header bags, automatic packaging roll films, high-transparency flat bags, and handle bags. Guided by our principle: 'Premium Quality, Customer First', we proudly export our solutions to Europe, America, Russia, Japan, and beyond.",
       aboutStoryPrimaryCtaZh: setting?.aboutStoryPrimaryCtaZh || "",

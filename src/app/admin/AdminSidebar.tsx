@@ -62,7 +62,7 @@ export default function AdminSidebar() {
   return (
     <aside className="w-64 bg-[#1E293B] text-white flex flex-col">
       <div className="h-16 flex items-center px-6 border-b border-gray-800">
-        <span className="text-xl font-bold text-[#F05A22]">HAILITONG</span>
+        <span className="text-xl font-bold text-[#F05A22]">HLT PACK</span>
         <span className="ml-2 font-medium text-gray-300">{dict.nav.brandSuffix}</span>
       </div>
 

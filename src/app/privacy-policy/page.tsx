@@ -17,10 +17,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const title = locale === "es" ? "Política de Privacidad" : locale === "ar" ? "سياسة الخصوصية" : "Privacy Policy";
   const description = locale === "es" 
-    ? "Política de Privacidad de HAILITONG Packaging. Conozca cómo recopilamos y protegemos sus datos personales."
+    ? "Política de Privacidad de HLT PACK. Conozca cómo recopilamos y protegemos sus datos personales."
     : locale === "ar"
-      ? "سياسة الخصوصية لشركة HAILITONG Packaging. تعرف على كيفية جمع وحماية معلوماتك الشخصية."
-      : "Privacy Policy for HAILITONG Packaging. Learn how we handle and protect your personal information.";
+      ? "سياسة الخصوصية لشركة HLT PACK. تعرف على كيفية جمع وحماية معلوماتك الشخصية."
+      : "Privacy Policy for HLT PACK. Learn how we handle and protect your personal information.";
 
   return buildSeoMetadata({
     title,

@@ -22,7 +22,7 @@ export default function AboutUs({ setting }: { setting?: any }) {
       accent: "Flexible",
       title2: "Packaging Since 2001",
       story1:
-        "Established in 2001 and located in Shenzhen, China, HAILITONG Packaging has evolved into a global leader in flexible packaging manufacturing. We specialize in engineering premium, sustainable, and high-barrier pouch solutions.",
+        "Established in 2001 and located in Shenzhen, China, HLT PACK has evolved into a global leader in flexible packaging manufacturing. We specialize in engineering premium, sustainable, and high-barrier pouch solutions.",
       story2:
         "Equipped with world-class multi-color rotogravure presses, solventless laminators, and advanced pouch-making lines, we deliver uncompromising quality to brands worldwide. Our mission is simple: ",
       mission: "\"Premium Quality, Customer First\".",
@@ -41,7 +41,7 @@ export default function AboutUs({ setting }: { setting?: any }) {
       accent: "empaque",
       title2: "flexible desde 2001",
       story1:
-        "Fundada en 2001 en Shenzhen, China, HAILITONG Packaging se ha convertido en un referente global en la fabricacion de empaques flexibles. Nos especializamos en soluciones premium, sostenibles y de alta barrera.",
+        "Fundada en 2001 en Shenzhen, China, HLT PACK se ha convertido en un referente global en la fabricacion de empaques flexibles. Nos especializamos en soluciones premium, sostenibles y de alta barrera.",
       story2:
         "Con prensas de huecograbado multicolor, laminadoras sin solventes y lineas avanzadas de fabricacion de bolsas, ofrecemos calidad sin concesiones a marcas de todo el mundo. Nuestra mision es simple: ",
       mission: "\"Calidad premium, cliente primero\".",
@@ -60,7 +60,7 @@ export default function AboutUs({ setting }: { setting?: any }) {
       accent: "التغليف",
       title2: "المرن منذ 2001",
       story1:
-        "تأسست HAILITONG Packaging عام 2001 في شنتشن بالصين، وتطورت لتصبح شركة رائدة عالميا في تصنيع التغليف المرن. نحن متخصصون في الحلول عالية الجودة والمستدامة وذات الحواجز العالية.",
+        "تأسست HLT PACK عام 2001 في شنتشن بالصين، وتطورت لتصبح شركة رائدة عالميا في تصنيع التغليف المرن. نحن متخصصون في الحلول عالية الجودة والمستدامة وذات الحواجز العالية.",
       story2:
         "بفضل مطابع الروتوغرافور متعددة الالوان، وآلات الترقق بدون مذيبات، وخطوط تصنيع الاكياس المتقدمة، نقدم جودة ثابتة لعلامات تجارية حول العالم. مهمتنا بسيطة: ",
       mission: "\"جودة ممتازة، والعميل اولا\".",

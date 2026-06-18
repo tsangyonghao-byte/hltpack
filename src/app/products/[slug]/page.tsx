@@ -31,7 +31,7 @@ const productDetailText = {
       `Discover our ${name}, designed with premium protection and sustainability. Explore key features and request a quote.`,
     ogTitle: (name: string) => `${name} - Flexible Packaging Solutions`,
     ogDescription: (name: string) =>
-      `Premium ${name} by HAILITONG. Innovative barrier technologies for product freshness.`,
+      `Premium ${name} by HLT PACK. Innovative barrier technologies for product freshness.`,
     home: "Home",
     products: "Products",
     back: "Back to Products",
@@ -51,7 +51,7 @@ const productDetailText = {
       `Descubra nuestro ${name}, disenado con proteccion premium y sostenibilidad. Explore caracteristicas clave y solicite una cotizacion.`,
     ogTitle: (name: string) => `${name} - Soluciones de envases flexibles`,
     ogDescription: (name: string) =>
-      `${name} premium de HAILITONG. Tecnologias de barrera innovadoras para preservar la frescura del producto.`,
+      `${name} premium de HLT PACK. Tecnologias de barrera innovadoras para preservar la frescura del producto.`,
     home: "Inicio",
     products: "Productos",
     back: "Volver a productos",
@@ -71,7 +71,7 @@ const productDetailText = {
       `اكتشف ${name} المصمم بحماية عالية واستدامة. تعرّف على الميزات الأساسية واطلب عرض سعر.`,
     ogTitle: (name: string) => `${name} - حلول تغليف مرنة`,
     ogDescription: (name: string) =>
-      `${name} المميز من HAILITONG. تقنيات حواجز مبتكرة للحفاظ على نضارة المنتج.`,
+      `${name} المميز من HLT PACK. تقنيات حواجز مبتكرة للحفاظ على نضارة المنتج.`,
     home: "الرئيسية",
     products: "المنتجات",
     back: "العودة إلى المنتجات",
@@ -121,10 +121,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: localizedCategoryName,
       description:
         locale === "es"
-          ? `Explore ${localizedCategoryName.toLowerCase()} de HAILITONG Packaging.`
+          ? `Explore ${localizedCategoryName.toLowerCase()} de HLT PACK.`
           : locale === "ar"
-            ? `استعرض ${localizedCategoryName} من HAILITONG Packaging.`
-            : `Browse ${localizedCategoryName.toLowerCase()} from HAILITONG Packaging.`,
+            ? `استعرض ${localizedCategoryName} من HLT PACK.`
+            : `Browse ${localizedCategoryName.toLowerCase()} from HLT PACK.`,
       siteName,
       socialTitle: `${localizedCategoryName} | ${siteName}`,
       canonicalPath: `/products/${resolvedParams.slug}`,
@@ -241,7 +241,7 @@ export default async function ProductDetailPage({
     category: productCategoryLabel,
     brand: {
       "@type": "Brand",
-      name: "HAILITONG Packaging",
+      name: "HLT PACK",
     },
     url: `${getSiteUrl()}${productPath}`,
   };

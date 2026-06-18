@@ -118,7 +118,7 @@ export default function Footer({ setting, navItems = [] }: { setting?: any, navI
   };
 
   const currentYear = new Date().getFullYear();
-  const siteName = locale === "zh" ? (setting?.siteNameZh || "海力通包装") : (setting?.siteNameEn || "HAILITONG Packaging");
+  const siteName = locale === "zh" ? (setting?.siteNameZh || "海力通包装") : (setting?.siteNameEn || "HLT PACK");
   const copyright = locale === "zh" ? setting?.footerCopyZh : setting?.footerCopyEn;
   const localizedAddress =
     locale === "zh"
