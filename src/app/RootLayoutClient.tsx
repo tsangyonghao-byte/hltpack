@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FloatingWidgets from "@/components/layout/FloatingWidgets";
@@ -23,6 +24,21 @@ export default function RootLayoutClient({
   setting?: any;
 }) {
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname && !pathname.startsWith("/admin") && !pathname.startsWith("/api")) {
+      fetch("/api/track", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ path: pathname }),
+      }).catch((err) => {
+        console.error("Failed to send tracking log:", err);
+      });
+    }
+  }, [pathname]);
+
   const isAdmin = pathname?.startsWith("/admin");
   const isLogin = pathname === "/login";
 
