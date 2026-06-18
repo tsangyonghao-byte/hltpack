@@ -76,17 +76,35 @@ async function main() {
       await tx.friendLink.create({ data: item });
     }
 
-    // 9. Insert NavigationItems (hierarchical insertion: parents first, then children)
+    // 9. Insert NavigationItems (resolving hierarchy dependencies dynamically)
     console.log(`Inserting ${data.navItems.length} navigation items...`);
-    // Filter parent items (where parentId is null)
-    const parents = data.navItems.filter(item => !item.parentId);
-    const children = data.navItems.filter(item => item.parentId);
+    let remaining = [...data.navItems];
+    let insertedIds = new Set();
 
-    for (const parent of parents) {
-      await tx.navigationItem.create({ data: parent });
-    }
-    for (const child of children) {
-      await tx.navigationItem.create({ data: child });
+    let attempts = 0;
+    while (remaining.length > 0 && attempts < 10) {
+      const startCount = remaining.length;
+      const nextRemaining = [];
+
+      for (const item of remaining) {
+        if (!item.parentId || insertedIds.has(item.parentId)) {
+          await tx.navigationItem.create({ data: item });
+          insertedIds.add(item.id);
+        } else {
+          nextRemaining.push(item);
+        }
+      }
+
+      remaining = nextRemaining;
+      attempts++;
+      if (remaining.length === startCount) {
+        // Fallback: if stuck, force insert remaining
+        console.warn('Force inserting remaining items...');
+        for (const item of remaining) {
+          await tx.navigationItem.create({ data: item });
+        }
+        break;
+      }
     }
 
     // 10. Update Admin users if present in file
