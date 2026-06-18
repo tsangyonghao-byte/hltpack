@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { requireAdminSession } from "@/lib/adminAuth";
+import { requireAdminSession, isAdminAuthenticatedLight } from "@/lib/adminAuth";
 import { getAdminActionText } from "./adminActionText";
 
 const MESSAGE_STATUSES = ["new", "in_progress", "quoted", "won", "lost"] as const;
@@ -304,5 +304,33 @@ export async function updateMessagesFollowUpAt(ids: string[], followUpAt: string
   } catch (error) {
     console.error("Failed to update selected follow-up times:", error);
     return { success: false, error: text.updateMessagesFollowUpFailed };
+  }
+}
+
+export async function getUnreadMessagesCountAndLatest() {
+  const authenticated = await isAdminAuthenticatedLight();
+  if (!authenticated) {
+    return { success: false, error: "Not authenticated" };
+  }
+
+  try {
+    const [count, latest] = await Promise.all([
+      prisma.message.count({ where: { isRead: false } }),
+      prisma.message.findFirst({
+        where: { isRead: false },
+        orderBy: { createdAt: "desc" },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          content: true,
+        },
+      }),
+    ]);
+
+    return { success: true, count, latest };
+  } catch (error) {
+    console.error("Failed to query unread messages count:", error);
+    return { success: false, error: "Query failed" };
   }
 }

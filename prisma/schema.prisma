@@ -256,11 +256,13 @@ model AdminUser {
 }
 
 model VisitorLog {
-  id        String   @id @default(cuid())
-  ip        String
-  userAgent String?
-  path      String?
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  ip          String
+  userAgent   String?
+  path        String?
+  country     String?  // e.g. "China"
+  countryCode String?  // e.g. "CN"
+  createdAt   DateTime @default(now())
 
   @@index([createdAt])
   @@index([ip, createdAt])

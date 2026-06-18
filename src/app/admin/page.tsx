@@ -177,6 +177,7 @@ export default async function AdminDashboard() {
       select: {
         createdAt: true,
         ip: true,
+        userAgent: true,
       },
     }),
     prisma.message.findMany({
@@ -220,6 +221,26 @@ export default async function AdminDashboard() {
 
   const maxCount = Math.max(...dailyCounts.map(d => d.count), 1);
   const maxUv = Math.max(...dailyCounts.map(d => d.uvCount), 1);
+
+  let wechatCount = 0;
+  let mobileCount = 0;
+  let desktopCount = 0;
+
+  weeklyVisitorLogs.forEach((log) => {
+    const ua = (log.userAgent || "").toLowerCase();
+    if (ua.includes("micromessenger")) {
+      wechatCount++;
+    } else if (ua.includes("android") || ua.includes("iphone") || ua.includes("ipad")) {
+      mobileCount++;
+    } else {
+      desktopCount++;
+    }
+  });
+
+  const totalDeviceLogs = weeklyVisitorLogs.length || 1;
+  const wechatPct = Math.round((wechatCount / totalDeviceLogs) * 100);
+  const mobilePct = Math.round((mobileCount / totalDeviceLogs) * 100);
+  const desktopPct = Math.round((desktopCount / totalDeviceLogs) * 100);
 
   const productCountsMap: Record<string, number> = {};
   allMessagesProductNames.forEach(msg => {
@@ -401,7 +422,7 @@ export default async function AdminDashboard() {
       </section>
 
       {/* Visual Analytics Row */}
-      <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <AdminDashboardSectionCard 
           title={dict.dashboard.weeklyTrendTitle}
           action={
@@ -476,7 +497,7 @@ export default async function AdminDashboard() {
                   return (
                     <div key={idx} className="space-y-1.5">
                       <div className="flex items-center justify-between text-xs font-semibold">
-                        <span className="text-gray-700 truncate max-w-[200px]" title={p.name}>
+                        <span className="text-gray-700 truncate max-w-[150px]" title={p.name}>
                           {p.name}
                         </span>
                         <span className="text-[#F05A22] font-mono text-[11px] shrink-0">
@@ -493,6 +514,51 @@ export default async function AdminDashboard() {
                   );
                 })
               )}
+            </div>
+          </div>
+        </AdminDashboardSectionCard>
+
+        <AdminDashboardSectionCard title={locale === "zh" ? "访问终端占比" : "Device Distribution"}>
+          <div className="bg-white p-6 rounded-xl border border-gray-100 flex flex-col justify-center h-64">
+            <div className="space-y-4.5 w-full">
+              {/* Desktop */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs font-semibold">
+                  <span className="text-gray-700">{locale === "zh" ? "电脑端 (Desktop)" : "Desktop"}</span>
+                  <span className="text-indigo-600 font-mono text-[11px] shrink-0">
+                    {desktopCount} {locale === "zh" ? "次访问" : "visits"} ({desktopPct}%)
+                  </span>
+                </div>
+                <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                  <div className="bg-indigo-500 h-full rounded-full transition-all duration-700" style={{ width: `${Math.max(desktopPct, 3)}%` }} />
+                </div>
+              </div>
+
+              {/* Mobile */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs font-semibold">
+                  <span className="text-gray-700">{locale === "zh" ? "移动浏览器 (Mobile)" : "Mobile Browser"}</span>
+                  <span className="text-violet-600 font-mono text-[11px] shrink-0">
+                    {mobileCount} {locale === "zh" ? "次访问" : "visits"} ({mobilePct}%)
+                  </span>
+                </div>
+                <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                  <div className="bg-violet-500 h-full rounded-full transition-all duration-700" style={{ width: `${Math.max(mobilePct, 3)}%` }} />
+                </div>
+              </div>
+
+              {/* WeChat */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs font-semibold">
+                  <span className="text-gray-700">{locale === "zh" ? "微信内置 (WeChat)" : "WeChat App"}</span>
+                  <span className="text-emerald-600 font-mono text-[11px] shrink-0">
+                    {wechatCount} {locale === "zh" ? "次访问" : "visits"} ({wechatPct}%)
+                  </span>
+                </div>
+                <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                  <div className="bg-emerald-500 h-full rounded-full transition-all duration-700" style={{ width: `${Math.max(wechatPct, 3)}%` }} />
+                </div>
+              </div>
             </div>
           </div>
         </AdminDashboardSectionCard>

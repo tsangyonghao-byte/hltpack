@@ -18,6 +18,7 @@ import {
   KeyRound,
   Users,
   Award,
+  Activity,
 } from "lucide-react";
 import { useAdminLanguage } from "@/i18n/AdminLanguageContext";
 import { setAdminLanguage } from "@/actions/adminLangActions";
@@ -61,12 +62,12 @@ export default function AdminSidebar() {
 
   return (
     <aside className="w-64 bg-[#1E293B] text-white flex flex-col">
-      <div className="h-16 flex items-center px-6 border-b border-gray-800">
+      <div className="h-20 flex items-center px-6 border-b border-gray-800 pt-2">
         <span className="text-xl font-bold text-[#F05A22]">HLT PACK</span>
         <span className="ml-2 font-medium text-gray-300">{dict.nav.brandSuffix}</span>
       </div>
 
-      <nav className="flex-1 py-6 px-4 space-y-2">
+      <nav className="flex-1 py-4 px-4 space-y-2">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = item.exact ? pathname === item.href : pathname?.startsWith(item.href);
