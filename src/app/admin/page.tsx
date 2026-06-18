@@ -22,7 +22,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
-  const { dict } = await getAdminDictionary();
+  const { dict, locale } = await getAdminDictionary();
   const now = new Date();
   const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const startOfTomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
@@ -88,6 +88,55 @@ export default async function AdminDashboard() {
       },
     }),
   ]);
+
+  // Aggregate weekly message counts and product metrics
+  const last7Days = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    return d;
+  }).reverse();
+
+  const dayStart = new Date(last7Days[0].getFullYear(), last7Days[0].getMonth(), last7Days[0].getDate());
+
+  const [weeklyMessages, allMessagesProductNames] = await Promise.all([
+    prisma.message.findMany({
+      where: {
+        createdAt: { gte: dayStart },
+      },
+      select: {
+        createdAt: true,
+      },
+    }),
+    prisma.message.findMany({
+      select: {
+        productName: true,
+      },
+    }),
+  ]);
+
+  const dailyCounts = last7Days.map(date => {
+    const dateStr = `${date.getMonth() + 1}/${date.getDate()}`;
+    const dayStartStr = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+    const dayEndStr = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime();
+    
+    const count = weeklyMessages.filter(msg => {
+      const t = new Date(msg.createdAt).getTime();
+      return t >= dayStartStr && t < dayEndStr;
+    }).length;
+
+    return { label: dateStr, count };
+  });
+
+  const productCountsMap: Record<string, number> = {};
+  allMessagesProductNames.forEach(msg => {
+    const name = msg.productName || (locale === "zh" ? "网站留言 / 其他" : "General Inquiry / Other");
+    productCountsMap[name] = (productCountsMap[name] || 0) + 1;
+  });
+
+  const sortedProducts = Object.entries(productCountsMap)
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 4);
 
   const statCards = [
     {
@@ -179,6 +228,84 @@ export default async function AdminDashboard() {
             );
           })}
         </div>
+      </section>
+
+      {/* Visual Analytics Section */}
+      <section className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <AdminDashboardSectionCard title={dict.dashboard.inquiryTrend}>
+          <div className="bg-white p-4 rounded-xl border border-gray-100 flex flex-col justify-end h-64">
+            {(() => {
+              const maxCount = Math.max(...dailyCounts.map(d => d.count), 1);
+              return (
+                <div className="relative w-full h-full flex flex-col justify-end">
+                  <div className="flex-grow flex items-end justify-between px-2 pb-6 relative h-40">
+                    {/* Horizontal grid lines */}
+                    <div className="absolute inset-x-0 bottom-6 border-b border-gray-100 w-full" />
+                    <div className="absolute inset-x-0 bottom-20 border-b border-gray-100 w-full" />
+                    <div className="absolute inset-x-0 bottom-32 border-b border-gray-100 w-full" />
+                    
+                    {dailyCounts.map((d, index) => {
+                      const pctHeight = (d.count / maxCount) * 100;
+                      return (
+                        <div key={index} className="flex flex-col items-center flex-1 group z-10">
+                          {/* Count text displayed on hover */}
+                          <span className="text-[10px] font-bold text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity absolute -translate-y-6 bg-gray-800 text-white px-1.5 py-0.5 rounded shadow-sm">
+                            {d.count}
+                          </span>
+                          
+                          {/* Animated Bar */}
+                          <div 
+                            className="w-8 bg-[#F05A22] rounded-t transition-all duration-500 ease-out group-hover:bg-[#D44A18]"
+                            style={{ height: `${Math.max(pctHeight * 1.2, 4)}px`, maxHeight: '120px' }}
+                          />
+                          
+                          {/* Date Label */}
+                          <span className="text-[10px] text-gray-400 mt-2 font-medium group-hover:text-gray-700 transition-colors">
+                            {d.label}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+        </AdminDashboardSectionCard>
+
+        <AdminDashboardSectionCard title={dict.dashboard.popularProducts}>
+          <div className="bg-white p-6 rounded-xl border border-gray-100 flex flex-col justify-center h-64">
+            <div className="space-y-4 w-full">
+              {sortedProducts.length === 0 ? (
+                <div className="text-center py-8 text-sm text-gray-400 font-light">
+                  {locale === "zh" ? "暂无数据" : "No inquiry data available"}
+                </div>
+              ) : (
+                sortedProducts.map((p, idx) => {
+                  const pct = messagesCount > 0 ? Math.round((p.count / messagesCount) * 100) : 0;
+                  return (
+                    <div key={idx} className="space-y-1.5">
+                      <div className="flex items-center justify-between text-xs font-semibold">
+                        <span className="text-gray-700 truncate max-w-[200px]" title={p.name}>
+                          {p.name}
+                        </span>
+                        <span className="text-[#F05A22] font-mono text-[11px] shrink-0">
+                          {p.count} {dict.dashboard.inquiriesUnit} ({pct}%)
+                        </span>
+                      </div>
+                      <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                        <div 
+                          className="bg-[#F05A22] h-full rounded-full transition-all duration-700" 
+                          style={{ width: `${Math.max(pct, 5)}%` }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        </AdminDashboardSectionCard>
       </section>
 
       <section className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.1fr_1fr]">

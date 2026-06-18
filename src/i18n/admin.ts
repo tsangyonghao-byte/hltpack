@@ -78,6 +78,9 @@ export const adminDictionaries = {
       emptyNewsHint: "Publish a news item to keep the homepage fresh and up to date.",
       fromLabel: "From",
       viewAll: "View All",
+      inquiryTrend: "Recent 7-Day Inquiries",
+      popularProducts: "Top Inquired Products",
+      inquiriesUnit: "inquiries",
     },
     products: {
       title: "Products Management",
@@ -514,6 +517,9 @@ export const adminDictionaries = {
       emptyNewsHint: "发布一条新闻后，这里会显示最近更新的内容。",
       fromLabel: "来自",
       viewAll: "查看全部",
+      inquiryTrend: "最近7天询盘趋势",
+      popularProducts: "热门咨询产品占比",
+      inquiriesUnit: "条询盘",
     },
     products: {
       title: "产品管理",
