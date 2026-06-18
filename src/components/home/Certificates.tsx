@@ -36,9 +36,9 @@ export default function Certificates({ certificates = [] }: { certificates?: any
   
   // Only the 3 core certificates for the homepage layout
   const defaultCerts = [
-    { id: 1, name: certNames[0], img: "/zs01.png" },
-    { id: 2, name: certNames[1], img: "/zs02.png" },
-    { id: 3, name: certNames[2], img: "/zs03.png" },
+    { id: 1, name: certNames[0], img: "/zs01.webp" },
+    { id: 2, name: certNames[1], img: "/zs02.webp" },
+    { id: 3, name: certNames[2], img: "/zs03.webp" },
   ];
 
   const certs = certificates && certificates.length >= 3 
