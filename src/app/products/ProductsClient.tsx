@@ -26,9 +26,12 @@ const productText = {
     emptyTitle: "No products found",
     emptyDesc: "We couldn't find any products matching your current filters. Try adjusting your search or selecting a different category.",
     clearFilters: "Clear Filters",
-    mainCat1: "Plastic Packaging Bags",
-    mainCat2: "Shrink Label Series",
-    mainCat3: "High-Barrier & Metallized Films",
+    mainCat1: "Flexible Packaging",
+    mainCat2: "Shrink Labels",
+    mainCat3: "Rollstock & Films",
+    mainCat4: "Lidding Film",
+    mainCat5: "Protective Packaging",
+    mainCat6: "Specialty",
   },
   es: {
     home: "Inicio",
@@ -46,9 +49,12 @@ const productText = {
     emptyTitle: "No se encontraron productos",
     emptyDesc: "No encontramos productos que coincidan con los filtros actuales. Intente ajustar la búsqueda o seleccionar otra categoría.",
     clearFilters: "Limpiar filtros",
-    mainCat1: "Bolsas de Embalaje de Plástico",
-    mainCat2: "Serie de Etiquetas Termoencogibles",
-    mainCat3: "Películas Metalizadas y de Alta Barrera",
+    mainCat1: "Embalaje Flexible",
+    mainCat2: "Etiquetas Termoencogibles",
+    mainCat3: "Bobinas y Películas",
+    mainCat4: "Película de Tapa",
+    mainCat5: "Embalaje Protector",
+    mainCat6: "Especialidades",
   },
   ar: {
     home: "الرئيسية",
@@ -60,15 +66,18 @@ const productText = {
     filters: "الفلاتر",
     categories: "الفئات",
     customTitle: "هل تحتاج إلى حل مخصص؟",
-    customDesc: "يمكن لفريقنا الهندسي تصميم التغليف المثالي وفق متطلبات منتجك الخاصة.",
+    customDesc: "يمكن لفريقنا الهندسي تصميم التغليف المثالي وفق متمتطلبات منتجك الخاصة.",
     customBtn: "تواصل مع الخبراء",
     viewDetails: "عرض التفاصيل",
     emptyTitle: "لم يتم العثور على منتجات",
     emptyDesc: "لم نعثر على منتجات تطابق عوامل التصفية الحالية. جرّب تعديل البحث أو اختيار فئة أخرى.",
     clearFilters: "مسح الفلاتر",
-    mainCat1: "سلسلة أكياس التغليف البلاستيكية",
-    mainCat2: "سلسلة الملصقات المنكمشة",
-    mainCat3: "أفلام عالية الحاجز والمعدنية",
+    mainCat1: "التغليف المرن",
+    mainCat2: "الملصقات المنكمشة",
+    mainCat3: "رول و أفلام",
+    mainCat4: "غطاء الفيلم",
+    mainCat5: "التغليف الواقي",
+    mainCat6: "المنتجات الخاصة",
   },
 } as const;
 
@@ -89,7 +98,7 @@ export default function ProductsClient({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const plasticBagSubs = [
+  const flexiblePackagingSubs = [
     "Custom Pet Supplies Bags",
     "Tea Bags",
     "Custom Food Bags",
@@ -99,17 +108,37 @@ export default function ProductsClient({
     "Ziplock Bags",
     "Mask Bags",
     "Kraft Paper Bags",
-    "Bubble Bags",
     "Spout Pouches",
     "Foil-Clear Bags"
   ];
 
-  const highBarrierSubs = [
+  const rollstockFilmsSubs = [
     "Transparent High-Barrier Films (AlOx)",
     "Metallized Films (VMPET/VMCPP)",
     "Specialty & Functional Films",
     "Recyclable Mono-Materials"
   ];
+
+  const shrinkLabelsSubs = [
+    "Shrink Sleeve Labels",
+    "Full Body Shrink Sleeves",
+    "Tamper Evident Shrink Bands",
+    "Printed Shrink Label Rollstock"
+  ];
+
+  const protectivePackagingSubs = [
+    "BOPP Carton Sealing Tape",
+    "Bubble Mailer & Bag",
+    "Poly Mailers"
+  ];
+
+  const specialtySubs = [
+    "Microwavable Pouch",
+    "Retort Pouch",
+    "Anti-static Packaging",
+    "Moisture Barrier Packaging"
+  ];
+
   const subcategoryLabels = {
     en: {
       "Custom Pet Supplies Bags": "Custom Pet Supplies Bags",
@@ -121,52 +150,97 @@ export default function ProductsClient({
       "Ziplock Bags": "Ziplock Bags",
       "Mask Bags": "Mask Bags",
       "Kraft Paper Bags": "Kraft Paper Bags",
-      "Bubble Bags": "Bubble Bags",
       "Spout Pouches": "Spout Pouches",
       "Foil-Clear Bags": "Foil-Clear Bags",
       "Transparent High-Barrier Films (AlOx)": "Transparent High-Barrier Films (AlOx)",
       "Metallized Films (VMPET/VMCPP)": "Metallized Films (VMPET/VMCPP)",
       "Specialty & Functional Films": "Specialty & Functional Films",
       "Recyclable Mono-Materials": "Recyclable Mono-Materials",
-      "Shrink Label Series": productText.en.mainCat2,
+      "Shrink Sleeve Labels": "Shrink Sleeve Labels",
+      "Full Body Shrink Sleeves": "Full Body Shrink Sleeves",
+      "Tamper Evident Shrink Bands": "Tamper Evident Shrink Bands",
+      "Printed Shrink Label Rollstock": "Printed Shrink Label Rollstock",
+      "BOPP Carton Sealing Tape": "BOPP Carton Sealing Tape",
+      "Bubble Mailer & Bag": "Bubble Mailer & Bag",
+      "Poly Mailers": "Poly Mailers",
+      "Microwavable Pouch": "Microwavable Pouch",
+      "Retort Pouch": "Retort Pouch",
+      "Anti-static Packaging": "Anti-static Packaging",
+      "Moisture Barrier Packaging": "Moisture Barrier Packaging",
+      "Flexible Packaging": productText.en.mainCat1,
+      "Shrink Labels": productText.en.mainCat2,
+      "Rollstock & Films": productText.en.mainCat3,
+      "Lidding Film": productText.en.mainCat4,
+      "Protective Packaging": productText.en.mainCat5,
+      "Specialty": productText.en.mainCat6,
     },
     es: {
       "Custom Pet Supplies Bags": "Bolsas personalizadas para mascotas",
-      "Tea Bags": "Bolsas para te",
+      "Tea Bags": "Bolsas para té",
       "Custom Food Bags": "Bolsas personalizadas para alimentos",
-      "Medical Mask Bags": "Bolsas para mascarillas medicas",
+      "Medical Mask Bags": "Bolsas para mascarillas médicas",
       "Toy Bags": "Bolsas para juguetes",
       "Shaped Bags": "Bolsas con forma",
       "Ziplock Bags": "Bolsas ziplock",
       "Mask Bags": "Bolsas para mascarillas",
       "Kraft Paper Bags": "Bolsas de papel kraft",
-      "Bubble Bags": "Bolsas burbuja",
       "Spout Pouches": "Bolsas con boquilla",
       "Foil-Clear Bags": "Bolsas foil transparentes",
-      "Transparent High-Barrier Films (AlOx)": "Peliculas transparentes de alta barrera (AlOx)",
-      "Metallized Films (VMPET/VMCPP)": "Peliculas metalizadas (VMPET/VMCPP)",
-      "Specialty & Functional Films": "Peliculas especiales y funcionales",
+      "Transparent High-Barrier Films (AlOx)": "Películas transparentes de alta barrera (AlOx)",
+      "Metallized Films (VMPET/VMCPP)": "Películas metalizadas (VMPET/VMCPP)",
+      "Specialty & Functional Films": "Películas especiales y funcionales",
       "Recyclable Mono-Materials": "Monomateriales reciclables",
-      "Shrink Label Series": productText.es.mainCat2,
+      "Shrink Sleeve Labels": "Etiquetas de Manga Termoencogible",
+      "Full Body Shrink Sleeves": "Mangas Termoencogibles de Cuerpo Completo",
+      "Tamper Evident Shrink Bands": "Bandas de Garantía Termoencogibles",
+      "Printed Shrink Label Rollstock": "Bobinas de Etiquetas Termoencogibles Impresas",
+      "BOPP Carton Sealing Tape": "Cinta de Embalaje BOPP",
+      "Bubble Mailer & Bag": "Bolsas y Sobres de Burbuja",
+      "Poly Mailers": "Bolsas de Correo de Polietileno",
+      "Microwavable Pouch": "Bolsa para Microondas",
+      "Retort Pouch": "Bolsa Retorta",
+      "Anti-static Packaging": "Embalaje Antiestático",
+      "Moisture Barrier Packaging": "Embalaje de Barrera contra la Humedad",
+      "Flexible Packaging": productText.es.mainCat1,
+      "Shrink Labels": productText.es.mainCat2,
+      "Rollstock & Films": productText.es.mainCat3,
+      "Lidding Film": productText.es.mainCat4,
+      "Protective Packaging": productText.es.mainCat5,
+      "Specialty": productText.es.mainCat6,
     },
     ar: {
-      "Custom Pet Supplies Bags": "اكياس مخصصة لمستلزمات الحيوانات الاليفة",
-      "Tea Bags": "اكياس الشاي",
-      "Custom Food Bags": "اكياس مخصصة للاغذية",
-      "Medical Mask Bags": "اكياس للكمامات الطبية",
-      "Toy Bags": "اكياس الالعاب",
-      "Shaped Bags": "اكياس مشكلة",
-      "Ziplock Bags": "اكياس بسحاب",
-      "Mask Bags": "اكياس الاقنعة",
-      "Kraft Paper Bags": "اكياس ورق كرافت",
-      "Bubble Bags": "اكياس فقاعية",
-      "Spout Pouches": "اكياس بفوهة",
-      "Foil-Clear Bags": "اكياس شفافة مع رقائق",
-      "Transparent High-Barrier Films (AlOx)": "افلام شفافة عالية الحاجز (AlOx)",
-      "Metallized Films (VMPET/VMCPP)": "افلام معدنية (VMPET/VMCPP)",
-      "Specialty & Functional Films": "افلام متخصصة ووظيفية",
-      "Recyclable Mono-Materials": "مواد احادية قابلة لاعادة التدوير",
-      "Shrink Label Series": productText.ar.mainCat2,
+      "Custom Pet Supplies Bags": "أكياس مخصصة لمستلزمات الحيوانات الأليفة",
+      "Tea Bags": "أكياس الشاي",
+      "Custom Food Bags": "أكياس مخصصة للأغذية",
+      "Medical Mask Bags": "أكياس للكمامات الطبية",
+      "Toy Bags": "أكياس الألعاب",
+      "Shaped Bags": "أكياس مشكلة",
+      "Ziplock Bags": "أكياس بسحاب",
+      "Mask Bags": "أكياس الأقنعة",
+      "Kraft Paper Bags": "أكياس ورق كرافت",
+      "Spout Pouches": "أكياس بفوهة",
+      "Foil-Clear Bags": "أكياس شفافة مع رقائق",
+      "Transparent High-Barrier Films (AlOx)": "أفلام شفافة عالية الحاجز (AlOx)",
+      "Metallized Films (VMPET/VMCPP)": "أفلام معدنية (VMPET/VMCPP)",
+      "Specialty & Functional Films": "أفلام متخصصة ووظيفية",
+      "Recyclable Mono-Materials": "مواد أحادية قابلة لإعادة التدوير",
+      "Shrink Sleeve Labels": "ملصقات الأكمام المنكمشة",
+      "Full Body Shrink Sleeves": "أكمام منكمشة كاملة للجسم",
+      "Tamper Evident Shrink Bands": "أشرطة منكمشة مانعة للتلاعب",
+      "Printed Shrink Label Rollstock": "رول ملصقات منكمشة مطبوعة",
+      "BOPP Carton Sealing Tape": "شريط تغليف الكرتون BOPP",
+      "Bubble Mailer & Bag": "أكياس وشواحن فقاعية",
+      "Poly Mailers": "مغلفات البريد البولي",
+      "Microwavable Pouch": "كيس قابل للتسخين في الميكروويف",
+      "Retort Pouch": "كيس蒸煮 (ريتورت)",
+      "Anti-static Packaging": "تغليف مضاد للاستاتيكية",
+      "Moisture Barrier Packaging": "تغليف حاجز الرطوبة",
+      "Flexible Packaging": productText.ar.mainCat1,
+      "Shrink Labels": productText.ar.mainCat2,
+      "Rollstock & Films": productText.ar.mainCat3,
+      "Lidding Film": productText.ar.mainCat4,
+      "Protective Packaging": productText.ar.mainCat5,
+      "Specialty": productText.ar.mainCat6,
     },
   } as const;
   const labelMap = subcategoryLabels[locale as keyof typeof subcategoryLabels] || subcategoryLabels.en;
@@ -182,21 +256,28 @@ export default function ProductsClient({
     getProductCategoryNameFromParam(searchParams.get("category"));
   const searchParam = initialSearchQuery || searchParams.get("search") || "";
 
-  const isPlasticCategory =
-    categoryParam === "Plastic Packaging Bags" || Boolean(categoryParam && plasticBagSubs.includes(categoryParam));
-  const isHighBarrierCategory =
-    categoryParam === "High-Barrier & Metallized Films" || Boolean(categoryParam && highBarrierSubs.includes(categoryParam));
+  const isFlexibleCategory =
+    categoryParam === "Flexible Packaging" || Boolean(categoryParam && flexiblePackagingSubs.includes(categoryParam));
+  const isRollstockCategory =
+    categoryParam === "Rollstock & Films" || Boolean(categoryParam && rollstockFilmsSubs.includes(categoryParam));
+  const isShrinkCategory =
+    categoryParam === "Shrink Labels" || Boolean(categoryParam && shrinkLabelsSubs.includes(categoryParam));
+  const isLiddingCategory = categoryParam === "Lidding Film";
+  const isProtectiveCategory =
+    categoryParam === "Protective Packaging" || Boolean(categoryParam && protectivePackagingSubs.includes(categoryParam));
+  const isSpecialtyCategory =
+    categoryParam === "Specialty" || Boolean(categoryParam && specialtySubs.includes(categoryParam));
 
   const getInitialActiveCategory = () => {
     if (!categoryParam) {
       return text.allProducts;
     }
-    if (categoryParam === "Plastic Packaging Bags") {
-      return text.mainCat1;
-    }
-    if (categoryParam === "High-Barrier & Metallized Films") {
-      return text.mainCat3;
-    }
+    if (categoryParam === "Flexible Packaging") return text.mainCat1;
+    if (categoryParam === "Shrink Labels") return text.mainCat2;
+    if (categoryParam === "Rollstock & Films") return text.mainCat3;
+    if (categoryParam === "Lidding Film") return text.mainCat4;
+    if (categoryParam === "Protective Packaging") return text.mainCat5;
+    if (categoryParam === "Specialty") return text.mainCat6;
     return getCategoryLabel(categoryParam);
   };
 
@@ -204,8 +285,11 @@ export default function ProductsClient({
   const [searchQuery, setSearchQuery] = useState(searchParam);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isPlasticBagsOpen, setIsPlasticBagsOpen] = useState(isPlasticCategory || !categoryParam);
-  const [isHighBarrierOpen, setIsHighBarrierOpen] = useState(isHighBarrierCategory || !categoryParam);
+  const [isFlexibleOpen, setIsFlexibleOpen] = useState(isFlexibleCategory || !categoryParam);
+  const [isRollstockOpen, setIsRollstockOpen] = useState(isRollstockCategory || !categoryParam);
+  const [isShrinkOpen, setIsShrinkOpen] = useState(isShrinkCategory);
+  const [isProtectiveOpen, setIsProtectiveOpen] = useState(isProtectiveCategory);
+  const [isSpecialtyOpen, setIsSpecialtyOpen] = useState(isSpecialtyCategory);
   const ITEMS_PER_PAGE = 9;
 
   const syncFiltersFromUrl = () => {
@@ -213,13 +297,23 @@ export default function ProductsClient({
       getProductCategoryNameFromPathname(pathname) ||
       getProductCategoryNameFromParam(searchParams.get("category"));
     const searchParam = searchParams.get("search");
-    const isPlasticCategory =
-      categoryParam === "Plastic Packaging Bags" || Boolean(categoryParam && plasticBagSubs.includes(categoryParam));
-    const isHighBarrierCategory =
-      categoryParam === "High-Barrier & Metallized Films" || Boolean(categoryParam && highBarrierSubs.includes(categoryParam));
 
-    setIsPlasticBagsOpen(isPlasticCategory || !categoryParam);
-    setIsHighBarrierOpen(isHighBarrierCategory || !categoryParam);
+    const isFlexibleCategory =
+      categoryParam === "Flexible Packaging" || Boolean(categoryParam && flexiblePackagingSubs.includes(categoryParam));
+    const isRollstockCategory =
+      categoryParam === "Rollstock & Films" || Boolean(categoryParam && rollstockFilmsSubs.includes(categoryParam));
+    const isShrinkCategory =
+      categoryParam === "Shrink Labels" || Boolean(categoryParam && shrinkLabelsSubs.includes(categoryParam));
+    const isProtectiveCategory =
+      categoryParam === "Protective Packaging" || Boolean(categoryParam && protectivePackagingSubs.includes(categoryParam));
+    const isSpecialtyCategory =
+      categoryParam === "Specialty" || Boolean(categoryParam && specialtySubs.includes(categoryParam));
+
+    setIsFlexibleOpen(isFlexibleCategory || !categoryParam);
+    setIsRollstockOpen(isRollstockCategory || !categoryParam);
+    setIsShrinkOpen(isShrinkCategory);
+    setIsProtectiveOpen(isProtectiveCategory);
+    setIsSpecialtyOpen(isSpecialtyCategory);
 
     if (searchParam) {
       setSearchQuery(searchParam);
@@ -232,13 +326,28 @@ export default function ProductsClient({
       return;
     }
 
-    if (categoryParam === "Plastic Packaging Bags") {
+    if (categoryParam === "Flexible Packaging") {
       setActiveCategory(text.mainCat1);
       return;
     }
-
-    if (categoryParam === "High-Barrier & Metallized Films") {
+    if (categoryParam === "Shrink Labels") {
+      setActiveCategory(text.mainCat2);
+      return;
+    }
+    if (categoryParam === "Rollstock & Films") {
       setActiveCategory(text.mainCat3);
+      return;
+    }
+    if (categoryParam === "Lidding Film") {
+      setActiveCategory(text.mainCat4);
+      return;
+    }
+    if (categoryParam === "Protective Packaging") {
+      setActiveCategory(text.mainCat5);
+      return;
+    }
+    if (categoryParam === "Specialty") {
+      setActiveCategory(text.mainCat6);
       return;
     }
 
@@ -268,12 +377,18 @@ export default function ProductsClient({
       } else {
         const categoryName =
           nextCategory === text.mainCat1
-            ? "Plastic Packaging Bags"
-            : nextCategory === text.mainCat3
-              ? "High-Barrier & Metallized Films"
-              : nextCategory === text.mainCat2
-                ? "Shrink Label Series"
-                : getCanonicalCategory(nextCategory);
+            ? "Flexible Packaging"
+            : nextCategory === text.mainCat2
+              ? "Shrink Labels"
+              : nextCategory === text.mainCat3
+                ? "Rollstock & Films"
+                : nextCategory === text.mainCat4
+                  ? "Lidding Film"
+                  : nextCategory === text.mainCat5
+                    ? "Protective Packaging"
+                    : nextCategory === text.mainCat6
+                      ? "Specialty"
+                      : getCanonicalCategory(nextCategory);
         const categoryPath = buildProductCategoryPath(categoryName);
         const query = params.toString();
         router.push(query ? `${categoryPath}?${query}` : categoryPath, { scroll: false });
@@ -288,7 +403,7 @@ export default function ProductsClient({
   // Read URL params whenever route search params or pathname changes
   useEffect(() => {
     syncFiltersFromUrl();
-  }, [searchParams, pathname, text.allProducts, text.mainCat1, text.mainCat3]);
+  }, [searchParams, pathname, text.allProducts, text.mainCat1, text.mainCat2, text.mainCat3, text.mainCat4, text.mainCat5, text.mainCat6]);
 
   // Reset page when filters change
   useEffect(() => {
@@ -312,9 +427,17 @@ export default function ProductsClient({
     if (activeCategory === text.allProducts) {
       matchesCategory = true;
     } else if (activeCategory === text.mainCat1) {
-      matchesCategory = plasticBagSubs.includes(productCategory);
+      matchesCategory = productCategory === "Flexible Packaging" || flexiblePackagingSubs.includes(productCategory);
+    } else if (activeCategory === text.mainCat2) {
+      matchesCategory = productCategory === "Shrink Labels" || shrinkLabelsSubs.includes(productCategory);
     } else if (activeCategory === text.mainCat3) {
-      matchesCategory = highBarrierSubs.includes(productCategory);
+      matchesCategory = productCategory === "Rollstock & Films" || rollstockFilmsSubs.includes(productCategory);
+    } else if (activeCategory === text.mainCat4) {
+      matchesCategory = productCategory === "Lidding Film";
+    } else if (activeCategory === text.mainCat5) {
+      matchesCategory = productCategory === "Protective Packaging" || protectivePackagingSubs.includes(productCategory);
+    } else if (activeCategory === text.mainCat6) {
+      matchesCategory = productCategory === "Specialty" || specialtySubs.includes(productCategory);
     } else {
       matchesCategory = productCategory === activeCanonical;
     }
@@ -520,29 +643,29 @@ export default function ProductsClient({
                     </button>
                   </li>
 
-                  {/* Main Category 1 with Subcategories */}
+                  {/* Main Category 1 (Flexible Packaging) with Subcategories */}
                   <li>
                     <div
                       className={clsx(
                         "w-full text-left px-5 py-4 rounded-none text-[14px] font-bold transition-all duration-300 flex items-center justify-between group border-l-2 cursor-pointer",
-                        (activeCategory === text.mainCat1 || plasticBagSubs.includes(getCanonicalCategory(activeCategory)))
+                        (activeCategory === text.mainCat1 || flexiblePackagingSubs.includes(getCanonicalCategory(activeCategory)))
                           ? "bg-white border-[#F05A22] text-[#1A1A1A] shadow-sm" 
                           : "bg-transparent border-transparent text-gray-500 hover:bg-white hover:text-[#1A1A1A] hover:border-gray-200"
                       )}
                       onClick={() => {
                         setActiveCategory(text.mainCat1);
-                        setIsPlasticBagsOpen(!isPlasticBagsOpen);
+                        setIsFlexibleOpen(!isFlexibleOpen);
                         updateUrlFilters(text.mainCat1);
                       }}
                     >
                       {text.mainCat1}
                       <motion.div 
-                        animate={{ rotate: isPlasticBagsOpen ? 180 : 0 }}
+                        animate={{ rotate: isFlexibleOpen ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
                       >
                         <ChevronDown className={clsx(
                           "w-4 h-4", 
-                          (activeCategory === text.mainCat1 || plasticBagSubs.includes(getCanonicalCategory(activeCategory))) ? "text-[#F05A22]" : "text-gray-400 group-hover:text-[#1A1A1A]"
+                          (activeCategory === text.mainCat1 || flexiblePackagingSubs.includes(getCanonicalCategory(activeCategory))) ? "text-[#F05A22]" : "text-gray-400 group-hover:text-[#1A1A1A]"
                         )} />
                       </motion.div>
                     </div>
@@ -550,11 +673,11 @@ export default function ProductsClient({
                     {/* Subcategories Dropdown */}
                     <motion.div
                       initial={false}
-                      animate={{ height: isPlasticBagsOpen ? "auto" : 0, opacity: isPlasticBagsOpen ? 1 : 0 }}
+                      animate={{ height: isFlexibleOpen ? "auto" : 0, opacity: isFlexibleOpen ? 1 : 0 }}
                       className="overflow-hidden bg-gray-50"
                     >
                       <ul className="py-2">
-                        {plasticBagSubs.map((sub) => (
+                        {flexiblePackagingSubs.map((sub) => (
                           <li key={sub}>
                             <button
                               onClick={() => {
@@ -578,64 +701,239 @@ export default function ProductsClient({
                     </motion.div>
                   </li>
 
-                  {/* Main Category 2 */}
+                  {/* Main Category 2 (Shrink Labels) with Subcategories */}
+                  <li>
+                    <div
+                      className={clsx(
+                        "w-full text-left px-5 py-4 rounded-none text-[14px] font-bold transition-all duration-300 flex items-center justify-between group border-l-2 cursor-pointer",
+                        (activeCategory === text.mainCat2 || shrinkLabelsSubs.includes(getCanonicalCategory(activeCategory)))
+                          ? "bg-white border-[#F05A22] text-[#1A1A1A] shadow-sm" 
+                          : "bg-transparent border-transparent text-gray-500 hover:bg-white hover:text-[#1A1A1A] hover:border-gray-200"
+                      )}
+                      onClick={() => {
+                        setActiveCategory(text.mainCat2);
+                        setIsShrinkOpen(!isShrinkOpen);
+                        updateUrlFilters(text.mainCat2);
+                      }}
+                    >
+                      {text.mainCat2}
+                      <motion.div 
+                        animate={{ rotate: isShrinkOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <ChevronDown className={clsx(
+                          "w-4 h-4", 
+                          (activeCategory === text.mainCat2 || shrinkLabelsSubs.includes(getCanonicalCategory(activeCategory))) ? "text-[#F05A22]" : "text-gray-400 group-hover:text-[#1A1A1A]"
+                        )} />
+                      </motion.div>
+                    </div>
+
+                    {/* Subcategories Dropdown */}
+                    <motion.div
+                      initial={false}
+                      animate={{ height: isShrinkOpen ? "auto" : 0, opacity: isShrinkOpen ? 1 : 0 }}
+                      className="overflow-hidden bg-gray-50"
+                    >
+                      <ul className="py-2">
+                        {shrinkLabelsSubs.map((sub) => (
+                          <li key={sub}>
+                            <button
+                              onClick={() => {
+                                setActiveCategory(getCategoryLabel(sub));
+                                setIsMobileFilterOpen(false);
+                                updateUrlFilters(getCategoryLabel(sub));
+                              }}
+                              className={clsx(
+                                "w-full text-left pl-10 pr-5 py-2.5 text-[13px] transition-colors flex items-center justify-between group",
+                                getCanonicalCategory(activeCategory) === sub 
+                                  ? "text-[#F05A22] font-bold bg-orange-50/50" 
+                                  : "text-gray-500 hover:text-[#1A1A1A] hover:bg-gray-100"
+                              )}
+                            >
+                              {getCategoryLabel(sub)}
+                              {getCanonicalCategory(activeCategory) === sub && <ChevronRight className="w-3 h-3 text-[#F05A22]" />}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  </li>
+
+                  {/* Main Category 3 (Rollstock & Films) with Subcategories */}
+                  <li>
+                    <div
+                      className={clsx(
+                        "w-full text-left px-5 py-4 rounded-none text-[14px] font-bold transition-all duration-300 flex items-center justify-between group border-l-2 cursor-pointer",
+                        (activeCategory === text.mainCat3 || rollstockFilmsSubs.includes(getCanonicalCategory(activeCategory)))
+                          ? "bg-white border-[#F05A22] text-[#1A1A1A] shadow-sm" 
+                          : "bg-transparent border-transparent text-gray-500 hover:bg-white hover:text-[#1A1A1A] hover:border-gray-200"
+                      )}
+                      onClick={() => {
+                        setActiveCategory(text.mainCat3);
+                        setIsRollstockOpen(!isRollstockOpen);
+                        updateUrlFilters(text.mainCat3);
+                      }}
+                    >
+                      {text.mainCat3}
+                      <motion.div 
+                        animate={{ rotate: isRollstockOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <ChevronDown className={clsx(
+                          "w-4 h-4", 
+                          (activeCategory === text.mainCat3 || rollstockFilmsSubs.includes(getCanonicalCategory(activeCategory))) ? "text-[#F05A22]" : "text-gray-400 group-hover:text-[#1A1A1A]"
+                        )} />
+                      </motion.div>
+                    </div>
+
+                    {/* Subcategories Dropdown */}
+                    <motion.div
+                      initial={false}
+                      animate={{ height: isRollstockOpen ? "auto" : 0, opacity: isRollstockOpen ? 1 : 0 }}
+                      className="overflow-hidden bg-gray-50"
+                    >
+                      <ul className="py-2">
+                        {rollstockFilmsSubs.map((sub) => (
+                          <li key={sub}>
+                            <button
+                              onClick={() => {
+                                setActiveCategory(getCategoryLabel(sub));
+                                setIsMobileFilterOpen(false);
+                                updateUrlFilters(getCategoryLabel(sub));
+                              }}
+                              className={clsx(
+                                "w-full text-left pl-10 pr-5 py-2.5 text-[13px] transition-colors flex items-center justify-between group",
+                                getCanonicalCategory(activeCategory) === sub 
+                                  ? "text-[#F05A22] font-bold bg-orange-50/50" 
+                                  : "text-gray-500 hover:text-[#1A1A1A] hover:bg-gray-100"
+                              )}
+                            >
+                              {getCategoryLabel(sub)}
+                              {getCanonicalCategory(activeCategory) === sub && <ChevronRight className="w-3 h-3 text-[#F05A22]" />}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  </li>
+
+                  {/* Main Category 4 (Lidding Film) */}
                   <li>
                     <button
                       onClick={() => {
-                        setActiveCategory(text.mainCat2);
+                        setActiveCategory(text.mainCat4);
                         setIsMobileFilterOpen(false);
-                        updateUrlFilters(text.mainCat2);
+                        updateUrlFilters(text.mainCat4);
                       }}
                       className={clsx(
                         "w-full text-left px-5 py-4 rounded-none text-[14px] font-bold transition-all duration-300 flex items-center justify-between group border-l-2",
-                        activeCategory === text.mainCat2 
+                        activeCategory === text.mainCat4 
                           ? "bg-white border-[#F05A22] text-[#1A1A1A] shadow-sm" 
                           : "bg-transparent border-transparent text-gray-500 hover:bg-white hover:text-[#1A1A1A] hover:border-gray-200"
                       )}
                     >
-                      {text.mainCat2}
-                      {activeCategory === text.mainCat2 && (
+                      {text.mainCat4}
+                      {activeCategory === text.mainCat4 && (
                         <motion.div layoutId="activeArrow">
                           <ChevronRight className="w-4 h-4 text-[#F05A22]" />
                         </motion.div>
                       )}
                     </button>
                   </li>
-                  {/* Main Category 3 (High-Barrier Films) with Subcategories */}
+
+                  {/* Main Category 5 (Protective Packaging) with Subcategories */}
                   <li>
                     <div
                       className={clsx(
                         "w-full text-left px-5 py-4 rounded-none text-[14px] font-bold transition-all duration-300 flex items-center justify-between group border-l-2 cursor-pointer",
-                        (activeCategory === text.mainCat3 || highBarrierSubs.includes(getCanonicalCategory(activeCategory)))
+                        (activeCategory === text.mainCat5 || protectivePackagingSubs.includes(getCanonicalCategory(activeCategory)))
                           ? "bg-white border-[#F05A22] text-[#1A1A1A] shadow-sm" 
                           : "bg-transparent border-transparent text-gray-500 hover:bg-white hover:text-[#1A1A1A] hover:border-gray-200"
                       )}
                       onClick={() => {
-                        setActiveCategory(text.mainCat3);
-                        setIsHighBarrierOpen(!isHighBarrierOpen);
-                        updateUrlFilters(text.mainCat3);
+                        setActiveCategory(text.mainCat5);
+                        setIsProtectiveOpen(!isProtectiveOpen);
+                        updateUrlFilters(text.mainCat5);
                       }}
                     >
-                      {text.mainCat3}
+                      {text.mainCat5}
                       <motion.div 
-                        animate={{ rotate: isHighBarrierOpen ? 180 : 0 }}
+                        animate={{ rotate: isProtectiveOpen ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
                       >
                         <ChevronDown className={clsx(
                           "w-4 h-4", 
-                          (activeCategory === text.mainCat3 || highBarrierSubs.includes(getCanonicalCategory(activeCategory))) ? "text-[#F05A22]" : "text-gray-400 group-hover:text-[#1A1A1A]"
+                          (activeCategory === text.mainCat5 || protectivePackagingSubs.includes(getCanonicalCategory(activeCategory))) ? "text-[#F05A22]" : "text-gray-400 group-hover:text-[#1A1A1A]"
                         )} />
                       </motion.div>
                     </div>
 
-                    {/* High-Barrier Subcategories Dropdown */}
+                    {/* Subcategories Dropdown */}
                     <motion.div
                       initial={false}
-                      animate={{ height: isHighBarrierOpen ? "auto" : 0, opacity: isHighBarrierOpen ? 1 : 0 }}
+                      animate={{ height: isProtectiveOpen ? "auto" : 0, opacity: isProtectiveOpen ? 1 : 0 }}
                       className="overflow-hidden bg-gray-50"
                     >
                       <ul className="py-2">
-                        {highBarrierSubs.map((sub) => (
+                        {protectivePackagingSubs.map((sub) => (
+                          <li key={sub}>
+                            <button
+                              onClick={() => {
+                                setActiveCategory(getCategoryLabel(sub));
+                                setIsMobileFilterOpen(false);
+                                updateUrlFilters(getCategoryLabel(sub));
+                              }}
+                              className={clsx(
+                                "w-full text-left pl-10 pr-5 py-2.5 text-[13px] transition-colors flex items-center justify-between group",
+                                getCanonicalCategory(activeCategory) === sub 
+                                  ? "text-[#F05A22] font-bold bg-orange-50/50" 
+                                  : "text-gray-500 hover:text-[#1A1A1A] hover:bg-gray-100"
+                              )}
+                            >
+                              {getCategoryLabel(sub)}
+                              {getCanonicalCategory(activeCategory) === sub && <ChevronRight className="w-3 h-3 text-[#F05A22]" />}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  </li>
+
+                  {/* Main Category 6 (Specialty) with Subcategories */}
+                  <li>
+                    <div
+                      className={clsx(
+                        "w-full text-left px-5 py-4 rounded-none text-[14px] font-bold transition-all duration-300 flex items-center justify-between group border-l-2 cursor-pointer",
+                        (activeCategory === text.mainCat6 || specialtySubs.includes(getCanonicalCategory(activeCategory)))
+                          ? "bg-white border-[#F05A22] text-[#1A1A1A] shadow-sm" 
+                          : "bg-transparent border-transparent text-gray-500 hover:bg-white hover:text-[#1A1A1A] hover:border-gray-200"
+                      )}
+                      onClick={() => {
+                        setActiveCategory(text.mainCat6);
+                        setIsSpecialtyOpen(!isSpecialtyOpen);
+                        updateUrlFilters(text.mainCat6);
+                      }}
+                    >
+                      {text.mainCat6}
+                      <motion.div 
+                        animate={{ rotate: isSpecialtyOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <ChevronDown className={clsx(
+                          "w-4 h-4", 
+                          (activeCategory === text.mainCat6 || specialtySubs.includes(getCanonicalCategory(activeCategory))) ? "text-[#F05A22]" : "text-gray-400 group-hover:text-[#1A1A1A]"
+                        )} />
+                      </motion.div>
+                    </div>
+
+                    {/* Subcategories Dropdown */}
+                    <motion.div
+                      initial={false}
+                      animate={{ height: isSpecialtyOpen ? "auto" : 0, opacity: isSpecialtyOpen ? 1 : 0 }}
+                      className="overflow-hidden bg-gray-50"
+                    >
+                      <ul className="py-2">
+                        {specialtySubs.map((sub) => (
                           <li key={sub}>
                             <button
                               onClick={() => {

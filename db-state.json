@@ -134,36 +134,36 @@
     },
     {
       "id": "cmok4wilw000ctmlo6jc3jfds",
-      "name": "Shrink Label Series",
+      "name": "Shrink Labels",
       "nameEs": null,
       "nameAr": null,
       "description": null,
       "descriptionEs": null,
       "descriptionAr": null,
       "createdAt": "2026-04-29T14:12:25.268Z",
-      "updatedAt": "2026-04-29T14:12:25.268Z"
+      "updatedAt": "2026-06-18T06:52:43.451Z"
     },
     {
       "id": "cmok5sy9s0000tmp81khvkunu",
-      "name": "Plastic Packaging Bags",
+      "name": "Flexible Packaging",
       "nameEs": null,
       "nameAr": null,
       "description": "塑料包装袋系列",
       "descriptionEs": null,
       "descriptionAr": null,
       "createdAt": "2026-04-29T14:37:38.560Z",
-      "updatedAt": "2026-04-29T14:37:38.560Z"
+      "updatedAt": "2026-06-18T06:52:43.222Z"
     },
     {
       "id": "cmovii60i0000tmm4euo6l7e4",
-      "name": "High-Barrier & Metallized Films",
+      "name": "Rollstock & Films",
       "nameEs": null,
       "nameAr": null,
       "description": null,
       "descriptionEs": null,
       "descriptionAr": null,
       "createdAt": "2026-05-07T13:18:38.322Z",
-      "updatedAt": "2026-05-07T13:18:38.322Z"
+      "updatedAt": "2026-06-18T06:52:43.348Z"
     },
     {
       "id": "cmovii62t0001tmm45rmn26us",
@@ -208,6 +208,160 @@
       "descriptionAr": null,
       "createdAt": "2026-05-07T13:18:38.626Z",
       "updatedAt": "2026-05-07T13:18:38.626Z"
+    },
+    {
+      "id": "cmqj57nns0000tmq44l01imn7",
+      "name": "Lidding Film",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:43.528Z",
+      "updatedAt": "2026-06-18T06:52:43.528Z"
+    },
+    {
+      "id": "cmqj57npu0001tmq46nvxxers",
+      "name": "Protective Packaging",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:43.602Z",
+      "updatedAt": "2026-06-18T06:52:43.602Z"
+    },
+    {
+      "id": "cmqj57ns40002tmq4fvpms8jg",
+      "name": "Specialty",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:43.685Z",
+      "updatedAt": "2026-06-18T06:52:43.685Z"
+    },
+    {
+      "id": "cmqj57nug0003tmq4g6pt4xr7",
+      "name": "BOPP Carton Sealing Tape",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:43.768Z",
+      "updatedAt": "2026-06-18T06:52:43.768Z"
+    },
+    {
+      "id": "cmqj57nwj0004tmq466q3d2p6",
+      "name": "Bubble Mailer & Bag",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:43.843Z",
+      "updatedAt": "2026-06-18T06:52:43.843Z"
+    },
+    {
+      "id": "cmqj57nzc0005tmq4yqaewtv9",
+      "name": "Poly Mailers",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:43.945Z",
+      "updatedAt": "2026-06-18T06:52:43.945Z"
+    },
+    {
+      "id": "cmqj57o1u0006tmq4hzwaevb0",
+      "name": "Microwavable Pouch",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:44.034Z",
+      "updatedAt": "2026-06-18T06:52:44.034Z"
+    },
+    {
+      "id": "cmqj57o460007tmq4ct06tibq",
+      "name": "Retort Pouch",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:44.118Z",
+      "updatedAt": "2026-06-18T06:52:44.118Z"
+    },
+    {
+      "id": "cmqj57o6c0008tmq4fechvijx",
+      "name": "Anti-static Packaging",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:44.197Z",
+      "updatedAt": "2026-06-18T06:52:44.197Z"
+    },
+    {
+      "id": "cmqj57o8k0009tmq4xeaiircd",
+      "name": "Moisture Barrier Packaging",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:44.277Z",
+      "updatedAt": "2026-06-18T06:52:44.277Z"
+    },
+    {
+      "id": "cmqj57obe000atmq4s3nuyj4b",
+      "name": "Shrink Sleeve Labels",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:44.379Z",
+      "updatedAt": "2026-06-18T06:52:44.379Z"
+    },
+    {
+      "id": "cmqj57oe9000btmq4hucanur7",
+      "name": "Full Body Shrink Sleeves",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:44.481Z",
+      "updatedAt": "2026-06-18T06:52:44.481Z"
+    },
+    {
+      "id": "cmqj57oh2000ctmq4u6keu1wp",
+      "name": "Tamper Evident Shrink Bands",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:44.582Z",
+      "updatedAt": "2026-06-18T06:52:44.582Z"
+    },
+    {
+      "id": "cmqj57okz000dtmq4e4jnli2v",
+      "name": "Printed Shrink Label Rollstock",
+      "nameEs": null,
+      "nameAr": null,
+      "description": null,
+      "descriptionEs": null,
+      "descriptionAr": null,
+      "createdAt": "2026-06-18T06:52:44.723Z",
+      "updatedAt": "2026-06-18T06:52:44.723Z"
     }
   ],
   "products": [
@@ -2298,7 +2452,7 @@
       "seoDescription": "High quality heat shrink sleeve label customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wilw000ctmlo6jc3jfds",
+      "categoryId": "cmqj57okz000dtmq4e4jnli2v",
       "image": "/products/shrink-label-series/pet-shrink-film/1.png",
       "gallery": "[\"/products/shrink-label-series/pet-shrink-film/1.png\"]",
       "features": "[]",
@@ -2309,7 +2463,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-05-01T07:41:03.450Z",
-      "updatedAt": "2026-06-18T04:12:26.747Z"
+      "updatedAt": "2026-06-18T06:52:46.647Z"
     },
     {
       "id": "cmomlsxbk004rtmxc2lu6gfx2",
@@ -2323,7 +2477,7 @@
       "seoDescription": "High quality heat shrink sleeve label customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wilw000ctmlo6jc3jfds",
+      "categoryId": "cmqj57okz000dtmq4e4jnli2v",
       "image": "/products/shrink-label-series/pet-heat-shrink-film/1.png",
       "gallery": "[\"/products/shrink-label-series/pet-heat-shrink-film/1.png\"]",
       "features": "[]",
@@ -2334,7 +2488,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-05-01T07:41:03.537Z",
-      "updatedAt": "2026-06-18T04:12:26.823Z"
+      "updatedAt": "2026-06-18T06:52:46.730Z"
     },
     {
       "id": "cmomlsxe0004ttmxc59nttb25",
@@ -2348,7 +2502,7 @@
       "seoDescription": "High quality heat shrink sleeve label customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wilw000ctmlo6jc3jfds",
+      "categoryId": "cmqj57oe9000btmq4hucanur7",
       "image": "/products/shrink-label-series/household-personal-care-shrink-label/1.png",
       "gallery": "[\"/products/shrink-label-series/household-personal-care-shrink-label/1.png\",\"/products/shrink-label-series/household-personal-care-shrink-label/2.png\"]",
       "features": "[]",
@@ -2359,7 +2513,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-05-01T07:41:03.625Z",
-      "updatedAt": "2026-06-18T04:12:26.616Z"
+      "updatedAt": "2026-06-18T06:52:46.489Z"
     },
     {
       "id": "cmomlsxgo004vtmxc1e7pusgz",
@@ -2373,7 +2527,7 @@
       "seoDescription": "High quality heat shrink sleeve label customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wilw000ctmlo6jc3jfds",
+      "categoryId": "cmqj57obe000atmq4s3nuyj4b",
       "image": "/products/shrink-label-series/heat-shrink-sleeve-label/1.png",
       "gallery": "[\"/products/shrink-label-series/heat-shrink-sleeve-label/1.png\",\"/products/shrink-label-series/heat-shrink-sleeve-label/2.png\"]",
       "features": "[]",
@@ -2384,7 +2538,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-05-01T07:41:03.720Z",
-      "updatedAt": "2026-06-18T04:12:26.541Z"
+      "updatedAt": "2026-06-18T06:52:46.406Z"
     },
     {
       "id": "cmomlsxj4004xtmxc7h8apzfj",
@@ -2398,7 +2552,7 @@
       "seoDescription": "High quality custom toy packaging bag customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wilw000ctmlo6jc3jfds",
+      "categoryId": "cmqj57oh2000ctmq4u6keu1wp",
       "image": "/products/shrink-label-series/toy-heat-shrink-label/1.png",
       "gallery": "[\"/products/shrink-label-series/toy-heat-shrink-label/1.png\",\"/products/shrink-label-series/toy-heat-shrink-label/2.png\"]",
       "features": "[]",
@@ -2409,7 +2563,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-05-01T07:41:03.808Z",
-      "updatedAt": "2026-06-18T04:12:26.683Z"
+      "updatedAt": "2026-06-18T06:52:46.564Z"
     },
     {
       "id": "cmomlsxmh004ztmxc8lftcpj6",
@@ -2423,7 +2577,7 @@
       "seoDescription": "High quality heat shrink sleeve label customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wilw000ctmlo6jc3jfds",
+      "categoryId": "cmqj57obe000atmq4s3nuyj4b",
       "image": "/products/shrink-label-series/mineral-water-label/1.png",
       "gallery": "[\"/products/shrink-label-series/mineral-water-label/1.png\",\"/products/shrink-label-series/mineral-water-label/2.png\"]",
       "features": "[]",
@@ -2434,7 +2588,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-05-01T07:41:03.929Z",
-      "updatedAt": "2026-06-18T04:12:26.411Z"
+      "updatedAt": "2026-06-18T06:52:46.255Z"
     },
     {
       "id": "cmomlsxos0051tmxcqvxtouzp",
@@ -2448,7 +2602,7 @@
       "seoDescription": "High quality heat shrink sleeve label customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wilw000ctmlo6jc3jfds",
+      "categoryId": "cmqj57obe000atmq4s3nuyj4b",
       "image": "/products/shrink-label-series/custom-mineral-water-label/1.png",
       "gallery": "[\"/products/shrink-label-series/custom-mineral-water-label/1.png\",\"/products/shrink-label-series/custom-mineral-water-label/2.png\"]",
       "features": "[]",
@@ -2459,7 +2613,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-05-01T07:41:04.012Z",
-      "updatedAt": "2026-06-18T04:12:26.466Z"
+      "updatedAt": "2026-06-18T06:52:46.331Z"
     },
     {
       "id": "cmovii6ja000ctmm4k2nrxpwl",
@@ -3209,7 +3363,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-05-07T13:22:26.542Z",
-      "updatedAt": "2026-06-18T04:12:23.560Z"
+      "updatedAt": "2026-06-18T06:52:46.181Z"
     },
     {
       "id": "cmovin26y001ttmrghle0i7k1",
@@ -3598,7 +3752,7 @@
       "seoDescription": "Bubble Bag from HAILITONG Packaging. Custom flexible packaging solution for bubble bags applications.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wifn0009tmlogspwf9ak",
+      "categoryId": "cmqj57nwj0004tmq466q3d2p6",
       "image": "/products/bubble-bags/bubble-bag/1.png",
       "gallery": "[\"/products/bubble-bags/bubble-bag/1.png\",\"/products/bubble-bags/bubble-bag/2.png\",\"/products/bubble-bags/bubble-bag/3.png\"]",
       "features": "[\"Protective cushioning structure\",\"Custom printing available\",\"Suitable for shipping and retail packaging\"]",
@@ -3609,7 +3763,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-05-07T14:32:05.169Z",
-      "updatedAt": "2026-06-18T04:12:25.014Z"
+      "updatedAt": "2026-06-18T06:52:46.099Z"
     },
     {
       "id": "cmqi2igtq0001tmaswu6qvhgi",
@@ -3623,7 +3777,7 @@
       "seoDescription": "High quality custom cup sealing lid film customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmovii66i0003tmm4zk4s7tvy",
+      "categoryId": "cmqj57nns0000tmq44l01imn7",
       "image": "/products/specialty-functional-films/custom-cup-sealing-lid-film/1.png",
       "gallery": "[\"/products/specialty-functional-films/custom-cup-sealing-lid-film/1.png\",\"/products/specialty-functional-films/custom-cup-sealing-lid-film/2.png\"]",
       "features": "[\"Custom Cup Sealing Lid Film\",\"Excellent Sealability\",\"High Temperature Resistance\",\"Easy Peel or Tight Seal Options\"]",
@@ -3634,7 +3788,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-17T12:49:22.862Z",
-      "updatedAt": "2026-06-18T04:12:23.163Z"
+      "updatedAt": "2026-06-18T06:52:44.819Z"
     },
     {
       "id": "cmqi2igwu0003tmas3flzld6g",
@@ -3648,7 +3802,7 @@
       "seoDescription": "High quality kraft paper bubble mailer customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wifn0009tmlogspwf9ak",
+      "categoryId": "cmqj57nwj0004tmq466q3d2p6",
       "image": "/products/bubble-bags/kraft-paper-bubble-mailer/1.png",
       "gallery": "[\"/products/bubble-bags/kraft-paper-bubble-mailer/1.png\",\"/products/bubble-bags/kraft-paper-bubble-mailer/2.png\",\"/products/bubble-bags/kraft-paper-bubble-mailer/3.png\"]",
       "features": "[\"Kraft Paper Bubble Mailer\",\"Padded Cushioned Protection\",\"Self-Adhesive Sealing Strip\",\"Eco-friendly Appearance\"]",
@@ -3659,7 +3813,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-17T12:49:22.974Z",
-      "updatedAt": "2026-06-18T04:12:24.652Z"
+      "updatedAt": "2026-06-18T06:52:45.132Z"
     },
     {
       "id": "cmqi2ih3a0005tmase7adcs3p",
@@ -3673,7 +3827,7 @@
       "seoDescription": "High quality metallic poly bubble mailer customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wifn0009tmlogspwf9ak",
+      "categoryId": "cmqj57nwj0004tmq466q3d2p6",
       "image": "/products/bubble-bags/metallic-poly-bubble-mailer/1.png",
       "gallery": "[\"/products/bubble-bags/metallic-poly-bubble-mailer/1.png\",\"/products/bubble-bags/metallic-poly-bubble-mailer/2.png\",\"/products/bubble-bags/metallic-poly-bubble-mailer/3.png\"]",
       "features": "[\"Metallic Poly Bubble Mailer\",\"Vibrant Glossy Finish\",\"Waterproof & Moisture Barrier\",\"Cushioning Protection\"]",
@@ -3684,7 +3838,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-17T12:49:23.206Z",
-      "updatedAt": "2026-06-18T04:12:24.727Z"
+      "updatedAt": "2026-06-18T06:52:45.218Z"
     },
     {
       "id": "cmqi2ih5y0007tmas16iecgvi",
@@ -3698,7 +3852,7 @@
       "seoDescription": "High quality white poly bubble mailer customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wifn0009tmlogspwf9ak",
+      "categoryId": "cmqj57nwj0004tmq466q3d2p6",
       "image": "/products/bubble-bags/white-poly-bubble-mailer/1.png",
       "gallery": "[\"/products/bubble-bags/white-poly-bubble-mailer/1.png\",\"/products/bubble-bags/white-poly-bubble-mailer/2.png\",\"/products/bubble-bags/white-poly-bubble-mailer/3.png\"]",
       "features": "[\"White Poly Bubble Mailer\",\"Clean Professional Look\",\"Tear-Resistant Poly Exterior\",\"Excellent Cushioning\"]",
@@ -3709,7 +3863,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-17T12:49:23.303Z",
-      "updatedAt": "2026-06-18T04:12:24.822Z"
+      "updatedAt": "2026-06-18T06:52:45.316Z"
     },
     {
       "id": "cmqi2ih9i0009tmas5ftbv3iy",
@@ -3723,7 +3877,7 @@
       "seoDescription": "High quality anti-static bubble mailer customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wifn0009tmlogspwf9ak",
+      "categoryId": "cmqj57nwj0004tmq466q3d2p6",
       "image": "/products/bubble-bags/anti-static-bubble-mailer/1.png",
       "gallery": "[\"/products/bubble-bags/anti-static-bubble-mailer/1.png\",\"/products/bubble-bags/anti-static-bubble-mailer/2.png\",\"/products/bubble-bags/anti-static-bubble-mailer/3.png\"]",
       "features": "[\"Anti-Static Bubble Mailer\",\"ESD Protection for Electronics\",\"Cushioning Cushion Wrap\",\"Puncture Resistant\"]",
@@ -3734,7 +3888,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-17T12:49:23.431Z",
-      "updatedAt": "2026-06-18T04:12:24.927Z"
+      "updatedAt": "2026-06-18T06:52:45.401Z"
     },
     {
       "id": "cmqi2ihce000btmasgibh818b",
@@ -3748,7 +3902,7 @@
       "seoDescription": "High quality custom printed poly mailer customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok5sy9s0000tmp81khvkunu",
+      "categoryId": "cmqj57nzc0005tmq4yqaewtv9",
       "image": "/products/plastic-packaging-bags/custom-printed-poly-mailer/1.png",
       "gallery": "[\"/products/plastic-packaging-bags/custom-printed-poly-mailer/1.png\",\"/products/plastic-packaging-bags/custom-printed-poly-mailer/2.png\",\"/products/plastic-packaging-bags/custom-printed-poly-mailer/3.png\",\"/products/plastic-packaging-bags/custom-printed-poly-mailer/4.png\",\"/products/plastic-packaging-bags/custom-printed-poly-mailer/5.png\",\"/products/plastic-packaging-bags/custom-printed-poly-mailer/6.png\",\"/products/plastic-packaging-bags/custom-printed-poly-mailer/7.png\"]",
       "features": "[\"Custom Printed Poly Mailer\",\"Waterproof & Tear-Resistant\",\"Strong Self-Adhesive Seal\",\"High Opacity Security Design\"]",
@@ -3759,7 +3913,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-17T12:49:23.534Z",
-      "updatedAt": "2026-06-18T04:12:25.113Z"
+      "updatedAt": "2026-06-18T06:52:45.599Z"
     },
     {
       "id": "cmqi2ihfj000dtmas01najhda",
@@ -3823,7 +3977,7 @@
       "seoDescription": "High quality bubble film rollstock customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wifn0009tmlogspwf9ak",
+      "categoryId": "cmqj57nwj0004tmq466q3d2p6",
       "image": "/products/bubble-bags/bubble-film-rollstock/1.png",
       "gallery": "[\"/products/bubble-bags/bubble-film-rollstock/1.png\",\"/products/bubble-bags/bubble-film-rollstock/2.png\"]",
       "features": "[\"Bubble Film Rollstock\",\"Shock Absorption Cushioning\",\"Lightweight Protective Packaging\",\"Flexible Wrap Material\"]",
@@ -3834,7 +3988,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-17T12:49:23.863Z",
-      "updatedAt": "2026-06-18T04:12:24.064Z"
+      "updatedAt": "2026-06-18T06:52:45.490Z"
     },
     {
       "id": "cmqi2ihp3000jtmasli8rlrb4",
@@ -3848,7 +4002,7 @@
       "seoDescription": "High quality anti-static esd shielding bag customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wi9f0006tmlo0t81uxa0",
+      "categoryId": "cmqj57o6c0008tmq4fechvijx",
       "image": "/products/ziplock-bags/anti-static-esd-shielding-bag/1.png",
       "gallery": "[\"/products/ziplock-bags/anti-static-esd-shielding-bag/1.png\",\"/products/ziplock-bags/anti-static-esd-shielding-bag/2.png\",\"/products/ziplock-bags/anti-static-esd-shielding-bag/3.png\",\"/products/ziplock-bags/anti-static-esd-shielding-bag/4.png\",\"/products/ziplock-bags/anti-static-esd-shielding-bag/5.png\",\"/products/ziplock-bags/anti-static-esd-shielding-bag/6.png\",\"/products/ziplock-bags/anti-static-esd-shielding-bag/7.png\"]",
       "features": "[\"Anti-Static ESD Shielding Bag\",\"Electrostatic Shielding Faraday Cage\",\"Resealable Zipper Lock\",\"Translucent for Scanning\"]",
@@ -3859,7 +4013,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-17T12:49:23.992Z",
-      "updatedAt": "2026-06-18T04:12:25.212Z"
+      "updatedAt": "2026-06-18T06:52:45.690Z"
     },
     {
       "id": "cmqi2ihsj000ltmasposmtyqr",
@@ -3873,7 +4027,7 @@
       "seoDescription": "High quality microwavable retort pouch customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wi0m0002tmlo9j8ru4ul",
+      "categoryId": "cmqj57o1u0006tmq4hzwaevb0",
       "image": "/products/custom-food-bags/microwavable-retort-pouch/1.png",
       "gallery": "[\"/products/custom-food-bags/microwavable-retort-pouch/1.png\",\"/products/custom-food-bags/microwavable-retort-pouch/2.png\",\"/products/custom-food-bags/microwavable-retort-pouch/3.png\",\"/products/custom-food-bags/microwavable-retort-pouch/4.png\",\"/products/custom-food-bags/microwavable-retort-pouch/5.png\",\"/products/custom-food-bags/microwavable-retort-pouch/6.png\",\"/products/custom-food-bags/microwavable-retort-pouch/7.png\",\"/products/custom-food-bags/microwavable-retort-pouch/8.png\",\"/products/custom-food-bags/microwavable-retort-pouch/9.png\",\"/products/custom-food-bags/microwavable-retort-pouch/10.png\",\"/products/custom-food-bags/microwavable-retort-pouch/11.png\",\"/products/custom-food-bags/microwavable-retort-pouch/12.png\",\"/products/custom-food-bags/microwavable-retort-pouch/13.png\"]",
       "features": "[\"Microwavable Retort Pouch\",\"Microwave Safe Material\",\"High Barrier Film Lamination\",\"Self-Venting Design Options\"]",
@@ -3884,7 +4038,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-17T12:49:24.115Z",
-      "updatedAt": "2026-06-18T04:12:26.168Z"
+      "updatedAt": "2026-06-18T06:52:45.883Z"
     },
     {
       "id": "cmqi2ihvo000ntmas989pb2fb",
@@ -3898,7 +4052,7 @@
       "seoDescription": "High quality high-temperature retort pouch customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wi0m0002tmlo9j8ru4ul",
+      "categoryId": "cmqj57o460007tmq4ct06tibq",
       "image": "/products/custom-food-bags/high-temperature-retort-pouch/1.png",
       "gallery": "[\"/products/custom-food-bags/high-temperature-retort-pouch/1.png\",\"/products/custom-food-bags/high-temperature-retort-pouch/2.png\",\"/products/custom-food-bags/high-temperature-retort-pouch/3.png\",\"/products/custom-food-bags/high-temperature-retort-pouch/4.png\",\"/products/custom-food-bags/high-temperature-retort-pouch/5.png\",\"/products/custom-food-bags/high-temperature-retort-pouch/6.png\",\"/products/custom-food-bags/high-temperature-retort-pouch/7.png\",\"/products/custom-food-bags/high-temperature-retort-pouch/8.png\"]",
       "features": "[\"High-Temperature Retort Pouch\",\"Withstands Up to 121°C/135°C Retort\",\"Excellent Foil Barrier\",\"Extended Shelf Life Storage\"]",
@@ -3909,7 +4063,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-17T12:49:24.228Z",
-      "updatedAt": "2026-06-18T04:12:26.289Z"
+      "updatedAt": "2026-06-18T06:52:45.973Z"
     },
     {
       "id": "cmqi2irw10001tmhsvrefqhso",
@@ -3923,7 +4077,7 @@
       "seoDescription": "High quality custom printed bopp packing tape customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wifn0009tmlogspwf9ak",
+      "categoryId": "cmqj57nug0003tmq4g6pt4xr7",
       "image": "/products/bubble-bags/custom-printed-bopp-packing-tape/1.png",
       "gallery": "[\"/products/bubble-bags/custom-printed-bopp-packing-tape/1.png\",\"/products/bubble-bags/custom-printed-bopp-packing-tape/2.png\",\"/products/bubble-bags/custom-printed-bopp-packing-tape/3.png\",\"/products/bubble-bags/custom-printed-bopp-packing-tape/4.png\",\"/products/bubble-bags/custom-printed-bopp-packing-tape/5.png\",\"/products/bubble-bags/custom-printed-bopp-packing-tape/6.png\",\"/products/bubble-bags/custom-printed-bopp-packing-tape/7.png\"]",
       "features": "[\"Custom Printed BOPP Packing Tape\",\"Strong Adhesion\",\"Custom Logo Printing\",\"High Tensile Strength\"]",
@@ -3934,7 +4088,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-17T12:49:37.201Z",
-      "updatedAt": "2026-06-18T04:12:24.432Z"
+      "updatedAt": "2026-06-18T06:52:44.943Z"
     },
     {
       "id": "cmqi2irzo0003tmhs8dspkv8w",
@@ -3948,7 +4102,7 @@
       "seoDescription": "High quality clear bopp carton sealing tape customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wifn0009tmlogspwf9ak",
+      "categoryId": "cmqj57nug0003tmq4g6pt4xr7",
       "image": "/products/bubble-bags/clear-bopp-carton-sealing-tape/1.png",
       "gallery": "[\"/products/bubble-bags/clear-bopp-carton-sealing-tape/1.png\",\"/products/bubble-bags/clear-bopp-carton-sealing-tape/2.png\",\"/products/bubble-bags/clear-bopp-carton-sealing-tape/3.png\",\"/products/bubble-bags/clear-bopp-carton-sealing-tape/4.png\",\"/products/bubble-bags/clear-bopp-carton-sealing-tape/5.png\",\"/products/bubble-bags/clear-bopp-carton-sealing-tape/6.png\"]",
       "features": "[\"Clear BOPP Carton Sealing Tape\",\"Excellent Clarity\",\"High Strength Packaging\",\"Long-lasting Adhesion\"]",
@@ -3959,7 +4113,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-17T12:49:37.332Z",
-      "updatedAt": "2026-06-18T04:12:24.560Z"
+      "updatedAt": "2026-06-18T06:52:45.043Z"
     },
     {
       "id": "cmqizhi8y0001tmi4jamle2cf",
@@ -3973,7 +4127,7 @@
       "seoDescription": "High quality moisture barrier packaging bag customized for your brand.",
       "seoDescriptionEs": null,
       "seoDescriptionAr": null,
-      "categoryId": "cmok4wi9f0006tmlo0t81uxa0",
+      "categoryId": "cmqj57o8k0009tmq4xeaiircd",
       "image": "/products/ziplock-bags/moisture-barrier-packaging-bag/1.png",
       "gallery": "[\"/products/ziplock-bags/moisture-barrier-packaging-bag/1.png\",\"/products/ziplock-bags/moisture-barrier-packaging-bag/2.png\",\"/products/ziplock-bags/moisture-barrier-packaging-bag/3.png\",\"/products/ziplock-bags/moisture-barrier-packaging-bag/4.png\",\"/products/ziplock-bags/moisture-barrier-packaging-bag/5.png\"]",
       "features": "[\"防静电防潮袋\",\"Moisture Barrier Packaging Bag\",\"ESD & Moisture Protection\",\"High Shielding Properties\",\"Resealable Zipper Lock\"]",
@@ -3984,7 +4138,7 @@
       "contentAr": null,
       "isFeatured": false,
       "createdAt": "2026-06-18T04:12:25.322Z",
-      "updatedAt": "2026-06-18T04:12:25.322Z"
+      "updatedAt": "2026-06-18T06:52:45.782Z"
     }
   ],
   "news": [
@@ -4980,15 +5134,15 @@
     },
     {
       "id": "cmok57t9s0001tmq41vsrviut",
-      "nameZh": "塑料包装袋系列",
-      "nameEn": "Plastic Packaging Bags",
-      "link": "/products/plastic-packaging-bags",
+      "nameZh": "软包装系列",
+      "nameEn": "Flexible Packaging",
+      "link": "/products/flexible-packaging",
       "order": 1,
       "parentId": "cmo2ql8ld0001tml81mbsac26",
       "isVisible": true,
-      "image": "/products/塑料包装袋系列/定制共挤膜快递袋/2.png",
+      "image": "/products/plastic-packaging-bags/custom-printed-poly-mailer/1.png",
       "createdAt": "2026-04-29T14:21:12.304Z",
-      "updatedAt": "2026-06-17T14:30:51.400Z"
+      "updatedAt": "2026-06-18T06:52:46.822Z"
     },
     {
       "id": "cmok57tbu0003tmq47scvuyby",
@@ -5100,15 +5254,15 @@
     },
     {
       "id": "cmok57tsr000ltmq4a2g0tfpi",
-      "nameZh": "气泡袋",
-      "nameEn": "Bubble Bags",
-      "link": "/products/bubble-bags",
-      "order": 10,
-      "parentId": "cmok57t9s0001tmq41vsrviut",
+      "nameZh": "气泡自封信封袋",
+      "nameEn": "Bubble Mailer & Bag",
+      "link": "/products/bubble-mailer-bag",
+      "order": 1,
+      "parentId": "nav-protective-packaging",
       "isVisible": true,
-      "image": "/products/塑料包装袋系列/气泡袋/1.png",
+      "image": "/products/bubble-bags/kraft-paper-bubble-mailer/1.png",
       "createdAt": "2026-04-29T14:21:12.987Z",
-      "updatedAt": "2026-06-17T13:42:35.665Z"
+      "updatedAt": "2026-06-18T06:52:47.645Z"
     },
     {
       "id": "cmok57tul000ntmq44typz9lj",
@@ -5136,27 +5290,27 @@
     },
     {
       "id": "cmok57tzo000rtmq4041tmzob",
-      "nameZh": "收缩标签系列",
-      "nameEn": "Shrink Label Series",
-      "link": "/products/shrink-label-series",
+      "nameZh": "热收缩标签系列",
+      "nameEn": "Shrink Labels",
+      "link": "/products/shrink-labels",
       "order": 2,
       "parentId": "cmo2ql8ld0001tml81mbsac26",
       "isVisible": true,
-      "image": "/images/nav/shrink-film-all.png",
+      "image": "/products/shrink-label-series/heat-shrink-sleeve-label/1.png",
       "createdAt": "2026-04-29T14:21:13.237Z",
-      "updatedAt": "2026-06-17T15:19:26.776Z"
+      "updatedAt": "2026-06-18T06:52:47.013Z"
     },
     {
       "id": "cmovk2nlo0001tmcsnnalwx49",
-      "nameZh": "高阻隔与金属化薄膜",
-      "nameEn": "High-Barrier & Metallized Films",
-      "link": "/products/high-barrier-metallized-films",
+      "nameZh": "卷膜与薄膜系列",
+      "nameEn": "Rollstock & Films",
+      "link": "/products/rollstock-films",
       "order": 100,
       "parentId": "cmo2ql8ld0001tml81mbsac26",
       "isVisible": true,
-      "image": "/images/nav/rollstock-hero-1.png",
+      "image": "/products/specialty-functional-films/general-purpose-pet-film-pet-ty/1.png",
       "createdAt": "2026-05-07T14:02:33.852Z",
-      "updatedAt": "2026-06-17T15:19:26.700Z"
+      "updatedAt": "2026-06-18T06:52:46.905Z"
     },
     {
       "id": "cmovk2nog0003tmcsw0gnqn31",
@@ -5205,6 +5359,162 @@
       "image": "/products/recyclable-mono-materials/mono-pe-recyclable-rollstock/1.png",
       "createdAt": "2026-05-07T14:02:34.228Z",
       "updatedAt": "2026-06-17T14:16:57.184Z"
+    },
+    {
+      "id": "nav-lidding-film",
+      "nameZh": "杯盖膜系列",
+      "nameEn": "Lidding Film",
+      "link": "/products/lidding-film",
+      "order": 3,
+      "parentId": "cmo2ql8ld0001tml81mbsac26",
+      "isVisible": true,
+      "image": "/products/specialty-functional-films/custom-cup-sealing-lid-film/1.png",
+      "createdAt": "2026-06-18T06:52:47.101Z",
+      "updatedAt": "2026-06-18T06:52:47.101Z"
+    },
+    {
+      "id": "nav-protective-packaging",
+      "nameZh": "防护包装系列",
+      "nameEn": "Protective Packaging",
+      "link": "/products/protective-packaging",
+      "order": 4,
+      "parentId": "cmo2ql8ld0001tml81mbsac26",
+      "isVisible": true,
+      "image": "/products/bubble-bags/custom-printed-bopp-packing-tape/1.png",
+      "createdAt": "2026-06-18T06:52:47.188Z",
+      "updatedAt": "2026-06-18T06:52:47.188Z"
+    },
+    {
+      "id": "nav-specialty",
+      "nameZh": "特种与功能包装",
+      "nameEn": "Specialty",
+      "link": "/products/specialty",
+      "order": 5,
+      "parentId": "cmo2ql8ld0001tml81mbsac26",
+      "isVisible": true,
+      "image": "/products/ziplock-bags/anti-static-esd-shielding-bag/1.png",
+      "createdAt": "2026-06-18T06:52:47.268Z",
+      "updatedAt": "2026-06-18T06:52:47.268Z"
+    },
+    {
+      "id": "sub-shrink-sleeve",
+      "nameZh": "热收缩套标",
+      "nameEn": "Shrink Sleeve Labels",
+      "link": "/products/shrink-sleeve-labels",
+      "order": 0,
+      "parentId": "cmok57tzo000rtmq4041tmzob",
+      "isVisible": true,
+      "image": "/products/shrink-label-series/heat-shrink-sleeve-label/1.png",
+      "createdAt": "2026-06-18T06:52:47.344Z",
+      "updatedAt": "2026-06-18T06:52:47.344Z"
+    },
+    {
+      "id": "sub-full-body",
+      "nameZh": "全收缩瓶套标",
+      "nameEn": "Full Body Shrink Sleeves",
+      "link": "/products/full-body-shrink-sleeves",
+      "order": 1,
+      "parentId": "cmok57tzo000rtmq4041tmzob",
+      "isVisible": true,
+      "image": "/products/shrink-label-series/heat-shrink-sleeve-label/1.png",
+      "createdAt": "2026-06-18T06:52:47.412Z",
+      "updatedAt": "2026-06-18T06:52:47.412Z"
+    },
+    {
+      "id": "sub-tamper-evident",
+      "nameZh": "防篡改收缩带",
+      "nameEn": "Tamper Evident Shrink Bands",
+      "link": "/products/tamper-evident-shrink-bands",
+      "order": 2,
+      "parentId": "cmok57tzo000rtmq4041tmzob",
+      "isVisible": true,
+      "image": "/products/shrink-label-series/heat-shrink-sleeve-label/1.png",
+      "createdAt": "2026-06-18T06:52:47.477Z",
+      "updatedAt": "2026-06-18T06:52:47.477Z"
+    },
+    {
+      "id": "sub-printed-rollstock",
+      "nameZh": "印刷收缩标签卷材",
+      "nameEn": "Printed Shrink Label Rollstock",
+      "link": "/products/printed-shrink-label-rollstock",
+      "order": 3,
+      "parentId": "cmok57tzo000rtmq4041tmzob",
+      "isVisible": true,
+      "image": "/products/shrink-label-series/heat-shrink-sleeve-label/2.png",
+      "createdAt": "2026-06-18T06:52:47.544Z",
+      "updatedAt": "2026-06-18T06:52:47.544Z"
+    },
+    {
+      "id": "sub-bopp-tape",
+      "nameZh": "封箱胶带系列",
+      "nameEn": "BOPP Carton Sealing Tape",
+      "link": "/products/bopp-carton-sealing-tape",
+      "order": 0,
+      "parentId": "nav-protective-packaging",
+      "isVisible": true,
+      "image": "/products/bubble-bags/custom-printed-bopp-packing-tape/1.png",
+      "createdAt": "2026-06-18T06:52:47.738Z",
+      "updatedAt": "2026-06-18T06:52:47.738Z"
+    },
+    {
+      "id": "sub-poly-mailers",
+      "nameZh": "共挤膜快递袋",
+      "nameEn": "Poly Mailers",
+      "link": "/products/poly-mailers",
+      "order": 2,
+      "parentId": "nav-protective-packaging",
+      "isVisible": true,
+      "image": "/products/plastic-packaging-bags/custom-printed-poly-mailer/1.png",
+      "createdAt": "2026-06-18T06:52:47.829Z",
+      "updatedAt": "2026-06-18T06:52:47.829Z"
+    },
+    {
+      "id": "sub-microwavable",
+      "nameZh": "微波炉加热袋",
+      "nameEn": "Microwavable Pouch",
+      "link": "/products/microwavable-pouch",
+      "order": 0,
+      "parentId": "nav-specialty",
+      "isVisible": true,
+      "image": "/products/custom-food-bags/microwavable-retort-pouch/1.png",
+      "createdAt": "2026-06-18T06:52:47.920Z",
+      "updatedAt": "2026-06-18T06:52:47.920Z"
+    },
+    {
+      "id": "sub-retort",
+      "nameZh": "高温蒸煮袋",
+      "nameEn": "Retort Pouch",
+      "link": "/products/retort-pouch",
+      "order": 1,
+      "parentId": "nav-specialty",
+      "isVisible": true,
+      "image": "/products/custom-food-bags/high-temperature-retort-pouch/1.png",
+      "createdAt": "2026-06-18T06:52:48.022Z",
+      "updatedAt": "2026-06-18T06:52:48.022Z"
+    },
+    {
+      "id": "sub-anti-static",
+      "nameZh": "防静电屏蔽包装",
+      "nameEn": "Anti-static Packaging",
+      "link": "/products/anti-static-packaging",
+      "order": 2,
+      "parentId": "nav-specialty",
+      "isVisible": true,
+      "image": "/products/ziplock-bags/anti-static-esd-shielding-bag/1.png",
+      "createdAt": "2026-06-18T06:52:48.112Z",
+      "updatedAt": "2026-06-18T06:52:48.112Z"
+    },
+    {
+      "id": "sub-moisture-barrier",
+      "nameZh": "防潮复合真空袋",
+      "nameEn": "Moisture Barrier Packaging",
+      "link": "/products/moisture-barrier-packaging",
+      "order": 3,
+      "parentId": "nav-specialty",
+      "isVisible": true,
+      "image": "/products/ziplock-bags/moisture-barrier-packaging-bag/1.png",
+      "createdAt": "2026-06-18T06:52:48.281Z",
+      "updatedAt": "2026-06-18T06:52:48.281Z"
     }
   ]
 }
