@@ -4,9 +4,15 @@ import { getSiteUrl, parsePathRules } from "@/lib/seo";
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
   const baseUrl = getSiteUrl();
-  const setting = await prisma.systemSetting.findUnique({
-    where: { id: "global" },
-  });
+
+  let setting = null;
+  try {
+    setting = await prisma.systemSetting.findUnique({
+      where: { id: "global" },
+    });
+  } catch (error) {
+    console.error("Failed to generate robots settings:", error);
+  }
 
   if (setting?.siteNoindex) {
     return {
