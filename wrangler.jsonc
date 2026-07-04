@@ -4,6 +4,16 @@
   "name": "hltpack",
   "compatibility_date": "2026-07-04",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "routes": [
+    {
+      "pattern": "hltpack.com/*",
+      "zone_name": "hltpack.com"
+    },
+    {
+      "pattern": "www.hltpack.com/*",
+      "zone_name": "hltpack.com"
+    }
+  ],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
