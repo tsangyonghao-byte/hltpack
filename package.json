@@ -15,6 +15,7 @@
     "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
+    "@prisma/adapter-d1": "^6.19.3",
     "@prisma/client": "^6.4.1",
     "@tailwindcss/typography": "^0.5.19",
     "@tiptap/extension-image": "^3.22.3",

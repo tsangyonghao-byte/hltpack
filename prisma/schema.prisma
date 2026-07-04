@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -267,4 +268,3 @@ model VisitorLog {
   @@index([createdAt])
   @@index([ip, createdAt])
 }
-
