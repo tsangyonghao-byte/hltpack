@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
-import path from "node:path";
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ["@prisma/client", ".prisma/client"],
   turbopack: {
-    root: path.resolve(__dirname),
+    root: process.cwd(),
   },
   experimental: {
     serverActions: {
