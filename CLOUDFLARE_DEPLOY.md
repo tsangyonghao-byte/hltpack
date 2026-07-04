@@ -4,14 +4,14 @@ This project is configured for Cloudflare Workers through OpenNext.
 
 ## Cloudflare Build Settings
 
-- Runtime: Node.js 20
+- Runtime: Node.js 22
 - Install command: `npm ci`
 - Build command: `npm run cf:build`
 - Deploy command for CLI deploys: `npm run cf:deploy`
 
 If Cloudflare asks for environment variables, add:
 
-- `NODE_VERSION=20`
+- `NODE_VERSION=22`
 - `DATABASE_URL`
 - `ADMIN_USER`
 - `ADMIN_PASS`
