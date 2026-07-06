@@ -93,6 +93,11 @@ export default function Hero({ banners = [] }: { banners?: Banner[] }) {
     onSelect();
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
+
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
   }, [emblaApi, onSelect]);
 
   // 自动播放

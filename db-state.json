@@ -4672,51 +4672,51 @@
       "subtitle": "SMART DESIGN",
       "subtitleEs": null,
       "subtitleAr": null,
-      "description": "Discover our eco-friendly pouch designs that reduce carbon footprint without compromising quality or shelf life.",
+      "description": "Self-venting microwavable pouches combine convenience, reliable performance, and shelf-ready presentation.",
       "descriptionEs": null,
       "descriptionAr": null,
-      "image": "/uploads/1777417357235-et7uxhe.png",
-      "link": "/products?category=Stand-up+Pouches",
+      "image": "/products/custom-food-bags/microwavable-retort-pouch/1.png",
+      "link": "/products/microwavable-retort-pouch",
       "isActive": true,
       "order": 1,
       "createdAt": "2026-04-17T12:02:13.532Z",
-      "updatedAt": "2026-04-28T23:02:37.280Z"
+      "updatedAt": "2026-07-06T12:58:35.704Z"
     },
     {
       "id": "cmo2uyv3v0001tmf8or8i57zg",
       "title": "Circular Economy Solutions",
       "titleEs": null,
       "titleAr": null,
-      "subtitle": "100% RECYCLABLE",
+      "subtitle": "RECYCLABLE BARRIER FILM",
       "subtitleEs": null,
       "subtitleAr": null,
-      "description": "High-barrier packaging engineered for a sustainable future, ensuring maximum freshness.",
+      "description": "Recyclable high-barrier ALOx-BOPP film supports circular packaging goals without compromising product protection.",
       "descriptionEs": null,
       "descriptionAr": null,
-      "image": "/uploads/1777417372259-piln4ml.png",
-      "link": "/sustainability",
+      "image": "/products/recyclable-mono-materials/high-barrier-alox-bopp-film-recyclable-alox-bopp/1.png",
+      "link": "/products/high-barrier-alox-bopp-film-recyclable",
       "isActive": true,
       "order": 2,
       "createdAt": "2026-04-17T12:02:13.628Z",
-      "updatedAt": "2026-04-28T23:02:52.422Z"
+      "updatedAt": "2026-07-06T12:58:35.704Z"
     },
     {
       "id": "cmo2uyv6a0002tmf8gg2q4xrd",
-      "title": "Leak-proof Engineering",
+      "title": "Moisture Barrier Protection",
       "titleEs": null,
       "titleAr": null,
-      "subtitle": "ADVANCED SAFETY",
+      "subtitle": "HIGH-BARRIER SAFETY",
       "subtitleEs": null,
       "subtitleAr": null,
-      "description": "Secure sealing and superior puncture resistance for liquids and heavy products.",
+      "description": "High-barrier packaging protects sensitive products from moisture, oxygen, and environmental exposure.",
       "descriptionEs": null,
       "descriptionAr": null,
-      "image": "/uploads/1777417380999-84sydoi.png",
-      "link": "/packaging-safety",
+      "image": "/products/ziplock-bags/moisture-barrier-packaging-bag/1.png",
+      "link": "/products/moisture-barrier-packaging-bag",
       "isActive": true,
       "order": 3,
       "createdAt": "2026-04-17T12:02:13.715Z",
-      "updatedAt": "2026-04-28T23:03:01.004Z"
+      "updatedAt": "2026-07-06T12:58:35.704Z"
     },
     {
       "id": "cmo2uyv9a0003tmf8tx59pa8a",
@@ -4726,33 +4726,33 @@
       "subtitle": "CONVENIENCE FIRST",
       "subtitleEs": null,
       "subtitleAr": null,
-      "description": "High-temperature resistant pouches perfect for microwavable and ready meals.",
+      "description": "High-temperature resistant pouches designed for shelf-stable foods, ready meals, and demanding processing.",
       "descriptionEs": null,
       "descriptionAr": null,
-      "image": "/uploads/1777417541804-02a86kh.png",
-      "link": "/products?category=Retort+Pouches",
+      "image": "/products/custom-food-bags/high-temperature-retort-pouch/1.png",
+      "link": "/products/high-temperature-retort-pouch",
       "isActive": true,
       "order": 4,
       "createdAt": "2026-04-17T12:02:13.823Z",
-      "updatedAt": "2026-04-28T23:05:41.807Z"
+      "updatedAt": "2026-07-06T12:58:35.704Z"
     },
     {
       "id": "cmo2uyvcb0004tmf8m6z23890",
-      "title": "Less Material, More Value",
+      "title": "Static-Safe Packaging",
       "titleEs": null,
       "titleAr": null,
-      "subtitle": "OPTIMIZED PACKAGING",
+      "subtitle": "ESD PROTECTION",
       "subtitleEs": null,
       "subtitleAr": null,
-      "description": "Reduce plastic usage with our lightweight yet durable packaging structures.",
+      "description": "Multi-layer shielding bags protect sensitive electronics from static, moisture, and handling damage.",
       "descriptionEs": null,
       "descriptionAr": null,
-      "image": "/uploads/1777417392327-a3kedlr.png",
-      "link": "/how-we-work",
+      "image": "/products/ziplock-bags/anti-static-esd-shielding-bag/1.png",
+      "link": "/products/anti-static-esd-shielding-bag",
       "isActive": true,
       "order": 5,
       "createdAt": "2026-04-17T12:02:13.931Z",
-      "updatedAt": "2026-04-28T23:03:12.346Z"
+      "updatedAt": "2026-07-06T12:58:35.704Z"
     }
   ],
   "settings": [
@@ -5253,18 +5253,6 @@
       "updatedAt": "2026-05-11T07:14:37.121Z"
     },
     {
-      "id": "cmok57tsr000ltmq4a2g0tfpi",
-      "nameZh": "气泡自封信封袋",
-      "nameEn": "Bubble Mailer & Bag",
-      "link": "/products/bubble-mailer-bag",
-      "order": 1,
-      "parentId": "nav-protective-packaging",
-      "isVisible": true,
-      "image": "/products/bubble-bags/kraft-paper-bubble-mailer/1.png",
-      "createdAt": "2026-04-29T14:21:12.987Z",
-      "updatedAt": "2026-06-18T06:52:47.645Z"
-    },
-    {
       "id": "cmok57tul000ntmq44typz9lj",
       "nameZh": "吸嘴袋",
       "nameEn": "Spout Pouches",
@@ -5515,6 +5503,18 @@
       "image": "/products/ziplock-bags/moisture-barrier-packaging-bag/1.png",
       "createdAt": "2026-06-18T06:52:48.281Z",
       "updatedAt": "2026-06-18T06:52:48.281Z"
+    },
+    {
+      "id": "cmok57tsr000ltmq4a2g0tfpi",
+      "nameZh": "气泡自封信封袋",
+      "nameEn": "Bubble Mailer & Bag",
+      "link": "/products/bubble-mailer-bag",
+      "order": 1,
+      "parentId": "nav-protective-packaging",
+      "isVisible": true,
+      "image": "/products/bubble-bags/kraft-paper-bubble-mailer/1.png",
+      "createdAt": "2026-04-29T14:21:12.987Z",
+      "updatedAt": "2026-06-18T06:52:47.645Z"
     }
   ]
 }

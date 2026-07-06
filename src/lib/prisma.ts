@@ -3,7 +3,7 @@ import { PrismaD1 } from '@prisma/adapter-d1';
 import { getCloudflareContext } from '@opennextjs/cloudflare';
 import { cache } from 'react';
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const globalForPrisma = global as unknown as { prisma?: PrismaClient; prismaD1?: PrismaClient };
 type PrismaD1Input = ConstructorParameters<typeof PrismaD1>[0];
 type WorkersEnvModule = { env?: { DB?: unknown } };
 
@@ -35,9 +35,18 @@ async function getD1Binding() {
 }
 
 async function createPrismaClient() {
+  if (process.env.NODE_ENV === 'development' && process.env.DATABASE_URL) {
+    return createLocalPrismaClient();
+  }
+
+  if (globalForPrisma.prismaD1) {
+    return globalForPrisma.prismaD1;
+  }
+
   const d1 = await getD1Binding();
   if (d1) {
-    return new PrismaClient({ adapter: new PrismaD1(d1 as PrismaD1Input) });
+    globalForPrisma.prismaD1 = new PrismaClient({ adapter: new PrismaD1(d1 as PrismaD1Input) });
+    return globalForPrisma.prismaD1;
   }
 
   if (process.env.NEXT_PHASE !== 'phase-production-build') {
@@ -45,7 +54,8 @@ async function createPrismaClient() {
       const { env } = await getCloudflareContext({ async: true });
       const asyncD1 = (env as { DB?: unknown }).DB;
       if (asyncD1) {
-        return new PrismaClient({ adapter: new PrismaD1(asyncD1 as PrismaD1Input) });
+        globalForPrisma.prismaD1 = new PrismaClient({ adapter: new PrismaD1(asyncD1 as PrismaD1Input) });
+        return globalForPrisma.prismaD1;
       }
     } catch {
       // getCloudflareContext is only available in the Cloudflare runtime.

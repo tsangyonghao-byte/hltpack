@@ -10,6 +10,19 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  outputFileTracingIncludes: {
+    '**/*': [
+      './node_modules/.prisma/client/wasm.js',
+      './node_modules/.prisma/client/query_engine_bg.js',
+      './node_modules/.prisma/client/query_engine_bg.wasm',
+      './node_modules/.prisma/client/query_compiler_fast_bg.js',
+      './node_modules/.prisma/client/query_compiler_fast_bg.wasm',
+      './node_modules/.prisma/client/wasm-worker-loader.mjs',
+      './node_modules/.prisma/client/wasm-edge-light-loader.mjs',
+      './node_modules/@prisma/client/runtime/wasm-engine-edge.js',
+      './node_modules/@prisma/client/runtime/wasm-compiler-edge.js',
+    ],
+  },
   experimental: {
     serverActions: {
       bodySizeLimit: "20mb",

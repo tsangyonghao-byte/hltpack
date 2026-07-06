@@ -10,9 +10,9 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "cf:build": "opennextjs-cloudflare build",
-    "cf:preview": "opennextjs-cloudflare build && wrangler dev",
-    "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "cf:build": "node scripts/cf-build.js",
+    "cf:preview": "node scripts/cf-build.js && wrangler dev",
+    "cf:deploy": "node scripts/cf-build.js && opennextjs-cloudflare deploy"
   },
   "dependencies": {
     "@prisma/adapter-d1": "^6.19.3",
