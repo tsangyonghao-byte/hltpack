@@ -281,7 +281,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= 1536) {
         setIsMobileMenuOpen(false);
         setActiveMobileGroup(null);
       }
@@ -443,29 +443,29 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
       {/* Background pseudoelement equivalent from target site */}
       <div 
         className={`absolute top-0 left-0 w-full transition-all duration-[750ms] ease-out z-[-1] ${
-          isSolid ? "h-[80px] md:h-[100px] bg-white/95 backdrop-blur-md shadow-[0_0_15px_rgba(0,0,0,0.16)]" : "h-[80px] md:h-[125px] xl:h-[161px] bg-transparent"
+          isSolid ? "h-[80px] 2xl:h-[100px] bg-white/95 backdrop-blur-md shadow-[0_0_15px_rgba(0,0,0,0.16)]" : "h-[80px] 2xl:h-[161px] bg-transparent"
         }`}
       />
 
-      <div className={`max-w-[1744px] mx-auto px-4 md:px-[16px] xl:px-[20px] flex flex-col md:flex-row justify-between items-stretch md:items-start transition-transform duration-[750ms] ease-out ${
+      <div className={`max-w-[1744px] mx-auto px-4 2xl:px-[20px] flex flex-col 2xl:flex-row justify-between items-stretch 2xl:items-start transition-transform duration-[750ms] ease-out ${
         isSolid ? "translate-y-0" : ""
       }`}>
         
         {/* Left: Logo and Mobile Menu Button */}
-        <div className="flex-shrink-0 flex items-center justify-between w-full md:w-auto h-[80px] md:h-auto md:pt-[20px] xl:pt-[41px] px-[10px] md:px-[7px] xl:px-[5px] transition-transform duration-[750ms] ease-out">
+        <div className="flex-shrink-0 flex items-center justify-between w-full 2xl:w-auto h-[80px] 2xl:h-auto 2xl:pt-[41px] px-[10px] 2xl:px-[5px] transition-transform duration-[750ms] ease-out">
           <Link href="/" className={`inline-block transition-transform duration-[750ms] ease-out ${
-            isSolid ? "scale-[0.85] origin-left md:scale-[0.68] xl:scale-[0.75] md:-translate-y-[22px] xl:-translate-y-[28px]" : "scale-[0.85] md:scale-[0.9] xl:scale-100 origin-left translate-y-[10px]"
+            isSolid ? "scale-[0.85] origin-left 2xl:scale-[0.75] 2xl:-translate-y-[28px]" : "scale-[0.85] 2xl:scale-100 origin-left translate-y-[10px]"
           }`}>
             <img 
               src={logoSrc} 
               alt={logoAlt} 
-              className={`w-[140px] md:w-[160px] xl:w-[180px] h-auto object-contain transition-all duration-[750ms] drop-shadow-md ${!isSolid ? 'brightness-0 invert' : ''}`} 
+              className={`w-[140px] 2xl:w-[180px] h-auto object-contain transition-all duration-[750ms] drop-shadow-md ${!isSolid ? 'brightness-0 invert' : ''}`} 
             />
           </Link>
           
           {/* Mobile Menu Button (Only visible on small screens) */}
           <button 
-            className="md:hidden flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white text-[#1A1A1A] shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-gray-100 transition-transform duration-300 active:scale-95"
+            className="2xl:hidden flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white text-[#1A1A1A] shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-gray-100 transition-transform duration-300 active:scale-95"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label={navbarText.toggleMenu}
           >
@@ -474,7 +474,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
         </div>
 
           {/* Right Section */}
-        <div className={`hidden md:flex flex-grow flex-col items-end pt-[18px] xl:pt-[30px] gap-[16px] xl:gap-[25px] transition-transform duration-[750ms] ease-out`}>
+        <div className={`hidden 2xl:flex flex-grow flex-col items-end pt-[30px] gap-[25px] transition-transform duration-[750ms] ease-out`}>
           
           {/* Top Bar: Tools & Lang (Capsule) - 滚动时保持在最右侧，紧贴顶部 */}
           <div className={`relative z-[60] flex items-center transition-all duration-[750ms] ease-out origin-top-right ${
@@ -683,7 +683,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="md:hidden fixed inset-0 z-[120] bg-[rgba(248,249,251,0.98)] backdrop-blur-xl"
+            className="2xl:hidden fixed inset-0 z-[120] bg-[rgba(248,249,251,0.98)] backdrop-blur-xl"
           >
             {/* NO longer hiding whatsapp, so that it remains visible just like on logospack */}
             
