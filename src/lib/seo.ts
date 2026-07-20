@@ -54,7 +54,13 @@ export function composeSeoTitle(title: string, titleSuffix: string, siteName: st
 }
 
 export function getSiteUrl() {
-  return process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL;
+  }
+  if (process.env.NODE_ENV === "production") {
+    return "https://www.hltpack.com";
+  }
+  return "http://localhost:3000";
 }
 
 export function toAbsoluteUrl(value: string) {

@@ -24,6 +24,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
   const isHomePage = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileLangOpen, setIsMobileLangOpen] = useState(false);
   const [activeMobileGroup, setActiveMobileGroup] = useState<string | null>(null);
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
   const [activeMegaCategory, setActiveMegaCategory] = useState<string | null>(null);
@@ -281,8 +282,9 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1536) {
+      if (window.innerWidth >= 1280) {
         setIsMobileMenuOpen(false);
+        setIsMobileLangOpen(false);
         setActiveMobileGroup(null);
       }
     };
@@ -443,38 +445,71 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
       {/* Background pseudoelement equivalent from target site */}
       <div 
         className={`absolute top-0 left-0 w-full transition-all duration-[750ms] ease-out z-[-1] ${
-          isSolid ? "h-[80px] 2xl:h-[100px] bg-white/95 backdrop-blur-md shadow-[0_0_15px_rgba(0,0,0,0.16)]" : "h-[80px] 2xl:h-[161px] bg-transparent"
+          isSolid ? "h-[80px] xl:h-[100px] bg-white/95 backdrop-blur-md shadow-[0_0_15px_rgba(0,0,0,0.16)]" : "h-[80px] xl:h-[161px] bg-transparent"
         }`}
       />
 
-      <div className={`max-w-[1744px] mx-auto px-4 2xl:px-[20px] flex flex-col 2xl:flex-row justify-between items-stretch 2xl:items-start transition-transform duration-[750ms] ease-out ${
+      <div className={`max-w-[1744px] mx-auto px-4 xl:px-[20px] flex flex-col xl:flex-row justify-between items-stretch xl:items-start transition-transform duration-[750ms] ease-out xl:relative ${
         isSolid ? "translate-y-0" : ""
       }`}>
         
         {/* Left: Logo and Mobile Menu Button */}
-        <div className="flex-shrink-0 flex items-center justify-between w-full 2xl:w-auto h-[80px] 2xl:h-auto 2xl:pt-[41px] px-[10px] 2xl:px-[5px] transition-transform duration-[750ms] ease-out">
+        <div className="flex-shrink-0 flex items-center justify-between w-full xl:w-auto h-[80px] xl:h-auto xl:pt-[41px] px-[10px] xl:px-[5px] transition-transform duration-[750ms] ease-out">
           <Link href="/" className={`inline-block transition-transform duration-[750ms] ease-out ${
-            isSolid ? "scale-[0.85] origin-left 2xl:scale-[0.75] 2xl:-translate-y-[28px]" : "scale-[0.85] 2xl:scale-100 origin-left translate-y-[10px]"
+            isSolid ? "scale-[0.85] origin-left xl:scale-[0.75] xl:-translate-y-[28px]" : "scale-[0.85] xl:scale-100 origin-left translate-y-[10px]"
           }`}>
             <img 
               src={logoSrc} 
               alt={logoAlt} 
-              className={`w-[140px] 2xl:w-[180px] h-auto object-contain transition-all duration-[750ms] drop-shadow-md ${!isSolid ? 'brightness-0 invert' : ''}`} 
+              className={`w-[140px] xl:w-[180px] h-auto object-contain transition-all duration-[750ms] drop-shadow-md ${!isSolid ? 'brightness-0 invert' : ''}`} 
             />
           </Link>
           
-          {/* Mobile Menu Button (Only visible on small screens) */}
-          <button 
-            className="2xl:hidden flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white text-[#1A1A1A] shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-gray-100 transition-transform duration-300 active:scale-95"
-            onClick={() => setIsMobileMenuOpen(true)}
-            aria-label={navbarText.toggleMenu}
-          >
-            <Menu className="h-5 w-5" />
-          </button>
+          {/* Mobile Actions Container (Only visible on screens smaller than xl) */}
+          <div className="xl:hidden flex items-center gap-[12px] relative">
+            {/* Mobile Language Switcher */}
+            <div className="relative">
+              <button 
+                className={`flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white transition-all duration-300 shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-gray-100 active:scale-95 ${isSolid ? 'text-[#1A1A1A]' : 'text-[#F05A22]'}`}
+                onClick={() => setIsMobileLangOpen(!isMobileLangOpen)}
+                aria-label="Change Language"
+              >
+                <Globe className="h-5 w-5" />
+              </button>
+              
+              {/* Mobile Language Dropdown */}
+              <AnimatePresence>
+                {isMobileLangOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute right-0 mt-2 w-32 bg-white rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] border border-gray-100 overflow-hidden text-gray-800 z-[130]"
+                  >
+                    <div className="py-1 flex flex-col">
+                      <button disabled={isSwitchingLanguage} onClick={() => { void handleLanguageChange('en'); setIsMobileLangOpen(false); }} className={`px-4 py-2.5 hover:bg-orange-50 hover:text-[#F05A22] text-[14px] font-medium transition-colors text-left disabled:opacity-60 ${locale === 'en' ? 'text-[#F05A22] bg-orange-50 font-bold' : ''}`}>{content.navbar.languages.en}</button>
+                      <button disabled={isSwitchingLanguage} onClick={() => { void handleLanguageChange('es'); setIsMobileLangOpen(false); }} className={`px-4 py-2.5 hover:bg-orange-50 hover:text-[#F05A22] text-[14px] font-medium transition-colors text-left disabled:opacity-60 ${locale === 'es' ? 'text-[#F05A22] bg-orange-50 font-bold' : ''}`}>{content.navbar.languages.es}</button>
+                      <button disabled={isSwitchingLanguage} onClick={() => { void handleLanguageChange('ar'); setIsMobileLangOpen(false); }} className={`px-4 py-2.5 hover:bg-orange-50 hover:text-[#F05A22] text-[14px] font-medium transition-colors text-left disabled:opacity-60 ${locale === 'ar' ? 'text-[#F05A22] bg-orange-50 font-bold' : ''}`}>{content.navbar.languages.ar}</button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button 
+              className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white text-[#1A1A1A] shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-gray-100 transition-transform duration-300 active:scale-95"
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label={navbarText.toggleMenu}
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+          </div>
         </div>
 
           {/* Right Section */}
-        <div className={`hidden 2xl:flex flex-grow flex-col items-end pt-[30px] gap-[25px] transition-transform duration-[750ms] ease-out`}>
+        <div className={`hidden xl:flex flex-grow flex-col items-end pt-[30px] gap-[25px] transition-transform duration-[750ms] ease-out xl:static`}>
           
           {/* Top Bar: Tools & Lang (Capsule) - 滚动时保持在最右侧，紧贴顶部 */}
           <div className={`relative z-[60] flex items-center transition-all duration-[750ms] ease-out origin-top-right ${
@@ -522,13 +557,13 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
           </div>
 
           {/* Bottom Bar: Navigation */}
-          <nav className={`flex items-center space-x-[24px] xl:space-x-[53px] justify-end transition-transform duration-[750ms] ease-out origin-right ${
-            isSolid ? "translate-y-[-45px]" : "translate-y-0"
+          <nav className={`flex items-center space-x-[24px] xl:space-x-[53px] justify-end transition-all duration-[750ms] ease-out origin-right ${
+            isSolid ? "mt-[-45px]" : "mt-0"
           }`}>
             {navLinks.map((link) => (
               <div 
                 key={link.name} 
-                className="relative"
+                className={link.href.includes('products') ? "xl:static relative" : "relative"}
                 onMouseEnter={() => {
                   if (link.children?.length) {
                     const matchedChild = link.children.find((child: any) => isMegaCategoryActive(child));
@@ -546,7 +581,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
               >
                 <Link
                   href={link.href}
-                  className={`group inline-flex items-center text-[13px] xl:text-[15px] font-bold transition-colors duration-[300ms] tracking-[0.5px] xl:tracking-[1px] relative ${isSolid ? "pb-0" : "pb-1"} ${
+                  className={`group inline-flex items-center text-[13px] xl:text-[15px] font-bold transition-colors duration-[300ms] tracking-[0.5px] xl:tracking-[1px] relative whitespace-nowrap ${isSolid ? "pb-0" : "pb-1"} ${
                     isTopLevelLinkActive(link.href) ? "text-[#F05A22]" : "text-[#1A1A1A]"
                   }`}
                 >
@@ -683,7 +718,7 @@ export default function Navbar({ navItems = [] }: { navItems?: any[] }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="2xl:hidden fixed inset-0 z-[120] bg-[rgba(248,249,251,0.98)] backdrop-blur-xl"
+            className="xl:hidden fixed inset-0 z-[120] bg-[rgba(248,249,251,0.98)] backdrop-blur-xl"
           >
             {/* NO longer hiding whatsapp, so that it remains visible just like on logospack */}
             

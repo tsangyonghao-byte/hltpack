@@ -14,7 +14,7 @@ const MARKETS = [
     title: "Food Packaging",
     subtitle: "Keeping food fresh, safe, and appealing.",
     description: "From snacks and confectionery to frozen foods and ready-to-eat meals, our advanced barrier films and pouch designs extend shelf life while maximizing shelf appeal. We offer retortable, microwavable, and resealable options.",
-    image: "/products/塑料包装袋系列/定制食品袋/食品包装袋/10001.jpg", // Using ketchup pouch as food mock
+    image: "/hltbz-new/Specialty/Retort Pouch/蒸煮袋单独图1.png",
     tags: ["Snacks", "Frozen Food", "Ready Meals", "Confectionery"],
     color: "from-orange-500/20 to-red-500/20",
     textColor: "text-orange-600"
@@ -24,7 +24,7 @@ const MARKETS = [
     title: "Beverage & Liquid",
     subtitle: "Leak-proof solutions for liquids on the go.",
     description: "Our high-performance spout pouches and bag-in-box solutions are perfect for juices, water, dairy, and alcoholic beverages. Engineered for superior drop resistance and puncture strength to ensure zero leakage.",
-    image: "/products/塑料包装袋系列/吸嘴袋/奶茶吸嘴袋/10001.jpg", // Using cosmetic sachet as liquid mock
+    image: "/hltbz-new/Beverage/饮料全图.png",
     tags: ["Juice", "Dairy", "Water", "Alcohol"],
     color: "from-blue-500/20 to-cyan-500/20",
     textColor: "text-blue-600"
@@ -54,7 +54,7 @@ const MARKETS = [
     title: "Personal Care & Home",
     subtitle: "Functional and stylish packaging for daily essentials.",
     description: "Attractive and chemical-resistant packaging for cosmetics, detergents, and cleaning products. Our shaped pouches and refill solutions help brands reduce plastic usage compared to rigid bottles.",
-    image: "/products/塑料包装袋系列/面膜袋/常规面膜袋/10001.jpg", // Using shaped pouch as personal care mock
+    image: "/hltbz-new/Personal Care & Household/日化用品全图.png",
     tags: ["Cosmetics", "Detergent", "Shampoo", "Refill Packs"],
     color: "from-purple-500/20 to-pink-500/20",
     textColor: "text-purple-600"

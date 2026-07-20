@@ -3,7 +3,7 @@ const path = require('path');
 
 const data = JSON.parse(fs.readFileSync('db-state.json', 'utf8'));
 
-let sql = '';
+let sql = 'PRAGMA foreign_keys = OFF;\n';
 
 // Helper to escape values for SQL
 function escapeVal(val) {
@@ -136,6 +136,8 @@ sql += makeInsertReplace('NavigationItem', parents);
 
 sql += `\n-- Insert or update child navigation items\n`;
 sql += makeInsertReplace('NavigationItem', children);
+
+sql += `\n-- Re-enable foreign key constraints\nPRAGMA foreign_keys = ON;\n`;
 
 fs.writeFileSync('sync-d1.sql', sql, 'utf8');
 console.log('Successfully generated sync-d1.sql');

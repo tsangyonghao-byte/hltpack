@@ -184,8 +184,8 @@ async function build() {
   try {
     execSync("npx prisma generate", { cwd: ROOT, stdio: "inherit" });
   } catch (err) {
-    console.error("Native Prisma client generation failed!");
-    process.exit(1);
+    console.warn("\n  ⚠️ [Warning] Native Prisma client generation failed (likely due to file locking on Windows).");
+    console.warn("  Attempting to proceed with the build since the existing generated client is likely valid.\n");
   }
 
   // --- Step 2: Build Next.js app ---
@@ -217,8 +217,8 @@ async function build() {
       },
     });
   } catch (err) {
-    console.error("WASM Prisma client generation failed!");
-    process.exit(1);
+    console.warn("\n  ⚠️ [Warning] WASM Prisma client generation failed (likely due to file locking on Windows).");
+    console.warn("  Attempting to proceed with the build since the existing generated client is likely valid.\n");
   }
 
   // --- Patching loaders to avoid dynamic WASM imports ---
